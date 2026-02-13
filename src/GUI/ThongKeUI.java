@@ -4,12 +4,20 @@
  */
 package GUI;
 
+import BUS.SanPhamBUS;
+import DTO.SanPhamDTO;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author THANH NHAN
  */
 public class ThongKeUI extends javax.swing.JPanel {
 
+    SanPhamBUS spbus=new SanPhamBUS();
+    
     /**
      * Creates new form ThongKeUI
      */
@@ -52,6 +60,9 @@ public class ThongKeUI extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
 
+        setPreferredSize(new java.awt.Dimension(1710, 1080));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1710, 1080));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(1710, 152));
@@ -202,7 +213,7 @@ public class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnreset)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +256,7 @@ public class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(btnreset1)
                 .addGap(20, 20, 20))
         );
@@ -325,7 +336,7 @@ public class ThongKeUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -337,6 +348,26 @@ public class ThongKeUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnresetActionPerformed
 
+    private void readAll(){
+        Vector header=new Vector();
+        ArrayList<SanPhamDTO> ds=new ArrayList<>();
+        header.add("STT");
+        header.add("Mã máy");
+        header.add("Tên máy");
+        header.add("Nhập");
+        header.add("Bán");
+        header.add("Tồn");
+        DefaultTableModel model=new DefaultTableModel(header,0);
+        int i=1;
+        for(SanPhamDTO sp:ds){
+            Vector row=new Vector();
+            row.add(i);
+            row.add(sp.getMaSP());
+            row.add(sp.getTen());
+            
+            i++;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;
