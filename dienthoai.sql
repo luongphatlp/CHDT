@@ -101,7 +101,6 @@ CREATE TABLE `chitietphieunhap` (
   `MaPN` varchar(10) NOT NULL,
   `MaSP` varchar(10) NOT NULL,
   `SoLuong` int(10) NOT NULL,
-  `DiaChi` varchar(50) NOT NULL,
   `TongTien` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
