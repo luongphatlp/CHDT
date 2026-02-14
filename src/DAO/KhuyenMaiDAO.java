@@ -31,15 +31,15 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
             Statement st=conn.createStatement();
             result= st.executeUpdate(qry);
         }catch (SQLException ex) {
-                System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return result;
     }
     
     @Override
-    public int delete(KhuyenMaiDTO ma){
+    public int delete(KhuyenMaiDTO km){
         int result=0;
-        String qry="Delete from khuyenmai where Ma='"+ma+"'";
+        String qry="Delete from khuyenmai where Ma='"+km.getMa()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -66,7 +66,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
         return result;
     }
     @Override
-    public ArrayList<KhuyenMaiDTO>  selectAll(){
+    public ArrayList<KhuyenMaiDTO> selectAll(){
         ArrayList<KhuyenMaiDTO> ds=new ArrayList<>();
         String qry="Select * from sinhvien";
         try(Connection conn=Connect.getConnection()){

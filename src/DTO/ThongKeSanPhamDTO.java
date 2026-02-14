@@ -29,11 +29,11 @@ public class ThongKeSanPhamDTO {
     }
 
     // Getter và Setter
-    public String getMasp() {
+    public String getMaSP() {
         return masp;
     }
 
-    public void setMasp(String masp) {
+    public void setMaSP(String masp) {
         this.masp = masp;
     }
 
