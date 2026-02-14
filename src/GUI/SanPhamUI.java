@@ -96,6 +96,11 @@ public class SanPhamUI extends javax.swing.JPanel {
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
         jToolBar1.add(jButton4);
         jToolBar1.add(jSeparator1);
 
@@ -207,7 +212,7 @@ public class SanPhamUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "Cấu hình", "RAM", "Mã hàng", "Hệ điều hành"
+                "Mã máy", "Tên máy", "Số lượng", "Đơn giá"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -236,6 +241,12 @@ public class SanPhamUI extends javax.swing.JPanel {
         ThemSPUI them = new ThemSPUI ();
         them.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        ChiTietSanPhamUI s = new ChiTietSanPhamUI();
+        s.setVisible(true);
+    }//GEN-LAST:event_jButton4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
