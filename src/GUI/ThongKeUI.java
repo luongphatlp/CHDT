@@ -26,7 +26,24 @@ public class ThongKeUI extends javax.swing.JPanel {
         initComponents();
         veBangAll();
     }
-    
+    //3 bảng hiển thị tổng số 
+    /*
+    public void bangDienThoai(){
+        int sum=0;
+        DienThoaiBUS bus=new DienThoaiBUS();
+        for(DienThoaiDTO dt:bus.getList())
+            sum+=dt.getSoLuong();
+        lbdienthoai.setText("Điện thoại:"+sum);
+    }
+    public void bangNCC(){
+        NhaCungCapBUS bus=new NhaCungCapBUS();
+        lbNhaCungCap.setText("Nhà cung cấp:"+bus.getLst().size());
+    }
+    public void bangNhanVien(){
+        NhanVienBUS bus=new NhanVienBUS();
+        lbNhanVien.setText("Nhân viên:"+bus.getList().size());
+    }
+    */
     public void veBangAll(){
         ThongKeBUS bus=new ThongKeBUS();
         veBang(bus.thongKeSanPham());
@@ -69,8 +86,9 @@ public class ThongKeUI extends javax.swing.JPanel {
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        lbdienthoai = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -124,32 +142,45 @@ public class ThongKeUI extends javax.swing.JPanel {
         kGradientPanel1.setkEndColor(new java.awt.Color(221, 221, 239));
         kGradientPanel1.setkStartColor(new java.awt.Color(82, 162, 228));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user-interface.png"))); // NOI18N
-        jLabel7.setText("Điện thoại");
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eye.png"))); // NOI18N
+
+        lbdienthoai.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
+        lbdienthoai.setForeground(new java.awt.Color(255, 255, 255));
+        lbdienthoai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user-interface.png"))); // NOI18N
+        lbdienthoai.setText("Điện thoại:");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addContainerGap(280, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addContainerGap(390, Short.MAX_VALUE)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(117, 117, 117))))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(268, Short.MAX_VALUE)))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(lbdienthoai)
+                    .addContainerGap(22, Short.MAX_VALUE)))
         );
 
         kGradientPanel2.setkEndColor(new java.awt.Color(184, 233, 233));
@@ -158,7 +189,7 @@ public class ThongKeUI extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delivery-courier.png"))); // NOI18N
-        jLabel8.setText("Nhà cung cấp");
+        jLabel8.setText("Nhà cung cấp:");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eye.png"))); // NOI18N
 
@@ -179,7 +210,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -218,13 +249,13 @@ public class ThongKeUI extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1732, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1961, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -350,7 +381,7 @@ public class ThongKeUI extends javax.swing.JPanel {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,7 +401,7 @@ public class ThongKeUI extends javax.swing.JPanel {
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1732, Short.MAX_VALUE)
+            .addGap(0, 1961, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,12 +460,12 @@ public static void main(String args[]) {
     private com.toedter.calendar.JDateChooser chtungay;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -449,6 +480,7 @@ public static void main(String args[]) {
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel3;
+    private javax.swing.JLabel lbdienthoai;
     private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables
 }
