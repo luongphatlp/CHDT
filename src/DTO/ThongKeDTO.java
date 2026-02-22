@@ -8,7 +8,7 @@ package DTO;
  *
  * @author Latitude E7470
  */
-public class ThongKeSanPhamDTO {
+public class ThongKeDTO {
     private String masp;
     private String ten;
     private int tongnhap;
@@ -16,11 +16,11 @@ public class ThongKeSanPhamDTO {
     private int tonkho;
 
     // Constructor rỗng
-    public ThongKeSanPhamDTO() {
+    public ThongKeDTO() {
     }
 
     // Constructor đầy đủ tham số
-    public ThongKeSanPhamDTO(String masp, String ten, int tongnhap, int tongban, int tonkho) {
+    public ThongKeDTO(String masp, String ten, int tongnhap, int tongban, int tonkho) {
         this.masp = masp;
         this.ten = ten;
         this.tongnhap = tongnhap;
