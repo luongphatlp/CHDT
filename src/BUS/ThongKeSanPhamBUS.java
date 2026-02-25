@@ -4,7 +4,7 @@
  */
 package BUS;
 
-import DAO.ThongKeDAO;
+import DAO.ThongKeSanPhamDAO;
 import DTO.ThongKeDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Latitude E7470
  */
-public class ThongKeBUS {
+public class ThongKeSanPhamBUS {
     private static ArrayList<ThongKeDTO> ds=new ArrayList<>();
     
     public ArrayList<ThongKeDTO> getList(){
@@ -22,18 +22,18 @@ public class ThongKeBUS {
     }
     //thuc hien thong ke san pham
     public ArrayList<ThongKeDTO> thongKeSanPham(){
-        ThongKeDAO dao=new ThongKeDAO();
+        ThongKeSanPhamDAO dao=new ThongKeSanPhamDAO();
         ds=dao.thongKeSanPham();
         return ds;
     }
     public ArrayList<ThongKeDTO> thongKeSanPhamDieuKien(String key,Date tu,Date den){
-        ThongKeDAO dao=new ThongKeDAO();
+        ThongKeSanPhamDAO dao=new ThongKeSanPhamDAO();
         ds= dao.thongKeSanPhamDieuKien(key,tu,den);
         //thongKeSanPhamDieuKien(String key, Date tu, Date den)
         return ds;
     }
     public static void main(String[] agrs){
-        ThongKeBUS bus=new ThongKeBUS();
+        ThongKeSanPhamBUS bus=new ThongKeSanPhamBUS();
         bus.thongKeSanPham();
         System.out.println(bus.getList().get(0).getMaSP());
     }

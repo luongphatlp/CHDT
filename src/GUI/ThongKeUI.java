@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import BUS.ThongKeBUS;
+import BUS.ThongKeSanPhamBUS;
 import DTO.ThongKeDTO;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class ThongKeUI extends javax.swing.JPanel {
     }
     */
     public void veBangAll(){
-        ThongKeBUS bus=new ThongKeBUS();
+        ThongKeSanPhamBUS bus=new ThongKeSanPhamBUS();
         veBang(bus.thongKeSanPham());
     }
     
@@ -439,7 +439,7 @@ public class ThongKeUI extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ThongKeBUS bus=new ThongKeBUS();
+        ThongKeSanPhamBUS bus=new ThongKeSanPhamBUS();
         
         String key=txttimkiem.getText();
         //JOptionPane.showMessageDialog(null,key);
