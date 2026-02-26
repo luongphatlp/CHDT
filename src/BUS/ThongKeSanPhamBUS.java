@@ -5,7 +5,7 @@
 package BUS;
 
 import DAO.ThongKeSanPhamDAO;
-import DTO.ThongKeDTO;
+import DTO.ThongKeSanPhamDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,18 +15,18 @@ import java.util.Date;
  * @author Latitude E7470
  */
 public class ThongKeSanPhamBUS {
-    private static ArrayList<ThongKeDTO> ds=new ArrayList<>();
+    private static ArrayList<ThongKeSanPhamDTO> ds=new ArrayList<>();
     
-    public ArrayList<ThongKeDTO> getList(){
+    public ArrayList<ThongKeSanPhamDTO> getList(){
         return ds;
     }
     //thuc hien thong ke san pham
-    public ArrayList<ThongKeDTO> thongKeSanPham(){
+    public ArrayList<ThongKeSanPhamDTO> thongKeSanPham(){
         ThongKeSanPhamDAO dao=new ThongKeSanPhamDAO();
         ds=dao.thongKeSanPham();
         return ds;
     }
-    public ArrayList<ThongKeDTO> thongKeSanPhamDieuKien(String key,Date tu,Date den){
+    public ArrayList<ThongKeSanPhamDTO> thongKeSanPhamDieuKien(String key,Date tu,Date den){
         ThongKeSanPhamDAO dao=new ThongKeSanPhamDAO();
         ds= dao.thongKeSanPhamDieuKien(key,tu,den);
         //thongKeSanPhamDieuKien(String key, Date tu, Date den)
