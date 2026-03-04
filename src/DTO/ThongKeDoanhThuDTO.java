@@ -16,4 +16,8 @@ public class ThongKeDoanhThuDTO {
     public void setNgay(String ngay){this.ngay=ngay;}
     public void setHoaDon(int hoadon){this.hoadon=hoadon;}
     public void setDoanhThu(int doanhthu){this.doanhthu=doanhthu;}
+    
+    public String getNgay(){return ngay;}
+    public int getHoaDon(){return hoadon;}
+    public int getDoanhThu(){return doanhthu;}
 }

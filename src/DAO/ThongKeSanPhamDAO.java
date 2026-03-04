@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-import DTO.ThongKeDTO;
+import DTO.ThongKeSanPhamDTO;
 import database.Connect;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,8 +19,8 @@ import java.util.Date;
 public class ThongKeSanPhamDAO{
 
     // 
-    public ArrayList<ThongKeDTO> thongKeSanPham(){
-        ArrayList<ThongKeDTO> ds=new ArrayList<>();
+    public ArrayList<ThongKeSanPhamDTO> thongKeSanPham(){
+        ArrayList<ThongKeSanPhamDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
             String qry =    
                     "SELECT " +
@@ -47,7 +47,7 @@ public class ThongKeSanPhamDAO{
             PreparedStatement  st=conn.prepareStatement(qry);
             ResultSet rt=st.executeQuery();
             while(rt.next()){
-                ThongKeDTO tk=new ThongKeDTO();
+                ThongKeSanPhamDTO tk=new ThongKeSanPhamDTO();
                 tk.setMaSP(rt.getString(1));
                 tk.setTen(rt.getString(2));
                 tk.setTongNhap(rt.getInt(3));
@@ -61,9 +61,9 @@ public class ThongKeSanPhamDAO{
         return ds;
     }
     //thong ke san pham theo masp,trong khoang 2 ngay
-    public ArrayList<ThongKeDTO> thongKeSanPhamDieuKien(String key,java.util.Date tuUtil,java.util.Date denUtil) {
+    public ArrayList<ThongKeSanPhamDTO> thongKeSanPhamDieuKien(String key,java.util.Date tuUtil,java.util.Date denUtil) {
 
-        ArrayList<ThongKeDTO> ds = new ArrayList<>();
+        ArrayList<ThongKeSanPhamDTO> ds = new ArrayList<>();
 
         try (Connection conn = Connect.getConnection()) {
 
@@ -182,7 +182,7 @@ public class ThongKeSanPhamDAO{
             ResultSet rt = ps.executeQuery();
 
             while (rt.next()) {
-                ThongKeDTO tk = new ThongKeDTO();
+                ThongKeSanPhamDTO tk = new ThongKeSanPhamDTO();
                 tk.setMaSP(rt.getString("Ma"));
                 tk.setTen(rt.getString("Ten"));
                 tk.setTongNhap(rt.getInt("TongNhap"));
