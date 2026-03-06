@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 import DTO.KhuyenMaiDTO;
-import DATABASE.Connect;
+import database.Connect;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- *
- * @author Latitude E7470
- */
 public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
     
     public KhuyenMaiDAO(){}
@@ -22,27 +16,29 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
     public int insert(KhuyenMaiDTO km){   
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES ("
-            + "'"+km.getMa()+"'"
-            + ",'"+km.getTen()+"'"
-            + ",'"+km.getNgayBD()+"'"
-            + ",'"+km.getNgayKT()+"'"
-            + ",'"+km.getGhiChu()+"')";
-            Statement st=conn.createStatement();
-            result= st.executeUpdate(qry);
+            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES (?,?,?,?,?)";
+            PreparedStatement st=conn.prepareStatement(qry);
+            int index=1;
+            st.setString(index++,km.getMa());
+            st.setString(index++, km.getTen());
+            st.setString(index++,km.getNgayBD());
+            st.setString(index++, km.getNgayKT());
+            st.setString(index++, km.getGhiChu());
+            result= st.executeUpdate();
         }catch (SQLException ex) {
-                System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return result;
     }
     
     @Override
-    public int delete(KhuyenMaiDTO ma){
+    public int delete(KhuyenMaiDTO km){
         int result=0;
-        String qry="Delete from khuyenmai where Ma='"+ma+"'";
         try(Connection conn=Connect.getConnection()) {
-            Statement st=conn.createStatement();
-            result=st.executeUpdate(qry);
+            String qry="Delete from khuyenmai where Ma=?";
+            PreparedStatement st=conn.prepareStatement(qry);
+            st.setString(1, km.getMa());
+            result=st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }      
@@ -50,25 +46,25 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
     }
     @Override
     public int update(KhuyenMaiDTO km){
-        int result=0;
-        String qry="Update khuyenmai Set";
-        qry+=" "+"Ten="+"'"+km.getTen()+"'";
-        qry+=","+"NgayBatDau="+"'"+km.getNgayBD()+"'";
-        qry+=","+"NgayKetThuc="+"'"+km.getNgayKT()+"'";
-        qry+=","+"Ghichu="+"'"+km.getGhiChu()+"'";
-        qry+=" WHERE Ma='"+km.getMa()+"'";
+        int result=0; 
         try(Connection conn=Connect.getConnection()) {
-            Statement st=conn.createStatement();
-            result=st.executeUpdate(qry);
+            String qry="Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=? WHERE Ma=?";
+            PreparedStatement st=conn.prepareStatement(qry);
+            st.setString(1, km.getTen());
+            st.setString(1, km.getNgayBD());
+            st.setString(1, km.getNgayKT());
+            st.setString(1, km.getGhiChu());
+            st.setString(1, km.getMa());
+            result=st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return result;
     }
     @Override
-    public ArrayList<KhuyenMaiDTO>  selectAll(){
+    public ArrayList<KhuyenMaiDTO> selectAll(){
         ArrayList<KhuyenMaiDTO> ds=new ArrayList<>();
-        String qry="Select * from sinhvien";
+        String qry="Select * from khuyenmai";
         try(Connection conn=Connect.getConnection()){
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qry);
