@@ -7,14 +7,18 @@ import java.util.ArrayList;
 
 public class ChiTietKhuyenMaiBUS {
     private ArrayList<ChiTietKhuyenMaiDTO> ds;
+    private ChiTietKhuyenMaiDAO dao=new ChiTietKhuyenMaiDAO();
     public ChiTietKhuyenMaiBUS(){
-        if(ds==null) ds=new ArrayList<>();
+        ds=new ArrayList<>();
     }
     public ArrayList<ChiTietKhuyenMaiDTO> getDS(){return ds;}
     
     public ArrayList<ChiTietKhuyenMaiDTO> docDS(){
-        ChiTietKhuyenMaiDAO dao=new ChiTietKhuyenMaiDAO();
         ds=dao.selectAll();
+        return ds;
+    }
+    public ArrayList<ChiTietKhuyenMaiDTO> docDSTheoMaKM(String ma){
+        ds=dao.selectByMaKM(ma);
         return ds;
     }
 }
