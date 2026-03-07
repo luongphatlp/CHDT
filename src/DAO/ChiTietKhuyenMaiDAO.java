@@ -15,7 +15,7 @@ public class ChiTietKhuyenMaiDAO {
     public int insert(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry="INSERT INTO chitietkhuyenmai(makm,masp,phantram) VALUES (?,?,?)";
+            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram) VALUES (?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++,km.getMaKM());

@@ -50,11 +50,12 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
         try(Connection conn=Connect.getConnection()) {
             String qry="Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=? WHERE Ma=?";
             PreparedStatement st=conn.prepareStatement(qry);
-            st.setString(1, km.getTen());
-            st.setString(1, km.getNgayBD());
-            st.setString(1, km.getNgayKT());
-            st.setString(1, km.getGhiChu());
-            st.setString(1, km.getMa());
+            int index=1;
+            st.setString(index++, km.getTen());
+            st.setString(index++, km.getNgayBD());
+            st.setString(index++, km.getNgayKT());
+            st.setString(index++, km.getGhiChu());
+            st.setString(index++, km.getMa());
             result=st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

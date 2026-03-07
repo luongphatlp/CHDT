@@ -52,11 +52,12 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
         try(Connection conn=Connect.getConnection()) {
             String qry="Update dienthoai Set Ten=?,DonGia=?,DonViTinh=?,MaHang=? WHERE Ma=?";
             PreparedStatement st=conn.prepareStatement(qry);
-            st.setString(1, sp.getTen());
-            st.setString(1, sp.getDonGia());
-            st.setString(1, sp.getDonViTinh());
-            st.setString(1, sp.getMaHang());
-            st.setString(1, sp.getMaSP());
+            int index=1;
+            st.setString(index++, sp.getTen());
+            st.setString(index++, sp.getDonGia());
+            st.setString(index++, sp.getDonViTinh());
+            st.setString(index++, sp.getMaHang());
+            st.setString(index++, sp.getMaSP());
             result=st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(SanPhamDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -77,7 +78,29 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
                 sp.setSoLuong(rs.getInt(3));
                 sp.setDonGia(rs.getString(4));
                 sp.setDonViTinh(rs.getString(5));
-                sp.setMaHang(rs.getString(5));
+                sp.setMaHang(rs.getString(6));
+                ds.add(sp);
+            }
+        }catch(SQLException ex) {
+            System.getLogger(SanPhamDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return ds;
+    }
+    public ArrayList<SanPhamDTO> selectSanPhamKhongTrongKhuyenMai(String ma){
+        ArrayList<SanPhamDTO> ds=new ArrayList<>();
+        try(Connection conn=Connect.getConnection()){
+            String qry="Select * FROM dienthoai WHERE Ma NOT IN (SELECT MaSanPham FROM chitietkhuyenmai WHERE MaKhuyenMai=?)";
+            PreparedStatement st=conn.prepareStatement(qry);
+            st.setString(1,ma);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                SanPhamDTO sp=new SanPhamDTO();
+                sp.setMaSP(rs.getString(1));
+                sp.setTen(rs.getString(2));
+                sp.setSoLuong(rs.getInt(3));
+                sp.setDonGia(rs.getString(4));
+                sp.setDonViTinh(rs.getString(5));
+                sp.setMaHang(rs.getString(6));
                 ds.add(sp);
             }
         }catch(SQLException ex) {

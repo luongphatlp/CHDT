@@ -21,4 +21,7 @@ public class ChiTietKhuyenMaiBUS {
         ds=dao.selectByMaKM(ma);
         return ds;
     }
+    public void add(ChiTietKhuyenMaiDTO km){
+        dao.insert(km);
+    }
 }
