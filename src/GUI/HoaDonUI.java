@@ -91,7 +91,7 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel8)
-                .addContainerGap(816, Short.MAX_VALUE))
+                .addContainerGap(820, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +247,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator3)
@@ -279,7 +279,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                                                 .addComponent(jLabel9)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 129, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)

@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package BUS;
 
-/**
- *
- * @author Latitude E7470
- */
+import DAO.SanPhamDAO;
+import DTO.SanPhamDTO;
+import java.util.ArrayList;
+
 public class SanPhamBUS {
+    ArrayList<SanPhamDTO> ds;
+    SanPhamDAO dao=new SanPhamDAO();
+    public SanPhamBUS(){ds=new ArrayList<>();}
+    public ArrayList<SanPhamDTO> getDS(){return ds;}
     
+    public ArrayList<SanPhamDTO> selectSanPhamKhongTrongKhuyenMai(String ma){
+        ds=dao.selectSanPhamKhongTrongKhuyenMai(ma);
+        return ds;
+    }
 }
