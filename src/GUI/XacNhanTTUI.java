@@ -4,22 +4,14 @@
  */
 package GUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-
 /**
  *
  * @author THANH NHAN
  */
 public class XacNhanTTUI extends javax.swing.JDialog {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(XacNhanTTUI.class.getName());
 
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(XacNhanTTUI.class.getName());
+    private javax.swing.table.DefaultTableModel modelGioHang;
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -32,21 +24,30 @@ public class XacNhanTTUI extends javax.swing.JDialog {
     /**
      * Creates new form XacNhanTTUI
      */
-    public XacNhanTTUI() {
-        
+    public XacNhanTTUI(java.awt.Frame parent, boolean modal, javax.swing.table.DefaultTableModel model, String tongTien, String phuongThucTT, String maHD) {
+        super(parent, modal);
         initComponents();
 
-        // Close the dialog when Esc is pressed
-        String cancelName = "cancel";
-        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
-        ActionMap actionMap = getRootPane().getActionMap();
-        actionMap.put(cancelName, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doClose(RET_CANCEL);
+        // 1. Sao chép dữ liệu bảng (như cũ)
+        javax.swing.table.DefaultTableModel modelXacNhan = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object[] row = new Object[model.getColumnCount()];
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                row[j] = model.getValueAt(i, j);
             }
-        });
+            modelXacNhan.addRow(row);
+        }
+        jLabel3.setText("Mã hóa đơn: " + maHD); // Hiển thị mã nhận được
+        // 2. Hiển thị tổng tiền
+        jLabel12.setText(tongTien);
+
+        // 3. Hiển thị phương thức thanh toán nhận được từ HoaDonUI
+        jLabel4.setText("Loại thanh toán: " + phuongThucTT);
+
+        // 4. Thời gian tạo (như cũ)
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        jLabel6.setText("Thời gian tạo: " + dtf.format(now));
     }
 
     /**
@@ -262,7 +263,7 @@ public class XacNhanTTUI extends javax.swing.JDialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
-    
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
@@ -294,7 +295,8 @@ public class XacNhanTTUI extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                XacNhanTTUI dialog = new XacNhanTTUI();
+                XacNhanTTUI dialog = new XacNhanTTUI(new javax.swing.JFrame(), true,
+                        new javax.swing.table.DefaultTableModel(), "0", "", "");
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
