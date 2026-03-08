@@ -30,17 +30,18 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectAll(){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
+            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qty);
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString(1));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString(2));
-                sp.setTen(rs.getString(3));
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTen(rs.getString("Ten"));
+                sp.setDonGia(rs.getString("DonGia"));
                 km.setSanPham(sp);
-                km.setPhanTram(rs.getInt(4));
+                km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
             }
         }catch(SQLException ex){
@@ -51,18 +52,19 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectByMaKM(String ma){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
+            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
             PreparedStatement st=conn.prepareStatement(qry);
             st.setString(1,ma);
             ResultSet rs=st.executeQuery();
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString(1));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString(2));
-                sp.setTen(rs.getString(3));
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTen(rs.getString("Ten"));
+                sp.setDonGia(rs.getString("DonGia"));
                 km.setSanPham(sp);
-                km.setPhanTram(rs.getInt(4));
+                km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
             }
         }catch(SQLException ex){
