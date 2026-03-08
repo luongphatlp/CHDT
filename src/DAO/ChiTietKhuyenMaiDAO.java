@@ -87,13 +87,12 @@ public class ChiTietKhuyenMaiDAO {
     public int update(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-        String qry="Update FROM chitietkhuyenmai SET"
-                +"PhanTram=? WHERE MaKhuyenMai=? AND MaSanPham=?";
+        String qry="Update chitietkhuyenmai SET PhanTram=? WHERE MaKhuyenMai=? AND MaSanPham=? ";
             PreparedStatement st=conn.prepareStatement(qry);
             st.setInt(1,km.getPhanTram());
             st.setString(2,km.getMaKM());
             st.setString(3,km.getSanPham().getMaSP());
-           result= st.executeUpdate(qry);
+           result= st.executeUpdate();
         }catch(SQLException ex){
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);            
         }

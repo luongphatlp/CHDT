@@ -3,6 +3,7 @@ package BUS;
 
 import DAO.ChiTietKhuyenMaiDAO;
 import DTO.ChiTietKhuyenMaiDTO;
+import DTO.SanPhamDTO;
 import java.util.ArrayList;
 
 public class ChiTietKhuyenMaiBUS {
@@ -23,5 +24,16 @@ public class ChiTietKhuyenMaiBUS {
     }
     public void add(ChiTietKhuyenMaiDTO km){
         dao.insert(km);
+    }
+    public void delete(String makm,String masp){
+        ChiTietKhuyenMaiDTO ctkm=new ChiTietKhuyenMaiDTO();
+        ctkm.setMaKM(makm);
+        SanPhamDTO sp=new SanPhamDTO();
+        sp.setMaSP(masp);
+        ctkm.setSanPham(sp);
+        dao.delete(ctkm);
+    }
+    public void update(ChiTietKhuyenMaiDTO km){
+        dao.update(km);
     }
 }
