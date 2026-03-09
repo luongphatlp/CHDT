@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3309
--- Thời gian đã tạo: Th3 07, 2026 lúc 11:15 AM
+-- Thời gian đã tạo: Th3 09, 2026 lúc 01:39 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -97,6 +97,17 @@ CREATE TABLE `chitietkhuyenmai` (
   `MaSanPham` varchar(10) NOT NULL,
   `PhanTram` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitietkhuyenmai`
+--
+
+INSERT INTO `chitietkhuyenmai` (`MaKhuyenMai`, `MaSanPham`, `PhanTram`) VALUES
+('1', '1', 2),
+('1', '2', 2),
+('2', '1', 10),
+('2', '2', 6),
+('3', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -213,8 +224,18 @@ CREATE TABLE `khuyenmai` (
   `Ten` varchar(50) NOT NULL,
   `NgayBatDau` date NOT NULL,
   `NgayKetThuc` date NOT NULL,
-  `GhiChu` varchar(50) DEFAULT NULL
+  `GhiChu` varchar(50) DEFAULT NULL,
+  `TinhTrang` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `khuyenmai`
+--
+
+INSERT INTO `khuyenmai` (`Ma`, `Ten`, `NgayBatDau`, `NgayKetThuc`, `GhiChu`, `TinhTrang`) VALUES
+('1', 'Tết', '2026-02-01', '2026-02-27', 'Khuyến mãi theo chủ đề Tết', 0),
+('2', '22', '2025-11-12', '2025-12-31', 'Cuối năm', 0),
+('3', 'Mùa đông', '2026-04-01', '2026-06-23', '', 0);
 
 -- --------------------------------------------------------
 
