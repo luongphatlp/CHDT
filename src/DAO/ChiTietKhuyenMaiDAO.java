@@ -1,6 +1,7 @@
 
 package DAO;
 import DTO.ChiTietKhuyenMaiDTO;
+import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
 import database.Connect;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class ChiTietKhuyenMaiDAO {
     public int insert(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram) VALUES (?,?,?)";
+            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram,TinhTrang) VALUES (?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++,km.getMaKM());
@@ -99,5 +100,16 @@ public class ChiTietKhuyenMaiDAO {
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);            
         }
         return result;
+    }
+    public void updatePhanTramGiam(int phantram,String makm){
+        try(Connection conn=Connect.getConnection()){
+            String qry="UPDATE chitietkhuyenmai SET PhanTram=? WHERE MaKhuyenMai=?";
+            PreparedStatement pt=conn.prepareStatement(qry);
+            pt.setInt(1,phantram);
+            pt.setString(2,makm);
+            pt.executeUpdate();
+        }catch(SQLException ex){
+            System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 }

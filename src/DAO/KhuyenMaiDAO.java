@@ -16,7 +16,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
     public int insert(KhuyenMaiDTO km){   
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES (?,?,?,?,?)";
+            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES (?,?,?,?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++,km.getMa());
@@ -24,6 +24,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
             st.setString(index++,km.getNgayBD());
             st.setString(index++, km.getNgayKT());
             st.setString(index++, km.getGhiChu());
+            st.setBoolean(index++,km.getTinhTrang());
             result= st.executeUpdate();
         }catch (SQLException ex) {
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -48,7 +49,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
     public int update(KhuyenMaiDTO km){
         int result=0; 
         try(Connection conn=Connect.getConnection()) {
-            String qry="Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=? WHERE Ma=?";
+            String qry="Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=?,TinhTrang=? WHERE Ma=?";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++, km.getTen());
@@ -56,6 +57,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
             st.setString(index++, km.getNgayKT());
             st.setString(index++, km.getGhiChu());
             st.setString(index++, km.getMa());
+            st.setBoolean(index++,km.getTinhTrang());
             result=st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -76,6 +78,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO>{
                 km.setNgayBD(rs.getString(3));
                 km.setNgayKT(rs.getString(4));
                 km.setGhiChu(rs.getString(5));
+                km.setTinhTrang(rs.getBoolean(6));
                 ds.add(km);
             }
         }catch(SQLException ex) {
