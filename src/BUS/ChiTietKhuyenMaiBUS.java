@@ -36,4 +36,7 @@ public class ChiTietKhuyenMaiBUS {
     public void update(ChiTietKhuyenMaiDTO km){
         dao.update(km);
     }
+    public void updatePhanTramGiam(int phantram,String makm){
+        dao.updatePhanTramGiam(phantram, makm);
+    }
 }

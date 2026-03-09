@@ -1,6 +1,7 @@
 
 package DAO;
 import DTO.ChiTietKhuyenMaiDTO;
+import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
 import database.Connect;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class ChiTietKhuyenMaiDAO {
     public int insert(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram) VALUES (?,?,?)";
+            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram,TinhTrang) VALUES (?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++,km.getMaKM());
@@ -30,17 +31,18 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectAll(){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
+            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qty);
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString(1));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString(2));
-                sp.setTen(rs.getString(3));
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTen(rs.getString("Ten"));
+                sp.setDonGia(rs.getString("DonGia"));
                 km.setSanPham(sp);
-                km.setPhanTram(rs.getInt(4));
+                km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
             }
         }catch(SQLException ex){
@@ -51,18 +53,19 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectByMaKM(String ma){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
+            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
             PreparedStatement st=conn.prepareStatement(qry);
             st.setString(1,ma);
             ResultSet rs=st.executeQuery();
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString(1));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString(2));
-                sp.setTen(rs.getString(3));
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTen(rs.getString("Ten"));
+                sp.setDonGia(rs.getString("DonGia"));
                 km.setSanPham(sp);
-                km.setPhanTram(rs.getInt(4));
+                km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
             }
         }catch(SQLException ex){
@@ -97,5 +100,16 @@ public class ChiTietKhuyenMaiDAO {
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);            
         }
         return result;
+    }
+    public void updatePhanTramGiam(int phantram,String makm){
+        try(Connection conn=Connect.getConnection()){
+            String qry="UPDATE chitietkhuyenmai SET PhanTram=? WHERE MaKhuyenMai=?";
+            PreparedStatement pt=conn.prepareStatement(qry);
+            pt.setInt(1,phantram);
+            pt.setString(2,makm);
+            pt.executeUpdate();
+        }catch(SQLException ex){
+            System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 }

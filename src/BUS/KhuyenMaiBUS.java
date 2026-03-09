@@ -32,4 +32,17 @@ public class KhuyenMaiBUS {
     public void update(KhuyenMaiDTO km){
         dao.update(km);
     }
+    public ArrayList<String> getDSMaKMHoatDong() {
+    ArrayList<String> dsMa = new ArrayList<>();
+    ArrayList<KhuyenMaiDTO> dsAll = kmDAO.getList(); // Giả sử bạn đã có hàm getList() lấy tất cả
+    
+    for (KhuyenMaiDTO km : dsAll) {
+        // Kiểm tra TinhTrang = 1 (Hoạt động)
+        // Bạn có thể thêm điều kiện kiểm tra ngày hệ thống nằm trong khoảng NgayBatDau và NgayKetThuc
+        if (km.getTinhTrang() == 1) { 
+            dsMa.add(km.getMa());
+        }
+    }
+    return dsMa;
+}
 }

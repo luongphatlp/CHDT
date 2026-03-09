@@ -3,6 +3,7 @@ public class ChiTietKhuyenMaiDTO {
     private String makm;
     private SanPhamDTO sanpham;
     private int phantram;
+
     
     public ChiTietKhuyenMaiDTO(){}
     public ChiTietKhuyenMaiDTO(String makm,SanPhamDTO sanpham,int phantram){
@@ -23,4 +24,6 @@ public class ChiTietKhuyenMaiDTO {
     
     public int getPhanTram(){return phantram;}
     public void setPhanTram(int phantram){this.phantram=phantram;}
+    
+
 }

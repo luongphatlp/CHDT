@@ -1,6 +1,7 @@
 package GUI;
 
 import BUS.HoaDonBUS;
+import BUS.KhuyenMaiBUS;
 import DAO.HoaDonDAO;
 import DTO.DienThoaiDTO;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
-
+        loadMaKhuyenMaiToCombo();
         String maHD = generateRandomHD();
         jLabel3.setText("Mã hóa đơn: " + maHD);
 
@@ -354,7 +355,22 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void loadMaKhuyenMaiToCombo() {
+        // 1. Khởi tạo BUS
+        KhuyenMaiBUS kmBus = new KhuyenMaiBUS();
 
+        // 2. Lấy danh sách mã đang hoạt động
+        ArrayList<String> dsMaKM = kmBus.getDSMaKMHoatDong();
+
+        // 3. Xóa dữ liệu cũ trong ComboBox
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Chọn mã giảm giá"); // Mục mặc định
+
+        // 4. Đổ dữ liệu mới vào
+        for (String ma : dsMaKM) {
+            jComboBox1.addItem(ma);
+        }
+    }
     private void btnThanhToanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThanhToanMouseClicked
         if (jTable2.getRowCount() == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Giỏ hàng trống!");
@@ -383,7 +399,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         String tongTien = jLabel11.getText();
         String maHD = jLabel3.getText().replace("Mã hóa đơn: ", "");
         // Gọi Dialog với đầy đủ tham số
-        XacNhanTTUI xn = new XacNhanTTUI(new javax.swing.JFrame(), true, model, tongTien, pttt,maHD);
+        XacNhanTTUI xn = new XacNhanTTUI(new javax.swing.JFrame(), true, model, tongTien, pttt, maHD);
         xn.setVisible(true);
 
         if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {

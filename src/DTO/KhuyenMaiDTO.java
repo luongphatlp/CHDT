@@ -2,16 +2,18 @@ package DTO;
 import java.util.ArrayList;
 public class KhuyenMaiDTO {
     private String ma,ten,ngaybd,ngaykt,ghichu;
+    private boolean tinhtrang;
     
     
     public KhuyenMaiDTO(){}
     
-    public KhuyenMaiDTO(String ma,String ten,String ngaybd,String ngaykt,String ghichu,ArrayList<ChiTietKhuyenMaiDTO> ctkm){
+    public KhuyenMaiDTO(String ma,String ten,String ngaybd,String ngaykt,String ghichu,Boolean tinhtrang){
         this.ma=ma;
         this.ten=ten;
         this.ngaybd=ngaybd;
         this.ngaykt=ngaykt;
         this.ghichu=ghichu;
+        this.tinhtrang=tinhtrang;
     }
     
     public KhuyenMaiDTO(KhuyenMaiDTO km){
@@ -19,7 +21,8 @@ public class KhuyenMaiDTO {
         this.ten=km.ten;
         this.ngaybd=km.ngaybd;
         this.ngaykt=km.ngaykt;
-        this.ghichu=km.ghichu;   
+        this.ghichu=km.ghichu;  
+        this.tinhtrang=km.tinhtrang;
     }
     
     public String getMa() {return ma;}
@@ -36,5 +39,8 @@ public class KhuyenMaiDTO {
 
     public String getGhiChu() {return ghichu;}
     public void setGhiChu(String ghichu) {this.ghichu = ghichu;}
+    
+    public boolean getTinhTrang(){return tinhtrang;}
+    public void setTinhTrang(boolean tinhtrang){this.tinhtrang=tinhtrang;}
     
 }
