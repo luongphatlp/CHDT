@@ -73,7 +73,6 @@ public class HomeUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         jPanel1.setForeground(new java.awt.Color(0, 51, 102));
         jPanel1.setOpaque(false);
@@ -593,9 +592,9 @@ public class HomeUI extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(1710, 1080));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        PanelMenu.setkEndColor(new java.awt.Color(142, 122, 188));
+        PanelMenu.setkEndColor(new java.awt.Color(51, 153, 255));
         PanelMenu.setkGradientFocus(1000);
-        PanelMenu.setkStartColor(new java.awt.Color(75, 47, 141));
+        PanelMenu.setkStartColor(new java.awt.Color(107, 85, 208));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/3.png"))); // NOI18N
 
@@ -610,12 +609,12 @@ public class HomeUI extends javax.swing.JFrame {
             .addGroup(PanelMenuLayout.createSequentialGroup()
                 .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelMenuLayout.createSequentialGroup()
-                        .addGap(471, 471, 471)
+                        .addGap(498, 498, 498)
                         .addComponent(jLabel1))
                     .addGroup(PanelMenuLayout.createSequentialGroup()
                         .addGap(660, 660, 660)
                         .addComponent(jLabel2)))
-                .addContainerGap(746, Short.MAX_VALUE))
+                .addContainerGap(719, Short.MAX_VALUE))
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,7 +623,7 @@ public class HomeUI extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(429, Short.MAX_VALUE))
         );
 
         jPanel4.add(PanelMenu, java.awt.BorderLayout.CENTER);

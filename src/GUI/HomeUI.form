@@ -102,9 +102,9 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="SP" max="32767" attributes="0"/>
-                      <Component id="NCC" alignment="0" pref="214" max="32767" attributes="0"/>
+                      <Component id="NCC" alignment="0" pref="219" max="32767" attributes="0"/>
                       <Component id="NH" alignment="0" max="32767" attributes="0"/>
-                      <Component id="PN" alignment="0" pref="214" max="32767" attributes="0"/>
+                      <Component id="PN" alignment="0" pref="219" max="32767" attributes="0"/>
                       <Component id="NV" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -119,16 +119,16 @@
                                           <Component id="jSeparator1" min="-2" pref="174" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="HD" alignment="0" pref="202" max="32767" attributes="0"/>
+                                      <Component id="HD" alignment="0" pref="207" max="32767" attributes="0"/>
                                       <Component id="THHD" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="KM" alignment="0" pref="202" max="32767" attributes="0"/>
+                                      <Component id="KM" alignment="0" pref="207" max="32767" attributes="0"/>
                                       <Component id="BH" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="pnTK" alignment="0" pref="202" max="32767" attributes="0"/>
+                                      <Component id="pnTK" alignment="0" pref="207" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jButton10" alignment="1" max="32767" attributes="0"/>
@@ -181,7 +181,7 @@
                           <Component id="pnTK" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="NV" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="235" max="32767" attributes="0"/>
+                          <EmptySpace pref="238" max="32767" attributes="0"/>
                           <Component id="jSeparator2" min="-2" pref="11" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton10" min="-2" max="-2" attributes="0"/>
@@ -622,7 +622,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="khuyenmai" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -727,7 +727,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="thongke" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -848,11 +848,11 @@
                 <Container class="keeptoo.KGradientPanel" name="PanelMenu">
                   <Properties>
                     <Property name="kEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="bc" green="7a" red="8e" type="rgb"/>
+                      <Color blue="ff" green="99" red="33" type="rgb"/>
                     </Property>
                     <Property name="kGradientFocus" type="int" value="1000"/>
                     <Property name="kStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="8d" green="2f" red="4b" type="rgb"/>
+                      <Color blue="d0" green="55" red="6b" type="rgb"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -867,7 +867,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="471" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="498" max="-2" attributes="0"/>
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -875,7 +875,7 @@
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="746" max="32767" attributes="0"/>
+                              <EmptySpace pref="719" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -886,7 +886,7 @@
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="423" max="32767" attributes="0"/>
+                              <EmptySpace pref="429" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
