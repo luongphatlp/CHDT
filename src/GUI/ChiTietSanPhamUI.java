@@ -318,9 +318,7 @@ public class ChiTietSanPhamUI extends javax.swing.JDialog {
                         .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jTextField12)
                         .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel17)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                        .addComponent(jLabel17)))
                 .addGap(17, 17, 17))
         );
         jPanel3Layout.setVerticalGroup(
