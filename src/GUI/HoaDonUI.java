@@ -1,9 +1,11 @@
 package GUI;
 
+import BUS.ChiTietKhuyenMaiBUS;
 import BUS.HoaDonBUS;
 import BUS.KhuyenMaiBUS;
 import DAO.HoaDonDAO;
 import DTO.DienThoaiDTO;
+import DTO.KhuyenMaiDTO;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,7 +19,11 @@ public class HoaDonUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
-        //loadMaKhuyenMaiToCombo();
+        try {
+            loadMaKhuyenMaiToCombo(); // Gọi hàm đổ dữ liệu vào JComboBox
+        } catch (Exception e) {
+            System.out.println("Lỗi load khuyến mãi: " + e.getMessage());
+        }
         String maHD = generateRandomHD();
         jLabel3.setText("Mã hóa đơn: " + maHD);
 
@@ -209,6 +215,11 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel11.setText("0");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jSpinner1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
 
@@ -355,22 +366,50 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-//    private void loadMaKhuyenMaiToCombo() {
-//        // 1. Khởi tạo BUS
-//        KhuyenMaiBUS kmBus = new KhuyenMaiBUS();
-//
-//        // 2. Lấy danh sách mã đang hoạt động
-//        //ArrayList<String> dsMaKM = kmBus.getDSMaKMHoatDong();
-//
-//        // 3. Xóa dữ liệu cũ trong ComboBox
-//        jComboBox1.removeAllItems();
-//        jComboBox1.addItem("Chọn mã giảm giá"); // Mục mặc định
-//
-//        // 4. Đổ dữ liệu mới vào
-//        for (String ma : dsMaKM) {
-//            jComboBox1.addItem(ma);
-//        }
-//    }
+    private void capNhatGiaTheoKhuyenMai() {
+        String maKMSelected = jComboBox1.getSelectedItem().toString();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        ChiTietKhuyenMaiBUS ctkmBus = new ChiTietKhuyenMaiBUS();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String maSP = model.getValueAt(i, 0).toString(); // Giả sử cột 0 là Mã SP
+            int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString()); // Cột 2 là Số lượng
+            int donGiaGoc = Integer.parseInt(model.getValueAt(i, 3).toString()); // Cột 3 là Đơn giá
+
+            int phanTramGiam = 0;
+            if (!maKMSelected.equals("Không áp dụng")) {
+                phanTramGiam = ctkmBus.getPhanTramGiamGia(maKMSelected, maSP);
+            }
+
+            // Tính toán thành tiền mới: (Đơn giá * Số lượng) * (100 - % giảm) / 100
+            int thanhTienMoi = (donGiaGoc * soLuong) * (100 - phanTramGiam) / 100;
+
+            // Cập nhật lại cột Thành tiền (giả sử là cột 4)
+            model.setValueAt(thanhTienMoi, i, 4);
+        }
+
+        // Đừng quên gọi hàm tính tổng tiền cuối cùng của hóa đơn sau khi cập nhật bảng
+        // tinhTongTienHoaDon(); 
+    }
+
+    private void loadMaKhuyenMaiToCombo() {
+        KhuyenMaiBUS kmBus = new KhuyenMaiBUS();
+        ArrayList<KhuyenMaiDTO> listKM = kmBus.getDSKMHoatDong();
+
+        // Tạm thời tắt sự kiện để tránh việc ComboBox bị trống gây lỗi
+        // jComboBox1.removeActionListener(jComboBox1.getActionListeners()[0]); 
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Không áp dụng");
+
+        if (listKM != null && !listKM.isEmpty()) {
+            for (KhuyenMaiDTO km : listKM) {
+                jComboBox1.addItem(km.getMa());
+            }
+        }
+
+        // Set mặc định chọn cái đầu tiên (Không áp dụng)
+        jComboBox1.setSelectedIndex(0);
+    }
     private void btnThanhToanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThanhToanMouseClicked
         if (jTable2.getRowCount() == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Giỏ hàng trống!");
@@ -394,19 +433,49 @@ public class HoaDonUI extends javax.swing.JPanel {
             return;
         }
 
+        // 1. Lấy mã khuyến mãi đang được chọn từ jComboBox1
+        // Thêm kiểm tra null để tránh lỗi nếu ComboBox trống
+        String maKM = "";
+        if (jComboBox1.getSelectedItem() != null) {
+            maKM = jComboBox1.getSelectedItem().toString();
+        } else {
+            maKM = "Không có";
+        }
+
         // Lấy dữ liệu bảng và tổng tiền
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
         String tongTien = jLabel11.getText();
         String maHD = jLabel3.getText().replace("Mã hóa đơn: ", "");
-        // Gọi Dialog với đầy đủ tham số
-        XacNhanTTUI xn = new XacNhanTTUI(new javax.swing.JFrame(), true, model, tongTien, pttt, maHD);
+
+        // 2. Gọi Dialog với đầy đủ tham số (đã thêm maKM vào cuối)
+        XacNhanTTUI xn = new XacNhanTTUI(
+                (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this),
+                true,
+                model,
+                tongTien,
+                pttt,
+                maHD,
+                maKM
+        );
+
         xn.setVisible(true);
 
         if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {
             // Clear giỏ hàng sau khi xác nhận thành công
             model.setRowCount(0);
             jLabel11.setText("0");
-            buttonGroup1.clearSelection(); // Bỏ chọn các checkbox
+
+            // Reset ComboBox về trạng thái ban đầu (nếu cần)
+            if (jComboBox1.getItemCount() > 0) {
+                jComboBox1.setSelectedIndex(0);
+            }
+
+            // Bỏ chọn các checkbox (Nếu bạn dùng ButtonGroup cho CheckBox)
+            jCheckBox2.setSelected(false);
+            jCheckBox3.setSelected(false);
+            jCheckBox4.setSelected(false);
+            jCheckBox5.setSelected(false);
+
             javax.swing.JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
         }
 
@@ -531,6 +600,16 @@ public class HoaDonUI extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "Đã xóa sản phẩm khỏi giỏ hàng.");
         }
     }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        if (jComboBox1.getSelectedItem() == null) {
+            return;
+        }
+
+        // Sau khi kiểm tra an toàn mới gọi logic giảm giá
+        capNhatGiaTheoKhuyenMai();
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
     private String generateRandomHD() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb = new StringBuilder("HD");
