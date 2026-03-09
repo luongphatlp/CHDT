@@ -360,7 +360,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         KhuyenMaiBUS kmBus = new KhuyenMaiBUS();
 
         // 2. Lấy danh sách mã đang hoạt động
-        ArrayList<String> dsMaKM = kmBus.getDSMaKMHoatDong();
+        //ArrayList<String> dsMaKM = kmBus.getDSMaKMHoatDong();
 
         // 3. Xóa dữ liệu cũ trong ComboBox
         jComboBox1.removeAllItems();
