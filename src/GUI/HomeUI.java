@@ -12,7 +12,6 @@ public class HomeUI extends javax.swing.JFrame {
     Color DefaultColor, ClickColor;
 
     public HomeUI() {
-        com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme.setup();
         initComponents();
 
         jPanel3.setLayout(new java.awt.BorderLayout());
