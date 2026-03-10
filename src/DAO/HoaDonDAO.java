@@ -45,7 +45,7 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
         ArrayList<DienThoaiDTO> ds = new ArrayList<>();
         Connection con = new Connect().getConnection();
         String sql = "SELECT Ma, Ten, SoLuong, DonGia FROM dienthoai";
-        System.out.println("Connection: " + con);
+        //System.out.println("Connection: " + con);
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

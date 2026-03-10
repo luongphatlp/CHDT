@@ -999,8 +999,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         int row = bangkhuyenmai.getSelectedRow();
         if(row>=0){
             chonsanphamdialog.setSize(600,400);
-         chonsanphamdialog.setLocation(300,200);
-         chonsanphamdialog.setVisible(true);
+            chonsanphamdialog.setLocation(300,200);
+            chonsanphamdialog.setVisible(true);
             String ma=bangkhuyenmai.getValueAt(row, 0).toString();
             veBangChonSanPhamKhuyenMai(ma);
         }

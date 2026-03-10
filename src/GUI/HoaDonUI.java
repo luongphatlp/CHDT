@@ -20,7 +20,7 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         initComponents();
         try {
-            loadMaKhuyenMaiToCombo(); // Gọi hàm đổ dữ liệu vào JComboBox
+                loadMaKhuyenMaiToCombo(); // Gọi hàm đổ dữ liệu vào JComboBox
         } catch (Exception e) {
             System.out.println("Lỗi load khuyến mãi: " + e.getMessage());
         }
@@ -29,7 +29,11 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         HoaDonDAO a = new HoaDonDAO();
         ArrayList<DienThoaiDTO> list = a.selectAllDienThoai();
-
+jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatTongTienVoiKhuyenMai();
+    }
+});
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for (DienThoaiDTO dt : list) {
@@ -65,7 +69,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
         btnThanhToan = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
@@ -174,10 +177,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 29)); // NOI18N
         jLabel5.setText("TỔNG TIỀN HÓA ĐƠN");
 
-        jLabel7.setBackground(new java.awt.Color(51, 255, 51));
-        jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 29)); // NOI18N
-        jLabel7.setText("đ");
-
         btnThanhToan.setBackground(new java.awt.Color(0, 153, 153));
         btnThanhToan.setFont(new java.awt.Font("Roboto Lt", 1, 21)); // NOI18N
         btnThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -285,9 +284,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(180, 180, 180)
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7))
+                                        .addComponent(jLabel11))
                                     .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -337,7 +334,6 @@ public class HoaDonUI extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7)
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,7 +374,7 @@ public class HoaDonUI extends javax.swing.JPanel {
 
             int phanTramGiam = 0;
             if (!maKMSelected.equals("Không áp dụng")) {
-                phanTramGiam = ctkmBus.getPhanTramGiamGia(maKMSelected, maSP);
+                phanTramGiam = ctkmBus.layPhanTramGiam(maKMSelected, maSP);
             }
 
             // Tính toán thành tiền mới: (Đơn giá * Số lượng) * (100 - % giảm) / 100
@@ -390,6 +386,98 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         // Đừng quên gọi hàm tính tổng tiền cuối cùng của hóa đơn sau khi cập nhật bảng
         // tinhTongTienHoaDon(); 
+    }
+    private void capNhatTongTienVoiKhuyenMai() {
+    // 1. Lấy mã khuyến mãi đang chọn
+    Object selectedItem = jComboBox1.getSelectedItem();
+    if (selectedItem == null) return;
+    String maKM = selectedItem.toString();
+
+    // 2. Khởi tạo BUS để kiểm tra mức giảm giá của từng sản phẩm
+    BUS.ChiTietKhuyenMaiBUS ctkmBUS = new BUS.ChiTietKhuyenMaiBUS();
+    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+    
+    long tongTienSauGiam = 0;
+
+    // 3. Duyệt qua từng dòng trong giỏ hàng (jTable2)
+    for (int i = 0; i < model.getRowCount(); i++) {
+        try {
+            // Lấy Mã SP (Cột 0), Số lượng (Cột 2), Đơn giá (Cột 3)
+            String maSP = model.getValueAt(i, 0).toString().trim();
+            int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString().replaceAll("[^0-9]", ""));
+            long donGia = Long.parseLong(model.getValueAt(i, 3).toString().replaceAll("[^0-9]", ""));
+
+            // 4. Lấy % giảm giá cho sản phẩm này từ mã KM tương ứng
+            int phanTramGiam = 0;
+            if (!maKM.equals("Không áp dụng") && !maKM.equals("Chọn mã KM")) {
+                phanTramGiam = ctkmBUS.layPhanTramGiam(maKM, maSP);
+            }
+
+            // 5. Tính thành tiền cho dòng này sau khi giảm giá
+            long thanhTienSauGiam = (donGia * soLuong) * (100 - phanTramGiam) / 100;
+            
+            // 6. Cộng dồn vào tổng hóa đơn
+            tongTienSauGiam += thanhTienSauGiam;
+
+        } catch (Exception e) {
+            System.err.println("Lỗi xử lý dòng " + i + ": " + e.getMessage());
+        }
+    }
+
+    // 7. Hiển thị tổng tiền mới lên jLabel11
+    jLabel11.setText(String.format("%,dđ", tongTienSauGiam));
+}
+    private void capNhatThanhTienTheoKhuyenMai() {
+        if (jComboBox1.getSelectedItem() == null) {
+            return;
+        }
+        String maKMSelected = jComboBox1.getSelectedItem().toString();
+
+        BUS.ChiTietKhuyenMaiBUS ctkmBUS = new BUS.ChiTietKhuyenMaiBUS();
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+
+        long tongTienMoi = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            try {
+                // Lấy dữ liệu an toàn (Dùng trim() để tránh lỗi khoảng trắng)
+                String maSP = model.getValueAt(i, 0).toString().trim();
+
+                // Lấy Đơn giá (thường ở cột cuối hoặc gần cuối)
+                // Bạn hãy kiểm tra lại: nếu Đơn giá ở cột 3 thì để là 3
+                String strDonGia = model.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
+                String strSoLuong = model.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
+
+                if (strDonGia.isEmpty() || strSoLuong.isEmpty()) {
+                    continue;
+                }
+
+                long donGiaGoc = Long.parseLong(strDonGia);
+                int soLuong = Integer.parseInt(strSoLuong);
+
+                int phanTramGiam = 0;
+                if (!maKMSelected.equals("Không áp dụng") && !maKMSelected.equals("Chọn mã KM")) {
+                    phanTramGiam = ctkmBUS.layPhanTramGiam(maKMSelected, maSP);
+                }
+
+                long thanhTienDong = (donGiaGoc * soLuong) * (100 - phanTramGiam) / 100;
+
+                // QUAN TRỌNG: Kiểm tra nếu bảng có cột Thành tiền (cột index 4) thì mới ghi vào
+                if (model.getColumnCount() > 4) {
+                    model.setValueAt(thanhTienDong + "đ", i, 4);
+                }
+
+                tongTienMoi += thanhTienDong;
+
+            } catch (Exception e) {
+                // In ra lỗi chi tiết để biết chính xác cột nào bị thiếu
+                System.err.println("Lỗi tại dòng " + i + ": " + e.getMessage());
+            }
+        }
+
+        // Cập nhật nhãn tổng tiền
+        jLabel11.setText(tongTienMoi + "đ");
+
     }
 
     private void loadMaKhuyenMaiToCombo() {
@@ -602,13 +690,9 @@ public class HoaDonUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        // TODO add your handling code here:
-        if (jComboBox1.getSelectedItem() == null) {
-            return;
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            capNhatThanhTienTheoKhuyenMai();
         }
-
-        // Sau khi kiểm tra an toàn mới gọi logic giảm giá
-        capNhatGiaTheoKhuyenMai();
     }//GEN-LAST:event_jComboBox1ItemStateChanged
     private String generateRandomHD() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -641,7 +725,6 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

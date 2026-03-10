@@ -49,13 +49,16 @@ public class ChiTietKhuyenMaiBUS {
         dao.updatePhanTramGiam(phantram, makm);
     }
 
-    public int getPhanTramGiamGia(String maKM, String maSP) {
-        ArrayList<ChiTietKhuyenMaiDTO> danhSach = docDSTheoMaKM(maKM);
-        for (ChiTietKhuyenMaiDTO ct : danhSach) {
-            if (ct.getSanPham().getMaSP().equals(maSP)) {
-                return ct.getPhanTram();
+    public int layPhanTramGiam(String maKM, String maSP) {
+        ArrayList<ChiTietKhuyenMaiDTO> dsCT = dao.selectByMaKM(maKM);
+        if (dsCT != null) {
+            for (ChiTietKhuyenMaiDTO ct : dsCT) {
+                if (ct.getSanPham().getMaSP().trim().equalsIgnoreCase(maSP.trim())) {
+                    System.out.println("-> Tìm thấy KM cho " + maSP + ": " + ct.getPhanTram() + "%");
+                    return ct.getPhanTram();
+                }
             }
         }
-        return 0; // Không tìm thấy sản phẩm trong danh mục giảm giá
+        return 0;
     }
 }
