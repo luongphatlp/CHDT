@@ -8,8 +8,13 @@ import BUS.ThongKeDoanhThuBUS;
 import BUS.ThongKeSanPhamBUS;
 import DTO.ThongKeDoanhThuDTO;
 import DTO.ThongKeSanPhamDTO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import java.lang.Object;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -204,6 +210,7 @@ public class ThongKeUI extends javax.swing.JPanel {
         a = new javax.swing.JScrollPane();
         pnbieudo = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
+        filechoosepdf = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -262,15 +269,16 @@ public class ThongKeUI extends javax.swing.JPanel {
         pnbieudo.setLayout(pnbieudoLayout);
         pnbieudoLayout.setHorizontalGroup(
             pnbieudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1305, Short.MAX_VALUE)
+            .addGap(0, 1306, Short.MAX_VALUE)
         );
         pnbieudoLayout.setVerticalGroup(
             pnbieudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 794, Short.MAX_VALUE)
+            .addGap(0, 1026, Short.MAX_VALUE)
         );
 
         a.setViewportView(pnbieudo);
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pdf (1).png"))); // NOI18N
         jButton4.setText("Xuất PDF");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,6 +295,8 @@ public class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(a, javax.swing.GroupLayout.PREFERRED_SIZE, 1292, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(bieudodialogLayout.createSequentialGroup()
                 .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(filechoosepdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         bieudodialogLayout.setVerticalGroup(
@@ -295,8 +305,10 @@ public class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(a, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(bieudodialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(filechoosepdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -735,6 +747,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
         jButton3.setText("Xuất Excel");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -842,7 +855,7 @@ public class ThongKeUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1162, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1162, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -894,7 +907,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             veBangThongKeDoanhThu("Ngày",ds);
             veBieuDo(1,ds);
         }else if(ngay.equals("Tháng")){
-            int nam=Integer.parseInt(txtnam.getText());
+            int nam=Integer.parseInt(txtnam.getText().trim());
             if(txtnam.getText() == null){
                 txtnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             }
@@ -929,7 +942,8 @@ public class ThongKeUI extends javax.swing.JPanel {
 
     private void btnbieudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbieudoActionPerformed
         // TODO add your handling code here:
-        bieudodialog.setSize(1300,800);
+        filechoosepdf.setVisible(false);
+        bieudodialog.setSize(1300,1000);
         bieudodialog.setVisible(true);
     }//GEN-LAST:event_btnbieudoActionPerformed
 
@@ -961,8 +975,48 @@ public class ThongKeUI extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    public void xuatPDFBieuDo(JFreeChart chart, String path){
+
+        try{
+
+            Document document = new Document(com.itextpdf.text.PageSize.A1);
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+
+            document.open();
+
+            BufferedImage chartImage = chart.createBufferedImage(1000,800);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(chartImage,"png",baos);
+
+            Image img = Image.getInstance(baos.toByteArray());
+
+            document.add(img);
+
+            document.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        ChartPanel chartPanel = (ChartPanel) pnbieudo.getComponent(0);
+        JFreeChart chart = chartPanel.getChart();
+        filechoosepdf.setVisible(true);
+        int result = filechoosepdf.showSaveDialog(null);
+
+    if(result == JFileChooser.APPROVE_OPTION){
+
+        File file = filechoosepdf.getSelectedFile();
+
+        String path = file.getAbsolutePath() + ".pdf";
+
+        xuatPDFBieuDo(chart,path);
+
+        JOptionPane.showMessageDialog(null,"Xuất PDF thành công");
+    }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     
@@ -983,6 +1037,7 @@ public static void main(String args[]) {
     private com.toedter.calendar.JDateChooser chtungay;
     private com.toedter.calendar.JDateChooser chtungaydoanhthu;
     private javax.swing.JFileChooser filechooseexcel;
+    private javax.swing.JFileChooser filechoosepdf;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
