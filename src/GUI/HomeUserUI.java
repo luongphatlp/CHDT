@@ -1,5 +1,7 @@
 package GUI;
 
+import DTO.NhanVienDTO;
+import static com.mysql.cj.conf.PropertyKey.logger;
 import java.awt.Color;
 
 /**
@@ -9,7 +11,6 @@ import java.awt.Color;
 public class HomeUserUI extends javax.swing.JFrame {
 
     Color DefaultColor, ClickColor;
-    private static final java.util.logging.Logger logger =java.util.logging.Logger.getLogger(HomeUI.class.getName());
 
     public HomeUserUI() {
         com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme.setup();
@@ -39,10 +40,10 @@ public class HomeUserUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
+        btnSuaThongTin = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton14 = new javax.swing.JButton();
+        btnDangXuat = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         SP = new javax.swing.JPanel();
         sanpham = new javax.swing.JButton();
@@ -58,7 +59,7 @@ public class HomeUserUI extends javax.swing.JFrame {
         thhoadon = new javax.swing.JButton();
         BH = new javax.swing.JPanel();
         baohanh = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnXemTTCN = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         PanelMenu = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -66,7 +67,6 @@ public class HomeUserUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1710, 1080));
 
         jPanel1.setForeground(new java.awt.Color(0, 51, 102));
         jPanel1.setOpaque(false);
@@ -79,20 +79,20 @@ public class HomeUserUI extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(232, 247, 250));
         jPanel2.setPreferredSize(new java.awt.Dimension(210, 1080));
 
-        jButton9.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(236, 240, 241));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        jButton9.setText("Sửa thông tin");
-        jButton9.setBorderPainted(false);
-        jButton9.setContentAreaFilled(false);
-        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSuaThongTin.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        btnSuaThongTin.setForeground(new java.awt.Color(236, 240, 241));
+        btnSuaThongTin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        btnSuaThongTin.setText("Sửa thông tin");
+        btnSuaThongTin.setBorderPainted(false);
+        btnSuaThongTin.setContentAreaFilled(false);
+        btnSuaThongTin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton9MouseClicked(evt);
+                btnSuaThongTinMouseClicked(evt);
             }
         });
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnSuaThongTin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnSuaThongTinActionPerformed(evt);
             }
         });
 
@@ -112,20 +112,20 @@ public class HomeUserUI extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(236, 240, 241));
         jSeparator1.setForeground(new java.awt.Color(236, 240, 241));
 
-        jButton14.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(236, 240, 241));
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logout.png"))); // NOI18N
-        jButton14.setText("Đăng xuất");
-        jButton14.setBorderPainted(false);
-        jButton14.setContentAreaFilled(false);
-        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDangXuat.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        btnDangXuat.setForeground(new java.awt.Color(236, 240, 241));
+        btnDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logout.png"))); // NOI18N
+        btnDangXuat.setText("Đăng xuất");
+        btnDangXuat.setBorderPainted(false);
+        btnDangXuat.setContentAreaFilled(false);
+        btnDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton14MouseClicked(evt);
+                btnDangXuatMouseClicked(evt);
             }
         });
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                btnDangXuatActionPerformed(evt);
             }
         });
 
@@ -199,7 +199,7 @@ public class HomeUserUI extends javax.swing.JFrame {
             .addGroup(NCCLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nhacungcap)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         NH.setBackground(new java.awt.Color(61, 67, 78));
@@ -269,7 +269,7 @@ public class HomeUserUI extends javax.swing.JFrame {
             .addGroup(PNLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(phieunhap)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         HD.setBackground(new java.awt.Color(61, 67, 78));
@@ -304,7 +304,7 @@ public class HomeUserUI extends javax.swing.JFrame {
         HDLayout.setVerticalGroup(
             HDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HDLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addComponent(hoadon)
                 .addContainerGap())
         );
@@ -376,20 +376,20 @@ public class HomeUserUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton10.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(236, 240, 241));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user (4).png"))); // NOI18N
-        jButton10.setText(" Xem thông tin");
-        jButton10.setBorderPainted(false);
-        jButton10.setContentAreaFilled(false);
-        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnXemTTCN.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        btnXemTTCN.setForeground(new java.awt.Color(236, 240, 241));
+        btnXemTTCN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user (4).png"))); // NOI18N
+        btnXemTTCN.setText(" Xem thông tin");
+        btnXemTTCN.setBorderPainted(false);
+        btnXemTTCN.setContentAreaFilled(false);
+        btnXemTTCN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton10MouseClicked(evt);
+                btnXemTTCNMouseClicked(evt);
             }
         });
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnXemTTCN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnXemTTCNActionPerformed(evt);
             }
         });
 
@@ -398,9 +398,9 @@ public class HomeUserUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(NCC, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+            .addComponent(NCC, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
             .addComponent(NH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PN, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+            .addComponent(PN, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -415,10 +415,10 @@ public class HomeUserUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(HD, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                            .addComponent(HD, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                             .addComponent(THHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnXemTTCN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -427,10 +427,10 @@ public class HomeUserUI extends javax.swing.JFrame {
                         .addComponent(jSeparator2)
                         .addGap(8, 8, 8))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton9)
+                        .addComponent(btnSuaThongTin)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton14)
+                        .addComponent(btnDangXuat)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -454,14 +454,14 @@ public class HomeUserUI extends javax.swing.JFrame {
                 .addComponent(THHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton10)
+                .addComponent(btnXemTTCN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
+                .addComponent(btnSuaThongTin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton14)
+                .addComponent(btnDangXuat)
                 .addGap(51, 51, 51))
         );
 
@@ -545,17 +545,39 @@ public class HomeUserUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_baohanhActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void btnSuaThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThongTinActionPerformed
+            // TODO add your handling code here:
+             DTO.TaiKhoanSession.capnhat();
+        
+        NhanVienUI nvGUI = new NhanVienUI();
+        NhanVienDTO nvDN = DTO.TaiKhoanSession.nvDangNhap;
+        
+        SuaNhanVienUI suaForm = new SuaNhanVienUI();
+        
+        String ma = nvDN.getMaNV();
+        String hoten = nvDN.getHotenNV();
+        String email = nvDN.getEmailNV();
+        java.util.Date ns = nvDN.getNgaySinh();
+        String cv = nvDN.getChucVu();
+        String tk = nvDN.getTaiKhoan();
+        String mk = nvDN.getMatKhau();
+        
+        suaForm.setThongTin(ma, hoten, email, ns, cv, tk, mk, tk);
+        
+        suaForm.quyenAmdin(false);
+        
+        suaForm.setVisible(true);
+        suaForm.setLocationRelativeTo(null);
+        
+    }//GEN-LAST:event_btnSuaThongTinActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void sanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sanphamMouseClicked
         SP.setBackground(ClickColor);
@@ -712,27 +734,33 @@ public class HomeUserUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_hoadonActionPerformed
 
-    private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
+    private void btnSuaThongTinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaThongTinMouseClicked
         // TODO add your handling code here:
         SuaThongTinUI s = new SuaThongTinUI();
         s.setVisible(true);
         
-    }//GEN-LAST:event_jButton9MouseClicked
+    }//GEN-LAST:event_btnSuaThongTinMouseClicked
 
-    private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
+    private void btnDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangXuatMouseClicked
         // TODO add your handling code here:
         Login s = new Login();
         s.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton14MouseClicked
+    }//GEN-LAST:event_btnDangXuatMouseClicked
 
-    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+    private void btnXemTTCNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXemTTCNMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10MouseClicked
+    }//GEN-LAST:event_btnXemTTCNMouseClicked
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    private void btnXemTTCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTTCNActionPerformed
+        // TODO add your handling code here:    
+                                                  
+        XemTTCaNhanUI xemForm = new XemTTCaNhanUI() ;
+        xemForm.setVisible(true);
+        xemForm.setLocationRelativeTo(null);
+        
+                
+    }//GEN-LAST:event_btnXemTTCNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -751,7 +779,7 @@ public class HomeUserUI extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         //</editor-fold>
         try {
@@ -773,11 +801,11 @@ public class HomeUserUI extends javax.swing.JFrame {
     private javax.swing.JPanel SP;
     private javax.swing.JPanel THHD;
     private javax.swing.JButton baohanh;
+    private javax.swing.JButton btnDangXuat;
+    private javax.swing.JButton btnSuaThongTin;
+    private javax.swing.JButton btnXemTTCN;
     private javax.swing.JButton hoadon;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
