@@ -5,7 +5,9 @@
 package GUI;
 
 import BUS.NhanVienBUS;
+import BUS.TaiKhoanNVBUS;
 import DTO.NhanVienDTO;
+import DTO.TaiKhoanNVDTO;
 
 /**
  *
@@ -144,7 +146,12 @@ public class Register extends javax.swing.JFrame {
 
         cmbChucVu.setBackground(new java.awt.Color(204, 204, 204));
         cmbChucVu.setForeground(new java.awt.Color(0, 0, 0));
-        cmbChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên", "ADMIN" }));
+        cmbChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên" }));
+        cmbChucVu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbChucVuActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -319,8 +326,19 @@ public class Register extends javax.swing.JFrame {
         l.setLocationRelativeTo(null);
         this.setVisible(false);
     }//GEN-LAST:event_btnContinueActionPerformed
+
+    private void cmbChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbChucVuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbChucVuActionPerformed
     
     public void laythongtin(){
+        
+        NhanVienDTO nvDTO = new NhanVienDTO();
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        TaiKhoanNVDTO tkDTO = new TaiKhoanNVDTO();
+        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
+    
+    
         txtHoten.isEnabled();
         String hoten = txtHoten.getText();
         String email = txtEmail.getText();
@@ -329,10 +347,11 @@ public class Register extends javax.swing.JFrame {
         String tk = txtTaikhoan.getText();
         String mk = new String(pwfmatkhau.getPassword());
         
-        NhanVienDTO nvDTO = new NhanVienDTO();
-        NhanVienBUS nvBUS = new NhanVienBUS();
         
-        nvDTO.setMaNV(nvBUS.maTuDong()); 
+        String maNV = nvBUS.maTuDong();
+        nvDTO.setMaNV(maNV);
+        tkDTO.setMaNV(maNV);
+        
         nvDTO.setHotenNV(hoten);
         nvDTO.setEmailNV(email);
         
@@ -340,11 +359,13 @@ public class Register extends javax.swing.JFrame {
         nvDTO.setNgaySinh(sqlNgaySinh);
         
         nvDTO.setChucVu(chucvu);
-        nvDTO.setTaiKhoan(tk);
-        nvDTO.setMatKhau(mk);
+        tkDTO.setTaiKhoan(tk);
+        tkDTO.setMatKhau(mk);
         nvDTO.setTinhTrang(false);
         
         nvBUS.them(nvDTO);
+        tkBUS.them(tkDTO);
+        
     }
     /**
      * @param args the command line arguments

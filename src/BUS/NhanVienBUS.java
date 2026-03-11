@@ -62,16 +62,8 @@ public class NhanVienBUS {
             
             return false;
         }
-        // kiem tra tai khoan trong
-        if(nvDTO.getTaiKhoan().trim().isEmpty() || nvDTO.getTaiKhoan().isEmpty()){
-           
-            return false;
-        }
-        // kiem tra mat khau trong
-        if(nvDTO.getMatKhau().trim().isEmpty() || nvDTO.getMatKhau().isEmpty()){
-            
-            return false;
-        }   
+
+       
         //kiem tra email trong
         if(nvDTO.getEmailNV().trim().isEmpty() || nvDTO.getEmailNV().isEmpty()){
             
@@ -187,12 +179,22 @@ public class NhanVienBUS {
         });
     }
     
-    
-    
-    
-    
    
     
-     
-    
+    public boolean kiemtraEmail(String hoten, String email) {
+        for (NhanVienDTO nv : dsnv) {
+            if (!hoten.equals(nv.getHotenNV()) && email.equals(nv.getEmailNV())) 
+                return false;
+           }
+        return true;
+    }
+    public String layMaNhanVien(String hoten, String email){
+        String ma = "";
+        for(int i = 0 ; i < dsnv.size() ; i++){
+            if(hoten.equals(dsnv.get(i).getHotenNV()) && email.equals(dsnv.get(i).getEmailNV())){
+                ma = dsnv.get(i).getMaNV();
+            }
+        }
+        return ma;
+    }
 }

@@ -4,8 +4,12 @@
  */
 package GUI;
 
+import BUS.NhanVienBUS;
+import DTO.NhanVienDTO;
+import SERVICES.GuiMaOTP;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -17,9 +21,9 @@ import javax.swing.KeyStroke;
  *
  * @author THANH NHAN
  */
-public class SuaThongTinUI extends javax.swing.JDialog {
+public class ThayDoiMatKhau1 extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SuaThongTinUI.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ThayDoiMatKhau1.class.getName());
 
     /**
      * A return status code - returned if Cancel button has been pressed
@@ -29,11 +33,14 @@ public class SuaThongTinUI extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
+    public static String curOTP = "";
+    public static String toEmail="";
+    public static String ma = "";
 
     /**
      * Creates new form SuaThongTinUI
      */
-    public SuaThongTinUI() {
+    public ThayDoiMatKhau1() {
         initComponents();
 
         // Close the dialog when Esc is pressed
@@ -66,17 +73,13 @@ public class SuaThongTinUI extends javax.swing.JDialog {
     private void initComponents() {
 
         kGradientPanel1 = new keeptoo.KGradientPanel();
-        okButton = new javax.swing.JButton();
+        btnGui = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        txtTaiKhoan = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        pwfMatKhau = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        pwfMatKhaunhaplai = new javax.swing.JPasswordField();
+        txtHoTen = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -87,10 +90,10 @@ public class SuaThongTinUI extends javax.swing.JDialog {
         kGradientPanel1.setkEndColor(new java.awt.Color(188, 159, 159));
         kGradientPanel1.setkStartColor(new java.awt.Color(174, 159, 190));
 
-        okButton.setText("Save");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
+        btnGui.setText("Gửi");
+        btnGui.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
+                btnGuiActionPerformed(evt);
             }
         });
 
@@ -101,16 +104,6 @@ public class SuaThongTinUI extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Tài khoản");
-
-        txtTaiKhoan.setBackground(new java.awt.Color(204, 204, 204));
-        txtTaiKhoan.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
-        txtTaiKhoan.setForeground(new java.awt.Color(0, 0, 0));
-        txtTaiKhoan.setBorder(null);
-        txtTaiKhoan.setOpaque(true);
-
         jLabel4.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Email:");
@@ -120,30 +113,30 @@ public class SuaThongTinUI extends javax.swing.JDialog {
         txtEmail.setForeground(new java.awt.Color(0, 0, 0));
         txtEmail.setBorder(null);
         txtEmail.setOpaque(true);
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Change Infomation");
 
-        pwfMatKhau.setBackground(new java.awt.Color(204, 204, 204));
-        pwfMatKhau.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
-        pwfMatKhau.setForeground(new java.awt.Color(0, 0, 0));
-        pwfMatKhau.setBorder(null);
-        pwfMatKhau.setOpaque(true);
-
         jLabel3.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Mật khẩu:");
+        jLabel3.setText("Họ và Tên");
 
-        jLabel6.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Nhập lại mật khẩu:");
-
-        pwfMatKhaunhaplai.setBackground(new java.awt.Color(204, 204, 204));
-        pwfMatKhaunhaplai.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
-        pwfMatKhaunhaplai.setForeground(new java.awt.Color(0, 0, 0));
-        pwfMatKhaunhaplai.setBorder(null);
-        pwfMatKhaunhaplai.setOpaque(true);
+        txtHoTen.setBackground(new java.awt.Color(204, 204, 204));
+        txtHoTen.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
+        txtHoTen.setForeground(new java.awt.Color(0, 0, 0));
+        txtHoTen.setBorder(null);
+        txtHoTen.setOpaque(true);
+        txtHoTen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoTenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -152,23 +145,19 @@ public class SuaThongTinUI extends javax.swing.JDialog {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelButton))
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3)
-                    .addComponent(txtTaiKhoan)
                     .addComponent(txtEmail)
-                    .addComponent(pwfMatKhau)
-                    .addComponent(pwfMatKhaunhaplai))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(cancelButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addComponent(txtHoTen))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        kGradientPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelButton, okButton});
+        kGradientPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGui, cancelButton});
 
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,29 +165,21 @@ public class SuaThongTinUI extends javax.swing.JDialog {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pwfMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pwfMatKhaunhaplai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okButton)
+                    .addComponent(btnGui)
                     .addComponent(cancelButton))
-                .addGap(30, 30, 30))
+                .addGap(32, 32, 32))
         );
 
-        getRootPane().setDefaultButton(okButton);
+        getRootPane().setDefaultButton(btnGui);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,17 +195,25 @@ public class SuaThongTinUI extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        if(txtTaiKhoan.getText().trim() == null && txtTaiKhoan.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "nhap day du thong tin vao o trong");
-            return;
+    
+    private void btnGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiActionPerformed
+        NhanVienBUS nvBUS = new NhanVienBUS();       
+        SERVICES.GuiMaOTP gui = new GuiMaOTP();
+        
+        
+        boolean hople  = nvBUS.kiemtraEmail(txtHoTen.getText(), txtEmail.getText());
+        if(hople){
+        curOTP = gui.generateOTP();
+        toEmail = txtEmail.getText();
+        gui.sendOTP(toEmail, curOTP);
+        ma = nvBUS.layMaNhanVien(txtHoTen.getText(), txtEmail.getText());//
+        this.dispose(); 
+        ThayDoiMatKhau2 form = new ThayDoiMatKhau2();
+        form.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Họ và tên hoặc Email không hợp lệ");
         }
-        
-        doClose(RET_OK);
-        
-        
-    }//GEN-LAST:event_okButtonActionPerformed
+    }//GEN-LAST:event_btnGuiActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         doClose(RET_CANCEL);
@@ -236,6 +225,14 @@ public class SuaThongTinUI extends javax.swing.JDialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtHoTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoTenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoTenActionPerformed
     
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -268,7 +265,7 @@ public class SuaThongTinUI extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                SuaThongTinUI dialog = new SuaThongTinUI();
+                ThayDoiMatKhau1 dialog = new ThayDoiMatKhau1();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -281,18 +278,14 @@ public class SuaThongTinUI extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGui;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private keeptoo.KGradientPanel kGradientPanel1;
-    private javax.swing.JButton okButton;
-    private javax.swing.JPasswordField pwfMatKhau;
-    private javax.swing.JPasswordField pwfMatKhaunhaplai;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtTaiKhoan;
+    private javax.swing.JTextField txtHoTen;
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;

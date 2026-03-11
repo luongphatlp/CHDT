@@ -212,7 +212,7 @@
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="jComboBox1" min="-2" pref="189" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField1" pref="424" max="32767" attributes="0"/>
+                          <Component id="jTextField1" pref="450" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnreset" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>

@@ -16,6 +16,7 @@ public class SanPhamUI extends javax.swing.JPanel {
     public SanPhamUI() {
         try {
             com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
