@@ -250,20 +250,20 @@ public class ChiTietBaoHanhUI extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         String maBH = jLabel3.getText().replace("Mã Bảo hành: ", "").trim();
-    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
-    
-    ArrayList<DTO.BaoHanhDTO> ds = new ArrayList<>();
-    int thoiHan = Integer.parseInt(model.getValueAt(0, 2).toString().replaceAll("[^0-9]", ""));
-    
-    for (int i = 0; i < model.getRowCount(); i++) {
-        ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
-    }
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
 
-    BUS.BaoHanhBUS bus = new BUS.BaoHanhBUS();
-    if (bus.xuLyLuuBaoHanh(maBH, thoiHan, ds)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lưu thành công!");
-        this.dispose(); // Đóng cửa sổ
-    }
+        ArrayList<DTO.BaoHanhDTO> ds = new ArrayList<>();
+        int thoiHan = Integer.parseInt(model.getValueAt(0, 2).toString().replaceAll("[^0-9]", ""));
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
+        }
+
+        BUS.BaoHanhBUS bus = new BUS.BaoHanhBUS();
+        if (bus.xuLyLuuBaoHanh(maBH, thoiHan, ds)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lưu thành công!");
+            this.dispose(); // Đóng cửa sổ
+        }
     }//GEN-LAST:event_okButtonActionPerformed
     private void updateMainTable() {
         // Nếu bạn có một instance của BaoHanhDienThoaiUI, hãy gọi loadData() của nó ở đây

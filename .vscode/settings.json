@@ -1,0 +1,16 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "dist/lib"
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "dist/lib/KGradientPanel.jar",
+        "dist/lib/flatlaf-3.7.jar",
+        "dist/lib/jcalendar-1.4.jar",
+        "dist/lib/flatlaf-intellij-themes-3.7 (1).jar",
+        "dist/lib/flatlaf-extras-3.7.jar",
+        "dist/lib/mysql-connector-j-9.6.0.jar",
+        "dist/CHDT.jar"
+    ]
+}

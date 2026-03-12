@@ -1,5 +1,21 @@
 package GUI;
 
+
+import BUS.NhanVienBUS;
+import BUS.TaiKhoanNVBUS;
+import DTO.NhanVienDTO;
+import DTO.TaiKhoanNVDTO;
+import GUI.Register;
+
+import com.formdev.flatlaf.FlatIntelliJLaf;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+
+import javax.swing.UIManager;
+
 /**
  *
  * @author THANH NHAN
@@ -37,17 +53,19 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtTaiKhoan = new javax.swing.JTextField();
+        pwfMatKhau = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnDangNhap = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(333, 0), new java.awt.Dimension(333, 0), new java.awt.Dimension(333, 32767));
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
+        btnQMK = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -70,13 +88,18 @@ public class Login extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(47, 114, 141));
 
-        jTextField1.setBackground(new java.awt.Color(47, 114, 141));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jTextField1.setBorder(null);
+        txtTaiKhoan.setBackground(new java.awt.Color(47, 114, 141));
+        txtTaiKhoan.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtTaiKhoan.setBorder(null);
+        txtTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTaiKhoanActionPerformed(evt);
+            }
+        });
 
-        jPasswordField1.setBackground(new java.awt.Color(47, 114, 141));
-        jPasswordField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPasswordField1.setBorder(null);
+        pwfMatKhau.setBackground(new java.awt.Color(47, 114, 141));
+        pwfMatKhau.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        pwfMatKhau.setBorder(null);
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,16 +109,16 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("USER NAME");
 
-        jButton1.setBackground(new java.awt.Color(220, 235, 239));
-        jButton1.setFont(new java.awt.Font("Courier New", 3, 22)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Đăng nhập");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDangNhap.setBackground(new java.awt.Color(220, 235, 239));
+        btnDangNhap.setFont(new java.awt.Font("Courier New", 3, 22)); // NOI18N
+        btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
+        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.setBorderPainted(false);
+        btnDangNhap.setContentAreaFilled(false);
+        btnDangNhap.setFocusPainted(false);
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDangNhapActionPerformed(evt);
             }
         });
 
@@ -128,6 +151,19 @@ public class Login extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("CỬA HÀNG BÁN ĐIỆN THOẠI");
 
+        btnQMK.setBackground(new java.awt.Color(220, 235, 239));
+        btnQMK.setFont(new java.awt.Font("Courier New", 3, 22)); // NOI18N
+        btnQMK.setForeground(new java.awt.Color(255, 255, 255));
+        btnQMK.setText("Quên mật khẩu");
+        btnQMK.setBorderPainted(false);
+        btnQMK.setContentAreaFilled(false);
+        btnQMK.setFocusPainted(false);
+        btnQMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQMKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -136,10 +172,10 @@ public class Login extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPasswordField1)
+                        .addComponent(pwfMatKhau)
                         .addComponent(jSeparator1)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(61, Short.MAX_VALUE))
@@ -156,11 +192,13 @@ public class Login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2))
                             .addComponent(jLabel7))
-                        .addGap(21, 21, 21))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(162, 162, 162))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnQMK)
+                        .addGap(130, 130, 130))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnDangNhap)
+                        .addGap(160, 160, 160))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,40 +208,53 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwfMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDangNhap)
+                .addGap(12, 12, 12)
+                .addComponent(btnQMK)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
+        jLabel4.setForeground(new java.awt.Color(8, 60, 116));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user (2).png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 67, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(38, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -246,15 +297,94 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        String tkInput = txtTaiKhoan.getText().trim();
+        String mkInput = new String(pwfMatKhau.getPassword());
+
+        if (tkInput.isEmpty() || mkInput.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Tài khoản và Mật khẩu.");
+            return;
+        }
+        if(tkInput.equals("1") && mkInput.equals("1")){
+           HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+            this.dispose();
+            return;
+        }
+        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
+        NhanVienBUS nvBUS = new NhanVienBUS();
+
+        // doc 2 file du lieu tai khoan len ram
+        if (tkBUS.getDSTK() == null) {
+            tkBUS.docDSTK();
+        }
+        if (nvBUS.getDSNV() == null) {
+            nvBUS.docDSNV();
+        }
+
+        // tim trong bang tai khoan tkmk trung voi truong nhap
+        String maNVHopLe = ""; 
+        for (TaiKhoanNVDTO tk : tkBUS.getDSTK()) {
+            if (tk.getTaiKhoan().equals(tkInput) && tk.getMatKhau().equals(mkInput)) {
+                
+                maNVHopLe = tk.getMaNV();
+                break;
+            }
+        }
+
+        //thong bao 
+        if (maNVHopLe.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại hoặc sai mật khẩu.");
+            return;
+        }
+
+        //truy xuat tu manv cua bang tk -> manv cua bang nv
+        NhanVienDTO nhanVienLogin = null;
+        for (NhanVienDTO nv : nvBUS.getDSNV()) {
+            if (nv.getMaNV() != null && nv.getMaNV().equals(maNVHopLe)) {
+                nhanVienLogin = nv;
+                break;
+            }
+        }
+
+        
+        if (nhanVienLogin == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi dữ liệu: Tài khoản này chưa được liên kết với nhân viên nào.");
+            return;
+        }
+
+        if (!nhanVienLogin.isTinhTrang()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa hoặc ngừng hoạt động.");
+            return;
+        }
+
+        
+        DTO.TaiKhoanSession.nvDangNhap = nhanVienLogin;
+
+        if (nhanVienLogin.getChucVu().equalsIgnoreCase("Quản Lý")) {
+            HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+        } else {
+            HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed
         // TODO add your handling code here:
-        
-        HomeUI j = new HomeUI ();
-        this.setVisible(false);
-        j.setLocationRelativeTo(null);
-        j.setVisible(true);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_txtTaiKhoanActionPerformed
+
+    private void btnQMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQMKActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ThayDoiMatKhau1 form = new ThayDoiMatKhau1();
+        form.setVisible(true);
+    }//GEN-LAST:event_btnQMKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,21 +403,23 @@ public class Login extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDangNhap;
+    private javax.swing.JButton btnQMK;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField pwfMatKhau;
+    private javax.swing.JTextField txtTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }
