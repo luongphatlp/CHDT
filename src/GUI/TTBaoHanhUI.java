@@ -11,6 +11,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -301,6 +302,17 @@ public class TTBaoHanhUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // 1. Thu thập dữ liệu từ các JTextField
+        String maSP = jTextField1.getText();
+        String tenSP = jTextField2.getText();
+        String tenKhach = jTextField3.getText(); // Ô nhập tên khách
+        String maHD = jTextField4.getText();
+        String imei = jTextField5.getText();
+
+        // 2. GỌI LỆNH LƯU VÀO DATABASE (QUAN TRỌNG)
+        // Ví dụ: BaoHanhDTO bh = new BaoHanhDTO(maSP, tenSP, imei, tenKhach, ...);
+        // boolean success = busBaoHanh.insert(bh);
+        // 3. Đóng form
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -319,6 +331,18 @@ public class TTBaoHanhUI extends javax.swing.JDialog {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
+    }
+
+    public void setThongTinBaoHanh(String maMay, String tenMay, String maHD, String imei) {
+        jTextField1.setText(maMay);      // Mã máy
+        jTextField2.setText(tenMay);     // Tên máy
+        jTextField4.setText(maHD);       // Mã hóa đơn
+        jTextField5.setText(imei);       // IMEI 10 ký tự
+
+        // Khóa không cho người dùng sửa các thông tin hệ thống tự tạo
+        jTextField1.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField4.setEditable(false);
     }
 
     /**
