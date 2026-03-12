@@ -685,10 +685,9 @@ public class HomeUI extends javax.swing.JFrame {
         String email = nvDN.getEmailNV();
         java.util.Date ns = nvDN.getNgaySinh();
         String cv = nvDN.getChucVu();
-        String tk = nvDN.getTaiKhoan();
-        String mk = nvDN.getMatKhau();
+         String tt = "1";
         
-        suaForm.setThongTin(ma, hoten, email, ns, cv, tk, mk, tk);
+        suaForm.setThongTin(ma, hoten, email, ns, cv,"1");
         
         suaForm.quyenAmdin(false);
         

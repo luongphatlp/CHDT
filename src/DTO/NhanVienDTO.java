@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -16,43 +17,25 @@ public class NhanVienDTO {
     private String hotenNV, emailNV;
     private java.sql.Date ngaySinh;
     private String chucVu;
-    private String taiKhoan, matKhau;
+    
     private boolean tinhTrang;
-
+    private String maTK;
     
     public NhanVienDTO(){}
 
-    public NhanVienDTO(String maNV, String hotenNV, String emailNV, Date ngaySinh, String chucVu, String taiKhoan, String matKhau, boolean tinhTrang) {
+    public NhanVienDTO(String maNV, String hotenNV, String emailNV, Date ngaySinh, String chucVu, boolean tinhTrang) {
         this.maNV = maNV;
         this.hotenNV = hotenNV;
         this.emailNV = emailNV;
         this.ngaySinh = ngaySinh;
         this.chucVu = chucVu;
-        this.taiKhoan = taiKhoan;
-        this.matKhau = matKhau;
         this.tinhTrang = tinhTrang;
+        
     }
+
+  
     
-    
-    
 
-    public String getTaiKhoan() {
-        return taiKhoan;
-    }
-
-    public void setTaiKhoan(String taiKhoan) {
-        this.taiKhoan = taiKhoan;
-    }
-
-    public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-   
     public boolean isTinhTrang() {
         return tinhTrang;
     }

@@ -83,15 +83,11 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         txtSuaEmailNV = new javax.swing.JTextField();
         txtSuaTenNV = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtTaiKhoanNV = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         rbnTrue = new javax.swing.JRadioButton();
         rbnFalse = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         cmbChucVuNV = new javax.swing.JComboBox<>();
         dcNgaySinhNV = new com.toedter.calendar.JDateChooser();
-        jLabel10 = new javax.swing.JLabel();
-        txtMatKhauNV = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -167,19 +163,6 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel7.setText("Chức Vụ");
 
-        txtTaiKhoanNV.setBackground(new java.awt.Color(230, 230, 230));
-        txtTaiKhoanNV.setForeground(new java.awt.Color(0, 0, 0));
-        txtTaiKhoanNV.setText("\n");
-        txtTaiKhoanNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTaiKhoanNVActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel8.setText("Tài Khoản");
-
         buttonGroup1.add(rbnTrue);
         rbnTrue.setText("True");
         rbnTrue.addActionListener(new java.awt.event.ActionListener() {
@@ -197,19 +180,6 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
 
         cmbChucVuNV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân Viên", "Quản Lý" }));
 
-        jLabel10.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel10.setText("Mật Khẩu");
-
-        txtMatKhauNV.setBackground(new java.awt.Color(230, 230, 230));
-        txtMatKhauNV.setForeground(new java.awt.Color(0, 0, 0));
-        txtMatKhauNV.setText("\n");
-        txtMatKhauNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauNVActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -222,16 +192,13 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel2))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtSuaTenNV, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSuaMaNV, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSuaEmailNV, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTaiKhoanNV, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -242,7 +209,6 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
                                         .addComponent(jLabel7)
                                         .addGap(119, 119, 119))
                                     .addComponent(cmbChucVuNV, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(txtMatKhauNV, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -278,15 +244,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cmbChucVuNV, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                     .addComponent(dcNgaySinhNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(txtTaiKhoanNV, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(txtMatKhauNV, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(rbnTrue)
@@ -315,14 +273,13 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         doClose(RET_CANCEL);
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    public void setThongTin(String ma, String hoten, String email, java.util.Date ns, String cv, String tk, String mk, String tt){// muc dich tao mot cong de tiep nhan thong tin tu hamsuathongtin
+    public void setThongTin(String ma, String hoten, String email, java.util.Date ns, String cv,  String tt){// muc dich tao mot cong de tiep nhan thong tin tu hamsuathongtin
         txtSuaMaNV.setText(ma);
         txtSuaTenNV.setText(hoten);
         txtSuaEmailNV.setText(email);
         dcNgaySinhNV.setDate(ns);
         cmbChucVuNV.setSelectedItem(cv);
-        txtTaiKhoanNV.setText((tk));
-        txtMatKhauNV.setText(mk);
+        
         if (tt != null && (tt.equalsIgnoreCase("true") || tt.equals("1"))) {
             rbnTrue.setSelected(true);  // Nếu dữ liệu là True hoặc 1 thì tick nút True
         } else {
@@ -335,8 +292,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         txtSuaEmailNV.setEditable(false);
         dcNgaySinhNV.setEnabled(false);
         cmbChucVuNV.setEditable(false);
-        txtTaiKhoanNV.setEditable(false);
-        txtMatKhauNV.setEditable(false);
+        
         rbnFalse.setEnabled(false);
         rbnTrue.setEnabled(false);
        
@@ -350,17 +306,9 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
 
-    private void txtTaiKhoanNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanNVActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTaiKhoanNVActionPerformed
-
     private void rbnTrueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbnTrueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbnTrueActionPerformed
-
-    private void txtMatKhauNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauNVActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauNVActionPerformed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -411,23 +359,19 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbChucVuNV;
     private com.toedter.calendar.JDateChooser dcNgaySinhNV;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton rbnFalse;
     private javax.swing.JRadioButton rbnTrue;
-    private javax.swing.JTextField txtMatKhauNV;
     private javax.swing.JTextField txtSuaEmailNV;
     private javax.swing.JTextField txtSuaMaNV;
     private javax.swing.JTextField txtSuaTenNV;
-    private javax.swing.JTextField txtTaiKhoanNV;
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;

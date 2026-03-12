@@ -73,7 +73,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(802, Short.MAX_VALUE))
+                .addContainerGap(747, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +126,7 @@ public class NhanVienUI extends javax.swing.JPanel {
                 .addComponent(txtMucTieu, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReset)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +203,7 @@ public class NhanVienUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã Nhân Viên", "Họ và Tên", "Email", "Ngày Sinh", "Chức Vụ", "Tài Khoản ", "Mật Khẩu", "Trạng Thái"
+                "STT", "Mã Nhân Viên", "Họ và Tên", "Email", "Ngày Sinh", "Chức Vụ", "Trạng Thái"
             }
         ));
         tblNhanVien.setRowHeight(30);
@@ -227,9 +227,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             tblNhanVien.getColumnModel().getColumn(3).setPreferredWidth(200);
             tblNhanVien.getColumnModel().getColumn(4).setPreferredWidth(100);
             tblNhanVien.getColumnModel().getColumn(5).setPreferredWidth(100);
-            tblNhanVien.getColumnModel().getColumn(6).setPreferredWidth(120);
-            tblNhanVien.getColumnModel().getColumn(7).setPreferredWidth(100);
-            tblNhanVien.getColumnModel().getColumn(8).setPreferredWidth(80);
+            tblNhanVien.getColumnModel().getColumn(6).setPreferredWidth(80);
         }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -291,10 +289,8 @@ public class NhanVienUI extends javax.swing.JPanel {
                 row.add(nv.getEmailNV());
                 row.add(nv.getNgaySinh());
                 row.add(nv.getChucVu());
-                row.add(nv.getTaiKhoan());
-                row.add(nv.getMatKhau());
                 row.add(nv.isTinhTrang());
-                
+               
                 model.addRow(row);
             }
             
@@ -317,11 +313,10 @@ public class NhanVienUI extends javax.swing.JPanel {
                 row.add(nv.getHotenNV());
                 row.add(nv.getEmailNV());
                 row.add(nv.getNgaySinh());
-                row.add(nv.getChucVu());
-                row.add(nv.getTaiKhoan());
-                row.add(nv.getMatKhau());
+                row.add(nv.getChucVu());      
                 row.add(nv.isTinhTrang());
-                
+               
+               
                 model.addRow(row);
             }
             
@@ -388,11 +383,10 @@ public class NhanVienUI extends javax.swing.JPanel {
             String email = tblNhanVien.getValueAt(row, 3).toString();
             java.util.Date ns = (java.util.Date) tblNhanVien.getValueAt(row, 4);
             String cv = tblNhanVien.getValueAt(row, 5).toString();
-            String tk = tblNhanVien.getValueAt(row, 6).toString();
-            String mk = tblNhanVien.getValueAt(row, 7).toString();
-            String tt = tblNhanVien.getValueAt(row, 8).toString();
+            String tt = tblNhanVien.getValueAt(row, 6).toString();
+          
             
-            suaForm.setThongTin(ma, hoten, email, ns , cv, tk, mk, tt);
+            suaForm.setThongTin(ma, hoten, email, ns , cv, tt);
             
             
             suaForm.setModal(true);
@@ -431,11 +425,10 @@ public class NhanVienUI extends javax.swing.JPanel {
             String email = tblNhanVien.getValueAt(row, 3).toString();
             java.util.Date ns = (java.util.Date) tblNhanVien.getValueAt(row, 4);
             String cv = tblNhanVien.getValueAt(row, 5).toString();
-            String tk = tblNhanVien.getValueAt(row, 6).toString();
-            String mk = tblNhanVien.getValueAt(row, 7).toString();
-            String tt = tblNhanVien.getValueAt(row, 8).toString();
             
-            thongtinForm.setThongTin(ma, hoten, email, ns , cv, tk,mk,tt);
+            String tt = tblNhanVien.getValueAt(row, 6).toString();
+            
+            thongtinForm.setThongTin(ma, hoten, email, ns , cv, tt);    
             
             
             
@@ -474,8 +467,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             row.add(nv.getEmailNV());
             row.add(nv.getNgaySinh().toString());
             row.add(nv.getChucVu());
-            row.add(nv.getTaiKhoan());
-            row.add(nv.getMatKhau());
+           
             
             model.addRow(row);
         }

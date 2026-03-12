@@ -547,7 +547,7 @@ public class HomeUserUI extends javax.swing.JFrame {
 
     private void btnSuaThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThongTinActionPerformed
             // TODO add your handling code here:
-             DTO.TaiKhoanSession.capnhat();
+        DTO.TaiKhoanSession.capnhat();
         
         NhanVienUI nvGUI = new NhanVienUI();
         NhanVienDTO nvDN = DTO.TaiKhoanSession.nvDangNhap;
@@ -559,10 +559,9 @@ public class HomeUserUI extends javax.swing.JFrame {
         String email = nvDN.getEmailNV();
         java.util.Date ns = nvDN.getNgaySinh();
         String cv = nvDN.getChucVu();
-        String tk = nvDN.getTaiKhoan();
-        String mk = nvDN.getMatKhau();
+        String tt = "1";
         
-        suaForm.setThongTin(ma, hoten, email, ns, cv, tk, mk, tk);
+        suaForm.setThongTin(ma, hoten, email, ns, cv,"1");
         
         suaForm.quyenAmdin(false);
         

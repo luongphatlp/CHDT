@@ -2,7 +2,9 @@ package GUI;
 
 
 import BUS.NhanVienBUS;
+import BUS.TaiKhoanNVBUS;
 import DTO.NhanVienDTO;
+import DTO.TaiKhoanNVDTO;
 import GUI.Register;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -62,6 +64,7 @@ public class Login extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
+        btnQMK = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -148,6 +151,19 @@ public class Login extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("CỬA HÀNG BÁN ĐIỆN THOẠI");
 
+        btnQMK.setBackground(new java.awt.Color(220, 235, 239));
+        btnQMK.setFont(new java.awt.Font("Courier New", 3, 22)); // NOI18N
+        btnQMK.setForeground(new java.awt.Color(255, 255, 255));
+        btnQMK.setText("Quên mật khẩu");
+        btnQMK.setBorderPainted(false);
+        btnQMK.setContentAreaFilled(false);
+        btnQMK.setFocusPainted(false);
+        btnQMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQMKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -176,11 +192,13 @@ public class Login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2))
                             .addComponent(jLabel7))
-                        .addGap(21, 21, 21))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnDangNhap)
-                .addGap(162, 162, 162))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnQMK)
+                        .addGap(130, 130, 130))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnDangNhap)
+                        .addGap(160, 160, 160))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,9 +219,11 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangNhap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(btnQMK)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -278,73 +298,93 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        // TODO add your handling code here:
-        String tk = txtTaiKhoan.getText().trim();
-        String mk = new String (pwfMatKhau.getPassword());
-        if(("1".equals(tk) &&"1".equals(mk))){
-            HomeUI j = new HomeUI();
-                this.setVisible(false);
-                j.setLocationRelativeTo(null);
-                j.setVisible(true);
-                return;
-        }
-        // kiem tra truong du lieu 
-        if(tk.trim().isEmpty() && mk.trim().isEmpty()){
-            JOptionPane.showMessageDialog(this,"Tai Khoan, Mat Khau khong duoc trong");
+        String tkInput = txtTaiKhoan.getText().trim();
+        String mkInput = new String(pwfMatKhau.getPassword());
+
+        if (tkInput.isEmpty() || mkInput.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Tài khoản và Mật khẩu.");
             return;
         }
-        
+        if(tkInput.equals("1") && mkInput.equals("1")){
+           HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+            this.dispose();
+            return;
+        }
+        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
         NhanVienBUS nvBUS = new NhanVienBUS();
-        if(nvBUS.getDSNV() == null && nvBUS.getDSNV().isEmpty() ){
+
+        // doc 2 file du lieu tai khoan len ram
+        if (tkBUS.getDSTK() == null) {
+            tkBUS.docDSTK();
+        }
+        if (nvBUS.getDSNV() == null) {
             nvBUS.docDSNV();
         }
-        
-        boolean dangnhapthanhcong = false;
-        boolean laNhanVien = false;
-        
-        for(NhanVienDTO nv : nvBUS.getDSNV()){
-            if((nv.getTaiKhoan().equals(tk) && nv.getMatKhau().equals(mk) )){
+
+        // tim trong bang tai khoan tkmk trung voi truong nhap
+        String maNVHopLe = ""; 
+        for (TaiKhoanNVDTO tk : tkBUS.getDSTK()) {
+            if (tk.getTaiKhoan().equals(tkInput) && tk.getMatKhau().equals(mkInput)) {
                 
-                if(nv.isTinhTrang() == false){
-                    JOptionPane.showMessageDialog(this,"Tai Khoan chua duoc kich hoat");
-                    return;
-                }
-                
-               
-                if(nv.getChucVu().toLowerCase().equalsIgnoreCase("Nhân viên")){
-                    laNhanVien = true;
-                }
-                
-                DTO.TaiKhoanSession.nvDangNhap = nv;
-                dangnhapthanhcong = true;
+                maNVHopLe = tk.getMaNV();
                 break;
             }
         }
-        
-        if (dangnhapthanhcong == true) {
-            if(laNhanVien == true){
-                HomeUserUI k = new HomeUserUI();
-                this.setVisible(false);
-                k.setLocationRelativeTo(null);
-                k.setVisible(true);
-            }else{
-                HomeUI j = new HomeUI();
-                this.setVisible(false);
-                j.setLocationRelativeTo(null);
-                j.setVisible(true);
-            }
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "Tai khoan khong khop ");
+
+        //thong bao 
+        if (maNVHopLe.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại hoặc sai mật khẩu.");
+            return;
         }
-                
+
+        //truy xuat tu manv cua bang tk -> manv cua bang nv
+        NhanVienDTO nhanVienLogin = null;
+        for (NhanVienDTO nv : nvBUS.getDSNV()) {
+            if (nv.getMaNV() != null && nv.getMaNV().equals(maNVHopLe)) {
+                nhanVienLogin = nv;
+                break;
+            }
+        }
+
         
+        if (nhanVienLogin == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi dữ liệu: Tài khoản này chưa được liên kết với nhân viên nào.");
+            return;
+        }
+
+        if (!nhanVienLogin.isTinhTrang()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa hoặc ngừng hoạt động.");
+            return;
+        }
+
         
+        DTO.TaiKhoanSession.nvDangNhap = nhanVienLogin;
+
+        if (nhanVienLogin.getChucVu().equalsIgnoreCase("Quản Lý")) {
+            HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+        } else {
+            HomeUI homeAdmin = new HomeUI();
+            homeAdmin.setLocationRelativeTo(null);
+            homeAdmin.setVisible(true);
+        }
+
+        this.dispose();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaiKhoanActionPerformed
+
+    private void btnQMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQMKActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ThayDoiMatKhau1 form = new ThayDoiMatKhau1();
+        form.setVisible(true);
+    }//GEN-LAST:event_btnQMKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,6 +404,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
+    private javax.swing.JButton btnQMK;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
