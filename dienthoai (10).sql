@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 12, 2026 lúc 08:04 PM
+-- Máy chủ: 127.0.0.1:3309
+-- Thời gian đã tạo: Th3 13, 2026 lúc 08:49 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `chdt`
+-- Cơ sở dữ liệu: `dienthoai`
 --
 
 -- --------------------------------------------------------
@@ -485,16 +485,17 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`Ma`, `hoten`, `Email`, `NgaySinh`, `ChucVu`, `TinhTrang`) VALUES
-('NV1', 'Nguyễn Minh Tuấn', 'tuan@shopdt.vn', '1998-03-12', 'Quản lý', 'Đang làm'),
-('NV10', 'Phan Đức Thịnh', 'thinh@shopdt.vn', '1998-11-25', 'Bán hàng', 'Đang làm'),
-('NV2', 'Trần Quốc Bảo', 'bao@shopdt.vn', '1999-07-21', 'Bán hàng', 'Đang làm'),
-('NV3', 'Lê Hoàng Nam', 'nam@shopdt.vn', '1997-05-10', 'Bán hàng', 'Đang làm'),
-('NV4', 'Phạm Nhật Anh', 'anh@shopdt.vn', '2000-01-11', 'Thu ngân', 'Đang làm'),
-('NV5', 'Võ Minh Đức', 'duc@shopdt.vn', '1996-08-22', 'Kho', 'Đang làm'),
-('NV6', 'Đặng Quốc Huy', 'huy@shopdt.vn', '1998-04-19', 'Kỹ thuật', 'Đang làm'),
-('NV7', 'Bùi Thành Long', 'long@shopdt.vn', '1999-12-09', 'Bán hàng', 'Đang làm'),
-('NV8', 'Hoàng Văn Sơn', 'son@shopdt.vn', '1995-02-18', 'Kỹ thuật', 'Đang làm'),
-('NV9', 'Ngô Hải Đăng', 'dang@shopdt.vn', '2001-06-15', 'Thu ngân', 'Đang làm');
+('1', '1', '1', '2000-09-09', 'Nhân viên', '1'),
+('NV1', 'Nguyễn Minh Tuấn', 'tuan@shopdt.vn', '1998-03-12', 'Quản lý', '1'),
+('NV10', 'Phan Đức Thịnh', 'thinh@shopdt.vn', '1998-11-25', 'Bán hàng', '1'),
+('NV2', 'Trần Quốc Bảo', 'bao@shopdt.vn', '1999-07-21', 'Bán hàng', '1'),
+('NV3', 'Lê Hoàng Nam', 'nam@shopdt.vn', '1997-05-10', 'Bán hàng', '1'),
+('NV4', 'Phạm Nhật Anh', 'anh@shopdt.vn', '2000-01-11', 'Thu ngân', '1'),
+('NV5', 'Võ Minh Đức', 'duc@shopdt.vn', '1996-08-22', 'Kho', '1'),
+('NV6', 'Đặng Quốc Huy', 'huy@shopdt.vn', '1998-04-19', 'Kỹ thuật', '1'),
+('NV7', 'Bùi Thành Long', 'long@shopdt.vn', '1999-12-09', 'Bán hàng', '1'),
+('NV8', 'Hoàng Văn Sơn', 'son@shopdt.vn', '1995-02-18', 'Kỹ thuật', '1'),
+('NV9', 'Ngô Hải Đăng', 'dang@shopdt.vn', '2001-06-15', 'Thu ngân', '1');
 
 -- --------------------------------------------------------
 
@@ -527,6 +528,18 @@ INSERT INTO `phieunhap` (`MaPN`, `Ngay`, `MaNV`, `MaNCC`, `TongTien`) VALUES
 ('PN7', '2026-04-01', 'NV5', 'NCC7', 90000000),
 ('PN8', '2026-04-10', 'NV5', 'NCC8', 110000000),
 ('PN9', '2026-05-02', 'NV5', 'NCC9', 170000000);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `taikhoan`
+--
+
+CREATE TABLE `taikhoan` (
+  `Ma` varchar(50) NOT NULL,
+  `TaiKhoan` varchar(50) NOT NULL,
+  `MatKhau` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
