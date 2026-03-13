@@ -123,10 +123,10 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         for(ChiTietKhuyenMaiDTO km:ds){
             Vector row=new Vector();
             row.add(km.getSanPham().getMaSP());
-            row.add(km.getSanPham().getTen());
+            row.add(km.getSanPham().getTenSP());
             row.add(km.getSanPham().getDonGia());
             row.add(km.getPhanTram());
-            int giagoc=Integer.parseInt(km.getSanPham().getDonGia());
+            int giagoc=km.getSanPham().getDonGia();
             int giakhuyenmai=giagoc - giagoc*km.getPhanTram()/100;
             row.add(giakhuyenmai);
             row.add("edit");
@@ -149,17 +149,17 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         for(ChiTietKhuyenMaiDTO km:ds){
             boolean ktkey=true;
             if(!key.equals(""))
-                ktkey=key.equals(km.getSanPham().getMaSP()) || km.getSanPham().getTen().contains(key);
+                ktkey=key.equals(km.getSanPham().getMaSP()) || km.getSanPham().getTenSP().contains(key);
             boolean ktphantram=true;
             if(phantram != 0)
                 ktphantram= phantram==km.getPhanTram();
             if(ktkey && ktphantram){
                 Vector row=new Vector();
                 row.add(km.getSanPham().getMaSP());
-                row.add(km.getSanPham().getTen());
+                row.add(km.getSanPham().getTenSP());
                 row.add(km.getSanPham().getDonGia());
                 row.add(km.getPhanTram());
-                int giagoc=Integer.parseInt(km.getSanPham().getDonGia());
+                int giagoc=km.getSanPham().getDonGia();
                 int giakhuyenmai=giagoc - giagoc*km.getPhanTram()/100;
                 row.add(giakhuyenmai);
                 row.add("edit");
@@ -308,7 +308,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             Vector row= new Vector();
             row.add(false);
             row.add(sp.getMaSP());
-            row.add(sp.getTen());
+            row.add(sp.getTenSP());
             row.add(sp.getSoLuong());
             row.add(sp.getDonGia());
             row.add(sp.getDonViTinh());
@@ -1091,7 +1091,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         
         SanPhamDTO sp=new SanPhamDTO();
         sp.setMaSP(masp);
-        sp.setTen(tensp);
+        sp.setTenSP(tensp);
         ctkm.setSanPham(sp);
         
         ctkm.setPhanTram(phantram);

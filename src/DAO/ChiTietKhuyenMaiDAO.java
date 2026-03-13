@@ -38,8 +38,8 @@ public class ChiTietKhuyenMaiDAO {
                 km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
                 sp.setMaSP(rs.getString("MaSanPham"));
-                sp.setTen(rs.getString("Ten"));
-                sp.setDonGia(rs.getString("DonGia"));
+                sp.setTenSP(rs.getString("Ten"));
+                sp.setDonGia(rs.getInt("DonGia"));
                 km.setSanPham(sp);
                 km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
@@ -61,8 +61,8 @@ public class ChiTietKhuyenMaiDAO {
                 km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
                 sp.setMaSP(rs.getString("MaSanPham"));
-                sp.setTen(rs.getString("Ten"));
-                sp.setDonGia(rs.getString("DonGia"));
+                sp.setTenSP(rs.getString("Ten"));
+                sp.setDonGia(rs.getInt("DonGia"));
                 km.setSanPham(sp);
                 km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);

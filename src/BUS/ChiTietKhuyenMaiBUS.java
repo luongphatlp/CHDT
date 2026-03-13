@@ -50,11 +50,11 @@ public class ChiTietKhuyenMaiBUS {
     }
 
     public int layPhanTramGiam(String maKM, String maSP) {
-        ArrayList<ChiTietKhuyenMaiDTO> dsCT = dao.selectByMaKM(maKM);
+        ArrayList<ChiTietKhuyenMaiDTO> dsCT = dao.selectByMaKM(maKM.trim());
         if (dsCT != null) {
             for (ChiTietKhuyenMaiDTO ct : dsCT) {
+                // So sánh mã SP trong DB với mã SP đang xét ở giỏ hàng
                 if (ct.getSanPham().getMaSP().trim().equalsIgnoreCase(maSP.trim())) {
-                    System.out.println("-> Tìm thấy KM cho " + maSP + ": " + ct.getPhanTram() + "%");
                     return ct.getPhanTram();
                 }
             }

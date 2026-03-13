@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3309
--- Thời gian đã tạo: Th3 09, 2026 lúc 01:39 PM
+-- Thời gian đã tạo: Th3 12, 2026 lúc 04:19 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -107,7 +107,8 @@ INSERT INTO `chitietkhuyenmai` (`MaKhuyenMai`, `MaSanPham`, `PhanTram`) VALUES
 ('1', '2', 2),
 ('2', '1', 10),
 ('2', '2', 6),
-('3', '1', 0);
+('3', '1', 0),
+('3', '2', 0);
 
 -- --------------------------------------------------------
 
@@ -142,16 +143,17 @@ CREATE TABLE `dienthoai` (
   `SoLuong` int(5) NOT NULL,
   `DonGia` int(10) NOT NULL,
   `DonViTinh` varchar(10) NOT NULL,
-  `MaHang` varchar(10) NOT NULL
+  `MaHang` varchar(10) NOT NULL,
+  `ThoiGianBaoHanh` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `dienthoai`
 --
 
-INSERT INTO `dienthoai` (`Ma`, `Ten`, `SoLuong`, `DonGia`, `DonViTinh`, `MaHang`) VALUES
-('1', '1', 2, 1, '1', '1'),
-('2', 'REDMI NOTE 10', 3, 3, 'Dong', '1');
+INSERT INTO `dienthoai` (`Ma`, `Ten`, `SoLuong`, `DonGia`, `DonViTinh`, `MaHang`, `ThoiGianBaoHanh`) VALUES
+('1', '1', 2, 1, '1', '1', 0),
+('2', 'REDMI NOTE 10', 3, 3, 'Dong', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -258,11 +260,19 @@ CREATE TABLE `nhacungcap` (
 
 CREATE TABLE `nhanvien` (
   `Ma` varchar(10) NOT NULL,
-  `Họ` varchar(50) NOT NULL,
-  `Ten` varchar(50) NOT NULL,
+  `hoten` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
   `NgaySinh` date NOT NULL,
-  `Luong` int(8) NOT NULL
+  `ChucVu` varchar(50) NOT NULL,
+  `TinhTrang` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhanvien`
+--
+
+INSERT INTO `nhanvien` (`Ma`, `hoten`, `Email`, `NgaySinh`, `ChucVu`, `TinhTrang`) VALUES
+('NV01', 'Luong Trieu Phat', 'luongphat1123@gmail.com', '2006-07-09', 'Nhân viên', '0');
 
 -- --------------------------------------------------------
 
@@ -285,6 +295,25 @@ CREATE TABLE `phieunhap` (
 INSERT INTO `phieunhap` (`MaPN`, `Ngay`, `MaNV`, `MaNCC`, `TongTien`) VALUES
 ('1', '2026-02-20', '1', '1', 400000),
 ('2', '2026-01-01', '1', '1', 100000);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `taikhoan`
+--
+
+CREATE TABLE `taikhoan` (
+  `Ma` varchar(50) NOT NULL,
+  `TaiKhoan` varchar(50) NOT NULL,
+  `MatKhau` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `taikhoan`
+--
+
+INSERT INTO `taikhoan` (`Ma`, `TaiKhoan`, `MatKhau`) VALUES
+('NV01', 'Phat', 'LuongPhat1123');
 
 --
 -- Chỉ mục cho các bảng đã đổ

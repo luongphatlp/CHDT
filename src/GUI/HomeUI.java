@@ -888,7 +888,7 @@ public class HomeUI extends javax.swing.JFrame {
         pnTK.setBackground(DefaultColor);
         NV.setBackground(DefaultColor);
         
-        BaoHanhUI s = new BaoHanhUI();
+        BaoHanhDienThoaiUI s = new BaoHanhDienThoaiUI();
         jPanel4.removeAll();
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
         jPanel4.revalidate();

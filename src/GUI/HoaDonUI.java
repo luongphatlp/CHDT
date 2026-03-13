@@ -6,6 +6,7 @@ import BUS.KhuyenMaiBUS;
 import DAO.HoaDonDAO;
 import DTO.DienThoaiDTO;
 import DTO.KhuyenMaiDTO;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,7 +21,7 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         initComponents();
         try {
-                loadMaKhuyenMaiToCombo(); // Gọi hàm đổ dữ liệu vào JComboBox
+            loadMaKhuyenMaiToCombo(); // Gọi hàm đổ dữ liệu vào JComboBox
         } catch (Exception e) {
             System.out.println("Lỗi load khuyến mãi: " + e.getMessage());
         }
@@ -29,11 +30,11 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         HoaDonDAO a = new HoaDonDAO();
         ArrayList<DienThoaiDTO> list = a.selectAllDienThoai();
-jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        capNhatTongTienVoiKhuyenMai();
-    }
-});
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                capNhatTongTienVoiKhuyenMai();
+            }
+        });
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for (DienThoaiDTO dt : list) {
@@ -45,6 +46,7 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             });
         }
         System.out.println(list.size());
+        customTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -120,6 +122,11 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
                 "Mã điện thoại", "Tên điện thoại", "Số lượng", "Đơn giá"
             }
         ));
+        jTable1.setSelectionBackground(new java.awt.Color(26, 75, 128));
+        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setShowHorizontalLines(true);
+        jTable1.setShowVerticalLines(true);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -186,6 +193,11 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
         btnThanhToan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnThanhToanMouseClicked(evt);
+            }
+        });
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
             }
         });
 
@@ -362,6 +374,42 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void customTable() {
+        // 1. Chỉnh Font Arial, kích thước 16 cho nội dung bảng
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable1.setFont(tableFont);
+
+        jTable1.setRowHeight(30);
+        jTable1.getTableHeader().setOpaque(false);
+//        jTable1.getTableHeader().setBackground(new Color(32,136,203));
+//        jTable1.getTableHeader().setForeground(new Color(32,132,230));
+        jTable1.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        resizeColumnWidth(jTable1);
+    }
+
+    private void resizeColumnWidth(javax.swing.JTable table) {
+        final javax.swing.table.TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; // Độ rộng tối thiểu
+            for (int row = 0; row < table.getRowCount(); row++) {
+                javax.swing.table.TableCellRenderer renderer = table.getCellRenderer(row, column);
+                java.awt.Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 15, width);
+            }
+            if (width > 400) {
+                width = 400; // Giới hạn độ rộng tối đa
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
+
     private void capNhatGiaTheoKhuyenMai() {
         String maKMSelected = jComboBox1.getSelectedItem().toString();
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
@@ -387,46 +435,57 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
         // Đừng quên gọi hàm tính tổng tiền cuối cùng của hóa đơn sau khi cập nhật bảng
         // tinhTongTienHoaDon(); 
     }
+
     private void capNhatTongTienVoiKhuyenMai() {
-    // 1. Lấy mã khuyến mãi đang chọn
-    Object selectedItem = jComboBox1.getSelectedItem();
-    if (selectedItem == null) return;
-    String maKM = selectedItem.toString();
-
-    // 2. Khởi tạo BUS để kiểm tra mức giảm giá của từng sản phẩm
-    BUS.ChiTietKhuyenMaiBUS ctkmBUS = new BUS.ChiTietKhuyenMaiBUS();
-    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
-    
-    long tongTienSauGiam = 0;
-
-    // 3. Duyệt qua từng dòng trong giỏ hàng (jTable2)
-    for (int i = 0; i < model.getRowCount(); i++) {
-        try {
-            // Lấy Mã SP (Cột 0), Số lượng (Cột 2), Đơn giá (Cột 3)
-            String maSP = model.getValueAt(i, 0).toString().trim();
-            int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString().replaceAll("[^0-9]", ""));
-            long donGia = Long.parseLong(model.getValueAt(i, 3).toString().replaceAll("[^0-9]", ""));
-
-            // 4. Lấy % giảm giá cho sản phẩm này từ mã KM tương ứng
-            int phanTramGiam = 0;
-            if (!maKM.equals("Không áp dụng") && !maKM.equals("Chọn mã KM")) {
-                phanTramGiam = ctkmBUS.layPhanTramGiam(maKM, maSP);
-            }
-
-            // 5. Tính thành tiền cho dòng này sau khi giảm giá
-            long thanhTienSauGiam = (donGia * soLuong) * (100 - phanTramGiam) / 100;
-            
-            // 6. Cộng dồn vào tổng hóa đơn
-            tongTienSauGiam += thanhTienSauGiam;
-
-        } catch (Exception e) {
-            System.err.println("Lỗi xử lý dòng " + i + ": " + e.getMessage());
+        Object selectedItem = jComboBox1.getSelectedItem();
+        if (selectedItem == null) {
+            return;
         }
+
+        String maKM = selectedItem.toString();
+        ChiTietKhuyenMaiBUS ctkmBUS = new ChiTietKhuyenMaiBUS();
+        DefaultTableModel modelGioHang = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel modelSanPham = (DefaultTableModel) jTable1.getModel();
+
+        for (int i = 0; i < modelGioHang.getRowCount(); i++) {
+            try {
+                String maSP = modelGioHang.getValueAt(i, 0).toString().trim();
+                int soLuong = Integer.parseInt(modelGioHang.getValueAt(i, 2).toString().replaceAll("[^0-9]", ""));
+
+                // Lấy Đơn giá gốc từ bảng sản phẩm (jTable1 - Cột 3) để tính toán luôn chính xác
+                long donGiaGoc = 0;
+                for (int j = 0; j < modelSanPham.getRowCount(); j++) {
+                    if (modelSanPham.getValueAt(j, 0).toString().trim().equals(maSP)) {
+                        donGiaGoc = Long.parseLong(modelSanPham.getValueAt(j, 3).toString().replaceAll("[^0-9]", ""));
+                        break;
+                    }
+                }
+
+                // Nếu không tìm thấy giá gốc ở jTable1, lấy giá ở cột 1 của jTable2 làm gốc
+                if (donGiaGoc == 0) {
+                    donGiaGoc = Long.parseLong(modelGioHang.getValueAt(i, 1).toString().replaceAll("[^0-9]", ""));
+                }
+
+                // Tra cứu % giảm giá từ database
+                int phanTramGiam = 0;
+                if (!maKM.equals("Không áp dụng") && !maKM.equals("Chọn mã KM")) {
+                    phanTramGiam = ctkmBUS.layPhanTramGiam(maKM, maSP);
+                }
+
+                // TÍNH TOÁN: Thành tiền = (Đơn giá * Số lượng) * (100 - % giảm) / 100
+                long thanhTienMoi = (donGiaGoc * soLuong) * (100 - phanTramGiam) / 100;
+
+                // Cập nhật lại cột Thành tiền (index 3)
+                modelGioHang.setValueAt(String.format("%,d", thanhTienMoi).replace(",", ".") + "đ", i, 3);
+
+            } catch (Exception e) {
+                System.err.println("Lỗi xử lý khuyến mãi dòng " + i + ": " + e.getMessage());
+            }
+        }
+        // Cuối cùng, cập nhật jLabel11
+        tinhLaiTongHoaDon();
     }
 
-    // 7. Hiển thị tổng tiền mới lên jLabel11
-    jLabel11.setText(String.format("%,dđ", tongTienSauGiam));
-}
     private void capNhatThanhTienTheoKhuyenMai() {
         if (jComboBox1.getSelectedItem() == null) {
             return;
@@ -435,48 +494,48 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
 
         BUS.ChiTietKhuyenMaiBUS ctkmBUS = new BUS.ChiTietKhuyenMaiBUS();
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
-
         long tongTienMoi = 0;
 
         for (int i = 0; i < model.getRowCount(); i++) {
             try {
-                // Lấy dữ liệu an toàn (Dùng trim() để tránh lỗi khoảng trắng)
-                String maSP = model.getValueAt(i, 0).toString().trim();
+                // Lấy Tên SP từ cột 0 để tìm Mã SP tương ứng (vì bảng jTable2 của bạn đang hiển thị Tên ở cột 0)
+                String tenSP = model.getValueAt(i, 0).toString();
+                String maSP = "";
 
-                // Lấy Đơn giá (thường ở cột cuối hoặc gần cuối)
-                // Bạn hãy kiểm tra lại: nếu Đơn giá ở cột 3 thì để là 3
-                String strDonGia = model.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
-                String strSoLuong = model.getValueAt(i, 2).toString().replaceAll("[^0-9]", "");
-
-                if (strDonGia.isEmpty() || strSoLuong.isEmpty()) {
-                    continue;
+                // Tìm Mã SP dựa trên Tên SP từ jTable1 (Bảng sản phẩm gốc)
+                for (int j = 0; j < jTable1.getRowCount(); j++) {
+                    if (jTable1.getValueAt(j, 1).toString().equals(tenSP)) {
+                        maSP = jTable1.getValueAt(j, 0).toString();
+                        break;
+                    }
                 }
 
-                long donGiaGoc = Long.parseLong(strDonGia);
-                int soLuong = Integer.parseInt(strSoLuong);
+                // Lấy Đơn giá (cột 1) và Số lượng (cột 2)
+                long donGia = Long.parseLong(model.getValueAt(i, 1).toString().replaceAll("[^0-9]", ""));
+                int soLuong = Integer.parseInt(model.getValueAt(i, 2).toString().replaceAll("[^0-9]", ""));
 
                 int phanTramGiam = 0;
-                if (!maKMSelected.equals("Không áp dụng") && !maKMSelected.equals("Chọn mã KM")) {
+                // Nếu không phải là "Không áp dụng", thực hiện tra cứu % giảm trong BUS
+                if (!maKMSelected.equals("Không áp dụng")) {
                     phanTramGiam = ctkmBUS.layPhanTramGiam(maKMSelected, maSP);
                 }
 
-                long thanhTienDong = (donGiaGoc * soLuong) * (100 - phanTramGiam) / 100;
+                // Tính toán thành tiền sau khi giảm %
+                long thanhTienMoi = (donGia * soLuong) * (100 - phanTramGiam) / 100;
 
-                // QUAN TRỌNG: Kiểm tra nếu bảng có cột Thành tiền (cột index 4) thì mới ghi vào
-                if (model.getColumnCount() > 4) {
-                    model.setValueAt(thanhTienDong + "đ", i, 4);
-                }
+                // Cập nhật lại cột Thành tiền (cột 3) của jTable2
+                model.setValueAt(thanhTienMoi + "đ", i, 3);
 
-                tongTienMoi += thanhTienDong;
+                tongTienMoi += thanhTienMoi;
 
             } catch (Exception e) {
-                // In ra lỗi chi tiết để biết chính xác cột nào bị thiếu
-                System.err.println("Lỗi tại dòng " + i + ": " + e.getMessage());
+                System.err.println("Lỗi tính toán tại dòng " + i + ": " + e.getMessage());
             }
         }
 
-        // Cập nhật nhãn tổng tiền
+        // 2. Cập nhật nhãn tổng tiền hóa đơn
         jLabel11.setText(tongTienMoi + "đ");
+        tinhLaiTongHoaDon();
 
     }
 
@@ -504,7 +563,6 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             return;
         }
 
-        // --- Logic lấy Phương thức thanh toán chuẩn ---
         String pttt = "";
         if (jCheckBox2.isSelected()) {
             pttt = "Thanh toán trực tiếp";
@@ -516,59 +574,48 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             pttt = "MOMO";
         }
 
-        if (pttt.equals("")) {
+        if (pttt.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức thanh toán!");
             return;
         }
 
-        // 1. Lấy mã khuyến mãi đang được chọn từ jComboBox1
-        // Thêm kiểm tra null để tránh lỗi nếu ComboBox trống
-        String maKM = "";
-        if (jComboBox1.getSelectedItem() != null) {
-            maKM = jComboBox1.getSelectedItem().toString();
-        } else {
-            maKM = "Không có";
-        }
-
-        // Lấy dữ liệu bảng và tổng tiền
+        String maKM = (jComboBox1.getSelectedItem() != null) ? jComboBox1.getSelectedItem().toString() : "Không có";
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
         String tongTien = jLabel11.getText();
         String maHD = jLabel3.getText().replace("Mã hóa đơn: ", "");
 
-        // 2. Gọi Dialog với đầy đủ tham số (đã thêm maKM vào cuối)
-        XacNhanTTUI xn = new XacNhanTTUI(
-                (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this),
-                true,
-                model,
-                tongTien,
-                pttt,
-                maHD,
-                maKM
-        );
-
+        java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        XacNhanTTUI xn = new XacNhanTTUI(parent, true, model, tongTien, pttt, maHD, maKM);
         xn.setVisible(true);
 
         if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {
-            // Clear giỏ hàng sau khi xác nhận thành công
-            model.setRowCount(0);
-            jLabel11.setText("0");
+            // Khởi tạo ThemBaoHanhUI và truyền model giỏ hàng vào để xử lý cho ChiTietBaoHanhUI sau này
+            ThemBaoHanhUI tbh = new ThemBaoHanhUI((java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this), true,model);
+            tbh.setVisible(true);
 
-            // Reset ComboBox về trạng thái ban đầu (nếu cần)
+            // Làm mới giao diện sau khi hoàn tất
+            model.setRowCount(0);
+            jLabel11.setText("0đ");
             if (jComboBox1.getItemCount() > 0) {
                 jComboBox1.setSelectedIndex(0);
             }
-
-            // Bỏ chọn các checkbox (Nếu bạn dùng ButtonGroup cho CheckBox)
             jCheckBox2.setSelected(false);
             jCheckBox3.setSelected(false);
             jCheckBox4.setSelected(false);
             jCheckBox5.setSelected(false);
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
         }
 
-    }//GEN-LAST:event_btnThanhToanMouseClicked
 
+    }//GEN-LAST:event_btnThanhToanMouseClicked
+    private String generateIMEI(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        java.util.Random rnd = new java.util.Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         int row = jTable1.getSelectedRow();
         if (row == -1) {
@@ -688,12 +735,32 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             javax.swing.JOptionPane.showMessageDialog(this, "Đã xóa sản phẩm khỏi giỏ hàng.");
         }
     }//GEN-LAST:event_jButton4MouseClicked
-
+    private void tinhLaiTongHoaDon() {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        long tongMoi = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            try {
+                // Cột 3 là Thành tiền
+                String strThanhTien = model.getValueAt(i, 3).toString().replaceAll("[^0-9]", "");
+                if (!strThanhTien.isEmpty()) {
+                    tongMoi += Long.parseLong(strThanhTien);
+                }
+            } catch (Exception e) {
+                System.err.println("Lỗi tính tổng: " + e.getMessage());
+            }
+        }
+        // Cập nhật nhãn hiển thị tổng tiền
+        jLabel11.setText(String.format("%,d", tongMoi).replace(",", ".") + "đ");
+    }
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             capNhatThanhTienTheoKhuyenMai();
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+
+    }//GEN-LAST:event_btnThanhToanActionPerformed
     private String generateRandomHD() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb = new StringBuilder("HD");

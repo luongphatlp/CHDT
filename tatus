@@ -1,0 +1,529 @@
+[33mcommit d90765977772624d07780c68d88f8a1d3a1ea912[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 13 14:29:12 2026 +0700
+
+    test
+
+[33mcommit 584a8870ca492670915a3ab0d8b595b55fab4420[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 13 14:27:04 2026 +0700
+
+    Cap nhat nhan vien
+
+[33mcommit 5b533c03304732f0e80cba6c43f1dc8e618daa74[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 13 14:00:45 2026 +0700
+
+    Cap nhat nhan vien
+
+[33mcommit 1532cd22722689254c7c87f6f06bbe335d42a0a8[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 13 13:56:31 2026 +0700
+
+    Cap nhat nhan vien
+
+[33mcommit 25be3b2b9a99ab4c14d0816fb462a0e2f0746e28[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Thu Mar 12 22:07:34 2026 +0700
+
+    Cap nhat nhan vien
+
+[33mcommit a103e8d8e4a8d3fdc7d3385d27c99da1babb3500[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 22:01:59 2026 +0700
+
+    làm thêm xuất pdf cho thống kê doanh thu
+
+[33mcommit 2395d00b1c85087d0a39960422c782bd3e42bb41[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 21:07:19 2026 +0700
+
+    làm thêm xuất excel cho thống kê doanh thu
+
+[33mcommit df4600873aeb37c96905a0bba50f07e06a1c7bf3[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 21:01:57 2026 +0700
+
+    Merge origin/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+    làm thêm xuất excel cho thống kê doanh thu
+
+[33mcommit 8b1faa092a6732b6f9d2f69e921f29872e85adcf[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 21:01:48 2026 +0700
+
+    Merge origin/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+    làm thêm xuất excel cho thống kê doanh thu
+
+[33mcommit 0c11ff50786c25ff8c4554b3b6a03f2628ef29cd[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 21:01:20 2026 +0700
+
+    Merge origin/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+    làm thêm xuất excel cho thống kê doanh thu
+
+[33mcommit 07138a4bc275f8a253edbf93123ec5ea9a23039d[m
+Merge: 527c712 12bbf31
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 11 21:01:05 2026 +0700
+
+    Merge origin/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+    làm thêm xuất excel cho thống kê doanh thu
+
+[33mcommit 527c712f1a3ce4558012fbaec2264bf57388f6c7[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Tue Mar 10 18:47:37 2026 +0700
+
+    Merge CHDT/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+
+[33mcommit 0ba835b3c2b4f85c28a6f6f857afe95634b4ba12[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Tue Mar 10 18:28:30 2026 +0700
+
+    Merge CHDT/namthinh into main
+    
+    # Conflicts:
+    #       nbproject/project.properties
+    #       src/DAO/ChiTietKhuyenMaiDAO.java
+    #       src/DAO/KhuyenMaiDAO.java
+    #       src/DATABASE/Connect.java
+    #       src/DTO/ChiTietKhuyenMaiDTO.java
+    #       src/DTO/KhuyenMaiDTO.java
+    #       src/GUI/ChiTietSanPhamUI.form
+    #       src/GUI/ChiTietSanPhamUI.java
+    #       src/GUI/HoaDonUI.form
+    #       src/GUI/HoaDonUI.java
+    #       src/GUI/HomeUI.form
+    #       src/GUI/HomeUI.java
+    #       src/GUI/HomeUserUI.form
+    #       src/GUI/HomeUserUI.java
+    #       src/GUI/KhuyenMaiUI.form
+    #       src/GUI/KhuyenMaiUI.java
+    #       src/GUI/Login.form
+    #       src/GUI/Login.java
+    #       src/GUI/NhanVienUI.form
+    #       src/GUI/NhanVienUI.java
+    #       src/GUI/Register.form
+    #       src/GUI/Register.java
+    #       src/GUI/SuaThongTinUI.form
+    #       src/GUI/SuaThongTinUI.java
+    #       src/GUI/ThongKeUI.form
+    #       src/GUI/ThongKeUI.java
+    #       src/GUI/XacNhanTTUI.form
+    #       src/GUI/XacNhanTTUI.java
+    #       src/TEST/MainApplication.java
+
+[33mcommit d1235371e75c89c3ee1b1582b4617a6d49bfb83f[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Tue Mar 10 14:02:01 2026 +0700
+
+    hoadon fini
+
+[33mcommit f9b10b8b816f3fa0e027d931585d75c36521044d[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 22:37:33 2026 +0700
+
+    hoadon end
+
+[33mcommit 73edf9e57d0ee2158cfcbc5838b174478460b256[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 21:30:10 2026 +0700
+
+    khuyen mai
+
+[33mcommit 5dfe688e50fd0b19268e045f8484acbd3d9be018[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 21:01:43 2026 +0700
+
+    fix pull
+
+[33mcommit da609a3f5bc223216fb74ce8d988137aca0b5f29[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 20:32:21 2026 +0700
+
+    Fix merge conflicts in KhuyenMaiBUS and DAO
+
+[33mcommit 9928fb3bb983640f95981451bcd4ccf541ac4d6d[m
+Merge: 963a32f c4ff330
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 20:23:13 2026 +0700
+
+    res
+
+[33mcommit 963a32fdd45c98854fbde85dd88ef084955efb99[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 20:18:12 2026 +0700
+
+    KhuyenMai HoaDon
+
+[33mcommit c4ff330c3ff1d1a79d9667335ab2041f84acedcb[m
+Merge: 5a6efc4 7c71574
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Mon Mar 9 20:13:43 2026 +0700
+
+    Merge CHDT/main into main
+
+[33mcommit 5a6efc4a33cd9ed04daa2db6a83ff125948803b9[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Mon Mar 9 20:13:24 2026 +0700
+
+    sua them san pham khuyen mai
+
+[33mcommit 7c715743fd2f24582499d50fa2fde019de0f8331[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Mon Mar 9 19:39:15 2026 +0700
+
+    Add files via upload
+
+[33mcommit 2257df2cc911d8c69c134aeb8c223e16f17f4750[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Mon Mar 9 19:38:36 2026 +0700
+
+    Delete dienthoai (7).sql
+
+[33mcommit 3bb7750238d84ee1141ac74ff6bfa870e6a16092[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Mon Mar 9 19:19:33 2026 +0700
+
+    hoa don khuyen mai
+
+[33mcommit 4f47998eec655772ede26a1b30db59bb14b549ed[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Mon Mar 9 19:08:43 2026 +0700
+
+    update khuyen mai
+
+[33mcommit 0c8742f0ec9b814108d7d00ef0b747e808bbc1cf[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Mar 8 16:24:01 2026 +0700
+
+    hoan thanh phần khuyen mai
+
+[33mcommit 80f067f65066c104dd703d6ac8f726eb95949ec2[m
+Merge: 5cb6539 08d7b22
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Sun Mar 8 14:25:55 2026 +0700
+
+    hoa don
+
+[33mcommit 5cb6539779819e42956fc00df3962b75bff61dc6[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Sun Mar 8 14:12:16 2026 +0700
+
+    hoa don
+
+[33mcommit 08d7b22fa825a619cd16e5762bdc8f100dce963e[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Mar 8 09:02:02 2026 +0700
+
+    Cap nhat sua san pham khuyen mai
+
+[33mcommit 896b4b58a97d6b32634a97da097a4cfd8e793876[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Mar 8 00:32:01 2026 +0700
+
+    Cap nhat chon san pham khuyen mai
+
+[33mcommit 2e7e8d11577c2aa4b0c00ddea6c112824d355d70[m
+Merge: 13a05da bb88aee
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sat Mar 7 19:52:56 2026 +0700
+
+    Merge CHDT/main into main
+
+[33mcommit 13a05dad289c72da26a80944bf4d2390f064f752[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sat Mar 7 19:52:37 2026 +0700
+
+    khuyen mai chua xong
+
+[33mcommit bb88aeef5f073dc5cfdab686c813ef58d12c1518[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Sat Mar 7 17:15:34 2026 +0700
+
+    Add files via upload
+
+[33mcommit 122b430f4b1cb429ade6b37891adc16358cd1a1f[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Sat Mar 7 17:14:58 2026 +0700
+
+    Delete dienthoai.sql
+
+[33mcommit 286eb4bfa1897a0b5de3fc669b41f4a8ebcbc90e[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 6 21:06:05 2026 +0700
+
+    khuyen mai
+
+[33mcommit aaea6ce13e0f4498ea5158bb69b608d4cb6ea152[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Fri Mar 6 15:44:40 2026 +0700
+
+    ve bieu do
+
+[33mcommit 12bbf31eeafd50384c3be026ef2ef3be7e0dd32e[m[33m ([m[1;31morigin/namthinh[m[33m)[m
+Author: CholinE7 <nguyentrannamthinh0711@gmail.com>
+Date:   Fri Mar 6 15:11:04 2026 +0700
+
+    up nhanvien code thieu thong ke
+
+[33mcommit 9408e031282a049086857a5accdcc44f17a091cd[m
+Author: CholinE7 <nguyentrannamthinh0711@gmail.com>
+Date:   Fri Mar 6 14:51:45 2026 +0700
+
+    nhanvien thieu thong ke
+
+[33mcommit 2b53d8dcb4b84bea7b046e011773c34054ed6f36[m
+Merge: d406178 6c8e60e
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Wed Mar 4 10:46:27 2026 +0700
+
+    Merge origin/main into main
+
+[33mcommit d4061781d0d59a5987d301053d5e5151a4a5a17d[m
+Author: DPEldich <nhanphan598@gmail.com>
+Date:   Wed Mar 4 10:45:58 2026 +0700
+
+    nhan 4/3/26
+
+[33mcommit 6c8e60ea2f2ef327933dad2afe3ab85893514917[m
+Merge: 7a21aa8 1de851c
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 4 08:34:39 2026 +0700
+
+    Merge CHDT/main into main
+
+[33mcommit 7a21aa826ac362f0d206b157fe6a2f46b0ff83ed[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Mar 4 08:33:42 2026 +0700
+
+    sua lai giao dien thong ke doanh thu
+
+[33mcommit 1de851c330cf1997b8317034de35d483efa5ffc5[m
+Author: Vo Thanh Tai <taivothanh@gmail.com>
+Date:   Mon Mar 2 13:38:17 2026 +0700
+
+    ok
+
+[33mcommit 84cce3d64bb66c86ff58970cf0946c326c8925c1[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Thu Feb 26 16:13:25 2026 +0700
+
+    thongkedoanhthu xong
+
+[33mcommit 8c3514b4c26883ee5651cd467877e7f518f2807e[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Wed Feb 25 14:51:52 2026 +0700
+
+    thongkedoanhthu chưa làm sao diện
+
+[33mcommit 442907e8b38b35b8dd21ef49d771fbfbbf17d4fd[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Mon Feb 23 19:48:59 2026 +0700
+
+    chinh lai ten cac cot
+
+[33mcommit bca8a8b72aa03c39b56e62781228f0d22b23a376[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Mon Feb 23 19:48:27 2026 +0700
+
+    Delete dienthoai.sql
+
+[33mcommit bbcf1ceebd92c2aad48b50d87377b9a3d32e9f55[m
+Merge: 90b4317 5e2f045
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Feb 22 21:01:32 2026 +0700
+
+    Merge CHDT/main into main
+
+[33mcommit 90b43172e0c6f83b30ed1ef46a01943b4a1ba3d0[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Feb 22 21:00:38 2026 +0700
+
+    thongkesanpham
+
+[33mcommit 5e2f04519c7fe83ccdb5443ab4b24cae6069291a[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Sun Feb 22 20:26:53 2026 +0700
+
+    Add files via upload
+    
+    Sua lai ten cac cot
+
+[33mcommit 100f97c2660b99d8c14231902d28b9d8979db013[m
+Author: Lương Triệu Phát <luongphat1123@gmail.com>
+Date:   Sun Feb 22 20:26:06 2026 +0700
+
+    Delete dienthoai.sql
+
+[33mcommit c1c71ed3f21b6aa2585dd2893bf59ebeed2c252d[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sun Feb 22 20:25:43 2026 +0700
+
+    thongkesanphamxong
+
+[33mcommit 6f2efa64287f4a9c3bcd0bd64d157f1c7fbd988a[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sat Feb 14 16:15:17 2026 +0700
+
+    thongkesanpham
+
+[33mcommit 9c9c1f3330b91fe6d40dad47ce8f7471819239ad[m
+Author: luongphatlp <luongphat1123@gmail.com>
+Date:   Sat Feb 14 15:21:45 2026 +0700
+
+    GUI moi
