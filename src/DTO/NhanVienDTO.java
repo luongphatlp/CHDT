@@ -55,12 +55,12 @@ public class NhanVienDTO {
 
 
 
-    public String getHotenNV() {
+    public String getHoTenNV() {
         return hotenNV;
     }
 
 
-    public void setHotenNV(String hotenNV) {
+    public void setHoTenNV(String hotenNV) {
         this.hotenNV = hotenNV;
     }
 

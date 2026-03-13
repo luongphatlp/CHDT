@@ -555,7 +555,7 @@ public class HomeUserUI extends javax.swing.JFrame {
         SuaNhanVienUI suaForm = new SuaNhanVienUI();
         
         String ma = nvDN.getMaNV();
-        String hoten = nvDN.getHotenNV();
+        String hoten = nvDN.getHoTenNV();
         String email = nvDN.getEmailNV();
         java.util.Date ns = nvDN.getNgaySinh();
         String cv = nvDN.getChucVu();

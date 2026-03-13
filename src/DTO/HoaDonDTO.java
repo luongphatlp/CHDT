@@ -14,13 +14,15 @@ public class HoaDonDTO {
     private String MaHD;
     private Date Ngay;
     private String MaNV;
-    private String TongTien;
+    private String MaKH;
+    private int TongTien;
     private String PTTT;
 
-    public HoaDonDTO(String MaHD, Date Ngay, String MaNV, String TongTien, String PTTT) {
+    public HoaDonDTO(String MaHD, Date Ngay, String MaNV,String MaKH, int TongTien, String PTTT) {
         this.MaHD = MaHD;
         this.Ngay = Ngay;
         this.MaNV = MaNV;
+        this.MaKH=MaKH;
         this.TongTien = TongTien;
         this.PTTT = PTTT;
     }
@@ -52,11 +54,11 @@ public class HoaDonDTO {
         this.MaNV = MaNV;
     }
 
-    public String getTongTien() {
+    public int getTongTien() {
         return TongTien;
     }
 
-    public void setTongTien(String TongTien) {
+    public void setTongTien(int TongTien) {
         this.TongTien = TongTien;
     }
 
@@ -68,4 +70,6 @@ public class HoaDonDTO {
         this.PTTT = PTTT;
     }
     
+    public String    getMaKH(){return MaKH;} 
+    public void setMaKH(String makh){this.MaKH=makh;}
 }

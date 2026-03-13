@@ -23,7 +23,7 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
         java.sql.PreparedStatement pst = conn.prepareStatement(qry)) {
         
         pst.setString(1, nv.getMaNV());
-        pst.setString(2, nv.getHotenNV());
+        pst.setString(2, nv.getHoTenNV());
         pst.setString(3, nv.getEmailNV());
         pst.setDate(4, (java.sql.Date) nv.getNgaySinh());
         pst.setString(5, nv.getChucVu());
@@ -46,7 +46,7 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
        try(Connection conn = Connect.getConnection();
         java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
         
-        pst.setString(1, nv.getHotenNV());
+        pst.setString(1, nv.getHoTenNV());
         pst.setString(2, nv.getEmailNV());
         java.sql.Date sqlDate = new java.sql.Date(nv.getNgaySinh().getTime());
         pst.setDate(3, sqlDate);
@@ -86,7 +86,7 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
             while (rs.next()){
                 NhanVienDTO nv = new NhanVienDTO();
                 nv.setMaNV(rs.getString(1));
-                nv.setHotenNV(rs.getString(2));
+                nv.setHoTenNV(rs.getString(2));
                 nv.setEmailNV(rs.getString(3));
                 nv.setNgaySinh(rs.getDate(4));
                 nv.setChucVu(rs.getString(5));
