@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import DTO.NhapHangDTO;
 import DTO.DienThoaiDTO;
+import java.util.Vector;
 /**
  *
  * @author Admin
@@ -95,27 +96,28 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
         }
         return ds;
     }
-    public ArrayList<DienThoaiDTO> getAll(){
+    public ArrayList<Vector> getAll(){
 
-        ArrayList<DienThoaiDTO> list = new ArrayList<>();
+        ArrayList<Vector> list = new ArrayList<>();
 
         try{
-
-            String sql = "SELECT Ma, Ten, DonGia FROM dienthoai";
-
             Connection con = Connect.getConnection();
+            String sql = "SELECT Ma, Ten, DonGia FROM dienthoai";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()){
-
+                Vector vector = new Vector();
                 DienThoaiDTO dt = new DienThoaiDTO();
 
                 dt.setMa(rs.getString("Ma"));
                 dt.setTen(rs.getString("Ten"));
                 dt.setDonGia(rs.getInt("DonGia"));
-
-                list.add(dt);
+                vector.add(dt.getMa());
+                vector.add(dt.getTen());
+                vector.add(dt.getDonGia());
+                
+                list.add(vector);
             }
 
         }catch(Exception e){
@@ -123,5 +125,5 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
         }
 
         return list;
-}    
+    }    
 }

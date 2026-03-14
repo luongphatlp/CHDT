@@ -6,15 +6,17 @@ package GUI;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
 import DTO.NhapHangDTO;
-import BUS.SanPhamBUS;
 import BUS.DienThoaiBUS;
 import DTO.DienThoaiDTO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -37,36 +39,26 @@ public class NhapHangUI extends javax.swing.JPanel {
         jTextField3.setEditable(false);
         //loadNhaCungCap(); 
     }
-    public void loadTableSanPham(ArrayList<NhapHangDTO> ds){
+    public void loadTableSanPham(ArrayList<Vector> ds){
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
 
-        for(NhapHangDTO nh : ds){
-            model.addRow(new Object[]{
-                nh.getMamay(),
-                nh.getTenmay(),
-                nh.getDongia()
-            });
+        for(Vector nh : ds){
+            model.addRow(nh);
         }
     }
     public void tinhTongTien(){
-        int tong = 0;
-
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        long tong = 0;
 
-        for(int i=0;i<model.getRowCount();i++){
-            int soluong = Integer.parseInt(model.getValueAt(i,3).toString());
+        for(int i = 0; i < model.getRowCount(); i++){
 
-            String masp = model.getValueAt(i,1).toString();
+            long gia = Long.parseLong(model.getValueAt(i, 4).toString());
+            tong += gia;
 
-            for(NhapHangDTO nh : NhapHangBUS.dsnh){
-                if(nh.getMasp().equals(masp)){
-                    tong += nh.getDongia() * soluong;
-                }
-            }
         }
 
-        jLabel5.setText(String.valueOf(tong));
+        jLabel8.setText(String.valueOf(tong));
     }
     public void capNhatSTT(){
 
@@ -97,14 +89,8 @@ public class NhapHangUI extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
 
-        for(DienThoaiDTO dt : bus.dsdt){
-
-            model.addRow(new Object[]{
-                dt.getMa(),
-                dt.getTen(),
-                dt.getDonGia()
-            });
-
+        for(Vector v : bus.dsdt){
+            model.addRow(v);
         }
     }
     /*public void loadNhaCungCap(){
@@ -377,30 +363,28 @@ public class NhapHangUI extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextField2))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(22, 22, 22)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(58, 58, 58)
+                            .addComponent(jLabel4)
+                            .addGap(85, 85, 85)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextField2))
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(22, 22, 22)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(58, 58, 58)
-                                    .addComponent(jLabel4)
-                                    .addGap(85, 85, 85)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jSeparator1)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 234, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,8 +405,8 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -476,7 +460,7 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(227, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,11 +494,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
         jTextField1.setText("");
-
-        NhapHangBUS bus = new NhapHangBUS();
-        bus.docDSNH();
-
-        loadTableSanPham(NhapHangBUS.dsnh);
+        loadDienThoai();
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -592,30 +572,31 @@ public class NhapHangUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
             return;
         }
-
+        int dongia = Integer.parseInt(jTable3.getValueAt(row, 2).toString());
         String masp = jTable3.getValueAt(row,0).toString();
         String tensp = jTable3.getValueAt(row,1).toString();
         int soluong = (int) jSpinner1.getValue();
-
+        int gia = dongia * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
 
         model.addRow(new Object[]{
             model.getRowCount()+1,
             masp,
             tensp,
-            soluong
+            soluong,
+            gia
         });
 
+      
         tinhTongTien();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String tuKhoa = jTextField1.getText();
-    
-        NhapHangBUS bus = new NhapHangBUS();
-        ArrayList<NhapHangDTO> ketQua = bus.timKiem(tuKhoa);
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable3.setRowSorter(sorter);
 
-        loadTableSanPham(ketQua);
+        sorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText()));
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
