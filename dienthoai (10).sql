@@ -642,7 +642,13 @@ ALTER TABLE `nhanvien`
 --
 ALTER TABLE `phieunhap`
   ADD PRIMARY KEY (`MaPN`);
+
+-- Tôi thêm vào đê lấy dữ liệu đơn giá sang 'hang' làm nhập hàng
+SELECT d.Ma, d.Ten, d.DonGia
+FROM dienthoai d
+JOIN hang h ON d.MaHang = h.Ma;
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
