@@ -13,7 +13,10 @@ import DAO.PhieuNhapHangDAO;
  */
 public class PhieuNhapHangBUS {
     public static ArrayList<PhieuNhapHangDTO> dspn;
-    public PhieuNhapHangBUS(){}
+    public PhieuNhapHangBUS(){
+        if(dspn == null){
+         dspn = new ArrayList<>();}
+    }
     public void docDSPN() {
         PhieuNhapHangDAO data = new PhieuNhapHangDAO();
         if(dspn == null) dspn = new ArrayList<PhieuNhapHangDTO>();
@@ -52,6 +55,15 @@ public class PhieuNhapHangBUS {
             }
         }
         return false; // Không tìm thấy
+    }
+    public boolean kiemTraMaPN(String mapn){
+
+        for(PhieuNhapHangDTO pn : dspn){
+            if(pn.getMapn().equals(mapn)){
+                return true;
+            }
+        }
+        return false;
     }
     public ArrayList<PhieuNhapHangDTO> timKiem(int tuKhoa) {
         ArrayList<PhieuNhapHangDTO> ketQua = new ArrayList<>();

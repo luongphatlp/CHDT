@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import DTO.NhapHangDTO;
+import DTO.DienThoaiDTO;
 /**
  *
  * @author Admin
@@ -93,5 +94,34 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
             System.getLogger(NhapHangDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return ds;
-    }    
+    }
+    public ArrayList<DienThoaiDTO> getAll(){
+
+        ArrayList<DienThoaiDTO> list = new ArrayList<>();
+
+        try{
+
+            String sql = "SELECT Ma, Ten, DonGia FROM dienthoai";
+
+            Connection con = Connect.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()){
+
+                DienThoaiDTO dt = new DienThoaiDTO();
+
+                dt.setMa(rs.getString("Ma"));
+                dt.setTen(rs.getString("Ten"));
+                dt.setDonGia(rs.getInt("DonGia"));
+
+                list.add(dt);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
+}    
 }

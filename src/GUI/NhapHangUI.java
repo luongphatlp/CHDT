@@ -3,6 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import BUS.NhapHangBUS;
+import BUS.PhieuNhapHangBUS;
+import DTO.NhapHangDTO;
+import BUS.SanPhamBUS;
+import BUS.DienThoaiBUS;
+import DTO.DienThoaiDTO;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,8 +32,94 @@ public class NhapHangUI extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         initComponents();
+        loadDienThoai();
+        jTextField3.setText(taoMaPhieuNhap());
+        jTextField3.setEditable(false);
+        //loadNhaCungCap(); 
     }
+    public void loadTableSanPham(ArrayList<NhapHangDTO> ds){
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
 
+        for(NhapHangDTO nh : ds){
+            model.addRow(new Object[]{
+                nh.getMamay(),
+                nh.getTenmay(),
+                nh.getDongia()
+            });
+        }
+    }
+    public void tinhTongTien(){
+        int tong = 0;
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        for(int i=0;i<model.getRowCount();i++){
+            int soluong = Integer.parseInt(model.getValueAt(i,3).toString());
+
+            String masp = model.getValueAt(i,1).toString();
+
+            for(NhapHangDTO nh : NhapHangBUS.dsnh){
+                if(nh.getMasp().equals(masp)){
+                    tong += nh.getDongia() * soluong;
+                }
+            }
+        }
+
+        jLabel5.setText(String.valueOf(tong));
+    }
+    public void capNhatSTT(){
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        for(int i = 0; i < model.getRowCount(); i++){
+            model.setValueAt(i+1, i, 0);
+        }
+    }
+    public String taoMaPhieuNhap() {
+
+        Random rd = new Random();
+        String ma;
+        PhieuNhapHangBUS bus = new PhieuNhapHangBUS();
+        do{
+            int so = 10000 + rd.nextInt(90000);
+            ma = "PN" + so;
+
+        }while(bus.kiemTraMaPN(ma));
+
+        return ma;
+    }
+    public void loadDienThoai(){
+
+        DienThoaiBUS bus = new DienThoaiBUS();
+        bus.docDS();
+
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0);
+
+        for(DienThoaiDTO dt : bus.dsdt){
+
+            model.addRow(new Object[]{
+                dt.getMa(),
+                dt.getTen(),
+                dt.getDonGia()
+            });
+
+        }
+    }
+    /*public void loadNhaCungCap(){
+
+        NhaCungCapDAO dao = new NhaCungCapDAO();
+
+        ArrayList<NhaCungCapDTO> ds = dao.selectAll();
+
+        cbNhaCungCap.removeAllItems();
+
+        for(NhaCungCapDTO ncc : ds){
+
+            cbNhaCungCap.addItem(ncc);
+        }
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,6 +189,11 @@ public class NhapHangUI extends javax.swing.JPanel {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
 
@@ -194,6 +297,18 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel3.setText("Nhà cung cấp:");
 
         jLabel4.setText("Ngày:");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -394,7 +509,12 @@ public class NhapHangUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        // TODO add your handling code here:
+        jTextField1.setText("");
+
+        NhapHangBUS bus = new NhapHangBUS();
+        bus.docDSNH();
+
+        loadTableSanPham(NhapHangBUS.dsnh);
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -406,11 +526,35 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable2.getSelectedRow();
+    
+        if(row == -1){
+            JOptionPane.showMessageDialog(this,"Chọn sản phẩm cần sửa");
+            return;
+        }
+
+        int soluong = (int) jSpinner1.getValue();
+
+        jTable2.setValueAt(soluong,row,3);
+ 
+        tinhTongTien();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable2.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm cần xóa");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        model.removeRow(row);
+
+        capNhatSTT();
+
+        tinhTongTien();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -418,13 +562,82 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        String maPN = jTextField3.getText();
+        /*NhaCungCapDTO ncc = (NhaCungCapDTO) cbNhaCungCap.getSelectedItem();
+        String maNCC = ncc.getMa();*/
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String ngay = sdf.format(jDateChooser1.getDate());
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        NhapHangBUS bus = new NhapHangBUS();
+
+        for(int i=0;i<model.getRowCount();i++){
+
+            NhapHangDTO nh = new NhapHangDTO();
+
+            nh.setMasp(model.getValueAt(i,1).toString());
+            nh.setTensp(model.getValueAt(i,2).toString());
+            nh.setSoluong(Integer.parseInt(model.getValueAt(i,3).toString()));
+
+            bus.them(nh);
+        }
+
+        JOptionPane.showMessageDialog(this,"Nhập hàng thành công");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable3.getSelectedRow();
+    
+        if(row == -1){
+            JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
+            return;
+        }
+
+        String masp = jTable3.getValueAt(row,0).toString();
+        String tensp = jTable3.getValueAt(row,1).toString();
+        int soluong = (int) jSpinner1.getValue();
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+        model.addRow(new Object[]{
+            model.getRowCount()+1,
+            masp,
+            tensp,
+            soluong
+        });
+
+        tinhTongTien();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String tuKhoa = jTextField1.getText();
+    
+        NhapHangBUS bus = new NhapHangBUS();
+        ArrayList<NhapHangDTO> ketQua = bus.timKiem(tuKhoa);
+
+        loadTableSanPham(ketQua);
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("Test Nhập Hàng");
+
+        NhapHangUI panel = new NhapHangUI();
+
+        frame.add(panel);
+
+        frame.setSize(1200,700);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;
