@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/OkCancelDialog.java to edit this template
- */
+
 package GUI;
 
 import java.awt.event.ActionEvent;
@@ -11,56 +8,97 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.InputMap;
+import BUS.SanPhamBUS;
+import DTO.SanPhamDTO;
 
-/**
- *
- * @author THANH NHAN
- */
 public class ThemSPUI extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ThemSPUI.class.getName());
-
-    /**
-     * A return status code - returned if Cancel button has been pressed
-     */
     public static final int RET_CANCEL = 0;
-    /**
-     * A return status code - returned if OK button has been pressed
-     */
     public static final int RET_OK = 1;
-
-    /**
-     * Creates new form ThemNCCUI
-     */
     public ThemSPUI() {
-        com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
-        initComponents();
-
-        // Close the dialog when Esc is pressed
-        String cancelName = "cancel";
-        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
-        ActionMap actionMap = getRootPane().getActionMap();
-        actionMap.put(cancelName, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doClose(RET_CANCEL);
-            }
-        });
+    try {
+        com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+    } catch (Exception ex) {
+        ex.printStackTrace();
     }
+    
+    initComponents(); 
+    this.setLayout(new java.awt.BorderLayout());
 
-    /**
-     * @return the return status of this dialog - one of RET_OK or RET_CANCEL
-     */
+    this.add(jPanel2, java.awt.BorderLayout.NORTH);
+
+    JScrollPane scroll = new JScrollPane(jPanel1);
+    scroll.setBorder(null); 
+    scroll.getVerticalScrollBar().setUnitIncrement(16); 
+    this.add(scroll, java.awt.BorderLayout.CENTER); 
+
+    JPanel pnFooter = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 15));
+    pnFooter.setBackground(java.awt.Color.WHITE);
+    pnFooter.add(okButton);
+    pnFooter.add(cancelButton);
+    this.add(pnFooter, java.awt.BorderLayout.SOUTH);
+
+    this.setSize(750, 750); 
+    this.setLocationRelativeTo(null);
+
+    formatComponents();
+    setupEscKey();    
+}
+
+private void formatComponents() {
+    javax.swing.JLabel[] labels = {
+         jLabel3, jLabel4, jLabel10, jLabel11, jLabel12, jLabel5, 
+         jLabel7, jLabel16, jLabel13, jLabel14, jLabel8, jLabel9, 
+         jLabel15, jLabel17, jLabel2
+    };
+    for (javax.swing.JLabel label : labels) {
+        label.setForeground(new java.awt.Color(40, 40, 40));
+        label.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 15));
+    }
+    
+    javax.swing.JTextField[] textFields = {
+        jTextField1, jTextField2, jTextField4, jTextField5, jTextField6, 
+        jTextField7, jTextField8, jTextField9, jTextField10, jTextField11
+    };
+    for (javax.swing.JTextField txt : textFields) {
+        txt.setBackground(java.awt.Color.WHITE);
+        txt.setForeground(java.awt.Color.BLACK); 
+        txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 154, 133), 1));
+    }
+}
+
+private void setupEscKey() {
+    String cancelName = "cancel";
+    javax.swing.InputMap inputMap = getRootPane().getInputMap(javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    inputMap.put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0), cancelName);
+    javax.swing.ActionMap actionMap = getRootPane().getActionMap();
+    actionMap.put(cancelName, new javax.swing.AbstractAction() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            doClose(RET_CANCEL);
+        }
+    });
+}
+    
+    private JPanel createGroupPanel(String title) {
+        JPanel panel = new JPanel(new java.awt.GridLayout(0, 2, 20, 15));
+        panel.setBackground(java.awt.Color.WHITE);
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 154, 133)), 
+            title, 0, 0, new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14), new java.awt.Color(25, 154, 133)
+        ));
+        return panel;
+    }
+    
     public int getReturnStatus() {
         return returnStatus;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -433,7 +471,41 @@ public class ThemSPUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
+        try {
+        String ma = jTextField1.getText().trim();
+        String ten = jTextField4.getText().trim();
+        int soLuong = (int) jSpinner1.getValue();
+        int gia = Integer.parseInt(jTextField11.getText().trim());
+        SanPhamDTO sp = new SanPhamDTO(ma, ten, soLuong, gia, "Cái", "H1");
+        sp.setMau(jTextField5.getText().trim());
+        sp.setManHinh(jTextField7.getText().trim());
+        sp.setKichThuoc(jTextField8.getText().trim());
+        sp.setChip(jTextField2.getText().trim());
+        sp.setRam(jComboBox2.getSelectedItem().toString());
+        sp.setBoNhoNgoai(Integer.parseInt(jComboBox4.getSelectedItem().toString().replaceAll("[^0-9]", "")));
+        sp.setCamTruoc(Integer.parseInt(jTextField9.getText().trim().replaceAll("[^0-9]", "")));
+        sp.setCamSau(Integer.parseInt(jTextField10.getText().trim().replaceAll("[^0-9]", "")));
+        sp.setPin(Integer.parseInt(jTextField6.getText().trim().replaceAll("[^0-9]", "")));
+        sp.setHeDieuHanh(jComboBox1.getSelectedItem().toString());
+        sp.setBaoHanh(Integer.parseInt(jComboBox3.getSelectedItem().toString().replaceAll("[^0-9]", "")));
+
+        if(ma.isEmpty() || ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Mã và Tên!");
+            return;
+        }
+        SanPhamBUS spBUS = new SanPhamBUS();
+
+        if (spBUS.themChiTiet(sp)) { 
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm và cấu hình thành công!");
+            doClose(RET_OK);
+        } else {
+            JOptionPane.showMessageDialog(this, "Mã sản phẩm đã tồn tại!");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi: Giá tiền, Pin, Camera phải nhập số!");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+    }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
