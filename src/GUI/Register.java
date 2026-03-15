@@ -352,7 +352,7 @@ public class Register extends javax.swing.JFrame {
         nvDTO.setMaNV(maNV);
         tkDTO.setMaNV(maNV);
         
-        nvDTO.setHotenNV(hoten);
+        nvDTO.setHoTenNV(hoten);
         nvDTO.setEmailNV(email);
         
         java.sql.Date sqlNgaySinh = new java.sql.Date(ngaysinh.getTime());

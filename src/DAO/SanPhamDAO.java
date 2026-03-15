@@ -32,16 +32,19 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
         }
         return result;
     }
+
     public int delete(String ma){
         int result=0;
         try(Connection conn=Connect.getConnection()) {
-            String qry="Delete from dienthoai where Ma=?";
-            PreparedStatement st=conn.prepareStatement(qry);
-            st.setString(1, ma);
-            result=st.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }      
+            String qryChiTiet = "DELETE FROM chitietdienthoai WHERE Ma=?";
+            PreparedStatement st1 = conn.prepareStatement(qryChiTiet);
+            st1.setString(1, ma);
+            st1.executeUpdate();
+            String qryChinh = "DELETE FROM dienthoai WHERE Ma=?";
+            PreparedStatement st2 = conn.prepareStatement(qryChinh);
+            st2.setString(1, ma);
+            result = st2.executeUpdate();
+        } catch (SQLException ex) { ex.printStackTrace(); }      
         return result;
     }
 
@@ -51,23 +54,24 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
     }
 
     @Override
-    public int update(SanPhamDTO sp){
-        int result=0; 
-        try(Connection conn=Connect.getConnection()) {
-            String qry="Update dienthoai Set Ten=?,DonGia=?,DonViTinh=?,MaHang=? WHERE Ma=?";
-            PreparedStatement st=conn.prepareStatement(qry);
-            int index=1;
-            st.setString(index++, sp.getTenSP()); 
-            st.setInt(index++, sp.getDonGia());  
-            st.setString(index++, sp.getDonViTinh());
-            st.setString(index++, sp.getMaHang());
-            st.setString(index++, sp.getMaSP());
-            result=st.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return result;
+public int update(SanPhamDTO sp){
+    int result=0; 
+    try(Connection conn=Connect.getConnection()) {
+        String qry="UPDATE dienthoai SET Ten=?, SoLuong=?, DonGia=?, DonViTinh=?, MaHang=? WHERE Ma=?";
+        PreparedStatement st=conn.prepareStatement(qry);
+        int index=1;
+        st.setString(index++, sp.getTenSP()); 
+        st.setInt(index++, sp.getSoLuong());
+        st.setInt(index++, sp.getDonGia());  
+        st.setString(index++, sp.getDonViTinh());
+        st.setString(index++, sp.getMaHang());
+        st.setString(index++, sp.getMaSP());
+        result=st.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+    return result;
+}
 
     @Override
     public ArrayList<SanPhamDTO> selectAll(){
@@ -113,5 +117,79 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
             ex.printStackTrace();
         }
         return ds;
+    }
+    public SanPhamDTO selectChiTietByMa(String ma) {
+    SanPhamDTO sp = null;
+    String qry = "SELECT dt.*, ct.* FROM dienthoai dt " +
+                 "JOIN chitietdienthoai ct ON dt.Ma = ct.Ma " +
+                 "WHERE dt.Ma = ?";
+    try (Connection conn = Connect.getConnection();
+         PreparedStatement st = conn.prepareStatement(qry)) {
+        st.setString(1, ma);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            sp = new SanPhamDTO();
+
+            sp.setMaSP(rs.getString("Ma"));
+            sp.setTenSP(rs.getString("Ten"));
+            sp.setDonGia(rs.getInt("DonGia"));
+            sp.setMaHang(rs.getString("MaHang"));
+            sp.setMau(rs.getString("Mau"));
+            sp.setManHinh(rs.getString("ManHinh"));
+            sp.setKichThuoc(rs.getString("KichThuocManHinh"));
+            sp.setChip(rs.getString("TenChip"));
+            sp.setRam(rs.getString("BoNhoTrong"));
+            sp.setBoNhoNgoai(rs.getInt("BoNhoNgoai"));
+            sp.setCamTruoc(rs.getInt("CameraTruoc"));
+            sp.setCamSau(rs.getInt("CameraSau"));
+            sp.setPin(rs.getInt("Pin"));
+            sp.setHeDieuHanh(rs.getString("HeDieuHanh"));
+            sp.setBaoHanh(rs.getInt("ThoiHanBaoHanh"));
+        }
+    } catch (SQLException ex) { ex.printStackTrace(); }
+    return sp;
+    }
+    public int insertChiTiet(SanPhamDTO sp) {
+        int result = 0;
+        String qry = "INSERT INTO chitietdienthoai (Ma, Mau, ManHinh, KichThuocManHInh, TenChip, BoNhoTrong, BoNhoNgoai, CameraTruoc, CameraSau, Pin, HeDieuHanh, ThoiHanBaoHanh) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = Connect.getConnection();
+             PreparedStatement st = conn.prepareStatement(qry)) {
+             st.setString(1, sp.getMaSP());
+             st.setString(2, sp.getMau());
+             st.setString(3, sp.getManHinh());
+             st.setString(4, sp.getKichThuoc());
+             st.setString(5, sp.getChip());
+             st.setString(6, sp.getRam());
+             st.setInt(7, sp.getBoNhoNgoai());
+             st.setInt(8, sp.getCamTruoc());
+             st.setInt(9, sp.getCamSau());
+             st.setInt(10, sp.getPin());
+             st.setString(11, sp.getHeDieuHanh());
+             st.setInt(12, sp.getBaoHanh());
+             result = st.executeUpdate();
+        } catch (SQLException ex) { ex.printStackTrace(); }
+        return result;
+    }
+    public int updateChiTiet(SanPhamDTO sp) {
+       int result = 0;
+       String qry = "UPDATE chitietdienthoai SET Mau=?, ManHinh=?, KichThuocManHInh=?, TenChip=?, BoNhoTrong=?, BoNhoNgoai=?, CameraTruoc=?, CameraSau=?, Pin=?, HeDieuHanh=?, ThoiHanBaoHanh=? WHERE Ma=?";
+       try (Connection conn = Connect.getConnection();
+            PreparedStatement st = conn.prepareStatement(qry)) {
+            st.setString(1, sp.getMau());
+            st.setString(2, sp.getManHinh());
+            st.setString(3, sp.getKichThuoc());
+            st.setString(4, sp.getChip());
+            st.setString(5, sp.getRam());
+            st.setInt(6, sp.getBoNhoNgoai());
+            st.setInt(7, sp.getCamTruoc());
+            st.setInt(8, sp.getCamSau());
+            st.setInt(9, sp.getPin());
+            st.setString(10, sp.getHeDieuHanh());
+            st.setInt(11, sp.getBaoHanh());
+            st.setString(12, sp.getMaSP());
+            result = st.executeUpdate();
+        } catch (SQLException ex) { ex.printStackTrace(); }
+        return result;
     }
 }

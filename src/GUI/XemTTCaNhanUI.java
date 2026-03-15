@@ -330,7 +330,7 @@ public class XemTTCaNhanUI extends javax.swing.JDialog {
         
         NhanVienDTO nvCaNhan = DTO.TaiKhoanSession.nvDangNhap;
         String ma = nvCaNhan.getMaNV();
-        String hoten = nvCaNhan.getHotenNV();
+        String hoten = nvCaNhan.getHoTenNV();
         String email = nvCaNhan.getEmailNV();
         java.util.Date ns = nvCaNhan.getNgaySinh();
         

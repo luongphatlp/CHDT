@@ -144,15 +144,17 @@ public class KhachHangUI extends javax.swing.JDialog {
 
         jTextField1.setBackground(new java.awt.Color(230, 230, 230));
         jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setText("\n");
 
         jTextField2.setBackground(new java.awt.Color(230, 230, 230));
         jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.setText("\n");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         jTextField3.setBackground(new java.awt.Color(230, 230, 230));
         jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField3.setText("\n");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -233,6 +235,10 @@ public class KhachHangUI extends javax.swing.JDialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void doClose(int retStatus) {
         returnStatus = retStatus;

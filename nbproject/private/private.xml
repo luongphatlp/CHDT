@@ -35,6 +35,10 @@
             <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaNhanVienUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/NhanVienUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/Register.java</file>
+            <file>file:/D:/projectnetbean/CHDT/.gitignore</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ChiTietKhuyenMaiBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietKhuyenMaiDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/SanPhamDTO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -11,6 +11,9 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- Tạo database và sử dụng nó
+CREATE DATABASE IF NOT EXISTS `dienthoai` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `dienthoai`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +24,6 @@ SET time_zone = "+00:00";
 -- Cơ sở dữ liệu: `dienthoai`
 --
 
--- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `baohanh`
@@ -573,7 +575,7 @@ ALTER TABLE `chitietdienthoai`
 -- Chỉ mục cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  ADD PRIMARY KEY (`MaHD`);
+  ADD PRIMARY KEY (`MaHD`, `MaSP`);
 
 --
 -- Chỉ mục cho bảng `chitietkhuyenmai`
@@ -585,9 +587,15 @@ ALTER TABLE `chitietkhuyenmai`
 -- Chỉ mục cho bảng `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  ADD PRIMARY KEY (`MaPN`);
+  ADD PRIMARY KEY (`MaPN`, `MaSP`);
 
 --
+-- Chỉ mục cho bảng `taikhoan`
+--
+ALTER TABLE `taikhoan`
+  ADD PRIMARY KEY (`Ma`);
+--
+
 -- Chỉ mục cho bảng `dienthoai`
 --
 ALTER TABLE `dienthoai`
@@ -634,7 +642,13 @@ ALTER TABLE `nhanvien`
 --
 ALTER TABLE `phieunhap`
   ADD PRIMARY KEY (`MaPN`);
+
+-- Tôi thêm vào đê lấy dữ liệu đơn giá sang 'hang' làm nhập hàng
+SELECT d.Ma, d.Ten, d.DonGia
+FROM dienthoai d
+JOIN hang h ON d.MaHang = h.Ma;
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

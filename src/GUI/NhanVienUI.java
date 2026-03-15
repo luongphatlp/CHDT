@@ -285,7 +285,7 @@ public class NhanVienUI extends javax.swing.JPanel {
                 Vector<Object> row = new Vector<>();
                 row.add(i++);
                 row.add(nv.getMaNV());
-                row.add(nv.getHotenNV());
+                row.add(nv.getHoTenNV());
                 row.add(nv.getEmailNV());
                 row.add(nv.getNgaySinh());
                 row.add(nv.getChucVu());
@@ -310,7 +310,7 @@ public class NhanVienUI extends javax.swing.JPanel {
                 Vector<Object> row = new Vector<>();
                 row.add(i++);
                 row.add(nv.getMaNV());
-                row.add(nv.getHotenNV());
+                row.add(nv.getHoTenNV());
                 row.add(nv.getEmailNV());
                 row.add(nv.getNgaySinh());
                 row.add(nv.getChucVu());      
@@ -463,7 +463,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             Vector<Object> row = new Vector<>();
             row.add(i++);
             row.add(nv.getMaNV());
-            row.add(nv.getHotenNV());
+            row.add(nv.getHoTenNV());
             row.add(nv.getEmailNV());
             row.add(nv.getNgaySinh().toString());
             row.add(nv.getChucVu());

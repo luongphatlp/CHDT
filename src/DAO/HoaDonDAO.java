@@ -43,10 +43,9 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
     
     public ArrayList<DienThoaiDTO> selectAllDienThoai() {
         ArrayList<DienThoaiDTO> ds = new ArrayList<>();
-        Connection con = new Connect().getConnection();
         String sql = "SELECT Ma, Ten, SoLuong, DonGia FROM dienthoai";
         //System.out.println("Connection: " + con);
-        try {
+        try(Connection con = new Connect().getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -69,7 +68,25 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
 
     @Override
     public ArrayList<HoaDonDTO> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<HoaDonDTO> ds=new ArrayList<>();
+        try(Connection conn=Connect.getConnection()){
+            String qry="SELECT MaHD, Ngay, MaNV, MaKH, TongTien, PTTT FROM hoadon";
+            PreparedStatement ps=conn.prepareStatement(qry);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                HoaDonDTO hd=new HoaDonDTO();
+                hd.setMaHD(rs.getString("MaHD"));
+                hd.setNgay(rs.getDate("Ngay"));
+                hd.setMaNV(rs.getString("MaNV"));
+                hd.setMaKH(rs.getString("MaKH"));
+                hd.setTongTien(rs.getInt("TongTien"));
+                hd.setPTTT(rs.getString("PTTT"));
+                ds.add(hd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
     }
 
 }

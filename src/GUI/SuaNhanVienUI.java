@@ -304,7 +304,7 @@ public class SuaNhanVienUI extends javax.swing.JDialog {
         NhanVienDTO nvDTO = new NhanVienDTO();
         
         nvDTO.setMaNV(ma);
-        nvDTO.setHotenNV(ten);
+        nvDTO.setHoTenNV(ten);
         nvDTO.setEmailNV(email);
         
         java.sql.Date sqlNgaySinh = new java.sql.Date(ngaySinh.getTime());

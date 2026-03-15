@@ -17,6 +17,7 @@ public class NhanVienBUS {
     public ArrayList<NhanVienDTO> getDSNV(){
         return dsnv;
     }
+    
     //constructer
     public NhanVienBUS(){
         NhanVienDAO data;
@@ -28,10 +29,11 @@ public class NhanVienBUS {
             }
     }
     
-    public void docDSNV(){
+    public ArrayList<NhanVienDTO> docDSNV(){
         NhanVienDAO data;
         data = new NhanVienDAO();
         dsnv = data.selectAll();      
+        return dsnv;
     }
     
     public String maTuDong(){      
@@ -59,7 +61,7 @@ public class NhanVienBUS {
     public boolean kiemTraHopLe(NhanVienDTO nvDTO){
        
         //kiem tra tren ho va ten trong
-        if(nvDTO.getHotenNV().trim().isEmpty() || nvDTO.getHotenNV().isEmpty()){
+        if(nvDTO.getHoTenNV().trim().isEmpty() || nvDTO.getHoTenNV().isEmpty()){
             
             return false;
         }
@@ -149,7 +151,7 @@ public class NhanVienBUS {
         for(NhanVienDTO nv : dsnv){
             if(nv.getMaNV().contains(muctieu)){
                 dstk.add(nv);
-            }else if (nv.getHotenNV().contains(muctieu)){
+            }else if (nv.getHoTenNV().contains(muctieu)){
                 dstk.add(nv);
             }else if (nv.getChucVu().contains(muctieu)) {
                 dstk.add(nv);
@@ -184,7 +186,7 @@ public class NhanVienBUS {
     
     public boolean kiemtraEmail(String hoten, String email) {
         for (NhanVienDTO nv : dsnv) {
-            if (!hoten.equals(nv.getHotenNV()) && email.equals(nv.getEmailNV())) 
+            if (!hoten.equals(nv.getHoTenNV()) && email.equals(nv.getEmailNV())) 
                 return false;
            }
         return true;
@@ -192,7 +194,7 @@ public class NhanVienBUS {
     public String layMaNhanVien(String hoten, String email){
         String ma = "";
         for(int i = 0 ; i < dsnv.size() ; i++){
-            if(hoten.equals(dsnv.get(i).getHotenNV()) && email.equals(dsnv.get(i).getEmailNV())){
+            if(hoten.equals(dsnv.get(i).getHoTenNV()) && email.equals(dsnv.get(i).getEmailNV())){
                 ma = dsnv.get(i).getMaNV();
             }
         }
