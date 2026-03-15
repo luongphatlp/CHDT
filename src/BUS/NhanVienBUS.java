@@ -8,6 +8,8 @@ import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JOptionPane;
 
 public class NhanVienBUS {
@@ -50,7 +52,7 @@ public class NhanVienBUS {
         }
         int somoi = soLonNhat + 1;
 
-        return String.format("NV%02d", somoi);
+        return String.format("NV%03d", somoi);
     }
         
      
@@ -158,7 +160,82 @@ public class NhanVienBUS {
         
         return dstk;
     }
-    
+    public ArrayList<NhanVienDTO> timKiemNangCao(String chucVu, String doTuoi, String kieu , String sapXep) {
+        ArrayList<NhanVienDTO> dstknc = new ArrayList<>();
+
+        if (this.dsnv == null) {
+            docDSNV();
+        }
+
+        if (this.dsnv == null) {
+            return dstknc;
+        }
+
+        for (NhanVienDTO nv : dsnv) {
+            boolean matchChucVu = false;
+            boolean matchTuoi = false;
+
+            if (chucVu.equalsIgnoreCase("Chọn chức vụ") || chucVu.trim().isEmpty()) {
+                matchChucVu = true;
+            } else if (nv.getChucVu() != null && nv.getChucVu().toLowerCase().contains(chucVu.toLowerCase())) {
+                matchChucVu = true;
+            }
+
+            int tuoiNhanVien = -1;
+            if (nv.getNgaySinh() != null) {
+                int namSinh = nv.getNgaySinh().getYear() + 1900;
+                tuoiNhanVien = 2026 - namSinh;
+            }
+
+            if (doTuoi.equalsIgnoreCase("Chọn độ tuổi") || doTuoi.trim().isEmpty()) {
+                matchTuoi = true;
+            } else if (doTuoi.equals("18-25") && tuoiNhanVien >= 18 && tuoiNhanVien <= 25) {
+                matchTuoi = true;
+            } else if (doTuoi.equals("26 -30") && tuoiNhanVien >= 26 && tuoiNhanVien <= 30) {
+                matchTuoi = true;
+            } else if (doTuoi.equals("31-45") && tuoiNhanVien >= 31 && tuoiNhanVien <= 45) {
+                matchTuoi = true;
+            } else if (doTuoi.equals("46-60") && tuoiNhanVien >= 46 && tuoiNhanVien <= 60) {
+                matchTuoi = true;
+            }
+
+            if (matchChucVu && matchTuoi) {
+                dstknc.add(nv);
+            }
+            if (!kieu.equalsIgnoreCase("Chọn kiểu") && dstknc.size() > 1) {
+
+                for (int i = 0; i < dstknc.size() - 1; i++) {
+                    for (int j = i + 1; j < dstknc.size(); j++) {
+
+                        NhanVienDTO nv1 = dstknc.get(i);
+                        NhanVienDTO nv2 = dstknc.get(j);
+                        int kqSoSanh = 0;
+
+                        if (kieu.equals("Mã Nhân Viên")) {
+                            kqSoSanh = nv1.getMaNV().compareTo(nv2.getMaNV());
+                        } else if (kieu.equals("Họ Tên")) {
+                            kqSoSanh = nv1.getHotenNV().compareTo(nv2.getHotenNV());
+                        } else if (kieu.equals("Ngày Sinh")) {
+                            if (nv1.getNgaySinh() != null && nv2.getNgaySinh() != null) {
+                                kqSoSanh = nv1.getNgaySinh().compareTo(nv2.getNgaySinh());
+                            }
+                        }
+
+                        if (sapXep.equals("Giảm dần")) {
+                            kqSoSanh = -kqSoSanh;
+                        }
+
+                        if (kqSoSanh > 0) {
+                            dstknc.set(i, nv2);
+                            dstknc.set(j, nv1);
+                        }
+                    }
+                }
+            }
+        }
+        return dstknc;
+    }
+
     public void sapXep(String kieuSapXep){
         java.util.Collections.sort(dsnv, new java.util.Comparator<NhanVienDTO>(){
             @Override
