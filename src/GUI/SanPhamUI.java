@@ -29,6 +29,7 @@ public class SanPhamUI extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         initComponents();
+        customTable();
         loadDataToTable(spBUS.getDS());
     }
     public void loadDataToTable(ArrayList<SanPhamDTO> ds) {
@@ -39,6 +40,7 @@ public class SanPhamUI extends javax.swing.JPanel {
                 sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), sp.getDonGia(), sp.getDonViTinh(), sp.getMaHang()
             });
         }
+        resizeColumnWidth(jTable1);
     }
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -135,7 +137,7 @@ public class SanPhamUI extends javax.swing.JPanel {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(820, 90));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã", "Tên" }));
 
         btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); 
         btnreset.setText("Làm mới");
@@ -258,33 +260,28 @@ public class SanPhamUI extends javax.swing.JPanel {
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                String text = jTextField1.getText();
-                loadDataToTable(spBUS.timKiem(text, 0, 0)); 
-            }
+                String text = jTextField1.getText().trim();
+                int index = jComboBox1.getSelectedIndex(); 
+                loadDataToTable(spBUS.timKiem(text, index)); 
+            } 
         });
 
         jButton3.addActionListener(e -> {
-    int row = jTable1.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần sửa!");
-        return;
-    }
+            int row = jTable1.getSelectedRow();
+            if (row == -1) {
+               JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần sửa!");
+               return;
+            }
+            String ma = jTable1.getValueAt(row, 0).toString();
+            SanPhamDTO spFull = spBUS.getChiTiet(ma); 
+            if (spFull != null) {
+                SuaSPUI suaForm = new SuaSPUI(spFull, this, this.spBUS);
+                suaForm.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu chi tiết của sản phẩm này!");
+            }
+        });
 
-    String ma = jTable1.getValueAt(row, 0).toString();
-    
-    SanPhamDTO spSelected = null;
-    for(SanPhamDTO sp : spBUS.getDS()) {
-        if(sp.getMaSP().equals(ma)) {
-            spSelected = sp;
-            break;
-        }
-    }
-    
-    if (spSelected != null) {
-        SuaSPUI suaForm = new SuaSPUI(spSelected, this, this.spBUS);
-        suaForm.setVisible(true);
-    }
-    });
     jButton5.addActionListener(e -> {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Chọn file Excel để nhập");
@@ -321,6 +318,37 @@ public class SanPhamUI extends javax.swing.JPanel {
         }
     });
     }
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable1.setFont(tableFont);
+        jTable1.setRowHeight(30);
+
+        jTable1.getTableHeader().setOpaque(false);
+        jTable1.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+
+    private void resizeColumnWidth(javax.swing.JTable table) {
+        final javax.swing.table.TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; 
+            for (int row = 0; row < table.getRowCount(); row++) {
+                javax.swing.table.TableCellRenderer renderer = table.getCellRenderer(row, column);
+                java.awt.Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 15, width);
+            }
+            if (width > 400) {
+                width = 400; 
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {
         jTextField1.setText("");
@@ -330,14 +358,27 @@ public class SanPhamUI extends javax.swing.JPanel {
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        ThemSPUI them = new ThemSPUI ();
-        them.setVisible(true);
+         ThemSPUI them = new ThemSPUI();
+         them.setVisible(true);
+         if (them.getReturnStatus() == ThemSPUI.RET_OK) {
+             spBUS.docDS();
+              loadDataToTable(spBUS.getDS());
+        }
     }
-
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {
-        ChiTietSanPhamUI s = new ChiTietSanPhamUI();
-        s.setVisible(true);
-    }
+        int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xem!");
+            return;
+        }
+        String ma = jTable1.getValueAt(row, 0).toString();
+        SanPhamDTO spFull = spBUS.getChiTiet(ma); 
+    
+        if (spFull != null) {
+             ChiTietSanPhamUI detailForm = new ChiTietSanPhamUI(spFull);
+             detailForm.setVisible(true);
+        }
+     }
 
 
 
