@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import javax.swing.JFrame;
+import BUS.PhieuNhapHangBUS;
+import DTO.PhieuNhapHangDTO;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import BUS.NhaCungCapBUS;
+import DTO.NhaCungCapDTO;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author THANH NHAN
@@ -17,8 +27,50 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
+        loadTable();
     }
+    NhaCungCapBUS busNCC = new NhaCungCapBUS();
+    PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
+    public String getTenNCC(String maNCC){
+        busNCC.docDS();
+        
+        for(NhaCungCapDTO ncc : busNCC.ds){
+            if(ncc.getMaNCC().equals(maNCC)){
+                return ncc.getTenNCC();
+            }
+        }
 
+        return maNCC;
+    }
+    public void loadTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        busPN.docDSPN();
+        busNCC.docDS();
+        ArrayList<PhieuNhapHangDTO> dspn = busPN.dspn;
+
+        int stt = 1;
+        
+        for(PhieuNhapHangDTO pn : dspn){
+            model.addRow(new Object[]{
+                stt++,
+                pn.getMapn(),
+                getTenNCC(pn.getMancc()),
+                pn.getManv(),
+                pn.getNgay(),
+                pn.getTongtien()
+            });
+        }
+    }
+    public void capNhatSTT(){
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        for(int i = 0; i < model.getRowCount(); i++){
+            model.setValueAt(i+1, i, 0);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -375,17 +427,67 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm cần xóa");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        model.removeRow(row);
+
+        capNhatSTT();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập cần sửa");
+            return;
+        }
+
+        String mapn = jTable1.getValueAt(row,1).toString();
+        NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
+        String maNCC = ncc.getMaNCC();
+
+        String maNV = jComboBox1.getSelectedItem().toString();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String ngay = sdf.format(jDateChooser1.getDate());
+        PhieuNhapHangBUS bus = new PhieuNhapHangBUS();
+        PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
+
+        pn.setMapn(mapn);
+        pn.setMancc(maNCC);
+        pn.setManv(maNV);
+        pn.setNgay(ngay);
+        bus.docDSPN();
+        bus.sua(pn);
+
+        JOptionPane.showMessageDialog(this,"Sửa thành công");
+
+        loadTable();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+    public static void main(String[] args) {
 
+        JFrame frame = new JFrame("Test Phiếu Nhập Hàng");
+
+        PhieuNhapUI panel = new PhieuNhapUI();
+
+        frame.add(panel);
+
+        frame.setSize(1200,700);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;

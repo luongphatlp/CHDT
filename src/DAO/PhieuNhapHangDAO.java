@@ -24,12 +24,12 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
     public int insert(PhieuNhapHangDTO pnh){
         int result = 0;
         try(Connection conn = Connect.getConnection()){
-            String qry = "INSERT INTO phieunhaphang(MaPhieu, Ngay, MaNhanVien, MaNCC, TongTien) VALUES ("
-            + "'" + pnh.getMapn() + "'"
-            + "'" + pnh.getNgay() + "'"
-            + "'" + pnh.getManv() + "'"
-            + "'" + pnh.getMancc() + "'"
-            + "'" + pnh.getTongtien() + "'";
+            String qry = "INSERT INTO phieunhap(MaPN, Ngay, MaNV, MaNCC, TongTien) VALUES ("
+            + "'" + pnh.getMapn() + "',"
+            + "'" + pnh.getNgay() + "',"
+            + "'" + pnh.getManv() + "',"
+            + "'" + pnh.getMancc() + "',"
+            + "'" + pnh.getTongtien() + "')";
             Statement st = conn.createStatement();
             result = st.executeUpdate(qry);
         }catch (SQLException ex) {
@@ -41,12 +41,12 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
     @Override
     public int update(PhieuNhapHangDTO pnh) {
         int result=0;
-        String qry="Update phieunhaphang Set";
+        String qry="Update phieunhap Set";
         qry+=" "+"Ngay="+"'"+pnh.getNgay()+"'";
-        qry+=","+"MaNhanVien="+"'"+pnh.getManv()+"'";
+        qry+=","+"MaNV="+"'"+pnh.getManv()+"'";
         qry+=","+"MaNCC="+"'"+pnh.getMancc()+"'";
         qry+=","+"TongTien="+"'"+pnh.getTongtien()+"'";
-        qry+=" WHERE MaPhieuNhap='"+pnh.getMapn()+"'";
+        qry+=" WHERE MaPN='"+pnh.getMapn()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -59,7 +59,7 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
     @Override
     public int delete(PhieuNhapHangDTO pnh) {
         int result=0;
-        String qry="Delete from phieunhaphang where MaPhieuNhap='"+pnh.getMapn()+"'";
+        String qry="Delete from phieunhap where MaPN='"+pnh.getMapn()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -71,14 +71,14 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
     @Override
     public ArrayList<PhieuNhapHangDTO> selectAll() {
         ArrayList<PhieuNhapHangDTO> ds=new ArrayList<>();
-        String qry="Select * from phieunhaphang";
+        String qry="Select * from phieunhap";
         try(Connection conn=Connect.getConnection()){
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qry);
             while(rs.next()){
                 PhieuNhapHangDTO pnh=new PhieuNhapHangDTO();
                 pnh.setMapn(rs.getString(1));
-                pnh.setNgay(rs.getInt(2));
+                pnh.setNgay(rs.getString(2));
                 pnh.setManv(rs.getString(3));
                 pnh.setMancc(rs.getString(4));
                 pnh.setTongtien(rs.getInt(5));

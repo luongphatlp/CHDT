@@ -8,7 +8,7 @@ import DTO.NhaCungCapDTO;
 import java.util.ArrayList;
 
 public class NhaCungCapBUS {
-    private ArrayList<NhaCungCapDTO> ds;
+    public ArrayList<NhaCungCapDTO> ds;
     private NhaCungCapDAO dao = new NhaCungCapDAO();
 
     public NhaCungCapBUS() {

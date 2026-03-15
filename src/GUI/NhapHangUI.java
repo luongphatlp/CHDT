@@ -11,6 +11,7 @@ import BUS.NhaCungCapBUS;
 import DAO.NhaCungCapDAO;
 import DTO.DienThoaiDTO;
 import DTO.NhaCungCapDTO;
+import DTO.PhieuNhapHangDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -59,16 +60,22 @@ public class NhapHangUI extends javax.swing.JPanel {
     }
     public void tinhTongTien(){
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        jLabel8.setText(String.valueOf(getTongTien()));
+    }
+    public long getTongTien(){
+
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         long tong = 0;
 
-        for(int i = 0; i < model.getRowCount(); i++){
+        for(int i=0;i<model.getRowCount();i++){
 
-            long gia = Long.parseLong(model.getValueAt(i, 4).toString());
+            long gia = Long.parseLong(model.getValueAt(i,4).toString());
             tong += gia;
 
         }
 
-        jLabel8.setText(String.valueOf(tong));
+        return tong;
     }
     public void capNhatSTT(){
 
@@ -579,15 +586,24 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        System.out.println("Da bam nut Nhap hang");
+        
+        
         String maPN = jTextField3.getText();
+        System.out.println("MaPN: " + maPN);
+        String maNV = jTextField2.getText();
         NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
         String maNCC = ncc.getMaNCC();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String ngay = sdf.format(jDateChooser1.getDate());
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-
-        NhapHangBUS bus = new NhapHangBUS();
-
+        if(model.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this,"Chưa có sản phẩm để nhập");
+            return;
+        }
+        
+        NhapHangBUS bus = new NhapHangBUS();   
+        bus.docDSNH();
         for(int i=0;i<model.getRowCount();i++){
 
             NhapHangDTO nh = new NhapHangDTO();
@@ -599,6 +615,17 @@ public class NhapHangUI extends javax.swing.JPanel {
 
             bus.them(nh);
         }
+        long tongTien = getTongTien();
+        PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
+        pn.setMapn(maPN);
+        pn.setMancc(maNCC);
+        pn.setManv(maNV);
+        pn.setNgay(ngay);
+        pn.setTongtien((int) tongTien);
+
+        PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
+        busPN.docDSPN();
+        busPN.them(pn);
         int confirm = JOptionPane.showConfirmDialog(
             this,
             "Bạn có muốn xuất file PDF không?",
