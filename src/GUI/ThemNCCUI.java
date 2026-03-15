@@ -23,6 +23,26 @@ public class ThemNCCUI extends javax.swing.JDialog {
         initComponents();
         setModal(true); 
         setLocationRelativeTo(null); 
+        
+        javax.swing.JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel6};
+        for (javax.swing.JLabel lbl : labels) {
+            lbl.setForeground(new java.awt.Color(50, 50, 50)); 
+            lbl.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 15)); // Chữ đậm, không in nghiêng
+        }
+        javax.swing.JTextField[] textFields = {jTextField1, jTextField2, jTextField3, jTextField4};
+        for (javax.swing.JTextField txt : textFields) {
+            txt.setBackground(java.awt.Color.WHITE);
+            txt.setForeground(java.awt.Color.BLACK); 
+            txt.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 16));
+
+            txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(151, 180, 198), 2));
+
+            txt.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        }
+
+        okButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
