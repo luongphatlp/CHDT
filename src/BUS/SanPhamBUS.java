@@ -42,16 +42,13 @@ public class SanPhamBUS {
     }
 
     public boolean sua(SanPhamDTO sp) {
-        if (dao.update(sp) > 0) {
-            for (int i = 0; i < ds.size(); i++) {
-                if (ds.get(i).getMaSP().equals(sp.getMaSP())) {
-                    ds.set(i, sp);
-                    return true;
-                }
-            }
-        }
-        return false;
+    if (dao.update(sp) > 0) { 
+        dao.updateChiTiet(sp); 
+        docDS(); 
+        return true;
     }
+    return false;
+}
 
     public boolean xoa(String ma) {
         if (dao.delete(ma) > 0) {
@@ -64,21 +61,20 @@ public class SanPhamBUS {
         return dao.selectSanPhamKhongTrongKhuyenMai(ma);
     }
 
-    public ArrayList<SanPhamDTO> timKiem(String text, int giaTu, int giaDen) {
-        ArrayList<SanPhamDTO> ketQua = new ArrayList<>();
-        String searchLower = text.toLowerCase().trim();
-        
-        for (SanPhamDTO sp : ds) {
-            boolean matchesText = sp.getTenSP().toLowerCase().contains(searchLower) 
-                               || sp.getMaSP().toLowerCase().contains(searchLower);
-            boolean matchesPrice = (giaTu <= 0 || sp.getDonGia() >= giaTu) 
-                                && (giaDen <= 0 || sp.getDonGia() <= giaDen);          
-            if (matchesText && matchesPrice) {
-                ketQua.add(sp);
+    public ArrayList<SanPhamDTO> timKiem(String text, int index) {
+       ArrayList<SanPhamDTO> ketQua = new ArrayList<>();
+       String search = text.toLowerCase().trim();
+       for (SanPhamDTO sp : ds) {
+            boolean match = false;
+            switch (index) {
+                case 0: match = sp.getTenSP().toLowerCase().contains(search) || sp.getMaSP().toLowerCase().contains(search); break;
+                case 1: match = sp.getMaSP().toLowerCase().contains(search); break;
+                case 2: match = sp.getTenSP().toLowerCase().contains(search); break;
             }
+            if (match) ketQua.add(sp);
         }
         return ketQua;
-    }
+        }
     public void xuatExcel(File file) throws IOException {
     Workbook workbook = new XSSFWorkbook();
     Sheet sheet = workbook.createSheet("Danh sách điện thoại");
@@ -122,12 +118,31 @@ public class SanPhamBUS {
                 sp.setDonGia((int) row.getCell(3).getNumericCellValue());
                 sp.setDonViTinh(row.getCell(4).getStringCellValue());
                 sp.setMaHang(row.getCell(5).getStringCellValue());
+                DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+                ct.setMau("Chưa xác định");
+                ct.setManHinh("Chưa xác định");
+                ct.setChip("Chưa xác định");
+                ct.setRam("N/A");
+                ct.setHeDieuHanh("Android");
                 
-                if (them(sp)) {
+                if (themChiTiet(sp)) {
                 count++;
                 }
             }
         }
         return count;
+    }
+    public SanPhamDTO getChiTiet(String ma) {
+        return dao.selectChiTietByMa(ma);
+    }
+
+    public boolean themChiTiet(SanPhamDTO sp) {
+       if (checkMaSP(sp.getMaSP())) return false;
+       if (dao.insert(sp) > 0) {
+           dao.insertChiTiet(sp); 
+           ds.add(sp);
+          return true;
+        }
+        return false;
     }
 }
