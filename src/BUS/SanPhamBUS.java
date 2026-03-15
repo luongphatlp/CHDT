@@ -118,11 +118,12 @@ public class SanPhamBUS {
                 sp.setDonGia((int) row.getCell(3).getNumericCellValue());
                 sp.setDonViTinh(row.getCell(4).getStringCellValue());
                 sp.setMaHang(row.getCell(5).getStringCellValue());
-                sp.setMau("Chưa xác định");
-                sp.setManHinh("Chưa xác định");
-                sp.setChip("Chưa xác định");
-                sp.setRam("N/A");
-                sp.setHeDieuHanh("Android");
+                DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+                ct.setMau("Chưa xác định");
+                ct.setManHinh("Chưa xác định");
+                ct.setChip("Chưa xác định");
+                ct.setRam("N/A");
+                ct.setHeDieuHanh("Android");
                 
                 if (themChiTiet(sp)) {
                 count++;
