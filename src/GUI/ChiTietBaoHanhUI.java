@@ -256,7 +256,7 @@ public class ChiTietBaoHanhUI extends javax.swing.JDialog {
         int thoiHan = Integer.parseInt(model.getValueAt(0, 2).toString().replaceAll("[^0-9]", ""));
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
+            //ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
         }
 
         BUS.BaoHanhBUS bus = new BUS.BaoHanhBUS();

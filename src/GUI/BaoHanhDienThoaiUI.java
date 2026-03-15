@@ -97,7 +97,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnreset)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +121,11 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
@@ -301,11 +306,8 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel10Layout.createSequentialGroup()
@@ -375,7 +377,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1286, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     public void refreshTable() {
@@ -401,6 +403,10 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
     private void btnreset2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreset2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnreset2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     public void loadDataToTable() {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();

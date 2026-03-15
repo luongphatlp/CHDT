@@ -76,7 +76,13 @@ public class HoaDonBUS {
             }
         return null;
     }
-public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String manv,
+    public String taoMaHD(){
+        if(ds.size()<10)
+            return "HD0"+ds.size();
+        else
+            return "HD"+ds.size();
+    }
+public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         Date tungay,Date denngay,int tugia,int dengia){
 
     ArrayList<HoaDonDTO> tam = new ArrayList<>();
@@ -97,9 +103,10 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String manv,
         if(pttt != null && !pttt.equals(""))
             ktpttt = pttt.equals(hd.getPTTT());
 
-        if(manv != null && !manv.equals(""))
+        if(nv != null && !nv.equals("")){
+            String manv=nv.split("-")[0];
             ktmanv = manv.equals(hd.getMaNV());
-
+        }
         if(tungay != null && denngay != null)
             ktngay = !tungay.after(hd.getNgay()) && !denngay.before(hd.getNgay());
         else if(tungay != null)
@@ -119,5 +126,26 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String manv,
     public ArrayList<NhanVienDTO> getDSNV(){
         NhanVienBUS bus=new NhanVienBUS();
         return bus.docDSNV();
+    }
+    public KhachHangDTO layKhachHangBySDT(String sdt){
+        KhachHangBUS buskh= new KhachHangBUS();
+        for(KhachHangDTO kh:buskh.getDSKH()){
+            if(sdt.equals(kh.getDt())){
+                return kh;
+            }
+        }
+        return null;
+    }
+    public String taoMaKH(){
+        KhachHangBUS bus=new KhachHangBUS();
+        int size=bus.getDSKH().size();
+        if(size <10)
+            return "KH0"+size;
+        else 
+            return "KH"+size;
+    }
+    public void themKH(KhachHangDTO kh){
+        KhachHangBUS bus=new KhachHangBUS();
+        bus.insert(kh);
     }
 }

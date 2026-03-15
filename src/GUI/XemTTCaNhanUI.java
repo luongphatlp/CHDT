@@ -326,9 +326,9 @@ public class XemTTCaNhanUI extends javax.swing.JDialog {
     
     public void hienthithongtin(){// muc dich tao mot cong de tiep nhan thong tin tu hamsuathongtin
         
-        DTO.TaiKhoanSession.capnhat();
+        UTIL.TaiKhoanSession.capnhat();
         
-        NhanVienDTO nvCaNhan = DTO.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nvCaNhan = UTIL.TaiKhoanSession.nvDangNhap;
         String ma = nvCaNhan.getMaNV();
         String hoten = nvCaNhan.getHoTenNV();
         String email = nvCaNhan.getEmailNV();
