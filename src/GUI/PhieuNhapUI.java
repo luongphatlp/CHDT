@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -28,6 +31,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         initComponents();
         loadTable();
+        loadComboMapn();
     }
     NhaCungCapBUS busNCC = new NhaCungCapBUS();
     PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
@@ -62,6 +66,16 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                 pn.getTongtien()
             });
         }
+        capNhatSTT();
+    }
+    public void loadComboMapn(){
+
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Tất cả");
+
+        for(PhieuNhapHangDTO pn : busPN.getDS()){
+            jComboBox1.addItem(pn.getMapn());
+        }
     }
     public void capNhatSTT(){
 
@@ -69,6 +83,61 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         for(int i = 0; i < model.getRowCount(); i++){
             model.setValueAt(i+1, i, 0);
+        }
+    }
+    public void locDuLieu(){
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        Date ngayTu = jDateChooser1.getDate();
+        Date ngayDen = jDateChooser2.getDate();
+
+        long giaTu = 0;
+        long giaDen = Long.MAX_VALUE;
+
+        try{
+            if(!jTextField3.getText().trim().isEmpty())
+                giaTu = Long.parseLong(jTextField3.getText());
+        }catch(Exception e){}
+
+        try{
+            if(!jTextField2.getText().trim().isEmpty())
+                giaDen = Long.parseLong(jTextField2.getText());
+        }catch(Exception e){}
+
+        int stt = 1;
+
+        for(PhieuNhapHangDTO pn : busPN.getDS()){
+
+            try{
+
+                Date ngayPN = new SimpleDateFormat("yyyy-MM-dd").parse(pn.getNgay());
+                long tongTien = pn.getTongtien();
+
+                boolean hopLe = true;
+
+                if(ngayTu != null && ngayPN.before(ngayTu))
+                    hopLe = false;
+
+                if(ngayDen != null && ngayPN.after(ngayDen))
+                    hopLe = false;
+
+                if(tongTien < giaTu || tongTien > giaDen)
+                    hopLe = false;
+
+                if(hopLe){
+                    model.addRow(new Object[]{
+                        stt++,
+                        pn.getMapn(),
+                        getTenNCC(pn.getMancc()),
+                        pn.getManv(),
+                        pn.getNgay(),
+                        pn.getTongtien()
+                    });
+                }
+
+            }catch(Exception e){}
         }
     }
     /**
@@ -191,6 +260,22 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jPanel3.setPreferredSize(new java.awt.Dimension(820, 90));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
         btnreset.setText("Làm mới");
@@ -207,7 +292,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jComboBox1, 0, 270, Short.MAX_VALUE)
+                .addComponent(jComboBox1, 0, 269, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -230,6 +315,18 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setText("Từ:");
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
+            }
+        });
+
+        jDateChooser2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser2PropertyChange(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel2.setText("Đến:");
@@ -270,6 +367,23 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Đến:");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -423,7 +537,17 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField3.setText("");
+        jTextField2.setText("");
+
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
+        TableRowSorter<?> sorter = (TableRowSorter<?>) jTable1.getRowSorter();
+        if (sorter != null) {
+            sorter.setRowFilter(null); // bỏ filter
+        }
+        loadTable();
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -450,31 +574,100 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         }
 
         String mapn = jTable1.getValueAt(row,1).toString();
-        NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
-        String maNCC = ncc.getMaNCC();
 
-        String maNV = jComboBox1.getSelectedItem().toString();
+        PhieuNhapHangDTO pn = null;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ngay = sdf.format(jDateChooser1.getDate());
-        PhieuNhapHangBUS bus = new PhieuNhapHangBUS();
-        PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
+        for(PhieuNhapHangDTO p : busPN.getDS()){
+            if(p.getMapn().equals(mapn)){
+                pn = p;
+                break;
+            }
+        }
 
-        pn.setMapn(mapn);
-        pn.setMancc(maNCC);
-        pn.setManv(maNV);
-        pn.setNgay(ngay);
-        bus.docDSPN();
-        bus.sua(pn);
-
-        JOptionPane.showMessageDialog(this,"Sửa thành công");
-
-        loadTable();
+        if(pn != null){
+            new SuaPNUI(pn,this,busPN).setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+
+        if(row == -1){
+            javax.swing.JOptionPane.showMessageDialog(this,"Hãy chọn một phiếu nhập");
+            return;
+        }
+
+        String mapn = jTable1.getValueAt(row,1).toString();
+
+        PhieuNhapHangDTO pn = null;
+
+        for(PhieuNhapHangDTO p : busPN.getDS()){
+            if(p.getMapn().equals(mapn)){
+                pn = p;
+                break;
+            }
+        }
+
+        ChiTietPNUI ui = new ChiTietPNUI();
+        ui.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+
+        String text = jTextField1.getText().trim();
+
+        if(text.length() == 0){
+            sorter.setRowFilter(null); // hiện lại toàn bộ bảng
+        }else{
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text)); 
+            // (?i) = tìm không phân biệt hoa thường
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        locDuLieu();
+    }//GEN-LAST:event_jDateChooser1PropertyChange
+
+    private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+        locDuLieu();
+    }//GEN-LAST:event_jDateChooser2PropertyChange
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        locDuLieu();
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        locDuLieu();
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        Object selected = jComboBox1.getSelectedItem();
+
+        if(selected == null) return;
+
+        String mapn = selected.toString();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+
+        if(mapn.equals("Tất cả")){
+            sorter.setRowFilter(null);
+        }else{
+            sorter.setRowFilter(RowFilter.regexFilter("^" + mapn + "$", 1));
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Test Phiếu Nhập Hàng");

@@ -22,6 +22,9 @@ public class PhieuNhapHangBUS {
         if(dspn == null) dspn = new ArrayList<PhieuNhapHangDTO>();
         dspn = data.selectAll();
     }
+    public ArrayList<PhieuNhapHangDTO> getDS(){
+        return dspn;
+    }
     public void them(PhieuNhapHangDTO pn){
         for (PhieuNhapHangDTO p : dspn) {
             if (p.getMapn().equals((pn.getMapn()))) {
