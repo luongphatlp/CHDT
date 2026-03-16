@@ -40,7 +40,7 @@ public class SanPhamUI extends javax.swing.JPanel {
                 sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), sp.getDonGia(), sp.getDonViTinh(), sp.getMaHang()
             });
         }
-        resizeColumnWidth(jTable1);
+        resizeColumnWidth(jTable1); 
     }
     @SuppressWarnings("unchecked")
     private void initComponents() {
