@@ -30,8 +30,24 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
+        customTable();
         loadTable();
         loadComboMapn();
+    }
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable1.setFont(tableFont);
+        jTable1.setRowHeight(30);
+
+        jTable1.getTableHeader().setOpaque(false);
+        jTable1.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
     NhaCungCapBUS busNCC = new NhaCungCapBUS();
     PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();

@@ -43,10 +43,35 @@ public class NhapHangUI extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         initComponents();
+        customTable();
         loadDienThoai();
         jTextField3.setText(taoMaPhieuNhap());
         jTextField3.setEditable(false);
         loadNhaCungCap(); 
+    }
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable2.setFont(tableFont);
+        jTable2.setRowHeight(30);
+
+        jTable2.getTableHeader().setOpaque(false);
+        jTable2.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+            jTable2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        jTable3.setFont(tableFont);
+        jTable3.setRowHeight(30);
+
+        jTable3.getTableHeader().setOpaque(false);
+        jTable3.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < jTable3.getColumnCount(); i++) {
+            jTable3.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
     public void loadTableSanPham(ArrayList<Vector> ds){
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
@@ -588,9 +613,7 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-         NhapHangUI ui = new NhapHangUI();
-        ui.setVisible(true);       
+              
         String maPN = jTextField3.getText();
         System.out.println("MaPN: " + maPN);
         String maNV = jTextField2.getText();
