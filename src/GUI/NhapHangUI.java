@@ -8,8 +8,6 @@ import BUS.PhieuNhapHangBUS;
 import DTO.NhapHangDTO;
 import BUS.DienThoaiBUS;
 import BUS.NhaCungCapBUS;
-import DAO.NhaCungCapDAO;
-import DTO.DienThoaiDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
 import com.itextpdf.text.Document;
@@ -538,6 +536,10 @@ public class NhapHangUI extends javax.swing.JPanel {
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
         jTextField1.setText("");
+        TableRowSorter<?> sorter = (TableRowSorter<?>) jTable3.getRowSorter();
+        if (sorter != null) {
+            sorter.setRowFilter(null); // bỏ filter
+        }
         loadDienThoai();
     }//GEN-LAST:event_btnresetActionPerformed
 
@@ -586,9 +588,9 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        System.out.println("Da bam nut Nhap hang");
         
-        
+         NhapHangUI ui = new NhapHangUI();
+        ui.setVisible(true);       
         String maPN = jTextField3.getText();
         System.out.println("MaPN: " + maPN);
         String maNV = jTextField2.getText();
