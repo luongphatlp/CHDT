@@ -44,7 +44,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jTable1.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
 
         javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }

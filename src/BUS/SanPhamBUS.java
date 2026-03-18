@@ -144,4 +144,9 @@ public class SanPhamBUS {
         }
         return false;
     }
+    public void tangSoLuong(String masp, int soluong){
+
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.updateSoLuong(masp, soluong);
+    }
 }

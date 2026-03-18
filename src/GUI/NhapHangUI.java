@@ -8,6 +8,7 @@ import BUS.PhieuNhapHangBUS;
 import DTO.NhapHangDTO;
 import BUS.DienThoaiBUS;
 import BUS.NhaCungCapBUS;
+import BUS.SanPhamBUS;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
 import com.itextpdf.text.Document;
@@ -59,7 +60,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         jTable2.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
 
         javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
         for (int i = 0; i < jTable2.getColumnCount(); i++) {
             jTable2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -68,7 +69,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
         jTable3.getTableHeader().setOpaque(false);
         jTable3.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
-        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
         for (int i = 0; i < jTable3.getColumnCount(); i++) {
             jTable3.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -626,19 +627,21 @@ public class NhapHangUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this,"Chưa có sản phẩm để nhập");
             return;
         }
-        
+        SanPhamBUS spBus = new SanPhamBUS();
         NhapHangBUS bus = new NhapHangBUS();   
         bus.docDSNH();
         for(int i=0;i<model.getRowCount();i++){
 
             NhapHangDTO nh = new NhapHangDTO();
-
+            String masp = model.getValueAt(i,1).toString();
+            int soluong = Integer.parseInt(model.getValueAt(i,3).toString());
             
             nh.setMasp(model.getValueAt(i,1).toString());
             nh.setTensp(model.getValueAt(i,2).toString());
             nh.setSoluong(Integer.parseInt(model.getValueAt(i,3).toString()));
 
             bus.them(nh);
+            spBus.tangSoLuong(masp, soluong);
         }
         long tongTien = getTongTien();
         PhieuNhapHangDTO pn = new PhieuNhapHangDTO();

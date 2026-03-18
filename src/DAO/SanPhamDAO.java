@@ -192,4 +192,17 @@ public int update(SanPhamDTO sp){
         } catch (SQLException ex) { ex.printStackTrace(); }
         return result;
     }
+    public void updateSoLuong(String masp, int soluongThem){
+
+        String sql = "UPDATE dienthoai SET SoLuong = SoLuong + ? WHERE Ma = ?";
+
+        try{Connection conn = Connect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, soluongThem);
+            ps.setString(2, masp);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
