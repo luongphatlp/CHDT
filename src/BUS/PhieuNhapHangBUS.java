@@ -79,4 +79,8 @@ public class PhieuNhapHangBUS {
         }
         return ketQua;
     }
+    public PhieuNhapHangDTO getByID(String maPN) {
+        PhieuNhapHangDAO dao = new PhieuNhapHangDAO();
+        return dao.getByID(maPN);
+    }
 }

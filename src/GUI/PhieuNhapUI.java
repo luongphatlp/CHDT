@@ -19,7 +19,10 @@ import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
-
+import java.io.*;
+import javax.swing.JFileChooser;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author THANH NHAN
@@ -81,7 +84,8 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                 getTenNCC(pn.getMancc()),
                 pn.getManv(),
                 pn.getNgay(),
-                pn.getTongtien()
+                pn.getTongtien(),
+                "Đang hoạt động"
             });
         }
         capNhatSTT();
@@ -200,6 +204,11 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
@@ -208,6 +217,11 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton6);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
@@ -502,9 +516,9 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
             // ✔ đổi trạng thái
-            model.setValueAt("NO", modelRow, 6);
+            model.setValueAt("Dừng hoạt động", modelRow, 6);
 
-            JOptionPane.showMessageDialog(this, "Đã chuyển trạng thái thành NO");
+            JOptionPane.showMessageDialog(this, "Đã chuyển trạng thái thành Dừng hoạt động");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -534,24 +548,10 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int row = jTable1.getSelectedRow();
-
-        if(row == -1){
-            javax.swing.JOptionPane.showMessageDialog(this,"Hãy chọn một phiếu nhập");
-            return;
-        }
-
-        String mapn = jTable1.getValueAt(row,1).toString();
-
-        PhieuNhapHangDTO pn = null;
-
-        for(PhieuNhapHangDTO p : busPN.getDS()){
-            if(p.getMapn().equals(mapn)){
-                pn = p;
-                break;
-            }
-        }
+        String maPN = jTable1.getValueAt(row, 1).toString();
 
         ChiTietPNUI ui = new ChiTietPNUI();
+        ui.loadData(maPN);
         ui.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -675,6 +675,109 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            try{
+                FileInputStream fis = new FileInputStream(file);
+                Workbook workbook = WorkbookFactory.create(fis);
+                Sheet sheet = workbook.getSheetAt(0);
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0); // clear bảng
+
+                for(int i = 1; i <= sheet.getLastRowNum(); i++){ // bỏ header
+                    Row row = sheet.getRow(i);
+
+                    if(row == null) continue;
+
+                    String mapn = row.getCell(0).toString();
+                    String tenncc = row.getCell(1).toString();
+                    String manv = row.getCell(2).toString();
+                    String ngay = row.getCell(3).toString();
+                    int tongtien = (int) row.getCell(4).getNumericCellValue();
+                    String trangthai = row.getCell(5).toString();
+
+                    model.addRow(new Object[]{
+                        model.getRowCount()+1,
+                        mapn,
+                        tenncc,
+                        manv,
+                        ngay,
+                        tongtien,
+                        trangthai
+                    });
+                }
+
+                workbook.close();
+                fis.close();
+
+                JOptionPane.showMessageDialog(this,"Nhập Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this,"Lỗi đọc file Excel!");
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+                                     
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file");
+
+        if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            // thêm đuôi .xlsx nếu chưa có
+            if(!file.getName().endsWith(".xlsx")){
+                file = new File(file.getAbsolutePath() + ".xlsx");
+            }
+
+            try{
+                Workbook workbook = new XSSFWorkbook();
+                Sheet sheet = workbook.createSheet("PhieuNhap");
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+                // header
+                Row header = sheet.createRow(0);
+                for(int i=0;i<model.getColumnCount();i++){
+                    Cell cell = header.createCell(i);
+                    cell.setCellValue(model.getColumnName(i));
+                }
+
+                // data
+                for(int i=0;i<model.getRowCount();i++){
+                    Row row = sheet.createRow(i+1);
+
+                    for(int j=0;j<model.getColumnCount();j++){
+                        Cell cell = row.createCell(j);
+                        cell.setCellValue(model.getValueAt(i,j).toString());
+                    }
+                }
+
+                FileOutputStream fos = new FileOutputStream(file);
+                workbook.write(fos);
+
+                fos.close();
+                workbook.close();
+
+                JOptionPane.showMessageDialog(this,"Xuất Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this,"Lỗi xuất file Excel!");
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Test Phiếu Nhập Hàng");

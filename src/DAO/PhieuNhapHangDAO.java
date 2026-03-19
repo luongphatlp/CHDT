@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import DTO.PhieuNhapHangDTO;
@@ -89,4 +90,28 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
         }
         return ds;
     }    
+    public PhieuNhapHangDTO getByID(String maPN) {
+        PhieuNhapHangDTO pn = null;
+        String sql = "SELECT * FROM phieunhap WHERE MaPN = ?";
+
+        try (Connection conn = Connect.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, maPN);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pn = new PhieuNhapHangDTO();
+                pn.setMapn(rs.getString("MaPN"));
+                pn.setManv(rs.getString("MaNV"));
+                pn.setMancc(rs.getString("MaNCC"));
+                pn.setNgay(rs.getString("Ngay"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return pn;
+    }
 }

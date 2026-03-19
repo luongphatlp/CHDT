@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import BUS.ChiTietPhieuNhapBUS;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
 import DTO.NhapHangDTO;
 import BUS.DienThoaiBUS;
 import BUS.NhaCungCapBUS;
 import BUS.SanPhamBUS;
+import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
 import com.itextpdf.text.Document;
@@ -17,16 +19,22 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -574,7 +582,54 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if(result == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            try{
+                FileInputStream fis = new FileInputStream(file);
+                Workbook workbook = WorkbookFactory.create(fis);
+                Sheet sheet = workbook.getSheetAt(0);
+
+                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+                for(int i = 1; i <= sheet.getLastRowNum(); i++){ // bỏ dòng tiêu đề
+                    Row row = sheet.getRow(i);
+
+                    if(row == null) continue;
+
+                    String masp = row.getCell(0).toString();
+                    String tensp = row.getCell(1).toString();
+                    int soluong = (int) row.getCell(2).getNumericCellValue();
+                    long dongia = (long) row.getCell(3).getNumericCellValue();
+
+                    long thanhtien = soluong * dongia;
+
+                    model.addRow(new Object[]{
+                        model.getRowCount() + 1,
+                        masp,
+                        tensp,
+                        soluong,
+                        thanhtien
+                    });
+                }
+
+                workbook.close();
+                fis.close();
+
+                tinhTongTien();
+
+                JOptionPane.showMessageDialog(this, "Nhập Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi đọc file Excel!");
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -630,19 +685,6 @@ public class NhapHangUI extends javax.swing.JPanel {
         SanPhamBUS spBus = new SanPhamBUS();
         NhapHangBUS bus = new NhapHangBUS();   
         bus.docDSNH();
-        for(int i=0;i<model.getRowCount();i++){
-
-            NhapHangDTO nh = new NhapHangDTO();
-            String masp = model.getValueAt(i,1).toString();
-            int soluong = Integer.parseInt(model.getValueAt(i,3).toString());
-            
-            nh.setMasp(model.getValueAt(i,1).toString());
-            nh.setTensp(model.getValueAt(i,2).toString());
-            nh.setSoluong(Integer.parseInt(model.getValueAt(i,3).toString()));
-
-            bus.them(nh);
-            spBus.tangSoLuong(masp, soluong);
-        }
         long tongTien = getTongTien();
         PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
         pn.setMapn(maPN);
@@ -654,6 +696,23 @@ public class NhapHangUI extends javax.swing.JPanel {
         PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
         busPN.docDSPN();
         busPN.them(pn);
+        ChiTietPhieuNhapBUS ctBUS = new ChiTietPhieuNhapBUS();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            String maSP = model.getValueAt(i, 1).toString();
+            int soLuong = Integer.parseInt(model.getValueAt(i, 3).toString());
+            long thanhTien = Long.parseLong(model.getValueAt(i, 4).toString());
+
+            ChiTietPhieuNhapDTO ct = new ChiTietPhieuNhapDTO();
+            ct.setMapn(maPN);
+            ct.setMasp(maSP);
+            ct.setSl(soLuong);
+            ct.setTongtien(thanhTien);
+
+            ctBUS.them(ct);
+            spBus.tangSoLuong(maSP, soLuong);
+        }
         int confirm = JOptionPane.showConfirmDialog(
             this,
             "Bạn có muốn xuất file PDF không?",
