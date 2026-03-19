@@ -46,11 +46,11 @@ public class BaoHanhDTO {
         this.makh = makh;
     }
 
-    public LocalDate getNgaylap() {
+    public LocalDate getNgayLap() {
         return ngaylap;
     }
 
-    public void setNgaylap(LocalDate ngaylap) {
+    public void setNgayLap(LocalDate ngaylap) {
         this.ngaylap = ngaylap;
     }
 }

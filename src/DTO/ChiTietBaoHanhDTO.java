@@ -4,7 +4,7 @@
  */
 package DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -14,14 +14,14 @@ public class ChiTietBaoHanhDTO {
 
     private String MaBH;
     private String IMEI;
-    private Date Ngayhethan;
+    private LocalDate Ngayhethan;
 
     // Constructor rỗng
     public ChiTietBaoHanhDTO() {
     }
 
     // Constructor có tham số
-    public ChiTietBaoHanhDTO(String MaBH, String IMEI, Date Ngay) {
+    public ChiTietBaoHanhDTO(String MaBH, String IMEI, LocalDate Ngay) {
         this.MaBH = MaBH;
         this.IMEI = IMEI;
         this.Ngayhethan = Ngay;
@@ -45,11 +45,11 @@ public class ChiTietBaoHanhDTO {
         this.IMEI = IMEI;
     }
 
-    public Date getNgay() {
+    public LocalDate getNgay() {
         return Ngayhethan;
     }
 
-    public void setNgay(Date Ngay) {
+    public void setNgay(LocalDate Ngay) {
         this.Ngayhethan = Ngay;
     }
 }

@@ -195,4 +195,24 @@ public int update(SanPhamDTO sp){
          } catch (SQLException ex) { ex.printStackTrace(); }
          return result;
 }
+    public int truSoLuongSanPham(String maSP, int soLuong) {
+        int result = 0;
+        String sql = "UPDATE dienthoai SET SoLuong = SoLuong - ? WHERE Ma = ? AND SoLuong >= ?";
+
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP);
+            ps.setInt(3, soLuong);
+
+            result = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

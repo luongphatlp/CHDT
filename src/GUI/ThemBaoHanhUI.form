@@ -459,9 +459,10 @@
             <Component class="javax.swing.JTable" name="bangchitietbaohanh">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="0">
+                  <Table columnCount="6" rowCount="0">
                     <Column editable="true" title="STT" type="java.lang.Object"/>
                     <Column editable="true" title="IMEI" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                     <Column editable="true" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                     <Column editable="true" title="Th&#x1edd;i h&#x1ea1;n b&#x1ea3;o h&#xe0;nh" type="java.lang.Object"/>
                     <Column editable="true" title="H&#x1ebf;t h&#x1ea1;n" type="java.lang.Object"/>

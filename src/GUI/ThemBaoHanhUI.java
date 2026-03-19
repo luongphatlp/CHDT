@@ -40,116 +40,67 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     public static final int RET_OK = 1;
     //private int returnStatus = RET_CANCEL;
 
-    public ThemBaoHanhUI(java.awt.Frame parent, boolean modal, DefaultTableModel model,KhachHangDTO kh) {
-        super(parent, modal);
-        com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
-        initComponents();
-        txtmabaohanh.setText(generateRandomString(10));
-        this.modelDuLieu = model;
-
-        String cancelName = "cancel";
-        InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
-        ActionMap actionMap = getRootPane().getActionMap();
-        actionMap.put(cancelName, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doClose(RET_CANCEL);
-            }
-        });
+    public LocalDate tinhNgayHetHan(LocalDate ngay, int thoiHan) {
+        return ngay.plusMonths(thoiHan);
     }
-    public Date tinhNgayHetHan(Date ngay,int thoihan){
-        Calendar cal= Calendar.getInstance();
-        cal.setTime(ngay);
-        cal.add(Calendar.MONDAY, thoihan);
-        Date ngayhethan=cal.getTime();
-        return ngayhethan;
-    }
-    public void veBangChiTietBaoHanh(ArrayList<SanPhamDTO> dssp,Date ngay){
+    public void veBangChiTietBaoHanh(ArrayList<SanPhamDTO> dssp,String ngay){
         SanPhamBUS bus=new SanPhamBUS();
         Vector header=new Vector();
         header.add("STT");
         header.add("IMEI");
+        header.add("Mã sản phẩm");
         header.add("Tên sản phẩm");
         header.add("Thời hạn bảo hành");
         header.add("Hết hạn");
         DefaultTableModel model =new DefaultTableModel(header,0);
         int stt=1;
-        
+        LocalDate hientai=LocalDate.parse(ngay);
         for(SanPhamDTO sp:dssp){
-            Vector row =new Vector();
-            row.add(stt++);
-            row.add("");
-            row.add(sp.getTenSP());
-            int thoihan=bus.layCTSPByMaSP().getThoihan());
-            row.add(thoihan);
-            Date ngayhethan=tinhNgayHetHan(ngay,thoihan);
+            for(int i=1;i<=sp.getSoLuong();i++){
+                Vector row =new Vector();
+                row.add(stt++);
+                row.add("");
+                row.add(sp.getMaSP());
+                row.add(sp.getTenSP());
+                int thoihan=bus.layCTSPByMaSP(sp.getMaSP()).getBaoHanh();
+                row.add(thoihan);
+                LocalDate ngayhethan=tinhNgayHetHan(hientai,thoihan);
+                row.add(ngayhethan);
+                model.addRow(row);
+            }
         }
+        bangchitietbaohanh.setModel(model);
     }
-    public ArrayList<ChiTietBaoHanhDTO> doiSPthanhHD(ArrayList<SanPhamDTO> dssp,String mabh,Date ngay){
-        ArrayList<ChiTietBaoHanhDTO> dsctbh=new ArrayList<>();
-        for(SanPhamDTO sp:dssp){
-            ChiTietBaoHanhDTO ctbh=new ChiTietBaoHanhDTO();
-            ctbh.setMaBH(mabh);
-            ctbh.setIMEI("");
-            
-            Calendar cal= Calendar.getInstance();
-            cal.setTime(ngay);
-            cal.add(Calendar.MONDAY, sp.layCTSPByMaSP().getThoihan());
-            Date ngayhethan=cal.getTime();
-            
-            ctbh.setNgay(ngayhethan);
-            dsctbh.add(ctbh);
-        }
-        return dsctbh;
-    }
-    public ThemBaoHanhUI(HoaDonDTO hd,ArrayList<SanPhamDTO> dssp){
-        String mabh=bus.taoMaBH();
+
+    public ThemBaoHanhUI(String makh, String mahd, ArrayList<SanPhamDTO> dssp) {
+        initComponents();
+        String mabh = bus.taoMaBH();
         txtmabaohanh.setText(mabh);
-        
-        Date now=new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ngay = sdf.format(now);
-        txtngaylap.setText(ngay);
-        txtmahoadon.setText(hd.getMaHD());
-        
-        txtmanhanvien.setText( UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
-        KhachHangDTO kh=bus.getKHByMaKH(hd.getMaKH());
-        txtmakhachhang.setText(hd.getMaKH());
-        txttenkh.setText(kh.getHoten());
-        txtsdt.setText(kh.getDt());
-        txtemail.setText(kh.getEmail());
-        veBangChiTietBaoHanh(dssp,ngay);
-    }
 
-    /**
-     * @return the return status of this dialog - one of RET_OK or RET_CANCEL
-     */
-    private String generateRandomString(int n) {
-        String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder sb = new StringBuilder(n);
-        for (int i = 0; i < n; i++) {
-            int index = (int) (alphaNumeric.length() * Math.random());
-            sb.append(alphaNumeric.charAt(index));
+        LocalDate ngay = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        txtngaylap.setText(ngay.format(formatter));
+
+        txtmahoadon.setText(mahd);
+
+        // Nhân viên
+        if (UTIL.TaiKhoanSession.nvDangNhap != null) {
+            txtmanhanvien.setText(UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
         }
-        return sb.toString();
-    }
 
-    private String generateRandomIMEI() {
-        String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder sb = new StringBuilder(10);
-        for (int i = 0; i < 10; i++) {
-            int index = (int) (alphaNumericString.length() * Math.random());
-            sb.append(alphaNumericString.charAt(index));
+        // Khách hàng
+        KhachHangDTO kh = bus.getKHByMaKH(makh);
+        if (kh != null) {
+            txtmakhachhang.setText(makh);
+            txttenkh.setText(kh.getHoten());
+            txtsdt.setText(kh.getDt());
+            txtemail.setText(kh.getEmail());
         }
-        return sb.toString();
+        String n=ngay.toString();
+        
+        veBangChiTietBaoHanh(dssp, n);
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -330,7 +281,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
 
             },
             new String [] {
-                "STT", "IMEI", "Tên sản phẩm", "Thời hạn bảo hành", "Hết hạn"
+                "STT", "IMEI", "Mã sản phẩm", "Tên sản phẩm", "Thời hạn bảo hành", "Hết hạn"
             }
         ));
         bangchitietbaohanh.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -510,16 +461,17 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         BaoHanhDTO bh=new BaoHanhDTO();
         bh.setMaBH(txtmabaohanh.getText());
         bh.setMaKH(txtmakhachhang.getText());
-        NhanVienDTO nv=new NhanVienDTO();
-        nv=UTIL.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nv=UTIL.TaiKhoanSession.nvDangNhap;
         bh.setMaNV(nv.getMaNV());
         String ngaylap=txtngaylap.getText();
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate date = LocalDate.parse(ngaylap, formatter);
+            bh.setNgayLap(date);
         } catch (java.time.format.DateTimeParseException e) {
             System.out.println("Sai định dạng ngày");
         }
+        bus.insert(bh);
     }
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // Bạn có thể thêm logic kiểm tra dữ liệu ở đây trước khi đóng
@@ -527,7 +479,32 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng không để trống mã bảo hành!");
             return;
         }
-        Ba
+        DefaultTableModel model= (DefaultTableModel) bangchitietbaohanh.getModel();
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i,1).equals("")){
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng không để trống mã IMEI!");
+                return;
+            }
+        }
+        BaoHanhDTO bh=new BaoHanhDTO();
+        String mabh=txtmabaohanh.getText();
+        bh.setMaBH(mabh);
+        bh.setMaKH(txtmakhachhang.getText());
+        bh.setMaNV(txtmanhanvien.getText());
+        bh.setNgayLap(LocalDate.parse(txtngaylap.getText()));
+        bus.insert(bh);
+        
+        ArrayList<ChiTietBaoHanhDTO> ds=new ArrayList<>();
+        for(int i=0;i<model.getRowCount();i++){
+            ChiTietBaoHanhDTO ctbh=new ChiTietBaoHanhDTO();
+            ctbh.setMaBH(mabh);
+            ctbh.setIMEI(model.getValueAt(i, 1).toString());
+            ctbh.setNgay(LocalDate.parse(model.getValueAt(i, 5).toString()));
+            ds.add(ctbh);
+        }
+        
+        bus.insertCTBH(ds);
+       
         // Nếu bạn muốn lưu vào DB ngay tại đây, hãy gọi hàm DAO
         
         // Hoặc đơn giản là đóng dialog và báo về cho HoaDonUI biết là đã xong
@@ -609,39 +586,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ThemBaoHanhUI dialog = new ThemBaoHanhUI(new javax.swing.JFrame(), true,new javax.swing.table.DefaultTableModel());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangchitietbaohanh;

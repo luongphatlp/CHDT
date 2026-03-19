@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
+import DTO.ChiTietSanPhamDTO;
 import java.util.ArrayList;
 
 public class SanPhamBUS {
@@ -144,5 +145,17 @@ public class SanPhamBUS {
           return true;
         }
         return false;
+    }
+    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
+        docDS();
+        for(SanPhamDTO sp:ds){
+            if(sp.getMaSP().equals(masp)){
+                return sp.getChiTiet();
+            }
+        }
+        return null;
+    }
+    public int capNhatSoLuongSanPham(String masp,int soluongtru){
+        return dao.truSoLuongSanPham(masp,soluongtru);
     }
 }

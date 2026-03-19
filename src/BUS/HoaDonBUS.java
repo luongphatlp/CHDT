@@ -1,3 +1,5 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -5,10 +7,14 @@
 package BUS;
 
 import DAO.HoaDonDAO;
-import DAO.NhanVienDAO;
+import DTO.ChiTietHoaDonDTO;
+import DTO.ChiTietKhuyenMaiDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
+import DTO.SanPhamDTO;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -21,8 +27,16 @@ public class HoaDonBUS {
     HoaDonDAO dao=new HoaDonDAO();
     NhanVienBUS busnv=new NhanVienBUS();
     KhachHangBUS buskh=new KhachHangBUS();
+    KhuyenMaiBUS buskm=new  KhuyenMaiBUS();
     ArrayList<HoaDonDTO> ds;
-    public HoaDonBUS(){ ds =new ArrayList<>();}
+    public HoaDonBUS(){
+        ds =new ArrayList<>();
+        buskm.docDS();
+        buskh.getDSKH();
+        busnv.docDSNV();
+    }
+    public void dockm(){buskm.docDS();}
+    
     public ArrayList<HoaDonDTO> getDS(){return ds;}
     public boolean checkSoLuong(int soLuongMua, int soLuongTon) {
         if (soLuongMua <= 0) {
@@ -40,6 +54,7 @@ public class HoaDonBUS {
         return soLuong * donGia;
     }
 
+    
     public int getSoLuongTonTuBang(javax.swing.JTable table, String tenSP) {
         for (int i = 0; i < table.getRowCount(); i++) {
             if (table.getValueAt(i, 1).toString().equals(tenSP)) {
@@ -57,6 +72,9 @@ public class HoaDonBUS {
     public ArrayList<HoaDonDTO> selectAll(){
         ds=dao.selectAll();
         return ds;
+    }
+    public LocalDate chuyenDateThanhLocalDate(Date ngay){
+        return ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
     public NhanVienDTO getNVByMaNV(String manv){
         ArrayList<NhanVienDTO> ds =busnv.getDSNV();
@@ -77,10 +95,7 @@ public class HoaDonBUS {
         return null;
     }
     public String taoMaHD(){
-        if(ds.size()<10)
-            return "HD0"+ds.size();
-        else
-            return "HD"+ds.size();
+        return dao.taoMaHD();
     }
 public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         Date tungay,Date denngay,int tugia,int dengia){
@@ -88,9 +103,10 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     ArrayList<HoaDonDTO> tam = new ArrayList<>();
 
     if(ds == null) selectAll();
-
+    LocalDate tu=chuyenDateThanhLocalDate(tungay);
+    LocalDate den=chuyenDateThanhLocalDate(denngay);
     for(HoaDonDTO hd : ds){
-
+        
         boolean mahd = true;
         boolean ktpttt = true;
         boolean ktmanv = true;
@@ -108,11 +124,11 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
             ktmanv = manv.equals(hd.getMaNV());
         }
         if(tungay != null && denngay != null)
-            ktngay = !tungay.after(hd.getNgay()) && !denngay.before(hd.getNgay());
+            ktngay = !tu.isAfter(hd.getNgay()) && !den.isBefore(hd.getNgay());
         else if(tungay != null)
-            ktngay = !tungay.after(hd.getNgay());
+            ktngay = !tu.isAfter(hd.getNgay());
         else if(denngay != null)
-            ktngay = !denngay.before(hd.getNgay());
+            ktngay = !den.isBefore(hd.getNgay());
 
         if(tugia != 0 || dengia != Integer.MAX_VALUE)
             ktgia = hd.getTongTien() >= tugia && hd.getTongTien() <= dengia;
@@ -147,5 +163,37 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     public void themKH(KhachHangDTO kh){
         KhachHangBUS bus=new KhachHangBUS();
         bus.insert(kh);
+    }
+    public void insertCTHD(ArrayList<ChiTietHoaDonDTO> ds){
+        ChiTietHoaDonBUS bus=new ChiTietHoaDonBUS();
+        for(ChiTietHoaDonDTO cthd:ds)
+            bus.insert(cthd);
+        
+    }
+    public void capNhatSoLuongSanPham(ArrayList<ChiTietHoaDonDTO> ds){
+         SanPhamBUS bus=new SanPhamBUS();
+        for(ChiTietHoaDonDTO cthd:ds)
+         bus.capNhatSoLuongSanPham(cthd.getMaSP(),cthd.getSoLuong());
+    }
+    public ArrayList<SanPhamDTO> selectAllDienThoai(){
+        return dao.selectAllDienThoai();
+    }
+    public int tinhTienSauKhuyenMai(ChiTietHoaDonDTO cthd) {
+        int tongTien = cthd.getSoLuong() * cthd.getDonGia();
+        ArrayList<ChiTietKhuyenMaiDTO> dsKM = buskm.getKMByMaSPConThoiHan(cthd.getMaSP());
+
+        int maxGiam = 0;
+        if (dsKM != null) {
+                           
+            for (ChiTietKhuyenMaiDTO km : dsKM) {
+                int giam = tongTien * km.getPhanTram() / 100;
+                
+                if (giam > maxGiam) {
+                    maxGiam = giam;
+                }
+            }
+        }
+
+        return maxGiam;
     }
 }
