@@ -4,17 +4,14 @@
  */
 package DAO;
 
-import DTO.DienThoaiDTO;
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
 import database.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import static database.Connect.getConnection;
-
+import java.sql.Timestamp;
 /**
  *
  * @author THANH NHAN
@@ -31,7 +28,8 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             PreparedStatement ps = con.prepareStatement(sql);
         ) {
             ps.setString(1, hd.getMaHD());
-            ps.setDate(2, java.sql.Date.valueOf(hd.getNgay()));
+            if(hd.getNgay() != null )
+            ps.setTimestamp(2, Timestamp.valueOf(hd.getNgay()));
             ps.setString(3, hd.getMaNV());
             ps.setString(4, hd.getMaKH());
             ps.setInt(5, hd.getTongTien());
@@ -55,7 +53,7 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             Connection con = Connect.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
         ) {
-            ps.setDate(1, java.sql.Date.valueOf(hd.getNgay()));
+            ps.setTimestamp(1, Timestamp.valueOf(hd.getNgay()));
             ps.setString(2, hd.getMaNV());
             ps.setString(3, hd.getMaKH());
             ps.setInt(4, hd.getTongTien());
@@ -116,7 +114,7 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             while(rs.next()){
                 HoaDonDTO hd=new HoaDonDTO();
                 hd.setMaHD(rs.getString("MaHD"));
-                hd.setNgay(rs.getDate("Ngay").toLocalDate());
+                hd.setNgay(rs.getTimestamp("Ngay").toLocalDateTime());
                 hd.setMaNV(rs.getString("MaNV"));
                 hd.setMaKH(rs.getString("MaKH"));
                 hd.setTongTien(rs.getInt("TongTien"));

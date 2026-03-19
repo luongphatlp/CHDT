@@ -567,6 +567,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         row=bangchitietbaohanh.getSelectedRow();
         if(row!=-1)
             bangchitietbaohanh.setValueAt(imei,row,1);
+        txtimei.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtmakhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmakhachhangActionPerformed
