@@ -2,6 +2,7 @@ package GUI;
 
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanSession;
+import SERVICES.DoiSoLieu;
 import static com.mysql.cj.conf.PropertyKey.logger;
 import java.awt.Color;
 
@@ -681,14 +682,16 @@ public class HomeUI extends javax.swing.JFrame {
         SuaNhanVienUI suaForm = new SuaNhanVienUI();
         
         String ma = nvDN.getMaNV();
-        String hoten = nvDN.getHotenNV();
+        String hoten = nvDN.getHoTenNV();
         String email = nvDN.getEmailNV();
-        java.util.Date ns = nvDN.getNgaySinh();
-        String cv = nvDN.getChucVu();
+        String gioitinh = nvDN.getGioiTinhNV();  
+        java.util.Date ns = nvDN.getNgaySinhNV();
+        String cv = nvDN.getChucVuNV();
+        String luong = DoiSoLieu.doiTien((nvDN.getLuongNV()));
         String tt = "1";
        
         
-        suaForm.setThongTin(ma, hoten, email, ns, cv, "1");
+        suaForm.setThongTin(ma, hoten, email, gioitinh, ns, cv, luong ,  "1");
         
         suaForm.quyenAmdin(false);
         

@@ -13,36 +13,27 @@ import java.text.SimpleDateFormat;
  */
 public class NhanVienDTO {
     private String maNV;
-    private String hotenNV, emailNV;
-    private java.sql.Date ngaySinh;
-    private String chucVu;
+    private String hoTenNV, emailNV;
+    private String gioiTinhNV;
+    private java.sql.Date ngaySinhNV;
+    private String chucVuNV;
     
-    private boolean tinhTrang;
-    private String maTK;
+    private boolean tinhTrangNV;
+    private String luongNV;
+
     
     public NhanVienDTO(){}
 
-    public NhanVienDTO(String maNV, String hotenNV, String emailNV, Date ngaySinh, String chucVu, boolean tinhTrang) {
+    public NhanVienDTO(String maNV, String hoTenNV, String emailNV, String gioiTinhNV, Date ngaySinhNV, String chucVuNV, boolean tinhTrangNV, String luongNV) {
         this.maNV = maNV;
-        this.hotenNV = hotenNV;
+        this.hoTenNV = hoTenNV;
         this.emailNV = emailNV;
-        this.ngaySinh = ngaySinh;
-        this.chucVu = chucVu;
-        this.tinhTrang = tinhTrang;
-        
+        this.gioiTinhNV = gioiTinhNV;
+        this.ngaySinhNV = ngaySinhNV;
+        this.chucVuNV = chucVuNV;
+        this.tinhTrangNV = tinhTrangNV;
+        this.luongNV = luongNV;
     }
-
-  
-    
-
-    public boolean isTinhTrang() {
-        return tinhTrang;
-    }
-
-    public void setTinhTrang(boolean tinhTrang) {
-        this.tinhTrang = tinhTrang;
-    }
-
 
     public String getMaNV() {
         return maNV;
@@ -52,42 +43,62 @@ public class NhanVienDTO {
         this.maNV = maNV;
     }
 
-
-
-    public String getHotenNV() {
-        return hotenNV;
+    public String getHoTenNV() {
+        return hoTenNV;
     }
 
-
-    public void setHotenNV(String hotenNV) {
-        this.hotenNV = hotenNV;
+    public void setHoTenNV(String hoTenNV) {
+        this.hoTenNV = hoTenNV;
     }
-
 
     public String getEmailNV() {
         return emailNV;
     }
 
-
     public void setEmailNV(String emailNV) {
         this.emailNV = emailNV;
     }
 
-
-    public String getChucVu() {
-        return chucVu;
+    public String getGioiTinhNV() {
+        return gioiTinhNV;
     }
 
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
+    public void setGioiTinhNV(String gioiTinhNV) {
+        this.gioiTinhNV = gioiTinhNV;
     }
 
-    public java.sql.Date getNgaySinh() {
-        return ngaySinh;
+    public Date getNgaySinhNV() {
+        return ngaySinhNV;
     }
 
-    public void setNgaySinh(java.sql.Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
+    public void setNgaySinhNV(Date ngaySinhNV) {
+        this.ngaySinhNV = ngaySinhNV;
     }
+
+    public String getChucVuNV() {
+        return chucVuNV;
+    }
+
+    public void setChucVuNV(String chucVuNV) {
+        this.chucVuNV = chucVuNV;
+    }
+
+    public boolean isTinhTrangNV() {
+        return tinhTrangNV;
+    }
+
+    public void setTinhTrangNV(boolean tinhTrangNV) {
+        this.tinhTrangNV = tinhTrangNV;
+    }
+
+    public String getLuongNV() {
+        return luongNV;
+    }
+
+    public void setLuongNV(String luongNV) {
+        this.luongNV = luongNV;
+    }
+
     
+
 }

@@ -16,18 +16,21 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
    public int insert(NhanVienDTO nv) {
     int result = 0;
     // Liệt kê rõ ràng 8 cột và dùng 8 dấu hỏi
-    String qry = "INSERT INTO nhanvien(ma, hoten, email, ngaysinh, chucvu, tinhTrang ) "
-               + "VALUES (?, ?, ?, ?, ?,?)";
+    String qry = "INSERT INTO nhanvien(ma, hoten, email, gioitinh , ngaysinh, chucvu, luong , tinhtrang ) "
+               + "VALUES (?, ?, ?, ?, ?,?,?,?)";
 
     try (Connection conn = Connect.getConnection();
         java.sql.PreparedStatement pst = conn.prepareStatement(qry)) {
         
         pst.setString(1, nv.getMaNV());
-        pst.setString(2, nv.getHotenNV());
+        pst.setString(2, nv.getHoTenNV());
         pst.setString(3, nv.getEmailNV());
-        pst.setDate(4, (java.sql.Date) nv.getNgaySinh());
-        pst.setString(5, nv.getChucVu());
-        pst.setBoolean(6, nv.isTinhTrang());
+        pst.setString(4, nv.getGioiTinhNV());
+        pst.setDate(5, (java.sql.Date) nv.getNgaySinhNV());
+        pst.setString(6, nv.getChucVuNV());
+        pst.setString(7, nv.getLuongNV());
+        pst.setBoolean(8, nv.isTinhTrangNV());
+        
        
 
         result = pst.executeUpdate();     
@@ -41,19 +44,22 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
     public int update(NhanVienDTO nv) {
        int result =0;
        
-       String qry = "UPDATE nhanvien SET hoten=? , Email=? , NgaySinh=?, ChucVu=?, TinhTrang = ?  Where Ma=?";
+       String qry = "UPDATE nhanvien SET hoten=? , email=? , gioitinh = ? , ngaysinh=?, chucVu=? , luong = ? , tinhtrang = ?   Where ma=?";
        
        try(Connection conn = Connect.getConnection();
         java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
         
-        pst.setString(1, nv.getHotenNV());
+        pst.setString(1, nv.getHoTenNV());
         pst.setString(2, nv.getEmailNV());
-        java.sql.Date sqlDate = new java.sql.Date(nv.getNgaySinh().getTime());
-        pst.setDate(3, sqlDate);
-        pst.setString(4, nv.getChucVu());
-        pst.setBoolean(5, nv.isTinhTrang());
+        pst.setString(3, nv.getGioiTinhNV());
+        java.sql.Date sqlDate = new java.sql.Date(nv.getNgaySinhNV().getTime());
+        pst.setDate(4, sqlDate);
         
-        pst.setString(6, nv.getMaNV());
+        pst.setString(5, nv.getChucVuNV());
+        pst.setString(6, nv.getLuongNV());
+        pst.setBoolean(7, nv.isTinhTrangNV());
+        
+        pst.setString(8, nv.getMaNV());
         
         result = pst.executeUpdate();
       
@@ -66,7 +72,7 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
     @Override
     public int delete(NhanVienDTO ma) {
         int result = 0;
-        String qry = "Delete from nhanvien where Ma='" + ma.getMaNV() + "'";
+        String qry = "Delete from nhanvien where ma='" + ma.getMaNV() + "'";
         try (Connection conn = Connect.getConnection()) {
             Statement st = conn.createStatement();
             result = st.executeUpdate(qry);
@@ -86,11 +92,14 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
             while (rs.next()){
                 NhanVienDTO nv = new NhanVienDTO();
                 nv.setMaNV(rs.getString(1));
-                nv.setHotenNV(rs.getString(2));
+                nv.setHoTenNV(rs.getString(2));
                 nv.setEmailNV(rs.getString(3));
-                nv.setNgaySinh(rs.getDate(4));
-                nv.setChucVu(rs.getString(5));
-                nv.setTinhTrang(rs.getBoolean(6));
+                nv.setGioiTinhNV(rs.getString(4));
+                nv.setNgaySinhNV(rs.getDate(5));
+                nv.setChucVuNV(rs.getString(6));
+                nv.setLuongNV(rs.getString(7));
+                nv.setTinhTrangNV(rs.getBoolean(8));
+               
                
                 ds.add(nv);
             }
@@ -99,16 +108,5 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
         }
         return ds;
     }
-//    public boolean updatePassword(String email, String newPass) {
-//        String sql = "UPDATE nhanvien SET MatKhau = ? WHERE Email = ?";
-//        try (Connection conn = Connect.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
-//            ps.setString(1, newPass);
-//            ps.setString(2, email);
-//            return ps.executeUpdate() > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-    
+
 }

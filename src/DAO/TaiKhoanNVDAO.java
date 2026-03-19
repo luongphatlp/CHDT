@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class TaiKhoanNVDAO {
    public int Insert(TaiKhoanNVDTO tk) {
         int result = 0;
-        // Câu lệnh SQL khớp với các cột: matk, taikhoan, matkhau
+       
         String qry = "INSERT INTO taikhoan (ma, taikhoan, matkhau) VALUES (?, ?, ?)";
         
         try (Connection con = Connect.getConnection();
@@ -40,7 +40,7 @@ public class TaiKhoanNVDAO {
         return result;
     }
 
-    // 2. Hàm Cập nhật (Update) - Thường cập nhật mật khẩu theo mã tài khoản
+    
     public int Update(TaiKhoanNVDTO tk) {
         int result = 0;
         String qry = "UPDATE taikhoan SET taikhoan = ? , matkhau = ? WHERE ma = ?";
