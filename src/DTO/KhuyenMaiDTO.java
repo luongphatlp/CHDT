@@ -1,14 +1,14 @@
+
 package DTO;
-import java.util.ArrayList;
+import java.time.LocalDate;
 public class KhuyenMaiDTO {
-    private String ma,ten,ngaybd,ngaykt,ghichu;
+    private String ma,ten,ghichu;
+    LocalDate ngaybd,ngaykt;
     
-    private ArrayList<ChiTietKhuyenMaiDTO> ctkm;
     
-    public KhuyenMaiDTO(){ctkm =new ArrayList<>();}
+    public KhuyenMaiDTO(){}
     
-    public KhuyenMaiDTO(String ma,String ten,String ngaybd,String ngaykt,String ghichu,ArrayList<ChiTietKhuyenMaiDTO> ctkm){
-        this.ctkm =ctkm;
+    public KhuyenMaiDTO(String ma,String ten,LocalDate ngaybd,LocalDate ngaykt,String ghichu){
         this.ma=ma;
         this.ten=ten;
         this.ngaybd=ngaybd;
@@ -17,12 +17,11 @@ public class KhuyenMaiDTO {
     }
     
     public KhuyenMaiDTO(KhuyenMaiDTO km){
-        this.ctkm =km.ctkm;
         this.ma=km.ma;
         this.ten=km.ten;
         this.ngaybd=km.ngaybd;
         this.ngaykt=km.ngaykt;
-        this.ghichu=km.ghichu;      
+        this.ghichu=km.ghichu;  
     }
     
     public String getMa() {return ma;}
@@ -31,16 +30,14 @@ public class KhuyenMaiDTO {
     public String getTen() {return ten;}
     public void setTen(String ten) {this.ten = ten;}
 
-    public String getNgayBD() {return ngaybd;}
-    public void setNgayBD(String ngaybd) {this.ngaybd = ngaybd;}
+    public LocalDate getNgayBD() {return ngaybd;}
+    public void setNgayBD(LocalDate ngaybd) {this.ngaybd = ngaybd;}
 
-    public String getNgayKT() {return ngaykt;}
-    public void setNgayKT(String ngaykt) {this.ngaykt = ngaykt;}
+    public LocalDate getNgayKT() {return ngaykt;}
+    public void setNgayKT(LocalDate ngaykt) {this.ngaykt = ngaykt;}
 
     public String getGhiChu() {return ghichu;}
     public void setGhiChu(String ghichu) {this.ghichu = ghichu;}
     
-    public ArrayList<ChiTietKhuyenMaiDTO> getChiTietKhuyenmai(){return ctkm;}
-    public void setChiTietKhuyenMai(ArrayList<ChiTietKhuyenMaiDTO> ctkm){this.ctkm=ctkm;}
     
 }

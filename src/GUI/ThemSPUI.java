@@ -1,42 +1,127 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/OkCancelDialog.java to edit this template
- */
 package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
+import BUS.SanPhamBUS;
+import DTO.SanPhamDTO;
+import DTO.ChiTietSanPhamDTO;
 
-/**
- *
- * @author THANH NHAN
- */
 public class ThemSPUI extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ThemSPUI.class.getName());
-
-    /**
-     * A return status code - returned if Cancel button has been pressed
-     */
     public static final int RET_CANCEL = 0;
-    /**
-     * A return status code - returned if OK button has been pressed
-     */
     public static final int RET_OK = 1;
 
-    /**
-     * Creates new form ThemNCCUI
-     */
     public ThemSPUI() {
-        com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
-        initComponents();
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        initComponents(); 
+        this.setLayout(new BorderLayout());
+        this.add(jPanel2, BorderLayout.NORTH);
 
-        // Close the dialog when Esc is pressed
+        jPanel1.setPreferredSize(null); 
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS)); 
+        jPanel1.setBackground(Color.WHITE);
+        jPanel1.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+
+        JPanel groupBasic = createGroupPanel("THÔNG TIN CƠ BẢN");
+        addPair(groupBasic, jLabel3, jTextField1);
+        addPair(groupBasic, jLabel4, jTextField4); 
+        addPair(groupBasic, jLabel17, jTextField11); 
+        addPair(groupBasic, jLabel2, jSpinner1); 
+        addPair(groupBasic, jLabel10, jTextField5); 
+
+        JPanel groupHardware = createGroupPanel("CẤU HÌNH KỸ THUẬT");
+        addPair(groupHardware, jLabel5, jTextField2); 
+        addPair(groupHardware, jLabel7, jComboBox2); 
+        addPair(groupHardware, jLabel16, jComboBox4);
+        addPair(groupHardware, jLabel9, jComboBox1); 
+
+        JPanel groupOther = createGroupPanel("MÀN HÌNH & TIỆN ÍCH");
+        addPair(groupOther, jLabel11, jTextField7); 
+        addPair(groupOther, jLabel12, jTextField8);
+        addPair(groupOther, jLabel13, jTextField9); 
+        addPair(groupOther, jLabel14, jTextField10);
+        addPair(groupOther, jLabel8, jTextField6); 
+        addPair(groupOther, jLabel15, jComboBox3);
+
+        jPanel1.removeAll();
+        jPanel1.add(groupBasic);
+        jPanel1.add(Box.createVerticalStrut(20)); 
+        jPanel1.add(groupHardware);
+        jPanel1.add(Box.createVerticalStrut(20));
+        jPanel1.add(groupOther);
+        jPanel1.revalidate(); 
+
+        JScrollPane scroll = new JScrollPane(jPanel1);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(16); 
+        this.add(scroll, BorderLayout.CENTER);
+
+        JPanel pnFooter = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 15)); 
+        pnFooter.setBackground(Color.WHITE);
+        pnFooter.add(okButton);
+        pnFooter.add(cancelButton);
+        this.add(pnFooter, BorderLayout.SOUTH);
+
+        this.setSize(750, 800); 
+        this.setLocationRelativeTo(null); 
+        
+        formatComponents(); 
+        setupEscKey();
+    }
+
+    private void addPair(JPanel panel, JLabel label, JComponent input) {
+        panel.add(label);
+        panel.add(input);
+    }
+
+    private JPanel createGroupPanel(String title) {
+        JPanel panel = new JPanel(new GridLayout(0, 2, 25, 15));
+        panel.setBackground(Color.WHITE);
+        
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(25, 154, 133), 1), 
+            title, 0, 0, new Font("Segoe UI", Font.BOLD, 14), new Color(25, 154, 133)
+        );
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(15, 20, 15, 20)));
+        return panel;
+    }
+
+    private void formatComponents() {
+        JLabel[] labels = {
+             jLabel3, jLabel4, jLabel10, jLabel11, jLabel12, jLabel5, 
+             jLabel7, jLabel16, jLabel13, jLabel14, jLabel8, jLabel9, 
+             jLabel15, jLabel17, jLabel2
+        };
+        for (JLabel label : labels) {
+            label.setForeground(new Color(50, 50, 50));
+            label.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        }
+        JTextField[] textFields = {
+            jTextField1, jTextField2, jTextField4, jTextField5, jTextField6, 
+            jTextField7, jTextField8, jTextField9, jTextField10, jTextField11
+        };
+        for (JTextField txt : textFields) {
+            txt.setBackground(Color.WHITE);
+            txt.setForeground(Color.BLACK); 
+            txt.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        }
+        JComboBox[] combos = {jComboBox1, jComboBox2, jComboBox3, jComboBox4};
+        for (JComboBox cb : combos) {
+            cb.setForeground(Color.BLACK);
+            cb.setBackground(Color.WHITE);
+        }
+    }
+
+    private void setupEscKey() {
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
@@ -48,19 +133,11 @@ public class ThemSPUI extends javax.swing.JDialog {
             }
         });
     }
-
-    /**
-     * @return the return status of this dialog - one of RET_OK or RET_CANCEL
-     */
+    
     public int getReturnStatus() {
         return returnStatus;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -433,16 +510,46 @@ public class ThemSPUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
+        try {
+            String ma = jTextField1.getText().trim();
+            String ten = jTextField4.getText().trim();
+            int soLuong = (int) jSpinner1.getValue();
+            int gia = Integer.parseInt(jTextField11.getText().trim());
+            SanPhamDTO sp = new SanPhamDTO(ma, ten, soLuong, gia, "Cái", "H1");
+            
+            DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+            ct.setMau(jTextField5.getText().trim());
+            ct.setManHinh(jTextField7.getText().trim());
+            ct.setKichThuoc(jTextField8.getText().trim());
+            ct.setChip(jTextField2.getText().trim());
+            ct.setRam(jComboBox2.getSelectedItem().toString());
+            ct.setBoNhoNgoai(Integer.parseInt(jComboBox4.getSelectedItem().toString().replaceAll("[^0-9]", "")));
+            ct.setCamTruoc(Integer.parseInt(jTextField9.getText().trim().replaceAll("[^0-9]", "")));
+            ct.setCamSau(Integer.parseInt(jTextField10.getText().trim().replaceAll("[^0-9]", "")));
+            ct.setPin(Integer.parseInt(jTextField6.getText().trim().replaceAll("[^0-9]", "")));
+            ct.setHeDieuHanh(jComboBox1.getSelectedItem().toString());
+            ct.setBaoHanh(Integer.parseInt(jComboBox3.getSelectedItem().toString().replaceAll("[^0-9]", "")));
+
+            if(ma.isEmpty() || ten.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Mã và Tên!");
+                return;
+            }
+            SanPhamBUS spBUS = new SanPhamBUS();
+            if (spBUS.themChiTiet(sp)) { 
+                JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
+                doClose(RET_OK);
+            } else {
+                JOptionPane.showMessageDialog(this, "Mã sản phẩm đã tồn tại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: Kiểm tra lại các trường nhập số!");
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         doClose(RET_CANCEL);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
@@ -455,43 +562,6 @@ public class ThemSPUI extends javax.swing.JDialog {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ThemSPUI dialog = new ThemSPUI();
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

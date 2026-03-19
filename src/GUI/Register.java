@@ -461,11 +461,11 @@ public class Register extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-
-        java.awt.EventQueue.invokeLater(() -> {
-            new Register().setVisible(true);
-        });
+        Register r =new Register();
+        r.setVisible(true);
+        //java.awt.EventQueue.invokeLater(() -> {
+          //  new Register().setVisible(true);
+        //});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

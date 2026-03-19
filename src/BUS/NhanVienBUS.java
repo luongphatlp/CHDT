@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -18,6 +19,7 @@ public class NhanVienBUS {
     public ArrayList<NhanVienDTO> getDSNV(){
         return dsnv;
     }
+    
     //constructer
     public NhanVienBUS(){
         NhanVienDAO data;
@@ -29,10 +31,11 @@ public class NhanVienBUS {
             }
     }
     
-    public void docDSNV(){
+    public ArrayList<NhanVienDTO> docDSNV(){
         NhanVienDAO data;
         data = new NhanVienDAO();
         dsnv = data.selectAll();      
+        return dsnv;
     }
     
     public String maTuDong(){      

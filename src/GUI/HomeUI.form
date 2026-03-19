@@ -126,9 +126,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="HD" alignment="0" pref="203" max="32767" attributes="0"/>
                                       <Component id="THHD" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="KM" alignment="0" pref="203" max="32767" attributes="0"/>
+                                      <Component id="KM" alignment="0" pref="207" max="32767" attributes="0"/>
                                       <Component id="BH" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="pnTK" alignment="0" pref="203" max="32767" attributes="0"/>
+                                      <Component id="pnTK" alignment="0" pref="207" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="btnXemTTCN" alignment="1" max="32767" attributes="0"/>

@@ -75,11 +75,21 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
         kGradientPanel1 = new keeptoo.KGradientPanel();
         btnGui = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
+========
+        jLabel5 = new javax.swing.JLabel();
+        txtTaiKhoan = new javax.swing.JTextField();
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
         jLabel4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
         txtHoTen = new javax.swing.JTextField();
+========
+        jLabel6 = new javax.swing.JLabel();
+        pwfMatKhaunhaplai = new javax.swing.JPasswordField();
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -104,6 +114,19 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
             }
         });
 
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
+========
+        jLabel5.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Tài khoản");
+
+        txtTaiKhoan.setBackground(new java.awt.Color(204, 204, 204));
+        txtTaiKhoan.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
+        txtTaiKhoan.setForeground(new java.awt.Color(0, 0, 0));
+        txtTaiKhoan.setBorder(null);
+        txtTaiKhoan.setOpaque(true);
+
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
         jLabel4.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Email:");
@@ -113,20 +136,33 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
         txtEmail.setForeground(new java.awt.Color(0, 0, 0));
         txtEmail.setBorder(null);
         txtEmail.setOpaque(true);
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
             }
         });
+========
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
 
         jLabel1.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Change Infomation");
 
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
+========
+        pwfMatKhau.setBackground(new java.awt.Color(204, 204, 204));
+        pwfMatKhau.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
+        pwfMatKhau.setForeground(new java.awt.Color(0, 0, 0));
+        pwfMatKhau.setBorder(null);
+        pwfMatKhau.setOpaque(true);
+
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
         jLabel3.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Họ và Tên");
 
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
         txtHoTen.setBackground(new java.awt.Color(204, 204, 204));
         txtHoTen.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
         txtHoTen.setForeground(new java.awt.Color(0, 0, 0));
@@ -138,6 +174,18 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
             }
         });
 
+========
+        jLabel6.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Nhập lại mật khẩu:");
+
+        pwfMatKhaunhaplai.setBackground(new java.awt.Color(204, 204, 204));
+        pwfMatKhaunhaplai.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
+        pwfMatKhaunhaplai.setForeground(new java.awt.Color(0, 0, 0));
+        pwfMatKhaunhaplai.setBorder(null);
+        pwfMatKhaunhaplai.setOpaque(true);
+
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
@@ -145,6 +193,7 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(txtEmail)
@@ -154,6 +203,21 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
                         .addComponent(btnGui, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
                     .addComponent(txtHoTen))
+========
+                    .addComponent(jLabel6)
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancelButton))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtTaiKhoan)
+                    .addComponent(txtEmail)
+                    .addComponent(pwfMatKhau)
+                    .addComponent(pwfMatKhaunhaplai))
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -176,7 +240,11 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGui)
                     .addComponent(cancelButton))
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
                 .addGap(32, 32, 32))
+========
+                .addGap(30, 30, 30))
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
         );
 
         getRootPane().setDefaultButton(btnGui);
@@ -201,6 +269,7 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
         String hoTen = txtHoTen.getText();
         String email = txtEmail.getText();
 
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
         NhanVienBUS nvBUS = new NhanVienBUS();
         
         // 1. GỌI HÀM KIỂM TRA TỪ BUS
@@ -250,6 +319,18 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnGuiActionPerformed
+========
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        if(txtTaiKhoan.getText().trim() == null && txtTaiKhoan.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "nhap day du thong tin vao o trong");
+            return;
+        }
+        
+        doClose(RET_OK);
+        
+        
+    }//GEN-LAST:event_okButtonActionPerformed
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
 //        doClose(RET_CANCEL);
@@ -323,9 +404,18 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
+========
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JTextField txtEmail;
+<<<<<<<< HEAD:src/GUI/ThayDoiMatKhau1.java
     private javax.swing.JTextField txtHoTen;
+========
+    private javax.swing.JTextField txtTaiKhoan;
+>>>>>>>> 84acbee953880661b889efa6a293bbfaeffdaa7a:src/GUI/SuaThongTinUI.java
     // End of variables declaration//GEN-END:variables
 
     private int returnStatus = RET_CANCEL;

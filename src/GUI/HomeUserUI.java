@@ -724,7 +724,7 @@ public class HomeUserUI extends javax.swing.JFrame {
         BH.setBackground(ClickColor);
         
         
-        BaoHanhUI s = new BaoHanhUI();
+        BaoHanhDienThoaiUI s = new BaoHanhDienThoaiUI();
         jPanel4.removeAll();
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
         jPanel4.revalidate();

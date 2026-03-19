@@ -1,6 +1,6 @@
-
 package DAO;
 import DTO.ChiTietKhuyenMaiDTO;
+import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
 import database.Connect;
 import java.sql.Statement;
@@ -10,13 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ChiTietKhuyenMaiDAO implements InterfaceDAO<ChiTietKhuyenMaiDTO> {
+public class ChiTietKhuyenMaiDAO {
     public ChiTietKhuyenMaiDAO(){}
-    @Override
     public int insert(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry="INSERT INTO chitietkhuyenmai(makm,masp,phantram) VALUES (?,?,?)";
+            String qry="INSERT INTO chitietkhuyenmai(MaKhuyenMai,MaSanPham,PhanTram) VALUES (?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++,km.getMaKM());
@@ -28,19 +27,21 @@ public class ChiTietKhuyenMaiDAO implements InterfaceDAO<ChiTietKhuyenMaiDTO> {
         }       
         return result;
     }
-    @Override 
     public ArrayList<ChiTietKhuyenMaiDTO> selectAll(){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qty="SELECT MaKhuyenMai MaSanPham sp.Ten km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSP=sp.Ma";
+            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qty);
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString(1));
-                SanPhamDTO sp=new SanPhamDTO(rs.getString(2),rs.getString(3),0,"","","");
+                km.setMaKM(rs.getString("MaKhuyenMai"));
+                SanPhamDTO sp = new SanPhamDTO();
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTenSP(rs.getString("Ten"));
+                sp.setDonGia(rs.getInt("DonGia"));
                 km.setSanPham(sp);
-                km.setPhanTram(Integer.parseInt(rs.getString(3)));
+                km.setPhanTram(rs.getInt("PhanTram"));
                 ds.add(km);
             }
         }catch(SQLException ex){
@@ -48,7 +49,29 @@ public class ChiTietKhuyenMaiDAO implements InterfaceDAO<ChiTietKhuyenMaiDTO> {
         } 
         return ds;
     }
-    @Override
+    public ArrayList<ChiTietKhuyenMaiDTO> selectByMaKM(String ma){
+        ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
+        try(Connection conn=Connect.getConnection()){
+            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
+            PreparedStatement st=conn.prepareStatement(qry);
+            st.setString(1,ma);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
+                km.setMaKM(rs.getString("MaKhuyenMai"));
+                SanPhamDTO sp = new SanPhamDTO();
+                sp.setMaSP(rs.getString("MaSanPham"));
+                sp.setTenSP(rs.getString("Ten"));
+                sp.setDonGia(rs.getInt("DonGia"));
+                km.setSanPham(sp);
+                km.setPhanTram(rs.getInt("PhanTram"));
+                ds.add(km);
+            }
+        }catch(SQLException ex){
+            System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } 
+        return ds;
+    }
     public int delete(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
@@ -62,21 +85,30 @@ public class ChiTietKhuyenMaiDAO implements InterfaceDAO<ChiTietKhuyenMaiDTO> {
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);   
         }
         return result;
-    }
-    @Override 
+    } 
     public int update(ChiTietKhuyenMaiDTO km){
         int result=0;
         try(Connection conn=Connect.getConnection()){
-        String qry="Update FROM chitietkhuyenmai SET"
-                +"PhanTram=? WHERE MaKhuyenMai=? AND MaSanPham=?";
+        String qry="Update chitietkhuyenmai SET PhanTram=? WHERE MaKhuyenMai=? AND MaSanPham=? ";
             PreparedStatement st=conn.prepareStatement(qry);
             st.setInt(1,km.getPhanTram());
             st.setString(2,km.getMaKM());
             st.setString(3,km.getSanPham().getMaSP());
-           result= st.executeUpdate(qry);
+           result= st.executeUpdate();
         }catch(SQLException ex){
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);            
         }
         return result;
+    }
+    public void updatePhanTramGiam(int phantram,String makm){
+        try(Connection conn=Connect.getConnection()){
+            String qry="UPDATE chitietkhuyenmai SET PhanTram=? WHERE MaKhuyenMai=?";
+            PreparedStatement pt=conn.prepareStatement(qry);
+            pt.setInt(1,phantram);
+            pt.setString(2,makm);
+            pt.executeUpdate();
+        }catch(SQLException ex){
+            System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 }
