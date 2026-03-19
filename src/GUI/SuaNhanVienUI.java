@@ -340,12 +340,12 @@ public class SuaNhanVienUI extends javax.swing.JDialog {
        
         String luong = txtLuong.getText().trim();
         
-        // Bước 1: Trảm cái đuôi ".0" của Database (nếu có)
+       
         if (luong.endsWith(".0")) {
             luong = luong.substring(0, luong.length() - 2); 
         }
         
-        // Bước 2: Quét sạch mọi dấu phẩy (,) và dấu chấm (.) phân cách hàng nghìn
+        
         luong = luong.replace(",", "").replace(".", "");
         
         // Bước 3: Bắt đầu kiểm tra logic
@@ -359,7 +359,13 @@ public class SuaNhanVienUI extends javax.swing.JDialog {
             return; 
         }
         
-        boolean tinhTrang = rbnTrue.isSelected();
+        boolean tinhTrang = true;
+        if(rbnTrue.isSelected()){
+            tinhTrang = true;
+        }else{
+            rbnFalse.isSelected();
+            tinhTrang = false;
+        }
 
         NhanVienDTO nvDTO = new NhanVienDTO();
         nvDTO.setMaNV(ma);
@@ -376,7 +382,7 @@ public class SuaNhanVienUI extends javax.swing.JDialog {
         nvDTO.setLuongNV(luong);
         nvDTO.setTinhTrangNV(tinhTrang);
         
-        // KIỂM TRA HỢP LỆ BẰNG LỚP BUS
+        
         NhanVienBUS nvBUS = new NhanVienBUS();
         String thongbao = nvBUS.kiemTraHopLe(nvDTO);
         
