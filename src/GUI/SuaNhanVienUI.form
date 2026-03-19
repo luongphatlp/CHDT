@@ -352,7 +352,7 @@
         <Component class="javax.swing.JComboBox" name="cmbChucVuNV">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Nh&#xe2;n Vi&#xea;n&quot;, &quot;Qu&#x1ea3;n L&#xfd;&quot; })" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Nh&#xe2;n Vi&#xea;n&quot;, &quot;Qu&#x1ea3;n L&#xfd;&quot; ,&quot;Kho&quot; , &quot;B&#xe1;n h&#xe0;ng&quot; , &quot;B&#x1ea3;o v&#x1ec7;&quot; ,&quot;K&#x1ef9; thu&#x1ead;t&quot; , &quot;Th&#x1ef1;c t&#x1ead;p&quot; , &quot;K&#x1ebf; to&#xe1;n&quot;})" type="code"/>
             </Property>
           </Properties>
           <Events>

@@ -196,7 +196,7 @@ public class SuaNhanVienUI extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel9.setText("Tình Trạng");
 
-        cmbChucVuNV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân Viên", "Quản Lý" }));
+        cmbChucVuNV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân Viên", "Quản Lý" ,"Kho" , "Bán hàng" , "Bảo vệ" ,"Kỹ thuật" , "Thực tập" , "Kế toán"}));
         cmbChucVuNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbChucVuNVActionPerformed(evt);

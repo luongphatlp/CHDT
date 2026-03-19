@@ -197,26 +197,66 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiActionPerformed
-        NhanVienBUS nvBUS = new NhanVienBUS();       
-        SERVICES.GuiMaOTP gui = new GuiMaOTP();
+   
+        String hoTen = txtHoTen.getText();
+        String email = txtEmail.getText();
+
+        NhanVienBUS nvBUS = new NhanVienBUS();
         
+        // 1. GỌI HÀM KIỂM TRA TỪ BUS
+        String thongBaoLoi = nvBUS.kiemtraEmail(hoTen, email);
         
-        boolean hople  = nvBUS.kiemtraEmail(txtHoTen.getText(), txtEmail.getText());
-        if(hople){
-        curOTP = gui.generateOTP();
-        toEmail = txtEmail.getText();
-        gui.sendOTP(toEmail, curOTP);
-        ma = nvBUS.layMaNhanVien(txtHoTen.getText(), txtEmail.getText());//
-        this.dispose(); 
-        ThayDoiMatKhau2 form = new ThayDoiMatKhau2();
-        form.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(this, "Họ và tên hoặc Email không hợp lệ");
+        // 2. NẾU CÓ LỖI -> HIỆN THÔNG BÁO VÀ DỪNG LẠI NGAY
+        if (!thongBaoLoi.equals("OK")) {
+            javax.swing.JOptionPane.showMessageDialog(this, thongBaoLoi, "Lỗi nhập liệu", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Chặn đứng lệnh ở đây, không gửi OTP
+        }
+        
+        if(hoTen.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Họ tên không được để trống");
+            return;
+        }
+        if(email.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Email không được để trống");
+            return;
+        }
+        if(!email.equals("singapothinh0711@gmail.com")){
+            JOptionPane.showMessageDialog(this,"Email không phù hợp");
+            return;
+        }
+        
+        // 3. NẾU VƯỢT QUA KIỂM TRA ("OK") -> BẮT ĐẦU GỬI OTP
+        try {
+            SERVICES.GuiMaOTP gui = new GuiMaOTP();
+            
+            // Hiện thông báo đang gửi (vì gửi email có thể mất 1-2 giây)
+            System.out.println("Đang gửi mã OTP đến " + email + "..."); 
+            
+            curOTP = gui.generateOTP();
+            System.out.println(curOTP);
+            toEmail = email;
+            gui.sendOTP(toEmail, curOTP);
+            
+            ma = nvBUS.layMaNhanVien(hoTen, email);
+            
+            // Gửi xong thì đóng Form này, mở Form nhập OTP / Đổi MK lên
+            this.dispose(); 
+            ThayDoiMatKhau2 form = new ThayDoiMatKhau2();
+            form.setVisible(true);
+            form.setLocationRelativeTo(null); // Cho form căn giữa màn hình
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình gửi Email. Vui lòng kiểm tra lại kết nối mạng!", "Lỗi hệ thống", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnGuiActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
+//        doClose(RET_CANCEL);
+          this.dispose();
+          Login form = new Login ();
+          form.setVisible(true);
+
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**

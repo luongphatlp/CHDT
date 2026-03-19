@@ -60,8 +60,8 @@ public class NhanVienUI extends javax.swing.JPanel {
         cmbSapXep = new javax.swing.JComboBox<>();
         cmbDT = new javax.swing.JComboBox<>();
         cmbSXtheo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnApply = new javax.swing.JButton();
+        btnCancle = new javax.swing.JButton();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -95,11 +95,6 @@ public class NhanVienUI extends javax.swing.JPanel {
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jPanel10.setPreferredSize(new java.awt.Dimension(820, 90));
 
-        txtMucTieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMucTieuActionPerformed(evt);
-            }
-        });
         txtMucTieu.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMucTieuKeyTyped(evt);
@@ -240,39 +235,24 @@ public class NhanVienUI extends javax.swing.JPanel {
         cmbCV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cmbSapXep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ","Giảm dần", "Tăng dần" }));
-        cmbSapXep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSapXepActionPerformed(evt);
-            }
-        });
-        cmbSapXep.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cmbSapXepKeyReleased(evt);
-            }
-        });
 
         cmbDT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn độ tuổi","18-25", "26 -30", "31-45", "46-60" }));
-        cmbDT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbDTActionPerformed(evt);
-            }
-        });
 
         cmbSXtheo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn kiểu","Mã Nhân Viên", "Họ Tên", "Ngày Sinh", "Lương" }));
-        cmbSXtheo.addActionListener(new java.awt.event.ActionListener() {
+
+        btnApply.setText("Apply");
+        btnApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSXtheoActionPerformed(evt);
+                btnApplyActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Apply");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancle.setText("Cancel");
+        btnCancle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancleActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Cancel");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -295,8 +275,8 @@ public class NhanVienUI extends javax.swing.JPanel {
                             .addComponent(cmbSapXep, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnApply, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(btnCancle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(6, 6, 6))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1640, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -317,12 +297,12 @@ public class NhanVienUI extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbSXtheo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(btnApply))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))))
+                            .addComponent(btnCancle))))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -373,6 +353,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+    
     public void loadToTable (ArrayList<NhanVienDTO> ds){
         try{
             int i = 1;
@@ -401,6 +382,28 @@ public class NhanVienUI extends javax.swing.JPanel {
             e.printStackTrace();
         }  
     }
+    public void loadCVtoCMB(){
+        cmbCV.removeAllItems();
+        cmbCV.addItem("Chọn chức vụ");
+        
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        if(nvBUS.getDSNV() == null ){
+            nvBUS.docDSNV();
+        }
+        
+        ArrayList<String> dscv = new ArrayList<>();
+        
+        for(NhanVienDTO nv : nvBUS.getDSNV()){
+            String chucvu = nv.getChucVuNV();
+            if(chucvu != null  || chucvu.trim().isEmpty()){
+                if(!dscv.contains(chucvu)){
+                    dscv.add(chucvu);
+                    cmbCV.addItem(chucvu);
+                }
+            }
+        }
+    }
+    
     //
     
     // logic cho các nút chức năng
@@ -409,7 +412,7 @@ public class NhanVienUI extends javax.swing.JPanel {
 // nut reset
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-        
+        txtMucTieu.setText("");
         loadToData();
     }//GEN-LAST:event_btnResetActionPerformed
 
@@ -518,7 +521,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             loadToData();
         
         }catch(Exception e){
-            javax.swing.JOptionPane.showMessageDialog(this,"loi trich xuat du lieu");
+            javax.swing.JOptionPane.showMessageDialog(this,"Lỗi trích xuất dữ liệu");
             e.printStackTrace();
         }
         
@@ -534,52 +537,13 @@ public class NhanVienUI extends javax.swing.JPanel {
         NhanVienBUS nvBUS = new NhanVienBUS();
         ArrayList<NhanVienDTO> dstk = nvBUS.timkiem(muctieu);
         
-        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
-        
-        model.setRowCount(0);
-        
-        int i = 1 ;
-        for(NhanVienDTO nv : dstk){
-            Vector<Object> row = new Vector<>();
-            row.add(i++);
-            row.add(nv.getMaNV());
-            row.add(nv.getHoTenNV());
-            row.add(nv.getEmailNV());
-            row.add(nv.getNgaySinhNV().toString());
-            row.add(nv.getChucVuNV());
-           
-            
-            model.addRow(row);
-        }
+        loadToTable(dstk);
     }//GEN-LAST:event_txtMucTieuKeyTyped
 
-    private void cmbSapXepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbSapXepKeyReleased
+
+    private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_cmbSapXepKeyReleased
-
-
-// nut chon che do sap xep 
-    private void cmbSapXepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSapXepActionPerformed
-        // TODO add your handling code here:
-        String kieuSapXep = cmbSapXep.getSelectedItem().toString();
-
-        NhanVienBUS nvBUS = new NhanVienBUS();
-        nvBUS.sapXep(kieuSapXep);
-
-       
-    }//GEN-LAST:event_cmbSapXepActionPerformed
-
-    private void cmbDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbDTActionPerformed
-
-    private void txtMucTieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMucTieuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMucTieuActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String mucTieu = txtMucTieu.getText();
         String chucVu = cmbCV.getSelectedItem().toString();
         String doTuoi = cmbDT.getSelectedItem().toString();
         String kieu = cmbSXtheo.getSelectedItem().toString();
@@ -587,10 +551,10 @@ public class NhanVienUI extends javax.swing.JPanel {
         
         
         NhanVienBUS nvBUS = new NhanVienBUS();
-        ArrayList<NhanVienDTO> dstknc = nvBUS.timKiemNangCao(chucVu, doTuoi, kieu, sapXep);
+        ArrayList<NhanVienDTO> dstknc = nvBUS.timKiemNangCao (mucTieu ,chucVu, doTuoi, kieu, sapXep);
 
         loadToTable(dstknc);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnApplyActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -718,33 +682,22 @@ public class NhanVienUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void cmbSXtheoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSXtheoActionPerformed
+    private void btnCancleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSXtheoActionPerformed
-    public void loadCVtoCMB(){
-        cmbCV.removeAllItems();
-        cmbCV.addItem("Chọn chức vụ");
+        cmbCV.setSelectedIndex(0);
+        cmbDT.setSelectedIndex(0);
+        cmbSXtheo.setSelectedIndex(0);
+        cmbSapXep.setSelectedIndex(0);
         
-        NhanVienBUS nvBUS = new NhanVienBUS();
-        if(nvBUS.getDSNV() == null ){
-            nvBUS.docDSNV();
-        }
+        loadToData();
         
-        ArrayList<String> dscv = new ArrayList<>();
-        
-        for(NhanVienDTO nv : nvBUS.getDSNV()){
-            String chucvu = nv.getChucVuNV();
-            if(chucvu != null  || chucvu.trim().isEmpty()){
-                if(!dscv.contains(chucvu)){
-                    dscv.add(chucvu);
-                    cmbCV.addItem(chucvu);
-                }
-            }
-        }
-    }
+    }//GEN-LAST:event_btnCancleActionPerformed
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApply;
+    private javax.swing.JButton btnCancle;
     private javax.swing.JButton btnDetail;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnRemove;
@@ -753,8 +706,6 @@ public class NhanVienUI extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbDT;
     private javax.swing.JComboBox<String> cmbSXtheo;
     private javax.swing.JComboBox<String> cmbSapXep;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

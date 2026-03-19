@@ -157,45 +157,179 @@ public class NhanVienBUS {
     public ArrayList<NhanVienDTO> timkiem(String muctieu){
         ArrayList<NhanVienDTO> dstk = new ArrayList<>();
         
+       
         if(muctieu.trim().isEmpty()){
             return dsnv;
         }
+        
+        String timkiem = muctieu.trim().toLowerCase();
         for(NhanVienDTO nv : dsnv){
-            if(nv.getMaNV().contains(muctieu)){
+            
+            if(nv.getMaNV().toLowerCase().contains(timkiem)){
                 dstk.add(nv);
-            }else if (nv.getHoTenNV().contains(muctieu)){
+            }else if (nv.getHoTenNV().toLowerCase().contains(timkiem)){
                 dstk.add(nv);
-            }else if (nv.getChucVuNV().contains(muctieu)) {
+            }else if (nv.getChucVuNV().toLowerCase().contains(timkiem)) {
                 dstk.add(nv);
+            }else if (nv.getGioiTinhNV().toLowerCase().contains(timkiem)){
+               dstk.add(nv);
             }   
                 
         }
         
         return dstk;
     }
- public ArrayList<NhanVienDTO> timKiemNangCao(String chucVu, String doTuoi, String kieu , String sapXep) {
+    
+// public ArrayList<NhanVienDTO> timKiemNangCao(String chucVu, String doTuoi, String kieu , String sapXep) {
+//        ArrayList<NhanVienDTO> dstknc = new ArrayList<>();
+//
+//        if (this.dsnv == null) {
+//            docDSNV();
+//        }
+//
+//        if (this.dsnv == null) {
+//            return dstknc;
+//        }
+//
+//        for (NhanVienDTO nv : dsnv) {
+//            boolean matchChucVu = false;
+//            boolean matchTuoi = false;
+//
+//            // 1. Lọc theo chức vụ
+//            if (chucVu.equalsIgnoreCase("Chọn chức vụ") || chucVu.trim().isEmpty()) {
+//                matchChucVu = true;
+//            } else if (nv.getChucVuNV() != null && nv.getChucVuNV().toLowerCase().contains(chucVu.toLowerCase())) {
+//                matchChucVu = true;
+//            }
+//
+//           
+//            int tuoiNhanVien = -1;
+//            if (nv.getNgaySinhNV() != null) {
+//                int namSinh = nv.getNgaySinhNV().getYear() + 1900;
+//                tuoiNhanVien = 2026 - namSinh;
+//            }
+//
+//            if (doTuoi.equalsIgnoreCase("Chọn độ tuổi") || doTuoi.trim().isEmpty()) {
+//                matchTuoi = true;
+//            } else if (doTuoi.equals("18-25") && tuoiNhanVien >= 18 && tuoiNhanVien <= 25) {
+//                matchTuoi = true;
+//            } else if (doTuoi.equals("26-30") && tuoiNhanVien >= 26 && tuoiNhanVien <= 30) {
+//                matchTuoi = true;
+//            } else if (doTuoi.equals("31-45") && tuoiNhanVien >= 31 && tuoiNhanVien <= 45) {
+//                matchTuoi = true;
+//            } else if (doTuoi.equals("46-60") && tuoiNhanVien >= 46 && tuoiNhanVien <= 60) {
+//                matchTuoi = true;
+//            }
+//
+//            
+//            if (matchChucVu && matchTuoi) {
+//                dstknc.add(nv);
+//            }
+//        } 
+//
+//
+//      
+//        if (!kieu.equalsIgnoreCase("Chọn kiểu") && dstknc.size() > 1) {
+//            
+//            java.util.Collections.sort(dstknc, new java.util.Comparator<NhanVienDTO>() {
+//                @Override
+//                public int compare(NhanVienDTO nv1, NhanVienDTO nv2) {
+//                    int kqSoSanh = 0;
+//
+//                    try {
+//                        if (kieu.equals("Mã Nhân Viên")) {
+//                            kqSoSanh = nv1.getMaNV().compareTo(nv2.getMaNV());
+//                        } else if (kieu.equals("Họ Tên")) {
+//                            kqSoSanh = nv1.getHoTenNV().compareTo(nv2.getHoTenNV());
+//                        } else if (kieu.equals("Ngày Sinh")) {
+//                            if (nv1.getNgaySinhNV() != null && nv2.getNgaySinhNV() != null) {
+//                                kqSoSanh = nv1.getNgaySinhNV().compareTo(nv2.getNgaySinhNV());
+//                            }
+//                        } else if (kieu.equals("Lương")) {
+//                            
+//                           
+//                            String strLuong1 = nv1.getLuongNV().replace(",", "").trim();
+//                            String strLuong2 = nv2.getLuongNV().replace(",", "").trim();
+//                            
+//                            
+//                            double luong1 = Double.parseDouble(strLuong1);
+//                            double luong2 = Double.parseDouble(strLuong2);
+//                            
+//                            kqSoSanh = Double.compare(luong1, luong2);
+//                        }
+//                    } catch (Exception e) {
+//                        kqSoSanh = 0; 
+//                    }
+//
+//                    
+//                    if (sapXep.equals("Giảm dần")) {
+//                        return -kqSoSanh; 
+//                    }
+//                    return kqSoSanh;
+//                }
+//            });
+//        }
+//
+//        return dstknc;
+//    }
+//    public void sapXep(String kieuSapXep){
+//        java.util.Collections.sort(dsnv, new java.util.Comparator<NhanVienDTO>(){
+//            @Override
+//            public int compare(NhanVienDTO nv1 , NhanVienDTO nv2){ 
+//                java.util.Date d1 = nv1.getNgaySinhNV();
+//                java.util.Date d2 = nv2.getNgaySinhNV();
+//                
+//                if (d1 == null && d2 == null) return 0;
+//                if (d1 == null) return 1;
+//                if (d2 == null) return -1;
+//                
+//                if(kieuSapXep.equalsIgnoreCase("Tăng dần")){
+//                    return d1.compareTo(d2);
+//                } else {
+//                    return d2.compareTo(d1); 
+//                }
+//            }
+//        });
+//    }
+//    
+  
+    public ArrayList<NhanVienDTO> timKiemNangCao(String tuKhoa, String chucVu, String doTuoi, String kieu , String sapXep) {
         ArrayList<NhanVienDTO> dstknc = new ArrayList<>();
 
-        if (this.dsnv == null) {
-            docDSNV();
-        }
+        if (this.dsnv == null) docDSNV();
+        if (this.dsnv == null) return dstknc;
 
-        if (this.dsnv == null) {
-            return dstknc;
-        }
+        // Xử lý từ khóa đưa về chữ thường trước
+        String keyword = (tuKhoa == null) ? "" : tuKhoa.trim().toLowerCase();
 
         for (NhanVienDTO nv : dsnv) {
-            boolean matchChucVu = false;
-            boolean matchTuoi = false;
+            
+            // 1. MÀN LỌC TỪ KHÓA (Kế thừa từ hàm timkiem cũ)
+            boolean matchTuKhoa = false;
+            if (keyword.isEmpty()) {
+                matchTuKhoa = true; // Không gõ gì thì cho qua
+            } else {
+                String ma = (nv.getMaNV() != null) ? nv.getMaNV().toLowerCase() : "";
+                String ten = (nv.getHoTenNV() != null) ? nv.getHoTenNV().toLowerCase() : "";
+                String cv = (nv.getChucVuNV() != null) ? nv.getChucVuNV().toLowerCase() : "";
+                String email = (nv.getEmailNV() != null) ? nv.getEmailNV().toLowerCase() : "";
+                String gt = (nv.getGioiTinhNV() != null) ? nv.getGioiTinhNV().toLowerCase() : "";
+                
+                if (ma.contains(keyword) || ten.contains(keyword) || cv.contains(keyword) || email.contains(keyword) || gt.contains(keyword)) {
+                    matchTuKhoa = true;
+                }
+            }
 
-            // 1. Lọc theo chức vụ
+            // 2. MÀN LỌC CHỨC VỤ
+            boolean matchChucVu = false;
             if (chucVu.equalsIgnoreCase("Chọn chức vụ") || chucVu.trim().isEmpty()) {
                 matchChucVu = true;
             } else if (nv.getChucVuNV() != null && nv.getChucVuNV().toLowerCase().contains(chucVu.toLowerCase())) {
                 matchChucVu = true;
             }
 
-           
+            // 3. MÀN LỌC ĐỘ TUỔI
+            boolean matchTuoi = false;
             int tuoiNhanVien = -1;
             if (nv.getNgaySinhNV() != null) {
                 int namSinh = nv.getNgaySinhNV().getYear() + 1900;
@@ -214,21 +348,20 @@ public class NhanVienBUS {
                 matchTuoi = true;
             }
 
-            
-            if (matchChucVu && matchTuoi) {
+            // => NẾU NHÂN VIÊN LỌT QUA CẢ 3 MÀN LỌC THÌ MỚI ĐƯỢC NHẬN
+            if (matchTuKhoa && matchChucVu && matchTuoi) {
                 dstknc.add(nv);
             }
         } 
 
-
-      
+        // ==========================================
+        // BƯỚC SẮP XẾP DỮ LIỆU (Giữ nguyên thuật toán xịn hôm trước)
+        // ==========================================
         if (!kieu.equalsIgnoreCase("Chọn kiểu") && dstknc.size() > 1) {
-            
             java.util.Collections.sort(dstknc, new java.util.Comparator<NhanVienDTO>() {
                 @Override
                 public int compare(NhanVienDTO nv1, NhanVienDTO nv2) {
                     int kqSoSanh = 0;
-
                     try {
                         if (kieu.equals("Mã Nhân Viên")) {
                             kqSoSanh = nv1.getMaNV().compareTo(nv2.getMaNV());
@@ -239,60 +372,28 @@ public class NhanVienBUS {
                                 kqSoSanh = nv1.getNgaySinhNV().compareTo(nv2.getNgaySinhNV());
                             }
                         } else if (kieu.equals("Lương")) {
-                            
-                           
                             String strLuong1 = nv1.getLuongNV().replace(",", "").trim();
                             String strLuong2 = nv2.getLuongNV().replace(",", "").trim();
-                            
-                            
                             double luong1 = Double.parseDouble(strLuong1);
                             double luong2 = Double.parseDouble(strLuong2);
-                            
                             kqSoSanh = Double.compare(luong1, luong2);
                         }
-                    } catch (Exception e) {
-                        kqSoSanh = 0; 
-                    }
+                    } catch (Exception e) { kqSoSanh = 0; }
 
-                    
-                    if (sapXep.equals("Giảm dần")) {
-                        return -kqSoSanh; 
-                    }
+                    if (sapXep.equals("Giảm dần")) return -kqSoSanh; 
                     return kqSoSanh;
                 }
             });
         }
-
         return dstknc;
     }
-    public void sapXep(String kieuSapXep){
-        java.util.Collections.sort(dsnv, new java.util.Comparator<NhanVienDTO>(){
-            @Override
-            public int compare(NhanVienDTO nv1 , NhanVienDTO nv2){ 
-                java.util.Date d1 = nv1.getNgaySinhNV();
-                java.util.Date d2 = nv2.getNgaySinhNV();
-                
-                if (d1 == null && d2 == null) return 0;
-                if (d1 == null) return 1;
-                if (d2 == null) return -1;
-                
-                if(kieuSapXep.equalsIgnoreCase("Tăng dần")){
-                    return d1.compareTo(d2);
-                } else {
-                    return d2.compareTo(d1); 
-                }
-            }
-        });
-    }
-    
-   
-    
-    public boolean kiemtraEmail(String hoten, String email) {
+    // kiem tra cho phan lay mat khau
+    public String kiemtraEmail(String hoten, String email) {
         for (NhanVienDTO nv : dsnv) {
             if (!hoten.equals(nv.getHoTenNV()) && email.equals(nv.getEmailNV())) 
-                return false;
+                return "Mã nhân viên và gmail của nhân viên không hợp lệ";
            }
-        return true;
+        return "OK";
     }
     public String layMaNhanVien(String hoten, String email){
         String ma = "";
