@@ -72,7 +72,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         }
         jLabel6.setText(pn.getMapn());
         jLabel7.setText(pn.getManv());
-        jLabel8.setText(NhaCungCapBUS.getTenNCC(pn.getMancc()));
+        jLabel8.setText(pn.getMancc());
         if (pn.getNgay() != null) {
             jLabel9.setText(pn.getNgay().toString());
         }
@@ -84,10 +84,14 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         model.setRowCount(0);
 
         for (ChiTietPhieuNhapDTO ct : ds) {
-            double donGia = 0;
-            if (ct.getSl() != 0) {
-                donGia = (double) ct.getTongtien() / ct.getSl(); // ép kiểu
+            long donGia = 0;
+            long soLuong = ct.getSl();
+            long thanhTien = ct.getTongtien();
+
+            if (soLuong != 0) {
+                donGia = thanhTien / soLuong; 
             }
+
             model.addRow(new Object[]{
                 ct.getMasp(),
                 ct.getSl(),
@@ -96,7 +100,13 @@ public class ChiTietPNUI extends javax.swing.JDialog {
             });
         }
 
-        jLabel11.setText(df.format(pn.getTongtien()) + " VNĐ");
+        long tong = 0;
+
+        for (ChiTietPhieuNhapDTO ct : ds) {
+            tong += ct.getTongtien();
+        }
+
+        jLabel11.setText(df.format(tong) + " VNĐ");    
     }
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL

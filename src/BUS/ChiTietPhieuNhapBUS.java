@@ -26,8 +26,11 @@ public class ChiTietPhieuNhapBUS {
     }
     public void them(ChiTietPhieuNhapDTO pn){
         for (ChiTietPhieuNhapDTO p : dsct) {
-            if (p.getMapn().equals((pn.getMapn()))) {
-                return; //cái này phải làm thêm báo lỗi
+            if (p.getMapn().equals(pn.getMapn()) &&
+                p.getMasp().equals(pn.getMasp())) {
+
+                System.out.println("Trùng sản phẩm trong cùng phiếu!");
+                return;
             }
         }
         ChiTietPhieuNhapDAO data = new ChiTietPhieuNhapDAO();
