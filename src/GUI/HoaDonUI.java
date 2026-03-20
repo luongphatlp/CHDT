@@ -65,6 +65,16 @@ public class HoaDonUI extends javax.swing.JPanel {
         tinhLaiTongTien();
         javax.swing.JOptionPane.showMessageDialog(this, "Đã cập nhật số lượng!");
     }
+    public void boChonSanPham(){
+        DefaultTableModel model= (DefaultTableModel) bangchitietsanpham.getModel();
+        int row=bangchitietsanpham.getSelectedRow();
+        if(row!=-1){
+            model.removeRow(row);
+        }else{
+            JOptionPane.showMessageDialog(null,"Vui lòng chọn dòng để xóa");
+            return;
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -231,11 +241,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         jButton4.setForeground(new java.awt.Color(255, 255, 236));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minus.png"))); // NOI18N
         jButton4.setText(" Bỏ chọn Sản phẩm");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
-            }
-        });
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -364,11 +369,9 @@ public class HoaDonUI extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(lbtongtien)))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(lbtongtien))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(spcapnhatsoluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,10 +422,6 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        capNhatSoLuong();
-    }//GEN-LAST:event_jButton4MouseClicked
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
 
@@ -515,7 +514,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                 cthd.setMaHD(mahd);
                 cthd.setMaSP(model.getValueAt(i, 0).toString());
                 cthd.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
-                cthd.setDonGia(Integer.parseInt(model.getValueAt(i, 2).toString()));
+                cthd.setDonGia(Integer.parseInt(model.getValueAt(i, 2).toString()) - Integer.parseInt(model.getValueAt(i, 3).toString()));
                 cthd.setThanhTien(Integer.parseInt(model.getValueAt(i, 4).toString()));
                 dscthd.add(cthd);
             }
@@ -665,18 +664,21 @@ public class HoaDonUI extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_bangchitietsanphamMouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String sdt=txtsdt.getText();
         KhachHangDTO kh= bus.layKhachHangBySDT(sdt);
-        if(kh==null) return;
+        if(kh==null){
+            JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
+            return;
+        }
         txthoten.setText(kh.getHoten());
         txtemail.setText(kh.getEmail());
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
     private void customTable() {
         // 1. Chỉnh Font Arial, kích thước 16 cho nội dung bảng
         java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);

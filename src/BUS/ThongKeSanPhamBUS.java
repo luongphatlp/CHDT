@@ -5,8 +5,8 @@
 package BUS;
 
 import DAO.ThongKeSanPhamDAO;
+import DTO.SanPhamDTO;
 import DTO.ThongKeSanPhamDTO;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -36,5 +36,8 @@ public class ThongKeSanPhamBUS {
         ThongKeSanPhamBUS bus=new ThongKeSanPhamBUS();
         bus.thongKeSanPham();
         System.out.println(bus.getList().get(0).getMaSP());
+    }
+    public ArrayList<SanPhamDTO> getDSSP(){
+        SanPhamBUS bus=new SanPhamBUS();
     }
 }

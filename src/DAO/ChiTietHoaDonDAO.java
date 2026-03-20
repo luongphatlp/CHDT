@@ -87,7 +87,7 @@ public class ChiTietHoaDonDAO {
     // ================== SELECT ALL ==================
     public ArrayList<ChiTietHoaDonDTO> selectAll() {
         ArrayList<ChiTietHoaDonDTO> ds = new ArrayList<>();
-        String sql = "SELECT * FROM chitiethoadon";
+        String sql = "SELECT ct.MaHD,ct.MaSP,dt.Ten,ct.SoLuong,ct.DonGia,ct.ThanhTien FROM chitiethoadon ct JOIN dienthoai dt ON ct.MaSP=dt.Ma  ";
 
         try (
             Connection con = Connect.getConnection();
@@ -98,6 +98,7 @@ public class ChiTietHoaDonDAO {
                 ChiTietHoaDonDTO ct = new ChiTietHoaDonDTO();
                 ct.setMaHD(rs.getString("MaHD"));
                 ct.setMaSP(rs.getString("MaSP"));
+                ct.setTenSP(rs.getString("Ten"));
                 ct.setSoLuong(rs.getInt("SoLuong"));
                 ct.setDonGia(rs.getInt("DonGia"));
                 ct.setThanhTien(rs.getInt("ThanhTien"));

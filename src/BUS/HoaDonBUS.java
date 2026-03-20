@@ -29,6 +29,7 @@ public class HoaDonBUS {
     NhanVienBUS busnv=new NhanVienBUS();
     KhachHangBUS buskh=new KhachHangBUS();
     KhuyenMaiBUS buskm=new  KhuyenMaiBUS();
+    ChiTietHoaDonBUS busct=new ChiTietHoaDonBUS();
     ArrayList<HoaDonDTO> ds;
     public HoaDonBUS(){
         ds =new ArrayList<>();
@@ -85,6 +86,9 @@ public class HoaDonBUS {
             }
         }
         return null;
+    }
+    public ArrayList<ChiTietHoaDonDTO> getCTHDByMaHD(String mahd){
+        return busct.getCTHDByMaHD(mahd);
     }
     public KhachHangDTO getKHByMaKH(String makh){
         ArrayList<KhachHangDTO> ds =buskh.getDSKH();
@@ -153,6 +157,13 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
             }
         }
         return null;
+    }
+    public ArrayList<HoaDonDTO> getHDByMaNV(String manv){
+        ArrayList<HoaDonDTO> tam=new ArrayList<>();
+        for(HoaDonDTO hd:ds)
+            if(hd.getMaNV().equals(manv))
+                tam.add(hd);
+        return tam;
     }
     public String taoMaKH(){
         KhachHangBUS bus=new KhachHangBUS();

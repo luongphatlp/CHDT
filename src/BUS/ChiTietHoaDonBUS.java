@@ -38,5 +38,13 @@ class ChiTietHoaDonBUS {
        ds.remove(kiemTraMaSP(masp));
        return dao.delete(mahd, masp);    
     }
+    public ArrayList<ChiTietHoaDonDTO> getCTHDByMaHD(String mahd){
+        ArrayList<ChiTietHoaDonDTO> tam=new ArrayList<>();
+        for(ChiTietHoaDonDTO ct:ds){
+            if(ct.getMaHD().equals(mahd))
+                tam.add(ct);
+        }
+        return tam;
+    }
 
 }

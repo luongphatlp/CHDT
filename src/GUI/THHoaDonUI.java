@@ -5,10 +5,9 @@
 package GUI;
 
 import BUS.HoaDonBUS;
+import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +17,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -109,10 +107,92 @@ public class THHoaDonUI extends javax.swing.JPanel {
         txtdengia.setText("");
         veBangTHHoaDon();
     }
+    public void timKiem(){
+        String key=txttimkiemhoadon.getText();
+        String pttt=null;
+        if(cbpttt.getSelectedIndex()!=0) pttt=cbpttt.getSelectedItem().toString();
+        String manv=null;
+        if(cbmanv.getSelectedIndex()!=0) manv=cbmanv.getSelectedItem().toString();
+        Date tungay=null;
+        if(datetungay.getDate()!=null) tungay=datetungay.getDate();
+        Date denngay=null;
+        if(datedenngay.getDate()!=null) denngay=datedenngay.getDate();
+        int tu=0,den=Integer.MAX_VALUE;
+        if(!txttugia.getText().equals("") ){
+            if(!txttugia.getText().matches("\\d+(\\.\\d+)?"))
+                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
+            else 
+                tu=Integer.parseInt(txttugia.getText());
+        }
+        if(!txtdengia.getText().equals("")){
+            if(!txtdengia.getText().matches("\\d+(\\.\\d+)?"))
+                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
+            den=Integer.parseInt(txtdengia.getText());
+        }
+        ArrayList<HoaDonDTO> tam=bus.timKiem(key,pttt,manv,tungay,denngay,tu,den);
+        veBangTHHoaDonTimKiem(tam);
+    }
+    
+    public boolean exportExcel(JTable table) {
+        try {
+            JFileChooser fc = new JFileChooser();
+            fc.showSaveDialog(null);
+            String path = fc.getSelectedFile().getAbsolutePath() + ".xlsx";
+            Workbook wb = new XSSFWorkbook();
+            Sheet sheet = wb.createSheet("Data");
+            Row header = sheet.createRow(0);
+            for (int i = 0; i < table.getColumnCount(); i++) 
+                header.createCell(i).setCellValue(table.getColumnName(i));
+            for (int i = 0; i < table.getRowCount(); i++) {
+                Row row = sheet.createRow(i + 1);
+                for (int j = 0; j < table.getColumnCount(); j++) {
+                    Object value = table.getValueAt(i, j);
+                    if (value != null)
+                        row.createCell(j).setCellValue(value.toString());
+                    else
+                        row.createCell(j).setCellValue("");
+                }
+            }
+            FileOutputStream fos = new FileOutputStream(path);
+            wb.write(fos);
+            fos.close();
+            wb.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public void veBangChiTietHoaDon(ArrayList<ChiTietHoaDonDTO> ds){
+        Vector header =new Vector();
+        header.add("Mã sản phẩm");
+        header.add("Tên sản phẩm");
+        header.add("Số lượng");
+        header.add("Đơn giá");
+        header.add("Thành tiền");
+        DefaultTableModel model=new DefaultTableModel(header,0);
+        for(ChiTietHoaDonDTO tk:ds){
+            Vector row=new Vector();
+            row.add(tk.getMaSP());
+            row.add(tk.getTenSP());
+            row.add(tk.getSoLuong());
+            row.add(tk.getDonGia());
+            row.add(tk.getThanhTien());
+            model.addRow(row);
+        }
+        bangchitiethoadon.setModel(model);
+    }
+    public void hienChiTiet(){
+        int row=banghoadon.getSelectedRow();
+        if(row!=-1){
+            ArrayList<ChiTietHoaDonDTO> ds= bus.getCTHDByMaHD(banghoadon.getValueAt(row,0).toString());
+            veBangChiTietHoaDon(ds);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel6 = new javax.swing.JPanel();
+        jDialog1 = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
@@ -141,16 +221,18 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         banghoadon = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bangchitiethoadon = new javax.swing.JTable();
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 812, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 676, Short.MAX_VALUE)
         );
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -422,17 +504,42 @@ public class THHoaDonUI extends javax.swing.JPanel {
                 "Mã hóa đơn", "Người tạo hóa đơn", "Tổng tiền", "Mã nhân viên tạo"
             }
         ));
+        banghoadon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hienchitiet(evt);
+            }
+        });
         jScrollPane1.setViewportView(banghoadon);
+
+        bangchitiethoadon.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Mã sản phẩm", "Tên sản phẩm", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(bangchitiethoadon);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1710, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.CENTER);
@@ -457,29 +564,7 @@ public class THHoaDonUI extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String key=txttimkiemhoadon.getText();
-        String pttt=null;
-        if(cbpttt.getSelectedIndex()!=0) pttt=cbpttt.getSelectedItem().toString();
-        String manv=null;
-        if(cbmanv.getSelectedIndex()!=0) manv=cbmanv.getSelectedItem().toString();
-        Date tungay=null;
-        if(datetungay.getDate()!=null) tungay=datetungay.getDate();
-        Date denngay=null;
-        if(datedenngay.getDate()!=null) denngay=datedenngay.getDate();
-        int tu=0,den=Integer.MAX_VALUE;
-        if(!txttugia.getText().equals("") ){
-            if(!txttugia.getText().matches("\\d+(\\.\\d+)?"))
-                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
-            else 
-                tu=Integer.parseInt(txttugia.getText());
-        }
-        if(!txtdengia.getText().equals("")){
-            if(!txtdengia.getText().matches("\\d+(\\.\\d+)?"))
-                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
-            den=Integer.parseInt(txtdengia.getText());
-        }
-        ArrayList<HoaDonDTO> tam=bus.timKiem(key,pttt,manv,tungay,denngay,tu,den);
-        veBangTHHoaDonTimKiem(tam);
+        timKiem();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void veCbMaNV(){
@@ -492,51 +577,6 @@ public class THHoaDonUI extends javax.swing.JPanel {
         cbmanv.setModel(model);
     }
     
-    public boolean exportExcel(JTable table) {
-        try {
-
-            JFileChooser fc = new JFileChooser();
-            fc.showSaveDialog(null);
-
-            String path = fc.getSelectedFile().getAbsolutePath() + ".xlsx";
-
-            Workbook wb = new XSSFWorkbook();
-            Sheet sheet = wb.createSheet("Data");
-
-            Row header = sheet.createRow(0);
-
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                header.createCell(i).setCellValue(table.getColumnName(i));
-            }
-
-            for (int i = 0; i < table.getRowCount(); i++) {
-
-                Row row = sheet.createRow(i + 1);
-
-                for (int j = 0; j < table.getColumnCount(); j++) {
-
-                    Object value = table.getValueAt(i, j);
-
-                    if (value != null)
-                        row.createCell(j).setCellValue(value.toString());
-                    else
-                        row.createCell(j).setCellValue("");
-
-                }
-            }
-
-            FileOutputStream fos = new FileOutputStream(path);
-            wb.write(fos);
-
-            fos.close();
-            wb.close();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
     private void txttimkiemhoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttimkiemhoadonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttimkiemhoadonActionPerformed
@@ -560,7 +600,13 @@ public class THHoaDonUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txttugiaActionPerformed
 
+    private void hienchitiet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hienchitiet
+        // TODO add your handling code here:
+        hienChiTiet();
+    }//GEN-LAST:event_hienchitiet
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable bangchitiethoadon;
     private javax.swing.JTable banghoadon;
     private javax.swing.JButton btnreset;
     private javax.swing.JComboBox<String> cbmanv;
@@ -570,6 +616,7 @@ public class THHoaDonUI extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -580,11 +627,11 @@ public class THHoaDonUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField txtdengia;
