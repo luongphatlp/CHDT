@@ -146,6 +146,10 @@ public class SanPhamBUS {
         }
         return false;
     }
+    public void tangSoLuong(String masp, int soluong){
+
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.updateSoLuong(masp, soluong);
     public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
         docDS();
         for(SanPhamDTO sp:ds){
