@@ -103,14 +103,17 @@ public class HoaDonBUS {
         return dao.taoMaHD();
     }
 public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
-        Date tungay,Date denngay,int tugia,int dengia){
+        LocalDate tungay,LocalDate denngay,int tugia,int dengia){
 
     ArrayList<HoaDonDTO> tam = new ArrayList<>();
 
     if(ds == null) selectAll();
-    LocalDateTime tu=chuyenDateThanhLocalDateTime(tungay);
-    LocalDateTime den=chuyenDateThanhLocalDateTime(denngay);
-   
+    if(tungay==null) tungay=LocalDate.MIN;
+    if(denngay==null) denngay=LocalDate.MAX;
+    LocalDateTime tu=tungay.atStartOfDay();
+    LocalDateTime den=denngay.atTime(23, 59, 59);
+    if(tugia==0) tugia=0;
+    if(dengia ==0 )dengia=Integer.MAX_VALUE;
     for(HoaDonDTO hd : ds){
         
         boolean mahd = true;
@@ -129,15 +132,8 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
             String manv=nv.split("-")[0];
             ktmanv = manv.equals(hd.getMaNV());
         }
-        if(tungay != null && denngay != null)
-            ktngay = !tu.isAfter(hd.getNgay()) && !den.isBefore(hd.getNgay());
-        else if(tungay != null)
-            ktngay = !tu.isAfter(hd.getNgay());
-        else if(denngay != null)
-            ktngay = !den.isBefore(hd.getNgay());
-
-        if(tugia != 0 || dengia != Integer.MAX_VALUE)
-            ktgia = hd.getTongTien() >= tugia && hd.getTongTien() <= dengia;
+        ktngay = !tu.isAfter(hd.getNgay()) && !den.isBefore(hd.getNgay());
+        ktgia = hd.getTongTien() >= tugia && hd.getTongTien() <= dengia;
 
         if(mahd && ktpttt && ktmanv && ktngay && ktgia)
             tam.add(hd);
@@ -165,6 +161,14 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
                 tam.add(hd);
         return tam;
     }
+    public ArrayList<HoaDonDTO> getHDByMaKH(String makh){
+        ArrayList<HoaDonDTO> tam=new ArrayList<>();
+        for(HoaDonDTO hd:ds)
+            if(hd.getMaKH().equals(makh))
+                tam.add(hd);
+        return tam;
+    }
+    
     public String taoMaKH(){
         KhachHangBUS bus=new KhachHangBUS();
         int size=bus.getDSKH().size();

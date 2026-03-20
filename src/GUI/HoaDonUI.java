@@ -75,6 +75,85 @@ public class HoaDonUI extends javax.swing.JPanel {
             return;
         }
     }
+    public void thanhToan(){
+                if (bangchitietsanpham.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Giỏ hàng trống!");
+            return;
+        }
+        
+        String pttt =cbpttt.getSelectedItem().toString();
+        if (pttt.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức thanh toán!");
+            return;
+        }
+        if(txtsdt.getText().equals("") || txthoten.getText().equals("") || txtemail.getText().equals("")){
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đày đủ thông tin khách hàng");
+            return;
+        }
+        KhachHangDTO kh = bus.layKhachHangBySDT(txtsdt.getText());
+        if(kh==null){
+            JOptionPane.showMessageDialog(null, "Không tồn tại khách hàng");
+            return;
+        } 
+        String makh=kh.getMa();
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) bangchitietsanpham.getModel();
+        String tongTien = lbtongtien.getText();
+        String maHD=bus.taoMaHD();
+        java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        
+        XacNhanTTUI xn = new XacNhanTTUI(parent, true, model, tongTien, pttt, maHD);
+        xn.setVisible(true);
+        
+        if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {
+
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "Giỏ hàng trống!");
+                return;
+            }
+
+            ArrayList<SanPhamDTO> ds = new ArrayList<>();
+            ArrayList<ChiTietHoaDonDTO> dscthd= new ArrayList<>();
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                SanPhamDTO sp = new SanPhamDTO();
+                sp.setMaSP(model.getValueAt(i, 0).toString());
+                sp.setTenSP(model.getValueAt(i, 1).toString());
+                sp.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
+                ds.add(sp);
+            }
+            String mahd=bus.taoMaHD();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                ChiTietHoaDonDTO cthd = new ChiTietHoaDonDTO();
+                cthd.setMaHD(mahd);
+                cthd.setMaSP(model.getValueAt(i, 0).toString());
+                cthd.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
+                cthd.setDonGia(Integer.parseInt(model.getValueAt(i, 2).toString()) - Integer.parseInt(model.getValueAt(i, 3).toString()));
+                cthd.setThanhTien(Integer.parseInt(model.getValueAt(i, 4).toString()));
+                dscthd.add(cthd);
+            }
+            HoaDonDTO hd = thanhToan(mahd);
+
+            int ok = bus.insert(hd);
+            
+            
+            if (ok==0) {
+                JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn!");
+                return;
+            }
+            bus.capNhatSoLuongSanPham(dscthd);
+            bus.insertCTHD(dscthd);
+            
+            ThemBaoHanhUI tbh = new ThemBaoHanhUI(makh, hd.getMaHD(), ds);
+            tbh.setVisible(true);
+
+            // Reset UI
+            model.setRowCount(0);
+            lbtongtien.setText("0đ");
+            cbpttt.setSelectedIndex(0);
+            veBangHoaDon();
+        }
+
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -463,83 +542,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         return ds;
     }
     private void btnThanhToanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThanhToanMouseClicked
-        if (bangchitietsanpham.getRowCount() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Giỏ hàng trống!");
-            return;
-        }
-        
-        String pttt =cbpttt.getSelectedItem().toString();
-        if (pttt.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức thanh toán!");
-            return;
-        }
-        if(txtsdt.getText().equals("") || txthoten.getText().equals("") || txtemail.getText().equals("")){
-            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đày đủ thông tin khách hàng");
-            return;
-        }
-        KhachHangDTO kh = bus.layKhachHangBySDT(txtsdt.getText());
-        if(kh==null){
-            JOptionPane.showMessageDialog(null, "Không tồn tại khách hàng");
-            return;
-        } 
-        String makh=kh.getMa();
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) bangchitietsanpham.getModel();
-        String tongTien = lbtongtien.getText();
-        String maHD=bus.taoMaHD();
-        java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        
-        XacNhanTTUI xn = new XacNhanTTUI(parent, true, model, tongTien, pttt, maHD,"Test");
-        xn.setVisible(true);
-        
-        if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {
-
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "Giỏ hàng trống!");
-                return;
-            }
-
-            ArrayList<SanPhamDTO> ds = new ArrayList<>();
-            ArrayList<ChiTietHoaDonDTO> dscthd= new ArrayList<>();
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(model.getValueAt(i, 0).toString());
-                sp.setTenSP(model.getValueAt(i, 1).toString());
-                sp.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
-                ds.add(sp);
-            }
-            String mahd=bus.taoMaHD();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                ChiTietHoaDonDTO cthd = new ChiTietHoaDonDTO();
-                cthd.setMaHD(mahd);
-                cthd.setMaSP(model.getValueAt(i, 0).toString());
-                cthd.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
-                cthd.setDonGia(Integer.parseInt(model.getValueAt(i, 2).toString()) - Integer.parseInt(model.getValueAt(i, 3).toString()));
-                cthd.setThanhTien(Integer.parseInt(model.getValueAt(i, 4).toString()));
-                dscthd.add(cthd);
-            }
-            HoaDonDTO hd = thanhToan(mahd);
-
-            int ok = bus.insert(hd);
-            
-            
-            if (ok==0) {
-                JOptionPane.showMessageDialog(null, "Lỗi lưu hóa đơn!");
-                return;
-            }
-            bus.capNhatSoLuongSanPham(dscthd);
-            bus.insertCTHD(dscthd);
-            
-            ThemBaoHanhUI tbh = new ThemBaoHanhUI(makh, hd.getMaHD(), ds);
-            tbh.setVisible(true);
-
-            // Reset UI
-            model.setRowCount(0);
-            lbtongtien.setText("0đ");
-            cbpttt.setSelectedIndex(0);
-            veBangHoaDon();
-        }
-
+        thanhToan();
     }//GEN-LAST:event_btnThanhToanMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -678,6 +681,12 @@ public class HoaDonUI extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        int row=bangchitietsanpham.getSelectedRow();
+        if(row!=-1){
+            DefaultTableModel model=(DefaultTableModel) bangchitietsanpham.getModel();
+            model.removeRow(row);
+            bangchitietsanpham.setModel(model);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
     private void customTable() {
         // 1. Chỉnh Font Arial, kích thước 16 cho nội dung bảng

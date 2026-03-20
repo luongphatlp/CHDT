@@ -18,7 +18,7 @@ public class ChiTietHoaDonDAO {
 
     public int insert(ChiTietHoaDonDTO ct) {
         int result = 0;
-        String sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia) VALUES (?, ?, ?, ?)";
 
         try (
             Connection con = Connect.getConnection();
@@ -28,8 +28,6 @@ public class ChiTietHoaDonDAO {
             ps.setString(2, ct.getMaSP());
             ps.setInt(3, ct.getSoLuong());
             ps.setInt(4, ct.getDonGia());
-            ps.setInt(5, ct.getThanhTien());
-
             result = ps.executeUpdate();
 
         } catch (Exception e) {
@@ -42,7 +40,7 @@ public class ChiTietHoaDonDAO {
     // ================== UPDATE ==================
     public int update(ChiTietHoaDonDTO ct) {
         int result = 0;
-        String sql = "UPDATE chitiethoadon SET SoLuong = ?, DonGia = ?, ThanhTien = ? WHERE MaHD = ? AND MaSP = ?";
+        String sql = "UPDATE chitiethoadon SET SoLuong = ?, DonGia = ? WHERE MaHD = ? AND MaSP = ?";
 
         try (
             Connection con = Connect.getConnection();
@@ -50,9 +48,8 @@ public class ChiTietHoaDonDAO {
         ) {
             ps.setInt(1, ct.getSoLuong());
             ps.setInt(2, ct.getDonGia());
-            ps.setInt(3, ct.getThanhTien());
-            ps.setString(4, ct.getMaHD());
-            ps.setString(5, ct.getMaSP());
+            ps.setString(3, ct.getMaHD());
+            ps.setString(4, ct.getMaSP());
 
             result = ps.executeUpdate();
 
@@ -87,7 +84,7 @@ public class ChiTietHoaDonDAO {
     // ================== SELECT ALL ==================
     public ArrayList<ChiTietHoaDonDTO> selectAll() {
         ArrayList<ChiTietHoaDonDTO> ds = new ArrayList<>();
-        String sql = "SELECT ct.MaHD,ct.MaSP,dt.Ten,ct.SoLuong,ct.DonGia,ct.ThanhTien FROM chitiethoadon ct JOIN dienthoai dt ON ct.MaSP=dt.Ma  ";
+        String sql = "SELECT ct.MaHD,ct.MaSP,dt.Ten,ct.SoLuong,ct.DonGia FROM chitiethoadon ct JOIN dienthoai dt ON ct.MaSP=dt.Ma  ";
 
         try (
             Connection con = Connect.getConnection();
@@ -101,7 +98,7 @@ public class ChiTietHoaDonDAO {
                 ct.setTenSP(rs.getString("Ten"));
                 ct.setSoLuong(rs.getInt("SoLuong"));
                 ct.setDonGia(rs.getInt("DonGia"));
-                ct.setThanhTien(rs.getInt("ThanhTien"));
+                ct.setThanhTien(rs.getInt("SoLuong") * rs.getInt("DonGia"));
 
                 ds.add(ct);
             }
@@ -131,7 +128,7 @@ public class ChiTietHoaDonDAO {
                 ct.setMaSP(rs.getString("MaSP"));
                 ct.setSoLuong(rs.getInt("SoLuong"));
                 ct.setDonGia(rs.getInt("DonGia"));
-                ct.setThanhTien(rs.getInt("ThanhTien"));
+                ct.setThanhTien(rs.getInt("DonGia")*rs.getInt("SoLuong"));
 
                 ds.add(ct);
             }

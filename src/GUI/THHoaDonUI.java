@@ -9,8 +9,9 @@ import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -113,10 +114,10 @@ public class THHoaDonUI extends javax.swing.JPanel {
         if(cbpttt.getSelectedIndex()!=0) pttt=cbpttt.getSelectedItem().toString();
         String manv=null;
         if(cbmanv.getSelectedIndex()!=0) manv=cbmanv.getSelectedItem().toString();
-        Date tungay=null;
-        if(datetungay.getDate()!=null) tungay=datetungay.getDate();
-        Date denngay=null;
-        if(datedenngay.getDate()!=null) denngay=datedenngay.getDate();
+        LocalDate tungay=null;
+        if(datetungay.getDate()!=null) tungay=datetungay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate denngay=null;
+        if(datedenngay.getDate()!=null) denngay=datedenngay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int tu=0,den=Integer.MAX_VALUE;
         if(!txttugia.getText().equals("") ){
             if(!txttugia.getText().matches("\\d+(\\.\\d+)?"))
@@ -137,27 +138,29 @@ public class THHoaDonUI extends javax.swing.JPanel {
         try {
             JFileChooser fc = new JFileChooser();
             fc.showSaveDialog(null);
-            String path = fc.getSelectedFile().getAbsolutePath() + ".xlsx";
-            Workbook wb = new XSSFWorkbook();
-            Sheet sheet = wb.createSheet("Data");
-            Row header = sheet.createRow(0);
-            for (int i = 0; i < table.getColumnCount(); i++) 
-                header.createCell(i).setCellValue(table.getColumnName(i));
-            for (int i = 0; i < table.getRowCount(); i++) {
-                Row row = sheet.createRow(i + 1);
-                for (int j = 0; j < table.getColumnCount(); j++) {
-                    Object value = table.getValueAt(i, j);
-                    if (value != null)
-                        row.createCell(j).setCellValue(value.toString());
-                    else
-                        row.createCell(j).setCellValue("");
+            if(fc.getSelectedFile()!=null){
+                String path = fc.getSelectedFile().getAbsolutePath() + ".xlsx";
+                Workbook wb = new XSSFWorkbook();
+                Sheet sheet = wb.createSheet("Data");
+                Row header = sheet.createRow(0);
+                for (int i = 0; i < table.getColumnCount(); i++) 
+                    header.createCell(i).setCellValue(table.getColumnName(i));
+                for (int i = 0; i < table.getRowCount(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < table.getColumnCount(); j++) {
+                        Object value = table.getValueAt(i, j);
+                        if (value != null)
+                            row.createCell(j).setCellValue(value.toString());
+                        else
+                            row.createCell(j).setCellValue("");
+                    }
                 }
+                FileOutputStream fos = new FileOutputStream(path);
+                wb.write(fos);
+                fos.close();
+                wb.close();
+                return true;
             }
-            FileOutputStream fos = new FileOutputStream(path);
-            wb.write(fos);
-            fos.close();
-            wb.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -513,13 +516,13 @@ public class THHoaDonUI extends javax.swing.JPanel {
 
         bangchitiethoadon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Title 3", "Title 4"
+                "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Thành tiền"
             }
         ));
         jScrollPane2.setViewportView(bangchitiethoadon);
