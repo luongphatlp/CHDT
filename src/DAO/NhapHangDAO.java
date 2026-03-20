@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import DTO.NhapHangDTO;
 import DTO.DienThoaiDTO;
+import java.util.Vector;
 /**
  *
  * @author Admin
@@ -25,14 +26,9 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
     public int insert(NhapHangDTO nh){
         int result = 0;
         try(Connection conn = Connect.getConnection()){
-            String qry = "INSERT INTO nhaphang(MaMay, TenMay, DonGia, MaSP, TenSP, SoLuong, Gia) VALUES ("
-            + "'" + nh.getMamay() + "'"
-            + "'" + nh.getTenmay() + "'"
-            + "'" + nh.getDongia() + "'"
-            + "'" + nh.getMasp() + "'"
-            + "'" + nh.getTensp() + "'"
-            + "'" + nh.getSoluong() + "'"
-            + "'" + nh.getGia() + "'";        
+            String qry = "INSERT INTO hang(Ma, Ten) VALUES ("
+            + "'" + nh.getMamay() + "',"
+            + "'" + nh.getTenmay() + "')";        
             Statement st = conn.createStatement();
             result = st.executeUpdate(qry);
         }catch (SQLException ex) {
@@ -44,14 +40,9 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
     @Override
     public int update(NhapHangDTO nh) {
         int result=0;
-        String qry="Update nhaphang Set";
-        qry+=" "+"TenMay="+"'"+nh.getTenmay()+"'";
-        qry+=","+"DonGia="+"'"+nh.getDongia()+"'";
-        qry+=","+"MaSP="+"'"+nh.getMasp()+"'";
-        qry+=","+"TenSP="+"'"+nh.getTensp()+"'";
-        qry+=","+"SoLuong="+"'"+nh.getSoluong()+"'";
-        qry+=","+"Gia="+"'"+nh.getGia()+"'";
-        qry+=" WHERE MaMay='"+nh.getMamay()+"'";
+        String qry="Update hang Set";
+        qry+=" "+"Ten="+"'"+nh.getTenmay()+"'";
+        qry+=" WHERE Ma='"+nh.getMamay()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -64,7 +55,7 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
     @Override
     public int delete(NhapHangDTO nh) {
         int result=0;
-        String qry="Delete from nhaphang where MaMay='"+nh.getMamay()+"'";
+        String qry="Delete from hang where MaMay='"+nh.getMamay()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -76,18 +67,14 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
     @Override
     public ArrayList<NhapHangDTO> selectAll() {
         ArrayList<NhapHangDTO> ds=new ArrayList<>();
-        String qry="Select * from nhaphang";
+        String qry="Select * from hang";
         try(Connection conn=Connect.getConnection()){
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qry);
             while(rs.next()){
                 NhapHangDTO nh=new NhapHangDTO();
                 nh.setMamay(rs.getString(1));
-                nh.setDongia(rs.getInt(2));
-                nh.setMasp(rs.getString(3));
-                nh.setTensp(rs.getString(4));
-                nh.setSoluong(rs.getInt(5));
-                nh.setGia(rs.getInt(6));
+                nh.setTenmay(rs.getString(2));
                 ds.add(nh);
             }
         }catch(SQLException ex) {
@@ -95,27 +82,28 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
         }
         return ds;
     }
-    public ArrayList<DienThoaiDTO> getAll(){
+    public ArrayList<Vector> getAll(){
 
-        ArrayList<DienThoaiDTO> list = new ArrayList<>();
+        ArrayList<Vector> list = new ArrayList<>();
 
         try{
-
-            String sql = "SELECT Ma, Ten, DonGia FROM dienthoai";
-
             Connection con = Connect.getConnection();
+            String sql = "SELECT Ma, Ten, DonGia FROM dienthoai";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()){
-
+                Vector vector = new Vector();
                 DienThoaiDTO dt = new DienThoaiDTO();
 
                 dt.setMa(rs.getString("Ma"));
                 dt.setTen(rs.getString("Ten"));
                 dt.setDonGia(rs.getInt("DonGia"));
-
-                list.add(dt);
+                vector.add(dt.getMa());
+                vector.add(dt.getTen());
+                vector.add(dt.getDonGia());
+                
+                list.add(vector);
             }
 
         }catch(Exception e){
@@ -123,5 +111,5 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
         }
 
         return list;
-}    
+    }    
 }

@@ -10,13 +10,32 @@ import DAO.NhapHangDAO;
  * @author Admin
  */
 import java.util.ArrayList;
+import java.util.Vector;
 public class DienThoaiBUS {
-    public ArrayList<DienThoaiDTO> dsdt;
+    
+    public ArrayList<Vector> dsdt;
 
-    public void docDS(){
+    public void docDS() {
 
         NhapHangDAO dao = new NhapHangDAO();
         dsdt = dao.getAll();
 
+    }
+    public ArrayList<Vector> timKiem(String tuKhoa){
+
+        ArrayList<Vector> ketQua = new ArrayList<>();
+
+        for(Vector v : dsdt){
+
+            String ma = v.get(0).toString().toLowerCase();
+            String ten = v.get(1).toString().toLowerCase();
+
+            if(ma.contains(tuKhoa.toLowerCase()) || ten.contains(tuKhoa.toLowerCase())){
+                ketQua.add(v);
+            }
+
+        }
+
+        return ketQua;
     }
 }

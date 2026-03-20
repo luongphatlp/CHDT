@@ -4,6 +4,25 @@
  */
 package GUI;
 
+import javax.swing.JFrame;
+import BUS.PhieuNhapHangBUS;
+import DTO.PhieuNhapHangDTO;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import BUS.NhaCungCapBUS;
+import DTO.NhaCungCapDTO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import java.io.*;
+import javax.swing.JFileChooser;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author THANH NHAN
@@ -17,8 +36,69 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
+        customTable();
+        loadTable();
     }
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable1.setFont(tableFont);
+        jTable1.setRowHeight(30);
 
+        jTable1.getTableHeader().setOpaque(false);
+        jTable1.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+    NhaCungCapBUS busNCC = new NhaCungCapBUS();
+    PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
+    public String getTenNCC(String maNCC){
+        busNCC.docDS();
+        
+        for(NhaCungCapDTO ncc : busNCC.ds){
+            if(ncc.getMaNCC().equals(maNCC)){
+                return ncc.getTenNCC();
+            }
+        }
+
+        return maNCC;
+    }
+    public void loadTable(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        busPN.docDSPN();
+        busNCC.docDS();
+        ArrayList<PhieuNhapHangDTO> dspn = busPN.dspn;
+
+        int stt = 1;
+        
+        for(PhieuNhapHangDTO pn : dspn){
+            model.addRow(new Object[]{
+                stt++,
+                pn.getMapn(),
+                getTenNCC(pn.getMancc()),
+                pn.getManv(),
+                pn.getNgay(),
+                pn.getTongtien(),
+                "Đang hoạt động"
+            });
+        }
+        capNhatSTT();
+    }
+    public void capNhatSTT(){
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        for(int i = 0; i < model.getRowCount(); i++){
+            model.setValueAt(i+1, i, 0);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,10 +132,9 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jPanel8 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -125,6 +204,11 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
@@ -133,12 +217,33 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton6);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(820, 90));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Giảm dần", "Tăng dần" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         btnreset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
         btnreset.setText("Làm mới");
@@ -155,7 +260,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jComboBox1, 0, 270, Short.MAX_VALUE)
+                .addComponent(jComboBox1, 0, 269, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -219,6 +324,18 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Đến:");
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -250,27 +367,6 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc theo Mã nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 16))); // NOI18N
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jComboBox2, 0, 257, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel9.setBackground(new java.awt.Color(18, 77, 122));
         jPanel9.setForeground(new java.awt.Color(18, 77, 122));
         jPanel9.setPreferredSize(new java.awt.Dimension(100, 60));
@@ -296,6 +392,17 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton7.setBackground(new java.awt.Color(49, 140, 112));
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setIconTextGap(5);
+        jButton7.setLabel("Thực thi");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -305,15 +412,15 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15))))
         );
@@ -327,9 +434,11 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                     .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -337,12 +446,13 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên tạo", "Thời gian tạo", "Tổng tiền"
+                "STT", "Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên tạo", "Thời gian tạo", "Tổng tiền", "Trạng thái"
             }
         ));
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -371,21 +481,316 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField3.setText("");
+        jTextField2.setText("");
+
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
+        TableRowSorter<?> sorter = (TableRowSorter<?>) jTable1.getRowSorter();
+        if (sorter != null) {
+            sorter.setRowFilter(null); // bỏ filter
+        }
+        loadTable();
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có chắc muốn xóa không?",
+            "Xác nhận",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            int modelRow = jTable1.convertRowIndexToModel(row); 
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            // ✔ đổi trạng thái
+            model.setValueAt("Dừng hoạt động", modelRow, 6);
+
+            JOptionPane.showMessageDialog(this, "Đã chuyển trạng thái thành Dừng hoạt động");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+
+        if(row == -1){
+            JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập cần sửa");
+            return;
+        }
+
+        String mapn = jTable1.getValueAt(row,1).toString();
+
+        PhieuNhapHangDTO pn = null;
+
+        for(PhieuNhapHangDTO p : busPN.getDS()){
+            if(p.getMapn().equals(mapn)){
+                pn = p;
+                break;
+            }
+        }
+
+        if(pn != null){
+            new SuaPNUI(pn,this,busPN).setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        String maPN = jTable1.getValueAt(row, 1).toString();
+
+        ChiTietPNUI ui = new ChiTietPNUI();
+        ui.loadData(maPN);
+        ui.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+
+        String text = jTextField1.getText().trim();
+
+        if(text.length() == 0){
+            sorter.setRowFilter(null); // hiện lại toàn bộ bảng
+        }else{
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text)); 
+            // (?i) = tìm không phân biệt hoa thường
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+           TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+           jTable1.setRowSorter(sorter);
+           sorter.setComparator(5, (o1, o2) -> {
+           return Integer.compare(
+                    Integer.parseInt(o1.toString()),
+                    Integer.parseInt(o2.toString())
+                );
+           });
+           List<RowFilter<Object,Object>> filters = new ArrayList<>();
+
+           // 📅 2. Lọc theo ngày (nếu có)
+           try{
+               Date tuNgay = jDateChooser1.getDate();
+               Date denNgay = jDateChooser2.getDate();
+
+               if(tuNgay != null && denNgay != null){
+                   filters.add(new RowFilter<Object,Object>(){
+                        @Override
+                        public boolean include(Entry<?, ?> entry) {
+
+                            try{
+                                String ngayStr = entry.getStringValue(4); // cột ngày
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                Date ngay = sdf.parse(ngayStr);
+
+                                // ✔ nếu có từ ngày
+                                if(tuNgay != null && ngay.before(tuNgay)){
+                                    return false;
+                                }
+
+                                // ✔ nếu có đến ngày
+                                if(denNgay != null && ngay.after(denNgay)){
+                                    return false;
+                                }
+
+                                return true;
+
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+
+                            return false;
+                        }
+                    });
+               }
+               
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+           
+           // 💰 3. Lọc theo giá
+           try{
+               String giaTu = jTextField3.getText().trim();
+               String giaDen = jTextField2.getText().trim();
+
+               if(!giaTu.isEmpty() && !giaDen.isEmpty()){
+                   int min = Integer.parseInt(giaTu);
+                   int max = Integer.parseInt(giaDen);
+
+                   filters.add(new RowFilter<Object,Object>(){
+                       public boolean include(Entry<?,?> entry){
+                           int gia = Integer.parseInt(entry.getStringValue(5)); // cột tổng tiền
+                           return gia >= min && gia <= max;
+                       }
+                   });
+               }
+           }catch(Exception e){
+               JOptionPane.showMessageDialog(this,"Giá không hợp lệ");
+           }
+
+           // 👉 Gộp filter
+           sorter.setRowFilter(RowFilter.andFilter(filters));
+
+           // 🔽 4. SORT theo combobox
+           String selected = jComboBox1.getSelectedItem().toString();
+
+           List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+
+           if(selected.equals("Tăng dần")){
+               sortKeys.add(new RowSorter.SortKey(5, SortOrder.ASCENDING)); // cột tổng tiền
+           }else{
+               sortKeys.add(new RowSorter.SortKey(5, SortOrder.DESCENDING));
+           }
+
+           sorter.setSortKeys(sortKeys);
+           sorter.sort();        
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            try{
+                FileInputStream fis = new FileInputStream(file);
+                Workbook workbook = WorkbookFactory.create(fis);
+                Sheet sheet = workbook.getSheetAt(0);
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0); // clear bảng
+
+                for(int i = 1; i <= sheet.getLastRowNum(); i++){ // bỏ header
+                    Row row = sheet.getRow(i);
+
+                    if(row == null) continue;
+
+                    String mapn = row.getCell(0).toString();
+                    String tenncc = row.getCell(1).toString();
+                    String manv = row.getCell(2).toString();
+                    String ngay = row.getCell(3).toString();
+                    int tongtien = (int) row.getCell(4).getNumericCellValue();
+                    String trangthai = row.getCell(5).toString();
+
+                    model.addRow(new Object[]{
+                        model.getRowCount()+1,
+                        mapn,
+                        tenncc,
+                        manv,
+                        ngay,
+                        tongtien,
+                        trangthai
+                    });
+                }
+
+                workbook.close();
+                fis.close();
+
+                JOptionPane.showMessageDialog(this,"Nhập Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this,"Lỗi đọc file Excel!");
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+                                     
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file");
+
+        if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            // thêm đuôi .xlsx nếu chưa có
+            if(!file.getName().endsWith(".xlsx")){
+                file = new File(file.getAbsolutePath() + ".xlsx");
+            }
+
+            try{
+                Workbook workbook = new XSSFWorkbook();
+                Sheet sheet = workbook.createSheet("PhieuNhap");
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+                // header
+                Row header = sheet.createRow(0);
+                for(int i=0;i<model.getColumnCount();i++){
+                    Cell cell = header.createCell(i);
+                    cell.setCellValue(model.getColumnName(i));
+                }
+
+                // data
+                for(int i=0;i<model.getRowCount();i++){
+                    Row row = sheet.createRow(i+1);
+
+                    for(int j=0;j<model.getColumnCount();j++){
+                        Cell cell = row.createCell(j);
+                        cell.setCellValue(model.getValueAt(i,j).toString());
+                    }
+                }
+
+                FileOutputStream fos = new FileOutputStream(file);
+                workbook.write(fos);
+
+                fos.close();
+                workbook.close();
+
+                JOptionPane.showMessageDialog(this,"Xuất Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this,"Lỗi xuất file Excel!");
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("Test Phiếu Nhập Hàng");
+
+        PhieuNhapUI panel = new PhieuNhapUI();
+
+        frame.add(panel);
+
+        frame.setSize(1200,700);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;
@@ -394,8 +799,8 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
@@ -410,7 +815,6 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;

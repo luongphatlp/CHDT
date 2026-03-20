@@ -10,18 +10,18 @@ package DTO;
  */
 public class PhieuNhapHangDTO {
     String mapn;
-    int ngay;
+    String ngay;
     String manv;
     String mancc;
     int tongtien;
     public PhieuNhapHangDTO() {
         this.mapn = null;
-        this.ngay = 0;
+        this.ngay = null;
         this.manv = null;
         this.mancc = null;
         this.tongtien = 0;
     }
-    public PhieuNhapHangDTO(String mapn, int ngay, String manv, String mancc, int tongtien) {
+    public PhieuNhapHangDTO(String mapn, String ngay, String manv, String mancc, int tongtien) {
         this.mapn = mapn;
         this.ngay = ngay;
         this.manv = manv;
@@ -37,8 +37,8 @@ public class PhieuNhapHangDTO {
     }
     public String getMapn() {return mapn;}
     public void setMapn(String mapn){this.mapn = mapn;}
-    public int getNgay() {return ngay;}
-    public void setNgay(int ngay){this.ngay = ngay;}
+    public String getNgay() {return ngay;}
+    public void setNgay(String ngay){this.ngay = ngay;}
     public String getManv(){return manv;}
     public void setManv(String manv){this.manv = manv;}
     public String getMancc(){return mancc;}

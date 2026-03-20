@@ -4,13 +4,24 @@
  */
 package GUI;
 
+import BUS.ChiTietPhieuNhapBUS;
+import BUS.NhaCungCapBUS;
+import BUS.NhapHangBUS;
+import BUS.PhieuNhapHangBUS;
+import DTO.ChiTietPhieuNhapDTO;
+import DTO.NhaCungCapDTO;
+import DTO.PhieuNhapHangDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,7 +48,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
-
+        
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -50,7 +61,64 @@ public class ChiTietPNUI extends javax.swing.JDialog {
             }
         });
     }
+    
+    public void loadData(String maPN) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        // load thông tin phiếu
+        PhieuNhapHangBUS pnBUS = new PhieuNhapHangBUS();
+        PhieuNhapHangDTO pn = pnBUS.getByID(maPN);
+        if (pn == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy dữ liệu phiếu nhập!");
+            return;
+        }
+        jLabel6.setText(pn.getMapn());
+        jLabel7.setText(pn.getManv());
+        NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+        String tenNCC = "";
 
+        for(NhaCungCapDTO ncc : nccBUS.getDS()){
+            if(ncc.getMaNCC().equals(pn.getMancc())){
+                tenNCC = ncc.getTenNCC();
+                break;
+            }
+        }
+
+        jLabel8.setText(tenNCC);
+        if (pn.getNgay() != null) {
+            jLabel9.setText(pn.getNgay().toString());
+        }
+        // load chi tiết
+        ChiTietPhieuNhapBUS ctBUS = new ChiTietPhieuNhapBUS();
+        ArrayList<ChiTietPhieuNhapDTO> ds = ctBUS.getByMaPN(maPN);
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (ChiTietPhieuNhapDTO ct : ds) {
+            long donGia = 0;
+            long soLuong = ct.getSl();
+            long thanhTien = ct.getTongtien();
+
+            if (soLuong != 0) {
+                donGia = thanhTien / soLuong; 
+            }
+
+            model.addRow(new Object[]{
+                ct.getMasp(),
+                ct.getSl(),
+                df.format(donGia),
+                df.format(ct.getTongtien())
+            });
+        }
+
+        long tong = 0;
+
+        for (ChiTietPhieuNhapDTO ct : ds) {
+            tong += ct.getTongtien();
+        }
+
+        jLabel11.setText(df.format(tong) + " VNĐ");    
+    }
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
      */
@@ -83,7 +151,6 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -161,9 +228,6 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel11.setText("0");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
-        jLabel12.setText("đ");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -197,9 +261,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(138, 138, 138)
-                                .addComponent(jLabel11)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12)))
+                                .addComponent(jLabel11)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -207,7 +269,6 @@ public class ChiTietPNUI extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
@@ -226,8 +287,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel11))
                 .addGap(33, 33, 33)
                 .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -308,7 +368,6 @@ public class ChiTietPNUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

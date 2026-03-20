@@ -3,18 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import BUS.ChiTietPhieuNhapBUS;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
 import DTO.NhapHangDTO;
-import BUS.SanPhamBUS;
 import BUS.DienThoaiBUS;
-import DTO.DienThoaiDTO;
+import BUS.NhaCungCapBUS;
+import BUS.SanPhamBUS;
+import DTO.ChiTietPhieuNhapDTO;
+import DTO.NhaCungCapDTO;
+import DTO.PhieuNhapHangDTO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -32,41 +53,63 @@ public class NhapHangUI extends javax.swing.JPanel {
             ex.printStackTrace();
         }
         initComponents();
+        customTable();
         loadDienThoai();
         jTextField3.setText(taoMaPhieuNhap());
         jTextField3.setEditable(false);
-        //loadNhaCungCap(); 
+        loadNhaCungCap(); 
+        jDateChooser1.setDate(new Date());
     }
-    public void loadTableSanPham(ArrayList<NhapHangDTO> ds){
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        jTable2.setFont(tableFont);
+        jTable2.setRowHeight(30);
+
+        jTable2.getTableHeader().setOpaque(false);
+        jTable2.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
+        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+            jTable2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        jTable3.setFont(tableFont);
+        jTable3.setRowHeight(30);
+
+        jTable3.getTableHeader().setOpaque(false);
+        jTable3.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.LEFT);
+        for (int i = 0; i < jTable3.getColumnCount(); i++) {
+            jTable3.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+    public void loadTableSanPham(ArrayList<Vector> ds){
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
 
-        for(NhapHangDTO nh : ds){
-            model.addRow(new Object[]{
-                nh.getMamay(),
-                nh.getTenmay(),
-                nh.getDongia()
-            });
+        for(Vector nh : ds){
+            model.addRow(nh);
         }
     }
     public void tinhTongTien(){
-        int tong = 0;
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        jLabel8.setText(String.valueOf(getTongTien()));
+    }
+    public long getTongTien(){
 
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        long tong = 0;
 
         for(int i=0;i<model.getRowCount();i++){
-            int soluong = Integer.parseInt(model.getValueAt(i,3).toString());
 
-            String masp = model.getValueAt(i,1).toString();
+            long gia = Long.parseLong(model.getValueAt(i,4).toString());
+            tong += gia;
 
-            for(NhapHangDTO nh : NhapHangBUS.dsnh){
-                if(nh.getMasp().equals(masp)){
-                    tong += nh.getDongia() * soluong;
-                }
-            }
         }
 
-        jLabel5.setText(String.valueOf(tong));
+        return tong;
     }
     public void capNhatSTT(){
 
@@ -97,29 +140,57 @@ public class NhapHangUI extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
 
-        for(DienThoaiDTO dt : bus.dsdt){
-
-            model.addRow(new Object[]{
-                dt.getMa(),
-                dt.getTen(),
-                dt.getDonGia()
-            });
-
+        for(Vector v : bus.dsdt){
+            model.addRow(v);
         }
     }
-    /*public void loadNhaCungCap(){
+    public void loadNhaCungCap(){
 
-        NhaCungCapDAO dao = new NhaCungCapDAO();
+        NhaCungCapBUS bus = new NhaCungCapBUS();
+        ArrayList<NhaCungCapDTO> ds = bus.getDS();
 
-        ArrayList<NhaCungCapDTO> ds = dao.selectAll();
-
-        cbNhaCungCap.removeAllItems();
+        jComboBox2.removeAllItems();
 
         for(NhaCungCapDTO ncc : ds){
 
-            cbNhaCungCap.addItem(ncc);
+            jComboBox2.addItem(ncc);
         }
-    }*/
+    }
+    public void xuatPDF(String path){
+
+        try{
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(path));
+
+            document.open();
+
+            document.add(new Paragraph("PHIEU NHAP HANG"));
+            document.add(new Paragraph(" "));
+
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+            PdfPTable table = new PdfPTable(model.getColumnCount());
+
+            for(int i=0;i<model.getColumnCount();i++){
+                table.addCell(model.getColumnName(i));
+            }
+
+            for(int i=0;i<model.getRowCount();i++){
+                for(int j=0;j<model.getColumnCount();j++){
+                    table.addCell(model.getValueAt(i,j).toString());
+                }
+            }
+
+            document.add(table);
+
+            document.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,13 +220,13 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -247,6 +318,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel6.setText("Số lượng:");
 
         jSpinner1.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -310,13 +382,6 @@ public class NhapHangUI extends javax.swing.JPanel {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
@@ -377,30 +442,28 @@ public class NhapHangUI extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextField2))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(18, 18, 18)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(62, 62, 62)
+                            .addComponent(jLabel4)
+                            .addGap(85, 85, 85)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextField2))
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(22, 22, 22)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(58, 58, 58)
-                                    .addComponent(jLabel4)
-                                    .addGap(85, 85, 85)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 234, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,15 +477,15 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -476,7 +539,7 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -499,7 +562,7 @@ public class NhapHangUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,11 +573,11 @@ public class NhapHangUI extends javax.swing.JPanel {
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
         jTextField1.setText("");
-
-        NhapHangBUS bus = new NhapHangBUS();
-        bus.docDSNH();
-
-        loadTableSanPham(NhapHangBUS.dsnh);
+        TableRowSorter<?> sorter = (TableRowSorter<?>) jTable3.getRowSorter();
+        if (sorter != null) {
+            sorter.setRowFilter(null); // bỏ filter
+        }
+        loadDienThoai();
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -522,7 +585,54 @@ public class NhapHangUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if(result == JFileChooser.APPROVE_OPTION){
+
+            File file = fileChooser.getSelectedFile();
+
+            try{
+                FileInputStream fis = new FileInputStream(file);
+                Workbook workbook = WorkbookFactory.create(fis);
+                Sheet sheet = workbook.getSheetAt(0);
+
+                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+                for(int i = 1; i <= sheet.getLastRowNum(); i++){ // bỏ dòng tiêu đề
+                    Row row = sheet.getRow(i);
+
+                    if(row == null) continue;
+
+                    String masp = row.getCell(0).toString();
+                    String tensp = row.getCell(1).toString();
+                    int soluong = (int) row.getCell(2).getNumericCellValue();
+                    long dongia = (long) row.getCell(3).getNumericCellValue();
+
+                    long thanhtien = soluong * dongia;
+
+                    model.addRow(new Object[]{
+                        model.getRowCount() + 1,
+                        masp,
+                        tensp,
+                        soluong,
+                        thanhtien
+                    });
+                }
+
+                workbook.close();
+                fis.close();
+
+                tinhTongTien();
+
+                JOptionPane.showMessageDialog(this, "Nhập Excel thành công!");
+
+            }catch(Exception e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi đọc file Excel!");
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -533,11 +643,31 @@ public class NhapHangUI extends javax.swing.JPanel {
             return;
         }
 
-        int soluong = (int) jSpinner1.getValue();
+        int soLuongCu = Integer.parseInt(jTable2.getValueAt(row, 3).toString());
+        long donGia = Long.parseLong(jTable2.getValueAt(row, 4).toString().replace(",", ""));
 
-        jTable2.setValueAt(soluong,row,3);
- 
-        tinhTongTien();
+        // nhập số lượng mới
+        String input = JOptionPane.showInputDialog(this, "Nhập số lượng mới:", soLuongCu);
+
+        if(input == null) return; // bấm cancel
+
+        try{
+            int soLuongMoi = Integer.parseInt(input);
+
+            if(soLuongMoi <= 0){
+                JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
+                return;
+            }
+
+            // cập nhật bảng
+            jTable2.setValueAt(soLuongMoi, row, 3);
+
+            long thanhTien = soLuongMoi * donGia;
+            jTable2.setValueAt(String.format("%,d", thanhTien), row, 4);
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -557,32 +687,89 @@ public class NhapHangUI extends javax.swing.JPanel {
         tinhTongTien();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+              
         String maPN = jTextField3.getText();
-        /*NhaCungCapDTO ncc = (NhaCungCapDTO) cbNhaCungCap.getSelectedItem();
-        String maNCC = ncc.getMa();*/
+        System.out.println("MaPN: " + maPN);
+        String maNV = jTextField2.getText();
+        if(maNV == null || maNV.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống!");
+            return;
+        }
+        NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
+        String maNCC = ncc.getMaNCC();
+        Date today = new Date();
+        jDateChooser1.setDate(today);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ngay = sdf.format(jDateChooser1.getDate());
+        String ngay = sdf.format(today);
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        if(model.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this,"Chưa có sản phẩm để nhập");
+            return;
+        }
+        SanPhamBUS spBus = new SanPhamBUS();
+        NhapHangBUS bus = new NhapHangBUS();   
+        bus.docDSNH();
+        long tongTien = getTongTien();
+        PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
+        pn.setMapn(maPN);
+        pn.setMancc(maNCC);
+        pn.setManv(maNV);
+        pn.setNgay(ngay);
+        pn.setTongtien((int) tongTien);
 
-        NhapHangBUS bus = new NhapHangBUS();
+        PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
+        busPN.docDSPN();
+        busPN.them(pn);
+        ChiTietPhieuNhapBUS ctBUS = new ChiTietPhieuNhapBUS();
 
-        for(int i=0;i<model.getRowCount();i++){
+        for (int i = 0; i < model.getRowCount(); i++) {
 
-            NhapHangDTO nh = new NhapHangDTO();
+            String maSP = model.getValueAt(i, 1).toString();
+            int soLuong = Integer.parseInt(model.getValueAt(i, 3).toString());
+            long thanhTien = Long.parseLong(model.getValueAt(i, 4).toString());
 
-            nh.setMasp(model.getValueAt(i,1).toString());
-            nh.setTensp(model.getValueAt(i,2).toString());
-            nh.setSoluong(Integer.parseInt(model.getValueAt(i,3).toString()));
+            ChiTietPhieuNhapDTO ct = new ChiTietPhieuNhapDTO();
+            ct.setMapn(maPN);
+            ct.setMasp(maSP);
+            ct.setSl(soLuong);
+            ct.setTongtien(thanhTien);
 
-            bus.them(nh);
+            ctBUS.them(ct);
+            spBus.tangSoLuong(maSP, soLuong);
+        }
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có muốn xuất file PDF không?",
+            "Xuất PDF",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            String path = "phieunhap.pdf";
+
+            xuatPDF(path);
+
+            int open = JOptionPane.showConfirmDialog(
+                    this,
+                    "Xuất PDF thành công. Bạn có muốn mở file không?",
+                    "Mở PDF",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if(open == JOptionPane.YES_OPTION){
+                try{
+                    Desktop.getDesktop().open(new File(path));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
         JOptionPane.showMessageDialog(this,"Nhập hàng thành công");
+        model.setRowCount(0);
+        jLabel8.setText("0 VNĐ");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -592,30 +779,31 @@ public class NhapHangUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
             return;
         }
-
+        int dongia = Integer.parseInt(jTable3.getValueAt(row, 2).toString());
         String masp = jTable3.getValueAt(row,0).toString();
         String tensp = jTable3.getValueAt(row,1).toString();
         int soluong = (int) jSpinner1.getValue();
-
+        int gia = dongia * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
 
         model.addRow(new Object[]{
             model.getRowCount()+1,
             masp,
             tensp,
-            soluong
+            soluong,
+            gia
         });
 
+      
         tinhTongTien();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String tuKhoa = jTextField1.getText();
-    
-        NhapHangBUS bus = new NhapHangBUS();
-        ArrayList<NhapHangDTO> ketQua = bus.timKiem(tuKhoa);
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable3.setRowSorter(sorter);
 
-        loadTableSanPham(ketQua);
+        sorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText()));
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -646,7 +834,7 @@ public class NhapHangUI extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<NhaCungCapDTO> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
