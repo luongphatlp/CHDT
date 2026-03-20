@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/OkCancelDialog.java to edit this template
- */
+
 package GUI;
 
 import java.util.ArrayList;
@@ -256,14 +253,14 @@ public class ChiTietBaoHanhUI extends javax.swing.JDialog {
         int thoiHan = Integer.parseInt(model.getValueAt(0, 2).toString().replaceAll("[^0-9]", ""));
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
+            //ds.add(new DTO.BaoHanhDTO(model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), null));
         }
 
         BUS.BaoHanhBUS bus = new BUS.BaoHanhBUS();
-        if (bus.xuLyLuuBaoHanh(maBH, thoiHan, ds)) {
+        /*if (bus.xuLyLuuBaoHanh(maBH, thoiHan, ds)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lưu thành công!");
             this.dispose(); // Đóng cửa sổ
-        }
+        }*/
     }//GEN-LAST:event_okButtonActionPerformed
     private void updateMainTable() {
         // Nếu bạn có một instance của BaoHanhDienThoaiUI, hãy gọi loadData() của nó ở đây

@@ -4,7 +4,8 @@
  */
 package DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,13 +13,13 @@ import java.util.Date;
  */
 public class HoaDonDTO {
     private String MaHD;
-    private Date Ngay;
+    private LocalDateTime  Ngay;
     private String MaNV;
     private String MaKH;
     private int TongTien;
     private String PTTT;
 
-    public HoaDonDTO(String MaHD, Date Ngay, String MaNV,String MaKH, int TongTien, String PTTT) {
+    public HoaDonDTO(String MaHD, LocalDateTime Ngay, String MaNV,String MaKH, int TongTien, String PTTT) {
         this.MaHD = MaHD;
         this.Ngay = Ngay;
         this.MaNV = MaNV;
@@ -38,11 +39,11 @@ public class HoaDonDTO {
         this.MaHD = MaHD;
     }
 
-    public Date getNgay() {
+    public LocalDateTime getNgay() {
         return Ngay;
     }
 
-    public void setNgay(Date Ngay) {
+    public void setNgay(LocalDateTime Ngay) {
         this.Ngay = Ngay;
     }
 

@@ -358,9 +358,9 @@ public class Login extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa hoặc ngừng hoạt động.");
             return;
         }
-
         
-        DTO.TaiKhoanSession.nvDangNhap = nhanVienLogin;
+        
+        UTIL.TaiKhoanSession.nvDangNhap = nhanVienLogin;
 
         if (nhanVienLogin.getChucVu().equalsIgnoreCase("Quản Lý")) {
             HomeUI homeAdmin = new HomeUI();

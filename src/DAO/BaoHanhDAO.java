@@ -7,38 +7,91 @@ import java.util.ArrayList;
 
 public class BaoHanhDAO {
     
-    public void insertBaoHanh(String ma, int thoiGian) {
-        String sql = "INSERT IGNORE INTO baohanh (Ma, ThoiGian) VALUES (?, ?)";
+    public int insert(BaoHanhDTO bh) {
+        int r=-1;
+        String sql = "INSERT INTO baohanh (Ma,MaNV,MaKH,ThoiGian) VALUES (?, ?,?,?)";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, ma);
-            ps.setInt(2, thoiGian);
-            ps.executeUpdate();
+            ps.setString(1, bh.getMaBH());
+            ps.setString(2, bh.getMaNV());
+            ps.setString(3, bh.getMaKH());        
+            ps.setDate(4, java.sql.Date.valueOf(bh.getNgayLap()));
+            r= ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
+        return r;
     }
 
-    public boolean insertChiTietBaoHanh(String maBH, BaoHanhDTO bh) {
-        // Cột trong DB của bạn là 'Ngay', không phải 'NgayBaoHanh'
-        String sql = "INSERT INTO chitietbaohanh (MaBH, IMEI, Ngay) VALUES (?, ?, ?)";
+    public ArrayList<BaoHanhDTO> selectAll(){
+        ArrayList<BaoHanhDTO> ds=new ArrayList<>();
+        String qry="SELECT * FROM baohanh";
+        try(Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(qry);
+            ResultSet rs=ps.executeQuery();) 
+        {
+             while(rs.next()){
+                 BaoHanhDTO bh=new BaoHanhDTO();
+                 bh.setMaBH(rs.getString(1));
+                 bh.setMaNV(rs.getString(2));
+                 bh.setMaKH(rs.getString(3));
+                 bh.setNgayLap(rs.getDate(4).toLocalDate());
+                 ds.add(bh);
+             }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return ds;
+    }
+    public int update(BaoHanhDTO bh){
+        int r=-1;
+        String sql = "UPDATE  baohanh SET MaNV=?,MaKH=?,ThoiGian=? WHERE Ma=? ";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, maBH);
-            ps.setString(2, bh.getImei());
-            ps.setDate(3, bh.getNgayBaoHanh()); 
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.out.println("Loi tai DAO: " + e.getMessage());
-            return false;
-        }
+            ps.setString(1, bh.getMaNV());
+            ps.setString(2, bh.getMaKH());        
+            ps.setDate(3, java.sql.Date.valueOf(bh.getNgayLap()));
+            ps.setString(4, bh.getMaBH());
+            r= ps.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
+        return r;
     }
+    public int delete(String mabh){
+        int r=-1;
+         String sql = "DELETE  baohanh WHERE Ma=? ";
+        try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, mabh);
+            r= ps.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
+        return r;
+    }
+    public String taoMaBH() {
+        String sql = "SELECT MAX(Ma) FROM baohanh";
+        String maMax = null;
 
-    public ArrayList<BaoHanhDTO> selectAllForTable() {
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        ) {
+            if (rs.next()) {
+                maMax = rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (maMax == null) {
+            return "BH01";
+        }
+
+        int so = Integer.parseInt(maMax.substring(2));
+        return String.format("BH%02d", so + 1);
+}
+
+   /* public ArrayList<BaoHanhDTO> selectAll() {
         ArrayList<BaoHanhDTO> list = new ArrayList<>();
         // JOIN bảng 'chitietbaohanh' (ct) và 'dienthoai' (dt) qua IMEI và Ma
         String sql = "SELECT ct.IMEI, dt.Ten, ct.Ngay FROM chitietbaohanh ct JOIN dienthoai dt ON ct.IMEI = dt.Ma";
         try (Connection con = Connect.getConnection(); Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
-                list.add(new BaoHanhDTO(rs.getString("IMEI"), rs.getString("Ten"), rs.getDate("Ngay")));
+                
             }
         } catch (SQLException e) { System.out.println("Loi SQL selectAll: " + e.getMessage()); }
         return list;
-    }
+    }*/
 }

@@ -18,15 +18,14 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
     public int insert(KhuyenMaiDTO km) {
         int result = 0;
         try (Connection conn = Connect.getConnection()) {
-            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES (?,?,?,?,?,?)";
+            String qry = "INSERT INTO khuyenmai(Ma,Ten,NgayBatDau,NgayKetThuc,GhiChu) VALUES (?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(qry);
             int index = 1;
             st.setString(index++, km.getMa());
             st.setString(index++, km.getTen());
-            st.setString(index++, km.getNgayBD());
-            st.setString(index++, km.getNgayKT());
+            st.setDate(index++, java.sql.Date.valueOf(km.getNgayBD()));
+            st.setDate(index++, java.sql.Date.valueOf(km.getNgayKT()));
             st.setString(index++, km.getGhiChu());
-            st.setBoolean(index++, km.getTinhTrang());
             result = st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -52,15 +51,14 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
     public int update(KhuyenMaiDTO km) {
         int result = 0;
         try (Connection conn = Connect.getConnection()) {
-            String qry = "Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=?,TinhTrang=? WHERE Ma=?";
+            String qry = "Update khuyenmai Set Ten=?,NgayBatDau=?,NgayKetThuc=?,GhiChu=? WHERE Ma=?";
             PreparedStatement st = conn.prepareStatement(qry);
             int index = 1;
             st.setString(index++, km.getTen());
-            st.setString(index++, km.getNgayBD());
-            st.setString(index++, km.getNgayKT());
+            st.setDate(index++, java.sql.Date.valueOf(km.getNgayBD()));
+            st.setDate(index++, java.sql.Date.valueOf(km.getNgayKT()));
             st.setString(index++, km.getGhiChu());
             st.setString(index++, km.getMa());
-            st.setBoolean(index++, km.getTinhTrang());
             result = st.executeUpdate();
         } catch (SQLException ex) {
             System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -79,10 +77,9 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
                 KhuyenMaiDTO km = new KhuyenMaiDTO();
                 km.setMa(rs.getString(1));
                 km.setTen(rs.getString(2));
-                km.setNgayBD(rs.getString(3));
-                km.setNgayKT(rs.getString(4));
+                km.setNgayBD(rs.getDate(3).toLocalDate());
+                km.setNgayKT(rs.getDate(4).toLocalDate());
                 km.setGhiChu(rs.getString(5));
-                km.setTinhTrang(rs.getBoolean(6));
                 ds.add(km);
             }
         } catch (SQLException ex) {

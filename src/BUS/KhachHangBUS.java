@@ -13,7 +13,6 @@ package BUS;
 import DAO.KhachHangDAO;
 import DTO.KhachHangDTO;
 import java.util.ArrayList;
-import java.util.List;
 
 public class KhachHangBUS {
 

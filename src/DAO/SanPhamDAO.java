@@ -2,6 +2,7 @@ package DAO;
 
 import database.Connect;
 import DTO.SanPhamDTO;
+import DTO.ChiTietSanPhamDTO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -128,68 +129,90 @@ public int update(SanPhamDTO sp){
         st.setString(1, ma);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            sp = new SanPhamDTO();
-
-            sp.setMaSP(rs.getString("Ma"));
-            sp.setTenSP(rs.getString("Ten"));
-            sp.setDonGia(rs.getInt("DonGia"));
-            sp.setMaHang(rs.getString("MaHang"));
-            sp.setMau(rs.getString("Mau"));
-            sp.setManHinh(rs.getString("ManHinh"));
-            sp.setKichThuoc(rs.getString("KichThuocManHinh"));
-            sp.setChip(rs.getString("TenChip"));
-            sp.setRam(rs.getString("BoNhoTrong"));
-            sp.setBoNhoNgoai(rs.getInt("BoNhoNgoai"));
-            sp.setCamTruoc(rs.getInt("CameraTruoc"));
-            sp.setCamSau(rs.getInt("CameraSau"));
-            sp.setPin(rs.getInt("Pin"));
-            sp.setHeDieuHanh(rs.getString("HeDieuHanh"));
-            sp.setBaoHanh(rs.getInt("ThoiHanBaoHanh"));
+            sp = new SanPhamDTO(rs.getString("Ma"), rs.getString("Ten"), rs.getInt("SoLuong"), rs.getInt("DonGia"), rs.getString("DonViTinh"), rs.getString("MaHang"));
+            ChiTietSanPhamDTO ct = sp.getChiTiet();
+            ct.setMau(rs.getString("Mau"));
+            ct.setManHinh(rs.getString("ManHinh"));
+            ct.setKichThuoc(rs.getString("KichThuocManHInh"));
+            ct.setChip(rs.getString("TenChip"));
+            ct.setRam(rs.getString("BoNhoTrong"));
+            ct.setBoNhoNgoai(rs.getInt("BoNhoNgoai"));
+            ct.setCamTruoc(rs.getInt("CameraTruoc"));
+            ct.setCamSau(rs.getInt("CameraSau"));
+            ct.setPin(rs.getInt("Pin"));
+            ct.setHeDieuHanh(rs.getString("HeDieuHanh"));
+            ct.setBaoHanh(rs.getInt("ThoiHanBaoHanh"));
         }
     } catch (SQLException ex) { ex.printStackTrace(); }
     return sp;
     }
     public int insertChiTiet(SanPhamDTO sp) {
-        int result = 0;
-        String qry = "INSERT INTO chitietdienthoai (Ma, Mau, ManHinh, KichThuocManHInh, TenChip, BoNhoTrong, BoNhoNgoai, CameraTruoc, CameraSau, Pin, HeDieuHanh, ThoiHanBaoHanh) "
-                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = Connect.getConnection();
-             PreparedStatement st = conn.prepareStatement(qry)) {
-             st.setString(1, sp.getMaSP());
-             st.setString(2, sp.getMau());
-             st.setString(3, sp.getManHinh());
-             st.setString(4, sp.getKichThuoc());
-             st.setString(5, sp.getChip());
-             st.setString(6, sp.getRam());
-             st.setInt(7, sp.getBoNhoNgoai());
-             st.setInt(8, sp.getCamTruoc());
-             st.setInt(9, sp.getCamSau());
-             st.setInt(10, sp.getPin());
-             st.setString(11, sp.getHeDieuHanh());
-             st.setInt(12, sp.getBaoHanh());
-             result = st.executeUpdate();
+       int result = 0;
+       String qry = "INSERT INTO chitietdienthoai (Ma, Mau, ManHinh, KichThuocManHInh, TenChip, BoNhoTrong, BoNhoNgoai, CameraTruoc, CameraSau, Pin, HeDieuHanh, ThoiHanBaoHanh) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+       try (Connection conn = Connect.getConnection();
+           PreparedStatement st = conn.prepareStatement(qry)) {
+           DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+
+           st.setString(1, sp.getMaSP());
+           st.setString(2, ct.getMau());
+           st.setString(3, ct.getManHinh());
+           st.setString(4, ct.getKichThuoc());
+           st.setString(5, ct.getChip());
+           st.setString(6, ct.getRam());
+           st.setInt(7, ct.getBoNhoNgoai());
+           st.setInt(8, ct.getCamTruoc());
+           st.setInt(9, ct.getCamSau());
+           st.setInt(10, ct.getPin());
+           st.setString(11, ct.getHeDieuHanh());
+           st.setInt(12, ct.getBaoHanh());
+           result = st.executeUpdate();
         } catch (SQLException ex) { ex.printStackTrace(); }
         return result;
     }
     public int updateChiTiet(SanPhamDTO sp) {
-       int result = 0;
-       String qry = "UPDATE chitietdienthoai SET Mau=?, ManHinh=?, KichThuocManHInh=?, TenChip=?, BoNhoTrong=?, BoNhoNgoai=?, CameraTruoc=?, CameraSau=?, Pin=?, HeDieuHanh=?, ThoiHanBaoHanh=? WHERE Ma=?";
-       try (Connection conn = Connect.getConnection();
-            PreparedStatement st = conn.prepareStatement(qry)) {
-            st.setString(1, sp.getMau());
-            st.setString(2, sp.getManHinh());
-            st.setString(3, sp.getKichThuoc());
-            st.setString(4, sp.getChip());
-            st.setString(5, sp.getRam());
-            st.setInt(6, sp.getBoNhoNgoai());
-            st.setInt(7, sp.getCamTruoc());
-            st.setInt(8, sp.getCamSau());
-            st.setInt(9, sp.getPin());
-            st.setString(10, sp.getHeDieuHanh());
-            st.setInt(11, sp.getBaoHanh());
-            st.setString(12, sp.getMaSP());
+        int result = 0;
+        String qry = "UPDATE chitietdienthoai SET Mau=?, ManHinh=?, KichThuocManHInh=?, TenChip=?, BoNhoTrong=?, BoNhoNgoai=?, CameraTruoc=?, CameraSau=?, Pin=?, HeDieuHanh=?, ThoiHanBaoHanh=? WHERE Ma=?";
+        try (Connection conn = Connect.getConnection();
+        PreparedStatement st = conn.prepareStatement(qry)) {
+        
+            DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+
+            st.setString(1, ct.getMau());
+            st.setString(2, ct.getManHinh());
+            st.setString(3, ct.getKichThuoc());
+            st.setString(4, ct.getChip());
+            st.setString(5, ct.getRam());
+            st.setInt(6, ct.getBoNhoNgoai());
+            st.setInt(7, ct.getCamTruoc());
+            st.setInt(8, ct.getCamSau());
+            st.setInt(9, ct.getPin());
+            st.setString(10, ct.getHeDieuHanh());
+            st.setInt(11, ct.getBaoHanh());
+            st.setString(12, sp.getMaSP()); 
+        
             result = st.executeUpdate();
-        } catch (SQLException ex) { ex.printStackTrace(); }
+         } catch (SQLException ex) { ex.printStackTrace(); }
+         return result;
+}
+    public int truSoLuongSanPham(String maSP, int soLuong) {
+        int result = 0;
+        String sql = "UPDATE dienthoai SET SoLuong = SoLuong - ? WHERE Ma = ? AND SoLuong >= ?";
+
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            ps.setInt(1, soLuong);
+            ps.setString(2, maSP);
+            ps.setInt(3, soLuong);
+
+            result = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return result;
     }
     public void updateSoLuong(String masp, int soluongThem){

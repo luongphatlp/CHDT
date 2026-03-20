@@ -4,16 +4,14 @@
  */
 package DAO;
 
-import DTO.DienThoaiDTO;
 import DTO.HoaDonDTO;
+import DTO.SanPhamDTO;
 import database.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import static database.Connect.getConnection;
-
+import java.sql.Timestamp;
 /**
  *
  * @author THANH NHAN
@@ -22,13 +20,54 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
 
     @Override
     public int insert(HoaDonDTO hd) {
-        return 0;
+        int result = 0;
+        String sql = "INSERT INTO hoadon (MaHD, Ngay ,MaNV, MaKH, TongTien,PTTT) VALUES (?, ?, ?, ?, ?,?)";
+
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            ps.setString(1, hd.getMaHD());
+            if(hd.getNgay() != null )
+            ps.setTimestamp(2, Timestamp.valueOf(hd.getNgay()));
+            ps.setString(3, hd.getMaNV());
+            ps.setString(4, hd.getMaKH());
+            ps.setInt(5, hd.getTongTien());
+            ps.setString(6, hd.getPTTT());
+
+            result = ps.executeUpdate(); // trả về số dòng bị ảnh hưởng (1 = thành công)
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
     public int update(HoaDonDTO hd) {
-        return 0;
-    }
+        int result = 0;
+        String sql = "UPDATE hoadon SET Ngay = ?, MaNV = ?, MaKH = ?, TongTien = ?, PTTT = ? WHERE MaHD = ?";
+
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            ps.setTimestamp(1, Timestamp.valueOf(hd.getNgay()));
+            ps.setString(2, hd.getMaNV());
+            ps.setString(3, hd.getMaKH());
+            ps.setInt(4, hd.getTongTien());
+            ps.setString(5, hd.getPTTT());
+            ps.setString(6, hd.getMaHD()); // điều kiện WHERE
+
+            result = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }   
 
     @Override
     public int delete(HoaDonDTO hd) {
@@ -41,8 +80,8 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
         return null;
     }
     
-    public ArrayList<DienThoaiDTO> selectAllDienThoai() {
-        ArrayList<DienThoaiDTO> ds = new ArrayList<>();
+    public ArrayList<SanPhamDTO> selectAllDienThoai() {
+        ArrayList<SanPhamDTO> ds = new ArrayList<>();
         String sql = "SELECT Ma, Ten, SoLuong, DonGia FROM dienthoai";
         //System.out.println("Connection: " + con);
         try(Connection con = new Connect().getConnection()) {
@@ -50,12 +89,11 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                DienThoaiDTO dt = new DienThoaiDTO(
-                        rs.getString("Ma"),
-                        rs.getString("Ten"),
-                        rs.getInt("SoLuong"),
-                        rs.getInt("DonGia")
-                );
+                SanPhamDTO dt = new SanPhamDTO();
+                dt.setMaSP(rs.getString("Ma"));
+                dt.setTenSP(rs.getString("Ten"));
+                dt.setSoLuong(rs.getInt("SoLuong"));
+                dt.setDonGia(rs.getInt("DonGia"));
                 ds.add(dt);
             }
 
@@ -76,7 +114,7 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             while(rs.next()){
                 HoaDonDTO hd=new HoaDonDTO();
                 hd.setMaHD(rs.getString("MaHD"));
-                hd.setNgay(rs.getDate("Ngay"));
+                hd.setNgay(rs.getTimestamp("Ngay").toLocalDateTime());
                 hd.setMaNV(rs.getString("MaNV"));
                 hd.setMaKH(rs.getString("MaKH"));
                 hd.setTongTien(rs.getInt("TongTien"));
@@ -88,5 +126,27 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
         }
         return ds;
     }
+        public String taoMaHD() {
+        String sql = "SELECT MAX(MaHD) FROM hoadon";
+        String maMax = null;
 
+        try (
+            Connection con = Connect.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        ) {
+            if (rs.next()) {
+                maMax = rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (maMax == null) {
+            return "HD01";
+        }
+
+        int so = Integer.parseInt(maMax.substring(2));
+        return String.format("HD%02d", so + 1);
+}
 }

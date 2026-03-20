@@ -12,6 +12,8 @@ import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -40,7 +42,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         header.add("Ngày BĐ");
         header.add("Ngày KT");
         header.add("Ghi chú");
-        header.add("Tình trạng");
         DefaultTableModel model=new DefaultTableModel(header,0);
         for(KhuyenMaiDTO km:buskm.docDS()){
             Vector row=new Vector();
@@ -49,62 +50,42 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             row.add(km.getNgayBD());
             row.add(km.getNgayKT());
             row.add(km.getGhiChu());
-            String trangthai;
-            if(km.getTinhTrang()) trangthai="Hoạt động";
-            else trangthai="Ngừng";
-            row.add(trangthai);
             model.addRow(row);
         }
         bangkhuyenmai.setModel(model);
     }
-        public void veBangKhuyenMai(String key,Date bd,Date kt,int tinhtrang){      
+        public void veBangKhuyenMai(String key,Date b,Date k,int tinhtrang){      
         Vector header=new Vector();
         header.add("Mã KM");
         header.add("Tên KM");
         header.add("Ngày BĐ");
         header.add("Ngày KT");
         header.add("Ghi chú");
-        header.add("Tình trạng");
         DefaultTableModel model=new DefaultTableModel(header,0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for(KhuyenMaiDTO km:buskm.docDS()){
-            try {
-                boolean ktkey=key.equals(km.getMa()) || km.getTen().contains(key);
-                
-                boolean kttinhtrang =true;
-                if(tinhtrang != 2)
-                    kttinhtrang = tinhtrang == 1 ? km.getTinhTrang() == true : km.getTinhTrang() == false;
-                
-                boolean dkngay = true;
-                
-                Date ngayBD = sdf.parse(km.getNgayBD());
-                Date ngayKT = sdf.parse(km.getNgayKT());
-                
-                if(bd != null && kt == null){
-                    dkngay = !ngayBD.before(bd);
-                }
-                else if(bd == null && kt != null){
-                    dkngay = !ngayKT.after(kt);
-                }
-                else if(bd != null && kt != null){
-                    dkngay = !ngayBD.before(bd) && !ngayKT.after(kt);
-                }
-                
-                if(ktkey && dkngay && kttinhtrang){
-                    Vector row=new Vector();
-                    row.add(km.getMa());
-                    row.add(km.getTen());
-                    row.add(km.getNgayBD());
-                    row.add(km.getNgayKT());
-                    row.add(km.getGhiChu());
-                    String trangthai;
-                    if(km.getTinhTrang()) trangthai="Hoạt động";
-                    else trangthai="Ngừng";
-                    row.add(trangthai);
-                    model.addRow(row);
-                }
-            } catch (ParseException ex) {
-                System.getLogger(KhuyenMaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            boolean ktkey=key.equals(km.getMa()) || km.getTen().contains(key);
+            boolean dkngay = true;
+            LocalDate bd=b.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate kt=k.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate ngayBD = km.getNgayBD();
+            LocalDate ngayKT = km.getNgayKT();
+            if(bd != null && kt == null){
+                dkngay = !ngayBD.isBefore(bd);
+            }
+            else if(bd == null && kt != null){
+                dkngay = !ngayKT.isAfter(kt);
+            }
+            else if(bd != null && kt != null){
+                dkngay = !ngayBD.isBefore(bd) && !ngayKT.isAfter(kt);
+            }
+            if(ktkey && dkngay){
+                Vector row=new Vector();
+                row.add(km.getMa());
+                row.add(km.getTen());
+                row.add(km.getNgayBD());
+                row.add(km.getNgayKT());
+                row.add(km.getGhiChu());
+                model.addRow(row);
             }
         }
         bangkhuyenmai.setModel(model);
@@ -218,12 +199,10 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         }
         km.setMa(ma);
         km.setTen(ten);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        km.setNgayBD(sdf.format(datebatdaukhuyenmai.getDate()));
-        km.setNgayKT(sdf.format(dateketthuckhuyenmai.getDate()));
+        km.setNgayBD(datebatdaukhuyenmai.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        km.setNgayKT(datebatdaukhuyenmai.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         km.setGhiChu(areatxtghichu.getText());
-        km.setTinhTrang(tinhtrang);
         buskm.add(km);
     }
     public void suaKhuyenMai(){
@@ -267,12 +246,10 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         }
         km.setMa(ma);
         km.setTen(ten);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        km.setNgayBD(sdf.format(datebatdaukhuyenmai.getDate()));
-        km.setNgayKT(sdf.format(dateketthuckhuyenmai.getDate()));
+        km.setNgayBD(datebatdaukhuyenmai.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        km.setNgayKT(dateketthuckhuyenmai.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         km.setGhiChu(areatxtghichu.getText());
-        km.setTinhTrang(tinhtrang);
         buskm.update(km);
     }
     public void veBangChonSanPhamKhuyenMai(String makm){

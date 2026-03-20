@@ -1,21 +1,56 @@
 package DTO;
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class BaoHanhDTO {
-    private String imei;
-    private String ten;
-    private Date ngayBaoHanh;
 
-    public BaoHanhDTO() {}
-    public BaoHanhDTO(String imei, String ten, Date ngayBaoHanh) {
-        this.imei = imei;
-        this.ten = ten;
-        this.ngayBaoHanh = ngayBaoHanh;
+    private String mabh;
+    private String manv;
+    private String makh;
+    private LocalDate ngaylap;
+
+    // Constructor rỗng
+    public BaoHanhDTO() {
     }
-    public String getImei() { return imei; }
-    public void setImei(String imei) { this.imei = imei; }
-    public String getTen() { return ten; }
-    public void setTen(String ten) { this.ten = ten; }
-    public Date getNgayBaoHanh() { return ngayBaoHanh; }
-    public void setNgayBaoHanh(Date ngayBaoHanh) { this.ngayBaoHanh = ngayBaoHanh; }
+
+    // Constructor có tham số
+    public BaoHanhDTO(String mabh, String manv, String makh, LocalDate ngaylap) {
+        this.mabh = mabh;
+        this.manv = manv;
+        this.makh = makh;
+        this.ngaylap = ngaylap;
+    }
+
+    // Getter và Setter
+
+    public String getMaBH() {
+        return mabh;
+    }
+
+    public void setMaBH(String mabh) {
+        this.mabh = mabh;
+    }
+
+    public String getMaNV() {
+        return manv;
+    }
+
+    public void setMaNV(String manv) {
+        this.manv = manv;
+    }
+
+    public String getMaKH() {
+        return makh;
+    }
+
+    public void setMaKH(String makh) {
+        this.makh = makh;
+    }
+
+    public LocalDate getNgayLap() {
+        return ngaylap;
+    }
+
+    public void setNgayLap(LocalDate ngaylap) {
+        this.ngaylap = ngaylap;
+    }
 }

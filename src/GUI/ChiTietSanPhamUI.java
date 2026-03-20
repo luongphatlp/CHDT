@@ -23,6 +23,7 @@ public class ChiTietSanPhamUI extends javax.swing.JDialog {
         }
 
         initComponents();
+        DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
         javax.swing.JLabel[] labels = {
         jLabel3, jLabel4, jLabel10, jLabel11, jLabel12, jLabel5, 
         jLabel7, jLabel16, jLabel13, jLabel14, jLabel8, jLabel9, 
@@ -42,17 +43,19 @@ public class ChiTietSanPhamUI extends javax.swing.JDialog {
 
         jTextField1.setText(sp.getMaSP());
         jTextField4.setText(sp.getTenSP());
-        jTextField5.setText(sp.getMau());
-        jTextField7.setText(sp.getManHinh());
-        jTextField8.setText(sp.getKichThuoc());
-        jTextField2.setText(sp.getChip());
-        jTextField3.setText(sp.getRam());
-        jTextField13.setText(sp.getBoNhoNgoai() + " GB");
-        jTextField9.setText(sp.getCamTruoc() + " MP");
-        jTextField10.setText(sp.getCamSau() + " MP");
-        jTextField6.setText(sp.getPin() + " mAh");
-        jTextField12.setText(sp.getHeDieuHanh());
-        jTextField14.setText(sp.getBaoHanh() + " tháng");
+        if (ct != null) {
+            jTextField5.setText(ct.getMau());
+            jTextField7.setText(ct.getManHinh());
+            jTextField8.setText(ct.getKichThuoc());
+            jTextField2.setText(ct.getChip());
+            jTextField3.setText(ct.getRam());
+            jTextField13.setText(ct.getBoNhoNgoai() + " GB");
+            jTextField9.setText(ct.getCamTruoc() + " MP");
+            jTextField10.setText(ct.getCamSau() + " MP");
+            jTextField6.setText(ct.getPin() + " mAh");
+            jTextField12.setText(ct.getHeDieuHanh());
+            jTextField14.setText(ct.getBaoHanh() + " tháng");
+        }
         jTextField11.setText(String.format("%,d", sp.getDonGia()) + " VNĐ");
 
         setAllFieldsUneditable();

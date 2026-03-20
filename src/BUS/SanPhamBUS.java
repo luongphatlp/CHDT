@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
+import DTO.ChiTietSanPhamDTO;
 import java.util.ArrayList;
 
 public class SanPhamBUS {
@@ -118,11 +119,12 @@ public class SanPhamBUS {
                 sp.setDonGia((int) row.getCell(3).getNumericCellValue());
                 sp.setDonViTinh(row.getCell(4).getStringCellValue());
                 sp.setMaHang(row.getCell(5).getStringCellValue());
-                sp.setMau("Chưa xác định");
-                sp.setManHinh("Chưa xác định");
-                sp.setChip("Chưa xác định");
-                sp.setRam("N/A");
-                sp.setHeDieuHanh("Android");
+                DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
+                ct.setMau("Chưa xác định");
+                ct.setManHinh("Chưa xác định");
+                ct.setChip("Chưa xác định");
+                ct.setRam("N/A");
+                ct.setHeDieuHanh("Android");
                 
                 if (themChiTiet(sp)) {
                 count++;
@@ -148,5 +150,16 @@ public class SanPhamBUS {
 
         SanPhamDAO dao = new SanPhamDAO();
         dao.updateSoLuong(masp, soluong);
+    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
+        docDS();
+        for(SanPhamDTO sp:ds){
+            if(sp.getMaSP().equals(masp)){
+                return sp.getChiTiet();
+            }
+        }
+        return null;
+    }
+    public int capNhatSoLuongSanPham(String masp,int soluongtru){
+        return dao.truSoLuongSanPham(masp,soluongtru);
     }
 }

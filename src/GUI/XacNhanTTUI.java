@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import DTO.HoaDonDTO;
+
 /**
  *
  * @author THANH NHAN
