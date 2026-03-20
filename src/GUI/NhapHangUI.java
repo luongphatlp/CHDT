@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
 import javax.swing.JFileChooser;
@@ -57,6 +58,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         jTextField3.setText(taoMaPhieuNhap());
         jTextField3.setEditable(false);
         loadNhaCungCap(); 
+        jDateChooser1.setDate(new Date());
     }
     private void customTable() {
         
@@ -316,6 +318,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel6.setText("Số lượng:");
 
         jSpinner1.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -640,15 +643,31 @@ public class NhapHangUI extends javax.swing.JPanel {
             return;
         }
 
-        int soluong = (int) jSpinner1.getValue();
-        long dongia = Long.parseLong(jTable3.getValueAt(row, 2).toString());
+        int soLuongCu = Integer.parseInt(jTable2.getValueAt(row, 3).toString());
+        long donGia = Long.parseLong(jTable2.getValueAt(row, 4).toString().replace(",", ""));
 
-        // tính thành tiền
-        long thanhtien = dongia * soluong;
-        jTable2.setValueAt(soluong,row,3);
-        jTable2.setValueAt(thanhtien, row, 4);
- 
-        tinhTongTien();
+        // nhập số lượng mới
+        String input = JOptionPane.showInputDialog(this, "Nhập số lượng mới:", soLuongCu);
+
+        if(input == null) return; // bấm cancel
+
+        try{
+            int soLuongMoi = Integer.parseInt(input);
+
+            if(soLuongMoi <= 0){
+                JOptionPane.showMessageDialog(this, "Số lượng phải > 0");
+                return;
+            }
+
+            // cập nhật bảng
+            jTable2.setValueAt(soLuongMoi, row, 3);
+
+            long thanhTien = soLuongMoi * donGia;
+            jTable2.setValueAt(String.format("%,d", thanhTien), row, 4);
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -673,10 +692,16 @@ public class NhapHangUI extends javax.swing.JPanel {
         String maPN = jTextField3.getText();
         System.out.println("MaPN: " + maPN);
         String maNV = jTextField2.getText();
+        if(maNV == null || maNV.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống!");
+            return;
+        }
         NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
         String maNCC = ncc.getMaNCC();
+        Date today = new Date();
+        jDateChooser1.setDate(today);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ngay = sdf.format(jDateChooser1.getDate());
+        String ngay = sdf.format(today);
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         if(model.getRowCount() == 0){
             JOptionPane.showMessageDialog(this,"Chưa có sản phẩm để nhập");
@@ -743,6 +768,8 @@ public class NhapHangUI extends javax.swing.JPanel {
         }
 
         JOptionPane.showMessageDialog(this,"Nhập hàng thành công");
+        model.setRowCount(0);
+        jLabel8.setText("0 VNĐ");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

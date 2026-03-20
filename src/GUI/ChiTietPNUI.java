@@ -9,6 +9,7 @@ import BUS.NhaCungCapBUS;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
 import DTO.ChiTietPhieuNhapDTO;
+import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -72,7 +73,17 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         }
         jLabel6.setText(pn.getMapn());
         jLabel7.setText(pn.getManv());
-        jLabel8.setText(pn.getMancc());
+        NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+        String tenNCC = "";
+
+        for(NhaCungCapDTO ncc : nccBUS.getDS()){
+            if(ncc.getMaNCC().equals(pn.getMancc())){
+                tenNCC = ncc.getTenNCC();
+                break;
+            }
+        }
+
+        jLabel8.setText(tenNCC);
         if (pn.getNgay() != null) {
             jLabel9.setText(pn.getNgay().toString());
         }
