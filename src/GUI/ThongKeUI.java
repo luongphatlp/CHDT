@@ -1,5 +1,6 @@
 
 package GUI;
+import BUS.NhanVienBUS;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -8,6 +9,7 @@ import BUS.ThongKeDoanhThuBUS;
 import BUS.ThongKeNhanVienBUS;
 import BUS.ThongKeSanPhamBUS;
 import DTO.NhanVienDTO;
+import DTO.SanPhamDTO;
 import DTO.ThongKeDoanhThuDTO;
 import DTO.ThongKeNhanVienDTO;
 import DTO.ThongKeSanPhamDTO;
@@ -44,7 +46,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 
-public class ThongKeUI extends javax.swing.JPanel {
+public final class ThongKeUI extends javax.swing.JPanel {
     ThongKeSanPhamBUS bussp=new ThongKeSanPhamBUS();
     ThongKeNhanVienBUS busnv=new ThongKeNhanVienBUS();
     ThongKeDoanhThuBUS busdt=new ThongKeDoanhThuBUS();
@@ -52,6 +54,8 @@ public class ThongKeUI extends javax.swing.JPanel {
     public ThongKeUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
         initComponents();
+        bangDienThoai();
+        bangNhanVien();
         veBangThongKeSanPhamDayDu();
         chucNang();
         veListNhanVien();
@@ -60,17 +64,16 @@ public class ThongKeUI extends javax.swing.JPanel {
 
     public void bangDienThoai(){
         int sum=0;
-        for(SanPhamDTO dt:bussp.getList())
+        for(SanPhamDTO dt:bussp.getDSSP())
             sum+=dt.getSoLuong();
-        lbdienthoai.setText("Điện thoại:"+sum);
+        lbdienthoai.setText("Điện thoại: "+sum);
     }
  /*   public void bangNCC(){
         NhaCungCapBUS bus=new NhaCungCapBUS();
         lbncc.setText("Nhà cung cấp:"+bus.getLst().size());
     }*/
     public void bangNhanVien(){
-        NhanVienBUS bus=new NhanVienBUS();
-        lbnv.setText("Nhân viên:"+bus.getList().size());
+        lbnv.setText("Nhân viên:"+busnv.getDSNV().size());
     }
     public void chucNang(){
         pngay.setVisible(false);
@@ -462,30 +465,25 @@ public class ThongKeUI extends javax.swing.JPanel {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(390, Short.MAX_VALUE)
+                .addContainerGap(314, Short.MAX_VALUE)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(117, 117, 117))))
-            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(268, Short.MAX_VALUE)))
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(lbdienthoai)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(152, 152, 152)
                 .addComponent(jLabel1))
-            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lbdienthoai)
-                    .addContainerGap(22, Short.MAX_VALUE)))
         );
 
         kGradientPanel2.setkEndColor(new java.awt.Color(184, 233, 233));
@@ -505,7 +503,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbncc)
-                .addContainerGap(310, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel2))
@@ -515,7 +513,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbncc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -536,7 +534,7 @@ public class ThongKeUI extends javax.swing.JPanel {
             .addGroup(kGradientPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbnv)
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3))
@@ -558,11 +556,11 @@ public class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(34, 34, 34)
                 .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1160, Short.MAX_VALUE))
+                .addContainerGap(1693, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -570,10 +568,10 @@ public class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(kGradientPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(kGradientPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(kGradientPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);

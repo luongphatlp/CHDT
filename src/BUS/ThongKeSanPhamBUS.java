@@ -39,5 +39,7 @@ public class ThongKeSanPhamBUS {
     }
     public ArrayList<SanPhamDTO> getDSSP(){
         SanPhamBUS bus=new SanPhamBUS();
+        bus.docDS();
+        return bus.getDS();
     }
 }
