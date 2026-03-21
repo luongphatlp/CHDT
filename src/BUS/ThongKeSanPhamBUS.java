@@ -5,6 +5,7 @@
 package BUS;
 
 import DAO.ThongKeSanPhamDAO;
+import DTO.NhaCungCapDTO;
 import DTO.SanPhamDTO;
 import DTO.ThongKeSanPhamDTO;
 import java.util.ArrayList;
@@ -15,7 +16,12 @@ import java.util.Date;
  * @author Latitude E7470
  */
 public class ThongKeSanPhamBUS {
-    private static ArrayList<ThongKeSanPhamDTO> ds=new ArrayList<>();
+    private ArrayList<ThongKeSanPhamDTO> ds;
+    NhaCungCapBUS busncc=new NhaCungCapBUS();
+    public ThongKeSanPhamBUS(){
+        ds=new ArrayList<>();
+        busncc.docDS();
+    }
     
     public ArrayList<ThongKeSanPhamDTO> getList(){
         return ds;
@@ -41,5 +47,8 @@ public class ThongKeSanPhamBUS {
         SanPhamBUS bus=new SanPhamBUS();
         bus.docDS();
         return bus.getDS();
+    }
+    public ArrayList<NhaCungCapDTO> getDSNCC(){
+        return busncc.getDS();
     }
 }

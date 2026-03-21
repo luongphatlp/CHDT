@@ -8,7 +8,9 @@ import BUS.HoaDonBUS;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -134,38 +136,6 @@ public class THHoaDonUI extends javax.swing.JPanel {
         veBangTHHoaDonTimKiem(tam);
     }
     
-    public boolean exportExcel(JTable table) {
-        try {
-            JFileChooser fc = new JFileChooser();
-            fc.showSaveDialog(null);
-            if(fc.getSelectedFile()!=null){
-                String path = fc.getSelectedFile().getAbsolutePath() + ".xlsx";
-                Workbook wb = new XSSFWorkbook();
-                Sheet sheet = wb.createSheet("Data");
-                Row header = sheet.createRow(0);
-                for (int i = 0; i < table.getColumnCount(); i++) 
-                    header.createCell(i).setCellValue(table.getColumnName(i));
-                for (int i = 0; i < table.getRowCount(); i++) {
-                    Row row = sheet.createRow(i + 1);
-                    for (int j = 0; j < table.getColumnCount(); j++) {
-                        Object value = table.getValueAt(i, j);
-                        if (value != null)
-                            row.createCell(j).setCellValue(value.toString());
-                        else
-                            row.createCell(j).setCellValue("");
-                    }
-                }
-                FileOutputStream fos = new FileOutputStream(path);
-                wb.write(fos);
-                fos.close();
-                wb.close();
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
     public void veBangChiTietHoaDon(ArrayList<ChiTietHoaDonDTO> ds){
         Vector header =new Vector();
         header.add("Mã sản phẩm");
@@ -199,9 +169,10 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton4 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton6 = new javax.swing.JButton();
+        btnxuatexcel = new javax.swing.JButton();
+        btnxuatexcel1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         cbpttt = new javax.swing.JComboBox<>();
         txttimkiemhoadon = new javax.swing.JTextField();
@@ -245,28 +216,51 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jToolBar1.setRollover(true);
         jToolBar1.setPreferredSize(new java.awt.Dimension(505, 100));
+        jToolBar1.add(jSeparator1);
+
+        btnxuatexcel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnxuatexcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
+        btnxuatexcel.setText("Xuất Excel");
+        btnxuatexcel.setFocusable(false);
+        btnxuatexcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnxuatexcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnxuatexcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxuatexcelActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnxuatexcel);
+
+        btnxuatexcel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnxuatexcel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
+        btnxuatexcel1.setText("Xuất Excel Tất cả");
+        btnxuatexcel1.setFocusable(false);
+        btnxuatexcel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnxuatexcel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnxuatexcel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxuatexcel1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnxuatexcel1);
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/document.png"))); // NOI18N
-        jButton4.setText("Xem chi tiết");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pdf.png"))); // NOI18N
+        jButton4.setText("Xuất PDF");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
-        jToolBar1.add(jSeparator1);
-
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
-        jButton6.setText("Xuất Excel");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
             }
         });
-        jToolBar1.add(jButton6);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton4);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(820, 90));
@@ -469,8 +463,8 @@ public class THHoaDonUI extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -589,11 +583,37 @@ public class THHoaDonUI extends javax.swing.JPanel {
 
     }//GEN-LAST:event_cbmanvActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnxuatexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcelActionPerformed
         // TODO add your handling code here:
-        if(exportExcel(banghoadon)) JOptionPane.showMessageDialog(null,"Xuất file excel thành công");
+        int row=banghoadon.getSelectedRow();
+        if(row!=-1){
+            String mahd=banghoadon.getValueAt(row, 0).toString();
+            String manv=banghoadon.getValueAt(row,1).toString();
+            String makh=banghoadon.getValueAt(row,3).toString();
+            String ngay=banghoadon.getValueAt(row,2).toString();
+            String tongtien=banghoadon.getValueAt(row,4).toString();
+            String pttt=banghoadon.getValueAt(row,5).toString();
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".xlsx";
+                try {
+                    bus.xuatExcel(path,manv,makh,mahd,ngay,pttt,tongtien,(DefaultTableModel) bangchitiethoadon.getModel());
+                } catch (IOException ex) {
+                    System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file Excel thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }else
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
         
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnxuatexcelActionPerformed
 
     private void cbptttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbptttActionPerformed
         // TODO add your handling code here:
@@ -608,17 +628,70 @@ public class THHoaDonUI extends javax.swing.JPanel {
         hienChiTiet();
     }//GEN-LAST:event_hienchitiet
 
+    private void btnxuatexcel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcel1ActionPerformed
+        // TODO add your handling code here:
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".xlsx";
+                try {
+                    bus.xuatExcelTatCa(path,(DefaultTableModel) banghoadon.getModel());
+                } catch (IOException ex) {
+                    System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file Excel thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+    }//GEN-LAST:event_btnxuatexcel1ActionPerformed
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int row=banghoadon.getSelectedRow();
+        if(row!=-1){
+            String mahd=banghoadon.getValueAt(row, 0).toString();
+            String manv=banghoadon.getValueAt(row,1).toString();
+            String makh=banghoadon.getValueAt(row,3).toString();
+            String ngay=banghoadon.getValueAt(row,2).toString();
+            String tongtien=banghoadon.getValueAt(row,4).toString();
+            String pttt=banghoadon.getValueAt(row,5).toString();
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".pdf";
+                bus.xuatPDF(path,mahd,manv,makh,ngay,tongtien,pttt);
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file PDF thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }else
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangchitiethoadon;
     private javax.swing.JTable banghoadon;
     private javax.swing.JButton btnreset;
+    private javax.swing.JButton btnxuatexcel;
+    private javax.swing.JButton btnxuatexcel1;
     private javax.swing.JComboBox<String> cbmanv;
     private javax.swing.JComboBox<String> cbpttt;
     private com.toedter.calendar.JDateChooser datedenngay;
     private com.toedter.calendar.JDateChooser datetungay;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

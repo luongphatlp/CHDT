@@ -10,13 +10,14 @@ import BUS.SanPhamBUS;
 import DTO.ChiTietKhuyenMaiDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -65,10 +66,29 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         for(KhuyenMaiDTO km:buskm.docDS()){
             boolean ktkey=key.equals(km.getMa()) || km.getTen().contains(key);
             boolean dkngay = true;
-            LocalDate bd=b.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate kt=k.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean kttt=false;
+            LocalDate now=LocalDate.now();
+            LocalDate bd=LocalDate.MIN;
+            if(b!=null)
+                    bd=b.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate kt=LocalDate.MAX;
+            if(k!=null)
+                    kt=k.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate ngayBD = km.getNgayBD();
             LocalDate ngayKT = km.getNgayKT();
+            switch (tinhtrang) {
+                case 1:
+                    if(!now.isAfter(ngayKT) && !now.isBefore(ngayBD)){
+                        kttt=true;
+                    }   break;
+                case 0:
+                    if(now.isAfter(ngayKT) || now.isBefore(ngayBD)){
+                        kttt=true;
+                    }   break;
+                default:
+                    kttt=true;
+                    break;
+            }
             if(bd != null && kt == null){
                 dkngay = !ngayBD.isBefore(bd);
             }
@@ -78,7 +98,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             else if(bd != null && kt != null){
                 dkngay = !ngayBD.isBefore(bd) && !ngayKT.isAfter(kt);
             }
-            if(ktkey && dkngay){
+            if(ktkey && dkngay && kttt){
                 Vector row=new Vector();
                 row.add(km.getMa());
                 row.add(km.getTen());
@@ -99,7 +119,22 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         header.add("Giá khuyến mãi");
         header.add("Edit");
         header.add("Delete");
-        DefaultTableModel model=new DefaultTableModel(header,0);
+        DefaultTableModel model = new DefaultTableModel(header, 0){
+            @Override
+            public Class getColumnClass(int column){
+                if(column == 5 || column == 6){
+                    return Icon.class; // 👈 2 cột Edit + Delete
+                }
+                return Object.class;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return column == 5 || column == 6;
+            }
+        };
+        ImageIcon iconEdit = new ImageIcon(getClass().getResource("/icon/pen.png"));
+        ImageIcon iconDelete = new ImageIcon(getClass().getResource("/icon/minus.png"));
         ArrayList<ChiTietKhuyenMaiDTO> ds = busctkm.docDSTheoMaKM(makm);
         for(ChiTietKhuyenMaiDTO km:ds){
             Vector row=new Vector();
@@ -110,8 +145,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             int giagoc=km.getSanPham().getDonGia();
             int giakhuyenmai=giagoc - giagoc*km.getPhanTram()/100;
             row.add(giakhuyenmai);
-            row.add("edit");
-            row.add("delete");
+            row.add(iconEdit);
+            row.add(iconDelete);
             model.addRow(row);
         }
         bangchitietkhuyenmai.setModel(model);
@@ -165,9 +200,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         KhuyenMaiDTO km =new KhuyenMaiDTO();
         String ma=txtmakhuyenmai.getText();
         String ten=txttenkhuyenmai.getText();
-        String txttinhtrang=cbtinhtrang.getSelectedItem().toString();
-        boolean tinhtrang =true;
-        if(txttinhtrang.equals("Ngừng"))  tinhtrang=false;
         int kt=0;
         String thongbao="";
         if(ma.equals("")){
@@ -208,12 +240,9 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
     public void suaKhuyenMai(){
         KhuyenMaiDTO km =new KhuyenMaiDTO();
         int row=bangkhuyenmai.getSelectedRow();
-        String makmbandau=bangkhuyenmai.getValueAt(row, 1).toString();
+        String makmbandau=bangkhuyenmai.getValueAt(row, 0).toString();
         String ma=txtmakhuyenmai.getText();
         String ten=txttenkhuyenmai.getText();
-        String txttinhtrang=cbtinhtrang.getSelectedItem().toString();
-        boolean tinhtrang =true;
-        if(txttinhtrang.equals("Ngừng"))  tinhtrang=false;
         int kt=0;
         String thongbao="";
         if(ma.equals("")){
@@ -352,8 +381,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         spinnersanpham = new javax.swing.JSpinner();
         btnresetkhuyenmai1 = new javax.swing.JButton();
         cbtimkiemtinhtrang = new javax.swing.JComboBox<>();
-        jLabel17 = new javax.swing.JLabel();
-        cbtinhtrang = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         spinnergiamchung = new javax.swing.JSpinner();
@@ -684,12 +711,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             }
         });
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
-        jLabel17.setText("Tình trạng:");
-
-        cbtinhtrang.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
-        cbtinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoạt động", "Ngừng" }));
-
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
         jLabel18.setText("Tình trạng:");
 
@@ -724,8 +745,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                                             .addComponent(jLabel4)
                                             .addComponent(jLabel9)
                                             .addComponent(jLabel6)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel17)))
+                                            .addComponent(jLabel8)))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(14, 14, 14)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -737,16 +757,15 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(txtmakhuyenmai)
                                             .addComponent(txttenkhuyenmai)
-                                            .addComponent(datebatdaukhuyenmai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(dateketthuckhuyenmai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbtinhtrang, 0, 286, Short.MAX_VALUE))
+                                            .addComponent(datebatdaukhuyenmai, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                            .addComponent(dateketthuckhuyenmai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(spinnergiamchung, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(59, 59, 59)
@@ -759,7 +778,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel10)
@@ -795,7 +813,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                             .addComponent(jButton3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnresetkhuyenmai1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6))
         );
         jPanel3Layout.setVerticalGroup(
@@ -836,14 +855,11 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(dateketthuckhuyenmai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbtinhtrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
+                            .addComponent(jLabel8))
+                        .addGap(45, 45, 45))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 410, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -939,10 +955,13 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         Date bd=datebatdaukhuyenmaitimkiem.getDate();
         Date kt=dateketthuckhuyenmaitimkiem.getDate();
         String tt=cbtimkiemtinhtrang.getSelectedItem().toString();
-        int indextt=2;
+        int indextt;
         if(tt.equals("Hoạt động"))
             indextt=1;
-        else indextt=0;
+        else if(tt.equals("Ngừng")) 
+            indextt=0;
+        else 
+            indextt=2;
         veBangKhuyenMai(key,bd,kt,indextt);
         xoaForm();
         xoaBangChiTietKhuyenMai();
@@ -1137,7 +1156,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
     private javax.swing.JButton btnresetkhuyenmai1;
     private javax.swing.JButton btnxacnhan;
     private javax.swing.JComboBox<String> cbtimkiemtinhtrang;
-    private javax.swing.JComboBox<String> cbtinhtrang;
     private javax.swing.JDialog chinhsuachitietkhuyenmaidialog;
     private javax.swing.JDialog chonsanphamdialog;
     private com.toedter.calendar.JDateChooser datebatdaukhuyenmai;
@@ -1158,7 +1176,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;

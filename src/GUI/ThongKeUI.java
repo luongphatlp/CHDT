@@ -57,6 +57,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         initComponents();
         bangDienThoai();
         bangNhanVien();
+        bangNCC();
         veBangThongKeSanPhamDayDu();
         chucNang();
         veListNhanVien();
@@ -69,10 +70,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             sum+=dt.getSoLuong();
         lbdienthoai.setText("Điện thoại: "+sum);
     }
- /*   public void bangNCC(){
-        NhaCungCapBUS bus=new NhaCungCapBUS();
-        lbncc.setText("Nhà cung cấp:"+bus.getLst().size());
-    }*/
+    public void bangNCC(){
+        lbncc.setText("Nhà cung cấp:"+bussp.getDSNCC().size());
+    }
     public void bangNhanVien(){
         lbnv.setText("Nhân viên:"+busnv.getDSNV().size());
     }
