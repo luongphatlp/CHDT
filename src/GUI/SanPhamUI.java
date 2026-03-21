@@ -36,9 +36,15 @@ public class SanPhamUI extends javax.swing.JPanel {
     public void loadDataToTable(ArrayList<SanPhamDTO> ds) {
         model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+        int stt = 1;
         for (SanPhamDTO sp : ds) {
+            String giaTien = String.format("%,d VNĐ", sp.getDonGia());
+            String boNho = sp.getBoNho(); 
+            if (boNho == null || boNho.isEmpty()) {
+                boNho = "Chưa có";
+            }
             model.addRow(new Object[]{
-                sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), sp.getDonGia(), sp.getDonViTinh(), sp.getMaHang()
+                stt++, sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), giaTien, boNho
             });
         }
         resizeColumnWidth(jTable1); 
@@ -225,8 +231,13 @@ public class SanPhamUI extends javax.swing.JPanel {
         jTable1.setModel(new javax.swing.table.DefaultTableModel( 
             new Object [][] {},
             new String [] {
-                "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "Đơn vị tính", "Mã hãng"
-            }));
+                 "STT", "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "Bộ nhớ"
+            }){
+               @Override 
+               public boolean isCellEditable(int row, int column){
+                   return false;
+               }
+         });
 
         jScrollPane1.setViewportView(jTable1);
 
@@ -249,7 +260,7 @@ public class SanPhamUI extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Chọn sản phẩm cần xóa!");
                 return;
             }
-            String ma = jTable1.getValueAt(row, 0).toString();
+            String ma = jTable1.getValueAt(row, 1).toString();
             int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận xóa mã: " + ma, "Thông báo", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 if (spBUS.xoa(ma)) { 
@@ -273,7 +284,7 @@ public class SanPhamUI extends javax.swing.JPanel {
                JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần sửa!");
                return;
             }
-            String ma = jTable1.getValueAt(row, 0).toString();
+            String ma = jTable1.getValueAt(row, 1).toString();
             SanPhamDTO spFull = spBUS.getChiTiet(ma); 
             if (spFull != null) {
                 SuaSPUI suaForm = new SuaSPUI(spFull, this, this.spBUS);
@@ -372,7 +383,7 @@ public class SanPhamUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xem!");
             return;
         }
-        String ma = jTable1.getValueAt(row, 0).toString();
+        String ma = jTable1.getValueAt(row, 1).toString();
         SanPhamDTO spFull = spBUS.getChiTiet(ma); 
     
         if (spFull != null) {
