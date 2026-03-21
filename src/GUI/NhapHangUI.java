@@ -783,7 +783,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int row = jTable3.getSelectedRow();
-    
+        
         if(row == -1){
             JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
             return;
@@ -798,16 +798,37 @@ public class NhapHangUI extends javax.swing.JPanel {
         }
         int gia = dongia * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        boolean daTonTai = false;
 
-        model.addRow(new Object[]{
-            model.getRowCount()+1,
-            masp,
-            tensp,
-            soluong,
-            gia
-        });
+        for(int i = 0; i < model.getRowCount(); i++){
+            String maSPTrongBang = model.getValueAt(i, 1).toString();
 
-      
+            if(maSPTrongBang.equals(masp)){
+                // đã tồn tại → cộng số lượng
+                int soLuongCu = Integer.parseInt(model.getValueAt(i, 3).toString());
+                int soLuongMoi = soLuongCu + soluong;
+
+                model.setValueAt(soLuongMoi, i, 3);
+
+                // cập nhật lại thành tiền
+                int thanhTienMoi = soLuongMoi * dongia;
+                model.setValueAt(thanhTienMoi, i, 4);
+
+                daTonTai = true;
+                break;
+            }
+        }
+        if(!daTonTai){
+            model.addRow(new Object[]{
+                model.getRowCount() + 1,
+                masp,
+                tensp,
+                soluong,
+                gia
+            });
+        }
+
         tinhTongTien();
     }//GEN-LAST:event_jButton5ActionPerformed
 
