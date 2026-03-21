@@ -385,7 +385,34 @@ public class NhaCungCapUI extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+   // --- THÊM ĐOẠN NÀY VÀO CUỐI CLASS ĐỂ CHẠY THỬ ---
+    public static void main(String[] args) {
+        /* Set Look and Feel (Giao diện FlatLaf) */
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+        /* Tạo một cửa sổ Frame ảo để chứa Panel */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                javax.swing.JFrame frame = new javax.swing.JFrame("Test Giao Diện Nhà Cung Cấp");
+                frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+                
+                // Khởi tạo Panel của bạn
+                NhaCungCapUI panel = new NhaCungCapUI();
+                
+                // Thêm Panel vào Frame
+                frame.add(panel);
+                
+                // Chỉnh kích thước và hiển thị
+                frame.setSize(1200, 800); // Kích thước mô phỏng
+                frame.setLocationRelativeTo(null); // Căn giữa màn hình
+                frame.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;
