@@ -374,6 +374,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
         jLabel4.setText("Ngày:");
 
+        jTextField2.setEnabled(false);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -744,7 +745,7 @@ public class NhapHangUI extends javax.swing.JPanel {
             ct.setTongtien(thanhTien);
 
             ctBUS.them(ct);
-            //spBus.tangSoLuong(maSP, soLuong);
+            spBus.tangSoLuong(maSP, soLuong);
         }
         int confirm = JOptionPane.showConfirmDialog(
             this,

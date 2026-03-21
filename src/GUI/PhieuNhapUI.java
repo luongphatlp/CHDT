@@ -546,6 +546,9 @@ public class PhieuNhapUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+    System.out.println(i + " - " + jTable1.getColumnName(i));
+}
         int row = jTable1.getSelectedRow();
 
         if(row == -1){
@@ -570,12 +573,14 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
             if(result){
                 // update lại table
-                jTable1.setValueAt("Dừng hoạt động", modelRow, 6);
+                int modelCol = jTable1.convertColumnIndexToModel(6);
+                jTable1.setValueAt("Dừng hoạt động", modelRow, modelCol);
+                }
                 JOptionPane.showMessageDialog(this, "Đã chuyển sang Dừng hoạt động");
             }else{
                 JOptionPane.showMessageDialog(this, "Lỗi cập nhật!");
             }
-        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
