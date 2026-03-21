@@ -468,7 +468,7 @@ public class NhanVienUI extends javax.swing.JPanel {
             String tt = tblNhanVien.getValueAt(row, 8).toString();
           
             
-            suaForm.setThongTin(ma, hoten, email, gt, ns , cv,l,tt);
+            suaForm.setThongTin(ma, hoten, email, gt, ns , cv, l ,tt);
             
             
             suaForm.setModal(true);
@@ -555,77 +555,176 @@ public class NhanVienUI extends javax.swing.JPanel {
 
         loadToTable(dstknc);
     }//GEN-LAST:event_btnApplyActionPerformed
+            
+    private int docVaLuuNhanVien(java.io.File fileOpen) throws Exception {
+        int count = 0;
+        java.io.FileInputStream fis = new java.io.FileInputStream(fileOpen);
+        org.apache.poi.xssf.usermodel.XSSFWorkbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook(fis);
+        org.apache.poi.xssf.usermodel.XSSFSheet sheet = workbook.getSheetAt(0);
 
+        DAO.NhanVienDAO nvDAO = new DAO.NhanVienDAO();
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            org.apache.poi.xssf.usermodel.XSSFRow row = sheet.getRow(i);
+            if (row != null) {
+                DTO.NhanVienDTO nv = new DTO.NhanVienDTO();
+
+                // --- ĐOẠN CODE MỚI BỔ SUNG ĐỂ CHẶN LỖI DÒNG TRỐNG ---
+                String maNV = "";
+                if (row.getCell(1) != null) {
+                    maNV = row.getCell(1).getStringCellValue().trim();
+                }
+
+                // BỘ LỌC TỐI THƯỢNG: Nếu mã NV rỗng thì "continue" (bỏ qua luôn dòng này, nhảy sang dòng tiếp theo)
+                if (maNV.isEmpty()) {
+                    continue;
+                }
+
+                // Nếu có mã đàng hoàng thì mới set vào đối tượng và đi tiếp
+                nv.setMaNV(maNV);
+                // ----------------
+                if (row.getCell(2) != null) {
+                    nv.setHoTenNV(row.getCell(2).getStringCellValue());
+                }
+                if (row.getCell(3) != null) {
+                    nv.setEmailNV(row.getCell(3).getStringCellValue());
+                }
+                if (row.getCell(4) != null) {
+                    nv.setGioiTinhNV(row.getCell(4).getStringCellValue());
+                }
+
+                if (row.getCell(5) != null) {
+                    try {
+                        java.util.Date utilDate = row.getCell(5).getDateCellValue();
+                        // Bổ sung kiểm tra khác null trước khi gọi getTime()
+                        if (utilDate != null) {
+                            nv.setNgaySinhNV(new java.sql.Date(utilDate.getTime()));
+                        }
+                    } catch (Exception e) {
+                        // Bỏ qua lỗi nếu lỡ tay gõ chữ vào cột ngày sinh
+                        System.out.println("Cảnh báo: Sai định dạng ngày ở dòng " + i);
+                    }
+                }
+                if (row.getCell(6) != null) {
+                    nv.setChucVuNV(row.getCell(6).getStringCellValue());
+                }
+
+                org.apache.poi.ss.usermodel.DataFormatter formatter = new org.apache.poi.ss.usermodel.DataFormatter();
+
+
+                if (row.getCell(7) != null) {
+                    // 1. DataFormatter sẽ tự động đọc mọi thứ trong ô (Số, Chữ, Công thức) và biến thành Chuỗi chuẩn
+                    String tienLuong = formatter.formatCellValue(row.getCell(7)).trim();
+
+                    // 2. Dọn dẹp dữ liệu: Xóa các dấu phẩy, dấu chấm nếu Excel tự động định dạng tiền tệ (VD: 10,000,000 -> 10000000)
+                    tienLuong = tienLuong.replace(",", "").replace(".", "");
+
+                    // 3. Kiểm tra và gán vào DTO
+                    if (tienLuong.isEmpty()) {
+                        nv.setLuongNV("0"); // Chỉ khi nào ô thực sự không có gì mới gán bằng 0
+                    } else {
+                        nv.setLuongNV(tienLuong); // Nạp con số thuần túy vào hệ thống
+                    }
+                } else {
+                    nv.setLuongNV("0");
+                }
+                if (row.getCell(8) != null) {
+                    String tt = row.getCell(8).toString().trim();
+                    nv.setTinhTrangNV(tt.equalsIgnoreCase("true") || tt.equals("1") || tt.equals("1.0"));
+                }
+
+                if (nvDAO.themTuExcel(nv) > 0) {
+                    count++;
+                }
+            }
+        }
+        workbook.close();
+        fis.close();
+        return count;
+    }
+    private int docVaLuuTaiKhoan(java.io.File fileOpen) throws Exception {
+    int count = 0;
+    java.io.FileInputStream fis = new java.io.FileInputStream(fileOpen);
+    org.apache.poi.xssf.usermodel.XSSFWorkbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook(fis);
+    org.apache.poi.xssf.usermodel.XSSFSheet sheet = workbook.getSheetAt(0); 
+
+    // Gọi đến lớp DAO quản lý Tài Khoản
+    DAO.TaiKhoanNVDAO tkDAO = new DAO.TaiKhoanNVDAO(); 
+
+    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+        org.apache.poi.xssf.usermodel.XSSFRow row = sheet.getRow(i);
+        if (row != null) {
+            DTO.TaiKhoanNVDTO tk = new DTO.TaiKhoanNVDTO();
+            
+            // Lấy Mã, Tài khoản, Mật khẩu
+            if (row.getCell(1) != null) tk.setMaNV(row.getCell(1).getStringCellValue());
+            if (row.getCell(2) != null) tk.setTaiKhoan(row.getCell(2).getStringCellValue());
+            
+            if (row.getCell(3) != null) {
+                if (row.getCell(3).getCellType() == org.apache.poi.ss.usermodel.CellType.NUMERIC) {
+                    tk.setMatKhau(String.valueOf((long) row.getCell(3).getNumericCellValue()));
+                } else {
+                    tk.setMatKhau(row.getCell(3).getStringCellValue());
+                }
+            }
+
+            // Lưu xuống Database
+            if (tkDAO.themTuExcel(tk) > 0) {
+                count++;
+            }
+        }
+    }
+    workbook.close();
+    fis.close();
+    return count;
+}
+    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         try {
-            // 1. Mở hộp thoại chọn file Excel
-            javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-            fileChooser.setDialogTitle("Chọn file Excel để nhập");
-            int userSelection = fileChooser.showOpenDialog(this);
+            // 1. Mở hộp thoại chọn file Nhân Viên
+            javax.swing.JFileChooser fcNV = new javax.swing.JFileChooser();
+            fcNV.setDialogTitle("Bước 1: Chọn file Excel NHÂN VIÊN");
+            int chonNV = fcNV.showOpenDialog(this);
 
-            if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
-                java.io.File fileToOpen = fileChooser.getSelectedFile();
-                java.io.FileInputStream fis = new java.io.FileInputStream(fileToOpen);
-
-                // 2. Đọc file Excel
-                org.apache.poi.xssf.usermodel.XSSFWorkbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook(fis);
-                org.apache.poi.xssf.usermodel.XSSFSheet sheet = workbook.getSheetAt(0); // Lấy Sheet đầu tiên
-
-                NhanVienBUS nvBUS = new NhanVienBUS();
-                int count = 0;
-
-                // 3. Duyệt từng dòng (Bỏ qua dòng 0 vì là dòng Tiêu đề)
-                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                    org.apache.poi.xssf.usermodel.XSSFRow row = sheet.getRow(i);
-                    if (row != null) {
-                        NhanVienDTO nv = new NhanVienDTO();
-
-                        // Giả sử cột trong Excel khớp với thứ tự: Mã, Tên, Email, Chức vụ...
-                        // (Lưu ý: Bạn phải điều chỉnh số chỉ mục getCell() cho khớp với file Excel thực tế)
-                        if (row.getCell(1) != null) {
-                            nv.setMaNV(row.getCell(1).getStringCellValue());
-                        }
-                        if (row.getCell(2) != null) {
-                            nv.setHoTenNV(row.getCell(2).getStringCellValue());
-                        }
-                        if (row.getCell(3) != null) {
-                            nv.setEmailNV(row.getCell(3).getStringCellValue());
-                        }
-
-                        // Xử lý ngày sinh (Date) hơi phức tạp chút vì Excel lưu Date dạng số
-                        if (row.getCell(4) != null) {
-                            // Lấy ngày tháng từ Excel (kiểu util)
-                            java.util.Date utilDate = row.getCell(4).getDateCellValue();
-                            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-                            nv.setNgaySinhNV(sqlDate);
-                        }
-
-                        if (row.getCell(5) != null) {
-                            nv.setChucVuNV(row.getCell(5).getStringCellValue());
-                        }
-
-                        // Xử lý Boolean (Trạng thái)
-                        if (row.getCell(6) != null) {
-                            String tt = row.getCell(6).getStringCellValue();
-                            nv.setTinhTrangNV(tt.equalsIgnoreCase("true") || tt.equals("1"));
-                        }
-
-                        
-                        count++;
-                    }
-                }
-
-                workbook.close();
-                fis.close();
-
-                // 4. Load lại bảng để thấy dữ liệu mới
-                loadToData();
-                javax.swing.JOptionPane.showMessageDialog(this, "Nhập thành công " + count + " nhân viên từ file Excel!");
+            if (chonNV != javax.swing.JFileChooser.APPROVE_OPTION) {
+                return; // Dừng lại nếu người dùng tắt bảng chọn file
             }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi nhập file: Vui lòng kiểm tra định dạng dữ liệu Excel.\n" + e.getMessage());
-            e.printStackTrace();
+            java.io.File fileNV = fcNV.getSelectedFile();
+
+            // 2. Hiện thông báo xác nhận bước tiếp theo
+            int xacNhan = javax.swing.JOptionPane.showConfirmDialog(this,
+                    "Đã chọn xong file Nhân Viên.\nBạn có muốn mở tiếp thư mục để chọn file Tài Khoản không.\n(Nếu chọn No/Cancel, lệnh nhập Nhân Viên sẽ bị hủy bỏ hoàn toàn)",
+                    "Yêu cầu xác nhận",
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (xacNhan != javax.swing.JOptionPane.YES_OPTION) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Đã hủy quá trình nhập dữ liệu.");
+                return; // Dừng lại tại đây, chưa có lệnh SQL nào được chạy
+            }
+
+            // 3. Mở hộp thoại chọn file Tài Khoản
+            javax.swing.JFileChooser fcTK = new javax.swing.JFileChooser();
+            fcTK.setDialogTitle("Bước 2: Chọn file Excel TÀI KHOẢN");
+            int chonTK = fcTK.showOpenDialog(this);
+
+            if (chonTK != javax.swing.JFileChooser.APPROVE_OPTION) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Hủy tiến trình vì chưa chọn file Tài Khoản.");
+                return;
+            }
+            java.io.File fileTK = fcTK.getSelectedFile();
+
+            // 4. Bắt đầu đọc file và lưu vào Database theo đúng thứ tự (Cha trước, Con sau)
+            int soNhanVien = docVaLuuNhanVien(fileNV);
+            int soTaiKhoan = docVaLuuTaiKhoan(fileTK);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Hoàn tất.\n- Đã thêm: " + soNhanVien + " nhân viên.\n- Đã thêm: " + soTaiKhoan + " tài khoản.");
+
+            // 5. Load lại bảng giao diện
+            // loadDataToTable(nvBUS.getDS()); // Mở ghi chú dòng này theo tên hàm của em
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi chạy tiến trình: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 

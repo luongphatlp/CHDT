@@ -90,7 +90,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         dcNgaySinhNV = new com.toedter.calendar.JDateChooser();
         txtGioiTinh = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lbLuong = new javax.swing.JLabel();
         txtLuong = new javax.swing.JTextField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -192,9 +192,9 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         jLabel5.setText("Giới Tính");
 
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel8.setText("Lương");
+        lbLuong.setBackground(new java.awt.Color(0, 0, 0));
+        lbLuong.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        lbLuong.setText("Lương");
 
         txtLuong.setBackground(new java.awt.Color(230, 230, 230));
         txtLuong.setForeground(new java.awt.Color(0, 0, 0));
@@ -237,7 +237,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
                                     .addComponent(cmbChucVuNV, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(txtLuong)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
+                                .addComponent(lbLuong)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(38, 38, 38))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -268,7 +268,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(txtGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(lbLuong)
                         .addGap(18, 18, 18)
                         .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -405,6 +405,7 @@ public class XemTTNhanVienUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbLuong;
     private javax.swing.JRadioButton rbnFalse;
     private javax.swing.JRadioButton rbnTrue;
     private javax.swing.JTextField txtGioiTinh;

@@ -108,5 +108,28 @@ public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {
         }
         return ds;
     }
+    public int themTuExcel(NhanVienDTO nv) {
+        int result = 0;
+        // Liệt kê rõ ràng 8 cột và dùng 8 dấu hỏi
+        String qry = "INSERT INTO nhanvien(ma, hoten, email, gioitinh, ngaysinh, chucvu, luong, tinhtrang) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = Connect.getConnection(); java.sql.PreparedStatement pst = conn.prepareStatement(qry)) {
+
+            pst.setString(1, nv.getMaNV());
+            pst.setString(2, nv.getHoTenNV());
+            pst.setString(3, nv.getEmailNV());
+            pst.setString(4, nv.getGioiTinhNV());
+            pst.setDate(5, (java.sql.Date) nv.getNgaySinhNV());
+            pst.setString(6, nv.getChucVuNV());
+            pst.setString(7, nv.getLuongNV());
+            pst.setBoolean(8, nv.isTinhTrangNV());
+
+            result = pst.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace(); // Luôn dùng cái này để thấy lỗi SQL thật sự là gì
+        }
+        return result;
+    }
 
 }

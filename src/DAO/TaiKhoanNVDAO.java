@@ -111,6 +111,25 @@ public ArrayList<TaiKhoanNVDTO> SelectAll() {
             return false;
         }
     }
-    
+    public int themTuExcel(DTO.TaiKhoanNVDTO tk) {
+        int result = 0;
+
+        // Sử dụng INSERT IGNORE để bỏ qua lỗi trùng lặp Khóa chính
+        String qry = "INSERT IGNORE INTO taikhoan(ma, taikhoan, matkhau) VALUES (?, ?, ?)";
+
+        // Sử dụng try-with-resources để tự động đóng kết nối
+        try (java.sql.Connection conn = Connect.getConnection(); java.sql.PreparedStatement pst = conn.prepareStatement(qry)) {
+
+            // Thiết lập giá trị cho 3 dấu hỏi chấm
+            pst.setString(1, tk.getMaNV());
+            pst.setString(2, tk.getTaiKhoan());
+            pst.setString(3, tk.getMatKhau());
+
+            result = pst.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace(); // In lỗi ra màn hình console nếu có vấn đề về kết nối
+        }
+        return result;
+    }
 
 }

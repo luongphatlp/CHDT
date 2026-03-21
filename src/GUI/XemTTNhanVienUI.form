@@ -85,7 +85,7 @@
                               </Group>
                               <Component id="txtLuong" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbLuong" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="42" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -124,7 +124,7 @@
                           <Component id="txtGioiTinh" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbLuong" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="txtLuong" min="-2" pref="47" max="-2" attributes="0"/>
                       </Group>
@@ -364,7 +364,7 @@
             <Property name="text" type="java.lang.String" value="Gi&#x1edb;i T&#xed;nh"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
+        <Component class="javax.swing.JLabel" name="lbLuong">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
