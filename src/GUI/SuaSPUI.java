@@ -103,6 +103,7 @@ public class SuaSPUI extends JFrame {
         cbBaoHanh = new JComboBox<>(new String[]{"6 tháng", "12 tháng", "24 tháng"});
         cbBaoHanh.setSelectedItem(ct != null ? ct.getBaoHanh() + " tháng" : "12 tháng");
         spinSoLuong = new JSpinner(new SpinnerNumberModel(sp.getSoLuong(), 0, 1000, 1));
+        spinSoLuong.setEnabled(false);
     }
 
     private JPanel createGroupPanel(String title) {
@@ -145,7 +146,7 @@ public class SuaSPUI extends JFrame {
             spNew.setDonGia(Integer.parseInt(txtDonGia.getText().trim().replace(".", "")));
             spNew.setDonViTinh("Cái");
             spNew.setMaHang("H1"); 
-
+            spNew.setBoNho(cbRam.getSelectedItem().toString() + " / " + cbBoNhoNgoai.getSelectedItem().toString());
             ChiTietSanPhamDTO ctNew = spNew.getChiTiet(); 
             ctNew.setMau(txtMau.getText().trim());
             ctNew.setManHinh(txtManHinh.getText().trim());
