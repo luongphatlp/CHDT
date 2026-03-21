@@ -150,16 +150,21 @@ public class SanPhamBUS {
 
         SanPhamDAO dao = new SanPhamDAO();
         dao.updateSoLuong(masp, soluong);
-    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
+        
+    }
+
+    public ChiTietSanPhamDTO layCTSPByMaSP(String masp) {
         docDS();
-        for(SanPhamDTO sp:ds){
-            if(sp.getMaSP().equals(masp)){
+        for (SanPhamDTO sp : ds) {
+            if (sp.getMaSP().equals(masp)) {
                 return sp.getChiTiet();
             }
         }
         return null;
     }
-    public int capNhatSoLuongSanPham(String masp,int soluongtru){
-        return dao.truSoLuongSanPham(masp,soluongtru);
+
+    public int capNhatSoLuongSanPham(String masp, int soluongtru) {
+        return dao.truSoLuongSanPham(masp, soluongtru);
     }
 }
+

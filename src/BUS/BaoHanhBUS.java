@@ -49,10 +49,10 @@ public class BaoHanhBUS {
         }
         return null;
     }
-    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
-        SanPhamBUS bus =new  SanPhamBUS();
-        return bus.layCTSPByMaSP(masp);
-    } 
+//    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
+//        SanPhamBUS bus =new  SanPhamBUS();
+//        return bus.layCTSPByMaSP(masp);
+//    } 
     public void insertCTBH(ArrayList<ChiTietBaoHanhDTO> ds){
         ChiTietBaoHanhBUS bus=new ChiTietBaoHanhBUS();
         for(ChiTietBaoHanhDTO ctbh:ds)

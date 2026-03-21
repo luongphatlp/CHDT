@@ -569,13 +569,14 @@ public class NhanVienUI extends javax.swing.JPanel {
             if (row != null) {
                 DTO.NhanVienDTO nv = new DTO.NhanVienDTO();
 
-                // --- ĐOẠN CODE MỚI BỔ SUNG ĐỂ CHẶN LỖI DÒNG TRỐNG ---
+               
                 String maNV = "";
                 if (row.getCell(1) != null) {
                     maNV = row.getCell(1).getStringCellValue().trim();
                 }
 
-                // BỘ LỌC TỐI THƯỢNG: Nếu mã NV rỗng thì "continue" (bỏ qua luôn dòng này, nhảy sang dòng tiếp theo)
+               
+                
                 if (maNV.isEmpty()) {
                     continue;
                 }

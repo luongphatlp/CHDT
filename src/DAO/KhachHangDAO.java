@@ -46,27 +46,27 @@ public class KhachHangDAO {
     }
 
     // Thêm khách hàng
-    public boolean insert(KhachHangDTO kh) {
+        public boolean insert(KhachHangDTO kh) {
 
-        String sql = "INSERT INTO khachhang VALUES (?,?,?,?)";
+            String sql = "INSERT INTO khachhang VALUES (?,?,?,?)";
 
-        try {
-            conn = Connect.getConnection();
-            ps = conn.prepareStatement(sql);
+            try {
+                conn = Connect.getConnection();
+                ps = conn.prepareStatement(sql);
 
-            ps.setString(1, kh.getMa());
-            ps.setString(2, kh.getHoten());
-            ps.setString(3, kh.getDt());
-            ps.setString(4, kh.getEmail());
+                ps.setString(1, kh.getMa());
+                ps.setString(2, kh.getHoten());
+                ps.setString(3, kh.getDt());
+                ps.setString(4, kh.getEmail());
 
-            return ps.executeUpdate() > 0;
+                return ps.executeUpdate() > 0;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
         }
-
-        return false;
-    }
 
     // Sửa khách hàng
     public boolean update(KhachHangDTO kh) {
