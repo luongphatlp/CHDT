@@ -12,6 +12,7 @@ import BUS.SanPhamBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
+import UTIL.TaiKhoanSession;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -58,6 +59,10 @@ public class NhapHangUI extends javax.swing.JPanel {
         jTextField3.setEditable(false);
         loadNhaCungCap(); 
         jDateChooser1.setDate(new Date());
+        if (TaiKhoanSession.nvDangNhap != null) {
+        jTextField2.setText(TaiKhoanSession.nvDangNhap.getMaNV());
+        jTextField2.setEditable(false);
+        }
     }
     private void customTable() {
         
