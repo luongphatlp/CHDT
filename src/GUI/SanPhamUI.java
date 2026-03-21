@@ -403,16 +403,26 @@ public class SanPhamUI extends javax.swing.JPanel {
     private javax.swing.JToolBar jToolBar1;
     
     public static void main(String args[]) {
+        /* Set Look and Feel (Giao diện FlatLaf) */
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        /* Tạo một cửa sổ Frame ảo để chứa Panel */
         java.awt.EventQueue.invokeLater(() -> {
-            // Tạo một cái khung JFrame để chứa Panel SanPhamUI
             javax.swing.JFrame frame = new javax.swing.JFrame("Test Giao Diện Sản Phẩm");
             frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
             
-            // Thêm Panel vào khung
-            frame.add(new SanPhamUI());
+            // Khởi tạo Panel của bạn
+            SanPhamUI panel = new SanPhamUI();
             
-            // Thiết lập kích thước và hiển thị
-            frame.pack(); // Tự động co dãn theo kích thước Panel
+            // Thêm Panel vào Frame
+            frame.add(panel);
+            
+            // Tối ưu kích thước test (Thay vì dùng pack() khó kiểm soát)
+            frame.setSize(1200, 800); 
             frame.setLocationRelativeTo(null); // Hiển thị giữa màn hình
             frame.setVisible(true);
         }); 
