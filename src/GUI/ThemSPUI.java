@@ -23,6 +23,7 @@ public class ThemSPUI extends javax.swing.JDialog {
         }
         
         initComponents(); 
+        this.setModal(true);
         this.setLayout(new BorderLayout());
         this.add(jPanel2, BorderLayout.NORTH);
 
@@ -514,7 +515,7 @@ public class ThemSPUI extends javax.swing.JDialog {
             String ma = jTextField1.getText().trim();
             String ten = jTextField4.getText().trim();
             int soLuong = (int) jSpinner1.getValue();
-            int gia = Integer.parseInt(jTextField11.getText().trim());
+            int gia = Integer.parseInt(jTextField11.getText().trim().replace(".", ""));
             SanPhamDTO sp = new SanPhamDTO(ma, ten, soLuong, gia, "Cái", "H1");
             
             DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
