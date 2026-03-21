@@ -6,10 +6,12 @@ package GUI;
 
 import BUS.ChiTietPhieuNhapBUS;
 import BUS.NhaCungCapBUS;
+import BUS.NhanVienBUS;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapHangDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -72,7 +74,15 @@ public class ChiTietPNUI extends javax.swing.JDialog {
             return;
         }
         jLabel6.setText(pn.getMapn());
-        jLabel7.setText(pn.getManv());
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        String tenNV = "";
+        for(NhanVienDTO nv : nvBUS.getDSNV()){
+            if(nv.getMaNV().equals(pn.getManv())){
+                tenNV = nv.getHoTenNV();
+                break;
+            }
+        }
+        jLabel7.setText(tenNV);
         NhaCungCapBUS nccBUS = new NhaCungCapBUS();
         String tenNCC = "";
 
@@ -82,7 +92,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
                 break;
             }
         }
-
+        
         jLabel8.setText(tenNCC);
         if (pn.getNgay() != null) {
             jLabel9.setText(pn.getNgay().toString());
@@ -192,7 +202,7 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         jLabel2.setText("Mã phiếu nhập: ");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setText("Mã nhân viên: ");
+        jLabel3.setText("Tên nhân viên: ");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setText("Nhà cung cấp:");

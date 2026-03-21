@@ -83,4 +83,8 @@ public class PhieuNhapHangBUS {
         PhieuNhapHangDAO dao = new PhieuNhapHangDAO();
         return dao.getByID(maPN);
     }
+    public boolean capNhatTrangThai(String mapn, String trangthai){
+        PhieuNhapHangDAO dao = new PhieuNhapHangDAO();
+        return dao.capNhatTrangThai(mapn, trangthai);
+    }
 }
