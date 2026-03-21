@@ -2,39 +2,109 @@ package GUI;
 
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
-public class SuaNCCUI extends javax.swing.JDialog {
+public class SuaNCCUI extends JDialog {
     private NhaCungCapDTO ncc;
     private NhaCungCapUI parent;
     private NhaCungCapBUS bus;
+    private JTextField txtMa, txtTen, txtDiaChi, txtSDT;
+    private JButton btnLuu, btnHuy;
 
     public SuaNCCUI(NhaCungCapDTO ncc, NhaCungCapUI parent, NhaCungCapBUS bus) {
         this.ncc = ncc;
         this.parent = parent;
         this.bus = bus;
-        initComponents();
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) { ex.printStackTrace(); }
+
         setModal(true);
-        fillData();
+        setTitle("Cập Nhật Nhà Cung Cấp");
+        setSize(600, 650);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        JPanel pnHeader = new JPanel();
+        pnHeader.setBackground(new Color(151, 180, 198));
+        JLabel lblTitle = new JLabel("CẬP NHẬT NHÀ CUNG CẤP");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        lblTitle.setForeground(Color.WHITE);
+        pnHeader.add(lblTitle);
+        add(pnHeader, BorderLayout.NORTH);
+
+        JPanel pnBody = new JPanel();
+        pnBody.setLayout(new BoxLayout(pnBody, BoxLayout.Y_AXIS));
+        pnBody.setBackground(Color.WHITE);
+        pnBody.setBorder(BorderFactory.createEmptyBorder(25, 45, 25, 45));
+
+        JPanel groupInfo = createGroupPanel("THÔNG TIN NHÀ CUNG CẤP");
+        addInput(groupInfo, "Mã NCC (Không sửa):", txtMa = new JTextField(ncc.getMaNCC()));
+        txtMa.setEditable(false);
+        addInput(groupInfo, "Tên nhà cung cấp:", txtTen = new JTextField(ncc.getTenNCC()));
+        addInput(groupInfo, "Số điện thoại:", txtSDT = new JTextField(ncc.getSoDienThoai()));
+        addInput(groupInfo, "Địa chỉ:", txtDiaChi = new JTextField(ncc.getDiaChi()));
+
+        pnBody.add(groupInfo);
+        add(pnBody, BorderLayout.CENTER);
+
+        JPanel pnFooter = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
+        pnFooter.setBackground(Color.WHITE);
+
+        btnLuu = new JButton("LƯU THAY ĐỔI");
+        btnLuu.setBackground(new Color(0, 102, 102));
+        btnLuu.setForeground(Color.WHITE);
+        btnLuu.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnLuu.setPreferredSize(new Dimension(180, 45));
+        btnLuu.addActionListener(e -> btnLuuActionPerformed());
+
+        btnHuy = new JButton("HỦY BỎ");
+        btnHuy.setBackground(new Color(255, 51, 51));
+        btnHuy.setForeground(Color.WHITE);
+        btnHuy.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnHuy.setPreferredSize(new Dimension(140, 45));
+        btnHuy.addActionListener(e -> dispose());
+
+        pnFooter.add(btnLuu);
+        pnFooter.add(btnHuy);
+        add(pnFooter, BorderLayout.SOUTH);
     }
 
-    private void fillData() {
-        txtMa.setText(ncc.getMaNCC());
-        txtTen.setText(ncc.getTenNCC());
-        txtDiaChi.setText(ncc.getDiaChi());
-        txtSDT.setText(ncc.getSoDienThoai());
-        txtMa.setEditable(false); 
+    private JPanel createGroupPanel(String title) {
+        JPanel panel = new JPanel(new GridLayout(0, 1, 0, 10));
+        panel.setBackground(Color.WHITE);
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(151, 180, 198), 1), 
+            title, 0, 0, new Font("Segoe UI", Font.BOLD, 14), new Color(151, 180, 198)
+        );
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(15, 25, 20, 25)));
+        return panel;
     }
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {
+    private void addInput(JPanel panel, String labelText, JTextField input) {
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        label.setForeground(new Color(50, 50, 50));
+        panel.add(label);
+
+        input.setBackground(Color.WHITE);
+        input.setForeground(Color.BLACK);
+        input.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        input.setBorder(BorderFactory.createLineBorder(new Color(151, 180, 198), 1));
+        input.setMargin(new Insets(2, 10, 2, 10));
+        panel.add(input);
+    }
+
+    private void btnLuuActionPerformed() {
         String ten = txtTen.getText().trim();
         String diaChi = txtDiaChi.getText().trim();
         String sdt = txtSDT.getText().trim();
 
         if (!sdt.matches("\\d{10,11}")) { 
           JOptionPane.showMessageDialog(this, "Số điện thoại phải từ 10-11 ký số!");
-        return;
+          return;
         }
         if (ten.isEmpty() || diaChi.isEmpty() || sdt.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin nhà cung cấp!");
@@ -43,6 +113,7 @@ public class SuaNCCUI extends javax.swing.JDialog {
         ncc.setTenNCC(ten);
         ncc.setDiaChi(diaChi);
         ncc.setSoDienThoai(sdt);
+        
         if (bus.sua(ncc)) { 
             JOptionPane.showMessageDialog(this, "Cập nhật nhà cung cấp thành công!");
             parent.loadDataToTable(bus.getDS()); 
@@ -51,43 +122,4 @@ public class SuaNCCUI extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Cập nhật thất bại, vui lòng kiểm tra lại!");
         }
     }
-   private void initComponents() {
-    txtMa = new javax.swing.JTextField();
-    txtTen = new javax.swing.JTextField();
-    txtDiaChi = new javax.swing.JTextField();
-    txtSDT = new javax.swing.JTextField();
-    btnLuu = new javax.swing.JButton();
-    btnHuy = new javax.swing.JButton();
-    setTitle("Sửa Nhà Cung Cấp");
-    java.awt.Container cp = getContentPane();
-    cp.setLayout(new java.awt.GridLayout(5, 2, 10, 10));
-
-    cp.add(new javax.swing.JLabel(" Mã NCC:"));
-    cp.add(txtMa);
-    cp.add(new javax.swing.JLabel(" Tên NCC:"));
-    cp.add(txtTen);
-    cp.add(new javax.swing.JLabel(" Số điện thoại:"));
-    cp.add(txtSDT);
-    cp.add(new javax.swing.JLabel(" Địa chỉ:"));
-    cp.add(txtDiaChi);
-    
-    btnLuu.setText("Lưu");
-    btnLuu.addActionListener(this::btnLuuActionPerformed);
-    cp.add(btnLuu);
-
-    btnHuy.setText("Hủy");
-    btnHuy.addActionListener(this::btnHuyActionPerformed);
-    cp.add(btnHuy);
-
-    pack();
-}
-    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {
-        this.dispose(); 
-    }
-    private javax.swing.JTextField txtMa;
-    private javax.swing.JTextField txtTen;
-    private javax.swing.JTextField txtDiaChi;
-    private javax.swing.JTextField txtSDT;
-    private javax.swing.JButton btnLuu;
-    private javax.swing.JButton btnHuy;
 }
