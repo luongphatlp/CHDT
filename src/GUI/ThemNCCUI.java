@@ -293,8 +293,8 @@ public class ThemNCCUI extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
             return;
         }
-        if (!sdt.matches("\\d{10,11}")) { 
-            JOptionPane.showMessageDialog(this, "Số điện thoại phải từ 10-11 ký số!");
+        if (!sdt.matches("^0\\d{9}$")) { 
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số và bắt đầu bằng số 0.");
             return;
         }
         NhaCungCapDTO ncc = new NhaCungCapDTO(ma, ten, diachi, sdt);
