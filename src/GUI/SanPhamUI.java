@@ -39,14 +39,13 @@ public class SanPhamUI extends javax.swing.JPanel {
         int stt = 1;
         for (SanPhamDTO sp : ds) {
             String giaTien = String.format("%,d VNĐ", sp.getDonGia());
-            String boNho = sp.getBoNho(); 
-            if (boNho == null || boNho.isEmpty()) {
-                boNho = "Chưa có";
+            String ramRom = sp.getBoNho(); 
+            if (ramRom == null || ramRom.isEmpty()) {
+                ramRom = "Chưa có";
             }
             model.addRow(new Object[]{
-                stt++, sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), giaTien, boNho
-            });
-        }
+                stt++, sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), giaTien, ramRom
+            });        }
         resizeColumnWidth(jTable1); 
     }
     @SuppressWarnings("unchecked")
@@ -231,7 +230,7 @@ public class SanPhamUI extends javax.swing.JPanel {
         jTable1.setModel(new javax.swing.table.DefaultTableModel( 
             new Object [][] {},
             new String [] {
-                 "STT", "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "Bộ nhớ"
+                 "STT", "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "RAM/ROM"
             }){
                @Override 
                public boolean isCellEditable(int row, int column){
