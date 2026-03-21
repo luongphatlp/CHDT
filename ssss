@@ -1,0 +1,133 @@
+[33md301220[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mquocnam[m[33m)[m Remove private properties
+[33m79e5605[m Update phiếu nhập + nhập hàng, update database
+[33m241db27[m[33m ([m[1;31morigin/main[m[33m)[m Merge vào phần phiếu nhập, ctpn, nhập hàng đã 100% complete
+[33m5ff2585[m Merge branch 'main' into quocnam
+[33m8a7f6c6[m[33m ([m[1;31morigin/quocnam[m[33m)[m Update cho đẹp hơn
+[33m6493c7f[m FIX XONG PHẦN CTPN
+[33m375f0a2[m Hoàn thành phần phiếu nhập + nhập hàng, các nút đã chạy bình thường, chi tiết phiếu nhập còn bị lỗi nhiều
+[33mc3ac319[m Merge origin/main into main
+[33mf72914b[m thongkenhanvien
+[33m84acbee[m dung database moi chay duoc nha
+[33mef395e5[m HoaDon
+[33mef375c8[m Merge origin/main into main
+[33mb39fd44[m HoaDon
+[33mbe46d3c[m Fix lại phần tìm kiếm theo đúng yêu cầu, trạng thái đã hoạt động nhưng xấu sẽ cần update
+[33mad4be88[m Thêm tăng số lượng sp khi nhập hàng
+[33md14a712[m Chỉnh lại font của nhaphang + phieunhap
+[33m0992cc0[m Fix lại một chút phần nút "nhập hàng"
+[33m3026c09[m Hoàn thành tìm kiếm nhập hàng ngoại trừ nhân viên, nút làm mới, sửa, xem chi tiết (chưa có dữ liệu)
+[33mcafaf4c[m update SanPhamUI
+[33mf7e67ff[m update SanPhamUI
+[33mc9286fa[m NhapHang da xong nut Nhap hang, da xuat file pdf dc, PhieuNhap xong ham xoa.
+[33mcadddca[m BaoHanh
+[33mc2db364[m Merge origin/luongphat into main
+[33m9992d44[m BaoHanh
+[33mc91049a[m finish ThemSPUI
+[33m1ba1d6d[m finish SuaSPUI
+[33mda80444[m finish ChiTietSanPhamUI
+[33m3cae8eb[m finish SanPhamDTO
+[33m1e644c6[m Them ChiTietSanPhamDTO
+[33m0ca4dc2[m finish SanPhamDAO
+[33m092d200[m finish SanPhamBUS
+[33mc2e952e[m Pull về, cập nhập hàm NhapHang xong phần NCC, PDF
+[33m3749b8b[m finish ThemNCCUI
+[33m238a918[m finish NhaCungCapDTO
+[33m78273b3[m finish NhaCungCapDAO
+[33m84e1412[m finish ThemSPUI
+[33mf7e31c6[m finish SuaSPUI
+[33mf61e775[m finish SanPhamUI
+[33m789a941[m finish ChiTietSanPhamUI
+[33m8d313ed[m finish SanPhamDTO
+[33m3395b12[m finish SanPhamDAO
+[33m01cff7e[m finish SanPhamBUS
+[33m020a9cb[m finish
+[33m4b84c2a[m finish
+[33mff2c8df[m finish
+[33m64a72b3[m finish
+[33m53ab92f[m NhapHang test hoàn thành nút "+", sửa, xóa, làm mới, tìm kiếm
+[33m709010b[m Merge origin/main into main
+[33m30e8c68[m a
+[33m621660c[m Merge pull request #1 from luongphatlp/quocnam
+[33ma928afa[m NhapHang 90% xong, còn PhieuNhap + ChiTietPhieuNhap
+[33m4653f42[m Update dienthoai (10).sql - Thêm vào lấy dữ liệu ở cuối hàng
+[33ma08de31[m Chinh sua SQL
+[33mfd8f0d9[m Them SuaSPUI
+[33m6bd8e67[m Cap nhat SanPhamUI
+[33me0430b2[m Cap nhat SanPhamBUS
+[33md0ce9d4[m HIen tai GUI da bi mat, se lam lai
+[33mdf94627[m recover code
+[33m6d5a180[m cap nhat tong hop hoa don
+[33m6d5eab8[m Merge origin/main into main
+[33ma19063d[m Merge origin/main into main
+[33mbcc71aa[m database moi nhat
+[33me6e90f0[m Delete dienthoai (9).sql
+[33m990cb47[m Delete chdt (4).sql
+[33md907659[m test
+[33m584a887[m Cap nhat nhan vien
+[33m5b533c0[m Cap nhat nhan vien
+[33m1532cd2[m Cap nhat nhan vien
+[33m25e7cfc[m GUI: Bao Hanh and Fix database: file chdt(4)
+[33mdf204b8[m hoa don va setup cho BaoHanh
+[33me930fbb[m ok
+[33ma47b7e2[m ok
+[33m7f74d7d[m ok
+[33md7a6d5a[m Them bang taikhoan
+[33m49b8649[m Delete dienthoai (8).sql
+[33m25be3b2[m Cap nhat nhan vien
+[33ma103e8d[m làm thêm xuất pdf cho thống kê doanh thu
+[33m2395d00[m làm thêm xuất excel cho thống kê doanh thu
+[33mdf46008[m Merge origin/namthinh into main
+[33m8b1faa0[m Merge origin/namthinh into main
+[33m0c11ff5[m Merge origin/namthinh into main
+[33m07138a4[m Merge origin/namthinh into main
+[33m527c712[m Merge CHDT/namthinh into main
+[33m0ba835b[m Merge CHDT/namthinh into main
+[33md123537[m hoadon fini
+[33mf9b10b8[m hoadon end
+[33m73edf9e[m khuyen mai
+[33m5dfe688[m fix pull
+[33mda609a3[m Fix merge conflicts in KhuyenMaiBUS and DAO
+[33m9928fb3[m res
+[33m963a32f[m KhuyenMai HoaDon
+[33mc4ff330[m Merge CHDT/main into main
+[33m5a6efc4[m sua them san pham khuyen mai
+[33m7c71574[m Add files via upload
+[33m2257df2[m Delete dienthoai (7).sql
+[33m3bb7750[m hoa don khuyen mai
+[33m4f47998[m update khuyen mai
+[33m0c8742f[m hoan thanh phần khuyen mai
+[33m80f067f[m hoa don
+[33m5cb6539[m hoa don
+[33m08d7b22[m Cap nhat sua san pham khuyen mai
+[33m896b4b5[m Cap nhat chon san pham khuyen mai
+[33m2e7e8d1[m Merge CHDT/main into main
+[33m13a05da[m khuyen mai chua xong
+[33mbb88aee[m Add files via upload
+[33m122b430[m Delete dienthoai.sql
+[33m286eb4b[m khuyen mai
+[33maaea6ce[m ve bieu do
+[33m12bbf31[m up nhanvien code thieu thong ke
+[33m9408e03[m nhanvien thieu thong ke
+[33m2b53d8d[m Merge origin/main into main
+[33md406178[m nhan 4/3/26
+[33m6c8e60e[m Merge CHDT/main into main
+[33m7a21aa8[m sua lai giao dien thong ke doanh thu
+[33m1de851c[m ok
+[33m84cce3d[m thongkedoanhthu xong
+[33m8c3514b[m thongkedoanhthu chưa làm sao diện
+[33m442907e[m chinh lai ten cac cot
+[33mbca8a8b[m Delete dienthoai.sql
+[33mbbcf1ce[m Merge CHDT/main into main
+[33m90b4317[m thongkesanpham
+[33m5e2f045[m Add files via upload
+[33m100f97c[m Delete dienthoai.sql
+[33mc1c71ed[m thongkesanphamxong
+[33m6f2efa6[m thongkesanpham
+[33m9c9c1f3[m GUI moi
+[33m7c88205[m 13-02-2026
+[33mb708e0b[m Merge CHDT/main into main
+[33ma9f5c9f[m 13-02-2026
+[33m2c451ad[m Update dienthoai.sql
+[33mfa150f1[m Rename dienthoai (4).sql to dienthoai.sql
+[33mec373ec[m DATABASE
+[33ma0cb059[m lan 1
