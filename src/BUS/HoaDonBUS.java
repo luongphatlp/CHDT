@@ -14,6 +14,7 @@ import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,8 +74,8 @@ public class HoaDonBUS {
         ds=dao.selectAll();
         return ds;
     }
-    public LocalDate chuyenDateThanhLocalDate(Date ngay){
-        return ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    public LocalDateTime chuyenDateThanhLocalDateTime(Date ngay){
+        return ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
     public NhanVienDTO getNVByMaNV(String manv){
         ArrayList<NhanVienDTO> ds =busnv.getDSNV();
@@ -103,8 +104,9 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     ArrayList<HoaDonDTO> tam = new ArrayList<>();
 
     if(ds == null) selectAll();
-    LocalDate tu=chuyenDateThanhLocalDate(tungay);
-    LocalDate den=chuyenDateThanhLocalDate(denngay);
+    LocalDateTime tu=chuyenDateThanhLocalDateTime(tungay);
+    LocalDateTime den=chuyenDateThanhLocalDateTime(denngay);
+   
     for(HoaDonDTO hd : ds){
         
         boolean mahd = true;

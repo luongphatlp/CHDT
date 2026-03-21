@@ -14,6 +14,7 @@ import DTO.SanPhamDTO;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -430,8 +431,13 @@ public class HoaDonUI extends javax.swing.JPanel {
     public HoaDonDTO thanhToan(String mahd){
         HoaDonDTO hd=new HoaDonDTO();
         hd.setMaHD(mahd);
+<<<<<<< HEAD
         hd.setNgay( LocalDate.now());
         hd.setMaNV(DTO.TaiKhoanSession.nvDangNhap.getMaNV());
+=======
+        hd.setNgay( LocalDateTime.now());
+        hd.setMaNV(UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
+>>>>>>> 5ff258580ce91f3f77beb0d5a68105e6499010ac
         
         KhachHangDTO kh=bus.layKhachHangBySDT(txtsdt.getText());
         if(kh==null){

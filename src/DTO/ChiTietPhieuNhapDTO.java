@@ -10,21 +10,19 @@ package DTO;
  */
 public class ChiTietPhieuNhapDTO {
     private String mapn, masp; 
-    private int sl, dongia, tongtien;
+    private int sl; long tongtien;
     
     public ChiTietPhieuNhapDTO(){}
-    public ChiTietPhieuNhapDTO(String mapn, String masp, int sl, int dongia, int tongtien){
+    public ChiTietPhieuNhapDTO(String mapn, String masp, int sl, long tongtien){
         this.mapn = mapn;
         this.masp = masp;
         this.sl = sl;
-        this.dongia = dongia;
         this.tongtien = tongtien;
     }
     public ChiTietPhieuNhapDTO(ChiTietPhieuNhapDTO ctpn){
         this.mapn = ctpn.mapn;
         this.masp = ctpn.masp;
         this.sl = ctpn.sl;
-        this.dongia = ctpn.dongia;
         this.tongtien = ctpn.tongtien;
     }
     public String getMapn() {return mapn;}
@@ -36,10 +34,7 @@ public class ChiTietPhieuNhapDTO {
     public int getSl(){return sl;}
     public void setSl(int sl){this.sl = sl;}
     
-    public int getDongia(){return dongia;}
-    public void setDongia(int dongia){this.dongia = dongia;}
-    
-    public int getTongtien(){return tongtien;}
-    public void setTongtien(int tongtien){this.tongtien = tongtien;}
+    public long getTongtien(){return tongtien;}
+    public void setTongtien(long tongtien){this.tongtien = tongtien;}
     
 }

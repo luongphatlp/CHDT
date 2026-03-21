@@ -26,4 +26,8 @@ public class NhaCungCapDTO {
 
     public String getSoDienThoai() { return soDienThoai; }
     public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }
+    @Override
+    public String toString() {
+        return tenNCC;   // hiển thị tên nhà cung cấp trong combobox
+    }
 }
