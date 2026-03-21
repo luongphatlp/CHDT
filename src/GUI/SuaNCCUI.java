@@ -102,8 +102,8 @@ public class SuaNCCUI extends JDialog {
         String diaChi = txtDiaChi.getText().trim();
         String sdt = txtSDT.getText().trim();
 
-        if (!sdt.matches("\\d{10,11}")) { 
-          JOptionPane.showMessageDialog(this, "Số điện thoại phải từ 10-11 ký số!");
+        if (!sdt.matches("^0\\d{9}$")) { 
+          JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số và bắt đầu bằng số 0.");
           return;
         }
         if (ten.isEmpty() || diaChi.isEmpty() || sdt.isEmpty()) {

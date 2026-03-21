@@ -4,6 +4,7 @@ public class SanPhamDTO {
     private String masp, tenSP, donvitinh, mahang;
     private int soluong, dongia;
     private ChiTietSanPhamDTO chiTiet;
+    private String boNho; 
 
     public SanPhamDTO() {
         this.chiTiet = new ChiTietSanPhamDTO();
@@ -34,4 +35,6 @@ public class SanPhamDTO {
 
     public ChiTietSanPhamDTO getChiTiet() { return chiTiet; }
     public void setChiTiet(ChiTietSanPhamDTO chiTiet) { this.chiTiet = chiTiet; }
+    public String getBoNho() { return boNho; }
+    public void setBoNho(String boNho) { this.boNho = boNho; }
 }

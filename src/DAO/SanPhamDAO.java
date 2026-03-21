@@ -18,7 +18,7 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
     public int insert(SanPhamDTO sp){   
         int result=0;
         try(Connection conn=Connect.getConnection()){
-            String qry = "INSERT INTO dienthoai(Ma,Ten,SoLuong,DonGia,DonViTinh,MaHang) VALUES (?,?,?,?,?,?)";
+            String qry = "INSERT INTO dienthoai(Ma,Ten,SoLuong,DonGia,DonViTinh,MaHang,BoNho) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement st=conn.prepareStatement(qry);
             int index=1;
             st.setString(index++, sp.getMaSP());
@@ -27,6 +27,8 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
             st.setInt(index++, sp.getDonGia());
             st.setString(index++, sp.getDonViTinh());
             st.setString(index++, sp.getMaHang());
+            st.setString(index++, sp.getBoNho());
+            
             result= st.executeUpdate();
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -54,25 +56,27 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO>{
         return delete(sp.getMaSP());
     }
 
-    @Override
-public int update(SanPhamDTO sp){
-    int result=0; 
-    try(Connection conn=Connect.getConnection()) {
-        String qry="UPDATE dienthoai SET Ten=?, SoLuong=?, DonGia=?, DonViTinh=?, MaHang=? WHERE Ma=?";
-        PreparedStatement st=conn.prepareStatement(qry);
-        int index=1;
-        st.setString(index++, sp.getTenSP()); 
-        st.setInt(index++, sp.getSoLuong());
-        st.setInt(index++, sp.getDonGia());  
-        st.setString(index++, sp.getDonViTinh());
-        st.setString(index++, sp.getMaHang());
-        st.setString(index++, sp.getMaSP());
-        result=st.executeUpdate();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+@Override
+    public int update(SanPhamDTO sp){
+        int result=0; 
+        try(Connection conn=Connect.getConnection()) {
+            String qry="UPDATE dienthoai SET Ten=?, SoLuong=?, DonGia=?, DonViTinh=?, MaHang=?, BoNho=? WHERE Ma=?";
+            PreparedStatement st=conn.prepareStatement(qry);
+            int index=1;
+            st.setString(index++, sp.getTenSP()); 
+            st.setInt(index++, sp.getSoLuong());
+            st.setInt(index++, sp.getDonGia());  
+            st.setString(index++, sp.getDonViTinh());
+            st.setString(index++, sp.getMaHang());
+            st.setString(index++, sp.getBoNho());
+            
+            st.setString(index++, sp.getMaSP());
+            result=st.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
-    return result;
-}
 
     @Override
     public ArrayList<SanPhamDTO> selectAll(){
@@ -83,12 +87,13 @@ public int update(SanPhamDTO sp){
             ResultSet rs=st.executeQuery(qry);
             while(rs.next()){
                 SanPhamDTO sp=new SanPhamDTO();
-                sp.setMaSP(rs.getString(1));
-                sp.setTenSP(rs.getString(2));
-                sp.setSoLuong(rs.getInt(3));
-                sp.setDonGia(rs.getInt(4)); 
-                sp.setDonViTinh(rs.getString(5));
-                sp.setMaHang(rs.getString(6));
+                sp.setMaSP(rs.getString("Ma"));
+                sp.setTenSP(rs.getString("Ten"));
+                sp.setSoLuong(rs.getInt("SoLuong"));
+                sp.setDonGia(rs.getInt("DonGia")); 
+                sp.setDonViTinh(rs.getString("DonViTinh"));
+                sp.setMaHang(rs.getString("MaHang"));
+                sp.setBoNho(rs.getString("BoNho"));
                 ds.add(sp);
             }
         }catch(SQLException ex) {
@@ -96,7 +101,7 @@ public int update(SanPhamDTO sp){
         }
         return ds;
     }
-
+     
     public ArrayList<SanPhamDTO> selectSanPhamKhongTrongKhuyenMai(String maKM){
         ArrayList<SanPhamDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
