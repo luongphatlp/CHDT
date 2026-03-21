@@ -14,19 +14,22 @@ public class PhieuNhapHangDTO {
     String manv;
     String mancc;
     int tongtien;
+    String trangthai;
     public PhieuNhapHangDTO() {
         this.mapn = null;
         this.ngay = null;
         this.manv = null;
         this.mancc = null;
         this.tongtien = 0;
+        this.trangthai = null;
     }
-    public PhieuNhapHangDTO(String mapn, String ngay, String manv, String mancc, int tongtien) {
+    public PhieuNhapHangDTO(String mapn, String ngay, String manv, String mancc, int tongtien, String trangthai) {
         this.mapn = mapn;
         this.ngay = ngay;
         this.manv = manv;
         this.mancc = mancc;
         this.tongtien = tongtien;
+        this.trangthai = trangthai;
     }
     public PhieuNhapHangDTO(PhieuNhapHangDTO pnh1){
         this.mapn = pnh1.mapn;
@@ -34,6 +37,7 @@ public class PhieuNhapHangDTO {
         this.manv = pnh1.manv;
         this.mancc = pnh1.mancc;
         this.tongtien = pnh1.tongtien;
+        this.trangthai = pnh1.trangthai;
     }
     public String getMapn() {return mapn;}
     public void setMapn(String mapn){this.mapn = mapn;}
@@ -45,4 +49,13 @@ public class PhieuNhapHangDTO {
     public void setMancc(String mancc){this.mancc = mancc;}
     public int getTongtien(){return tongtien;}
     public void setTongtien(int tongtien){this.tongtien = tongtien;}
+
+    public String getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
+    }
+    
 }

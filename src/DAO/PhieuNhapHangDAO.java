@@ -25,12 +25,13 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
     public int insert(PhieuNhapHangDTO pnh){
         int result = 0;
         try(Connection conn = Connect.getConnection()){
-            String qry = "INSERT INTO phieunhap(MaPN, Ngay, MaNV, MaNCC, TongTien) VALUES ("
+            String qry = "INSERT INTO phieunhap(MaPN, Ngay, MaNV, MaNCC, TongTien, TrangThai) VALUES ("
             + "'" + pnh.getMapn() + "',"
             + "'" + pnh.getNgay() + "',"
             + "'" + pnh.getManv() + "',"
             + "'" + pnh.getMancc() + "',"
-            + "'" + pnh.getTongtien() + "')";
+            + "'" + pnh.getTongtien() + "',"
+            + "'" + pnh.getTrangthai() + "')";
             Statement st = conn.createStatement();
             result = st.executeUpdate(qry);
         }catch (SQLException ex) {
@@ -47,6 +48,7 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
         qry+=","+"MaNV="+"'"+pnh.getManv()+"'";
         qry+=","+"MaNCC="+"'"+pnh.getMancc()+"'";
         qry+=","+"TongTien="+"'"+pnh.getTongtien()+"'";
+        qry+=","+"TrangThai="+"'"+pnh.getTrangthai()+"'";
         qry+=" WHERE MaPN='"+pnh.getMapn()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
@@ -83,6 +85,7 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
                 pnh.setManv(rs.getString(3));
                 pnh.setMancc(rs.getString(4));
                 pnh.setTongtien(rs.getInt(5));
+                pnh.setTrangthai(rs.getString(6));
                 ds.add(pnh);
             }
         }catch(SQLException ex) {
@@ -106,6 +109,7 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
                 pn.setManv(rs.getString("MaNV"));
                 pn.setMancc(rs.getString("MaNCC"));
                 pn.setNgay(rs.getString("Ngay"));
+                pn.setTrangthai(rs.getString("TrangThai"));
             }
 
         } catch (Exception e) {
@@ -113,5 +117,21 @@ public class PhieuNhapHangDAO implements InterfaceDAO<PhieuNhapHangDTO>{
         }
 
         return pn;
+    }
+    public boolean capNhatTrangThai(String mapn, String trangthai){
+        String sql = "UPDATE phieunhap SET TrangThai = ? WHERE MaPN = ?";
+
+        try(Connection conn = Connect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setString(1, trangthai);
+            ps.setString(2, mapn);
+
+            return ps.executeUpdate() > 0;
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

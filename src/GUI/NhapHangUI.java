@@ -6,7 +6,6 @@ package GUI;
 import BUS.ChiTietPhieuNhapBUS;
 import BUS.NhapHangBUS;
 import BUS.PhieuNhapHangBUS;
-import DTO.NhapHangDTO;
 import BUS.DienThoaiBUS;
 import BUS.NhaCungCapBUS;
 import BUS.SanPhamBUS;
@@ -376,11 +375,14 @@ public class NhapHangUI extends javax.swing.JPanel {
             }
         });
 
+        jTextField3.setEnabled(false);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
+
+        jDateChooser1.setEnabled(false);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chức năng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
 
@@ -644,8 +646,8 @@ public class NhapHangUI extends javax.swing.JPanel {
         }
 
         int soLuongCu = Integer.parseInt(jTable2.getValueAt(row, 3).toString());
-        long donGia = Long.parseLong(jTable2.getValueAt(row, 4).toString().replace(",", ""));
-
+        long thanhTienCu = Long.parseLong(jTable2.getValueAt(row, 4).toString());
+        long donGia = thanhTienCu / soLuongCu;
         // nhập số lượng mới
         String input = JOptionPane.showInputDialog(this, "Nhập số lượng mới:", soLuongCu);
 
@@ -663,8 +665,8 @@ public class NhapHangUI extends javax.swing.JPanel {
             jTable2.setValueAt(soLuongMoi, row, 3);
 
             long thanhTien = soLuongMoi * donGia;
-            jTable2.setValueAt(String.format("%,d", thanhTien), row, 4);
-
+            jTable2.setValueAt(thanhTien, row, 4);
+            tinhTongTien();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ!");
         }
@@ -717,6 +719,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         pn.setManv(maNV);
         pn.setNgay(ngay);
         pn.setTongtien((int) tongTien);
+        pn.setTrangthai("Đang hoạt động");
 
         PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
         busPN.docDSPN();
@@ -736,7 +739,7 @@ public class NhapHangUI extends javax.swing.JPanel {
             ct.setTongtien(thanhTien);
 
             ctBUS.them(ct);
-            spBus.tangSoLuong(maSP, soLuong);
+            //spBus.tangSoLuong(maSP, soLuong);
         }
         int confirm = JOptionPane.showConfirmDialog(
             this,
@@ -769,7 +772,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
         JOptionPane.showMessageDialog(this,"Nhập hàng thành công");
         model.setRowCount(0);
-        jLabel8.setText("0 VNĐ");
+        jLabel8.setText("0");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -783,6 +786,10 @@ public class NhapHangUI extends javax.swing.JPanel {
         String masp = jTable3.getValueAt(row,0).toString();
         String tensp = jTable3.getValueAt(row,1).toString();
         int soluong = (int) jSpinner1.getValue();
+        if(soluong <= 0){
+            JOptionPane.showMessageDialog(this, "Không thêm do số lượng bằng 0!");
+            return;
+        }
         int gia = dongia * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
 

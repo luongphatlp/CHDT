@@ -150,6 +150,7 @@ public class SanPhamBUS {
 
         SanPhamDAO dao = new SanPhamDAO();
         dao.updateSoLuong(masp, soluong);
+    }
     public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
         docDS();
         for(SanPhamDTO sp:ds){
