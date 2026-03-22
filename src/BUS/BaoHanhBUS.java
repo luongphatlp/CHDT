@@ -272,4 +272,7 @@ public class BaoHanhBUS {
             }
         }
     }
+    public boolean KtIMEI(String imei){
+       return  busct.kTIMEI(imei);
+    }
 }

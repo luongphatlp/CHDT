@@ -76,7 +76,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         }
     }
     public void thanhToan(){
-                if (bangchitietsanpham.getRowCount() == 0) {
+        if (bangchitietsanpham.getRowCount() == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Giỏ hàng trống!");
             return;
         }
@@ -105,11 +105,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         xn.setVisible(true);
         
         if (xn.getReturnStatus() == XacNhanTTUI.RET_OK) {
-
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "Giỏ hàng trống!");
-                return;
-            }
 
             ArrayList<SanPhamDTO> ds = new ArrayList<>();
             ArrayList<ChiTietHoaDonDTO> dscthd= new ArrayList<>();
@@ -150,6 +145,9 @@ public class HoaDonUI extends javax.swing.JPanel {
             model.setRowCount(0);
             lbtongtien.setText("0đ");
             cbpttt.setSelectedIndex(0);
+            txtsdt.setText("");
+            txthoten.setText("");
+            txtemail.setText("");
             veBangHoaDon();
         }
 
@@ -514,17 +512,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         hd.setMaNV(DTO.TaiKhoanSession.nvDangNhap.getMaNV());
 
         
-        KhachHangDTO kh=bus.layKhachHangBySDT(txtsdt.getText());
-        if(kh==null){
-            KhachHangDTO kh1=new KhachHangDTO();
-            kh1.setMa(bus.taoMaKH());
-            kh1.setHoten(txthoten.getText());
-            kh1.setEmail(txtemail.getText());
-            kh1.setDt(txtsdt.getText());
-            bus.themKH(kh1);
-            hd.setMaKH(kh1.getMa());
-        }else
-            hd.setMaKH(bus.layKhachHangBySDT(txtsdt.getText()).getMa());
+        hd.setMaKH(bus.layKhachHangBySDT(txtsdt.getText()).getMa());
         String tt=lbtongtien.getText();
         hd.setTongTien(Integer.parseInt(tt));
         hd.setPTTT(cbpttt.getSelectedItem().toString());
@@ -563,7 +551,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         bangchitietsanpham.setValueAt(soLuongMoi, rowGioHang, 4);
         bangchitietsanpham.setValueAt(thanhTienMoi, rowGioHang, 5);
         tinhLaiTongTien();
-        javax.swing.JOptionPane.showMessageDialog(this, "Đã cập nhật số lượng!");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -588,7 +575,7 @@ public class HoaDonUI extends javax.swing.JPanel {
 
             boolean exists = false;
             for (int i = 0; i < bangchitietsanpham.getRowCount(); i++) {
-                if (bangchitietsanpham.getValueAt(i, 0).equals(tenSP)) {
+                if (bangchitietsanpham.getValueAt(i, 0).equals(maSP)) {
                     int currentQty = (int) bangchitietsanpham.getValueAt(i, 4);
                     int newQty = currentQty + soLuongMua;
 
@@ -597,6 +584,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                         bangchitietsanpham.setValueAt(newQty * donGia, i, 5);
                     } else {
                         javax.swing.JOptionPane.showMessageDialog(this, "Tổng số lượng trong giỏ vượt quá tồn kho!");
+                        return;
                     }
                     exists = true;
                     break;
@@ -640,7 +628,7 @@ public class HoaDonUI extends javax.swing.JPanel {
 
     if (rowGioHang != -1) {
         String masp = bangchitietsanpham.getValueAt(rowGioHang, 0).toString();
-        int soLuongHienTai = Integer.parseInt(bangsanpham.getValueAt(rowGioHang, 2).toString());
+        int soLuongHienTai = Integer.parseInt(bangchitietsanpham.getValueAt(rowGioHang, 4).toString());
 
         int soLuongTonKho = -1;
 
@@ -675,6 +663,8 @@ public class HoaDonUI extends javax.swing.JPanel {
         KhachHangDTO kh= bus.layKhachHangBySDT(sdt);
         if(kh==null){
             JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
+            txthoten.setText("");
+            txtemail.setText("");
             return;
         }
         txthoten.setText(kh.getHoten());

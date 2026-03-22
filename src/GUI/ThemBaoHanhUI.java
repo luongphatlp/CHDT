@@ -12,6 +12,7 @@ import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
+import static GUI.XacNhanTTUI.RET_CANCEL;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
@@ -512,7 +514,15 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                "Bạn có chắc muốn xóa không?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+        if (result == JOptionPane.YES_OPTION) {
+            doClose(RET_CANCEL);
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -561,12 +571,35 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     }//GEN-LAST:event_bangchitietbaohanhAncestorAdded
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String imei=txtimei.getText();
-        int row;
-        row=bangchitietbaohanh.getSelectedRow();
-        if(row!=-1)
-            bangchitietbaohanh.setValueAt(imei,row,1);
+        String imei = txtimei.getText().trim();
+
+        if (imei.isEmpty()) { 
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập IMEI");
+            return;
+        }
+
+        int row = bangchitietbaohanh.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng");
+            return;
+        }
+        boolean kt=true;
+        // kiểm tra trùng
+        for (int i = 0; i < bangchitietbaohanh.getRowCount(); i++) {
+            if (i == row) continue; // bỏ qua dòng đang chọn
+
+            Object value = bangchitietbaohanh.getValueAt(i, 1);
+            if (value != null && imei.equals(value.toString())) {
+                JOptionPane.showMessageDialog(null, "Trùng IMEI");
+                return;
+            }
+        }
+        if(kt && !bus.KtIMEI(imei)){
+            JOptionPane.showMessageDialog(null, "Đã tồn tại IMEI trong hệ thống");
+            return;
+        }
+        // nếu không trùng thì set
+        bangchitietbaohanh.setValueAt(imei, row, 1);
         txtimei.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 

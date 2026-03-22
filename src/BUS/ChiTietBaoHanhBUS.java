@@ -49,6 +49,12 @@ public class ChiTietBaoHanhBUS {
 
         return tam;
     }
+    public boolean kTIMEI(String imei){
+        for(ChiTietBaoHanhDTO ct:ds)
+            if(ct.getIMEI().equals(imei))
+                return false;
+        return true;
+    }
 }
     /*
     public boolean xuLyLuuBaoHanh( int thoiHan) {

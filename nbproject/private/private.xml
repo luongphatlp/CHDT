@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/NhanVienBUS.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ThayDoiMatKhau1.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ThayDoiMatKhau2.java</file>
@@ -55,6 +56,91 @@
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/ChiTietBaoHanhDAO.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/BaoHanhDTO.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ChiTietBaoHanhUI.java</file>
+=======
+            <file>file:/D:/projectnetbean/CHDT/src/TEST/MainApplication.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietKhuyenMaiDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/HomeUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/PhieuNhapUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DATABASE/Connect.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/NhanVienDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/NhanVienDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThongKeUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/KhuyenMaiUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/XacNhanTTUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/HoaDonUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/HomeUserUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaThongTinUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ChiTietSanPhamUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/TTBaoHanhUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ChiTietPNUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/HoaDonDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThemSPUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/TaiKhoanNVDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/TaiKhoanNVDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/NhanVienBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/QuenMatKhauBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/Login.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThayDoiMatKhau1.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThayDoiMatKhau2.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/SERVICES/GuiMaOTP.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/XemTTCaNhanUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/XemTTNhanVienUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SanPhamUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaNhanVienUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhanVienUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/Register.java</file>
+            <file>file:/D:/projectnetbean/CHDT/.gitignore</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ChiTietKhuyenMaiBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietKhuyenMaiDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/SanPhamDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/THHoaDonUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/KhachHangUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/BaoHanhDienThoaiUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ChiTietBaoHanhUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/HoaDonBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/HoaDonDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/KhachHangDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/KhachHangDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/KhachHangBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThemBaoHanhUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/PhieuBaoHanhUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SoLuongUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaSPUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/TaiKhoanNVBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/UTIL/TaiKhoanSession.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/BaoHanhBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietBaoHanhDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/SanPhamBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ChiTietSanPhamBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietPhieuNhapDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/BaoHanhDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/BaoHanhDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/DienThoaiDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietBaoHanhDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ChiTietBaoHanhBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietSanPhamDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/MayDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/MayDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/MayBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/SanPhamDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ChiTietHoaDonDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ChiTietHoaDonBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietHoaDonDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/DienThoaiBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ImeiGeneratorBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/KhuyenMaiBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/KhuyenMaiDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/KhuyenMaiDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/ThemNCCUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ThongKeNhanVienDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ThongKeNhanVienBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ThongKeNhanVienDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ThongKeDoanhThuDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ThongKeKhachHangBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhapHangUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhaCungCapUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/BUS/ThongKeSanPhamBUS.java</file>
+>>>>>>> 1c82ffc294f12161dbcc9f5f486ff6d61752d4ad
         </group>
     </open-files>
 </project-private>
