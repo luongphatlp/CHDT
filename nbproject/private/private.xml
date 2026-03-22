@@ -13,6 +13,7 @@
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/HomeUserUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/ChiTietKhuyenMaiBUS.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/SuaNhanVienUI.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/SanPhamDAO.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ThongKeUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/NhanVienUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/HoaDonBUS.java</file>
@@ -33,13 +34,27 @@
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/THHoaDonUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/NhaCungCapBUS.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ThemBaoHanhUI.java</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/database/Connect.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/SanPhamUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/TTBaoHanhUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/XacNhanTTUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/HoaDonDAO.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/KhachHangUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/KhachHangBUS.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/BaoHanhBUS.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/SanPhamDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/PhieuNhapUI.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/PhieuNhapHangBUS.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/PhieuNhapHangDAO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/BaoHanhDAO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/NhapHangDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/PhieuNhapHangDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/NhaCungCapDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/NhaCungCapDAO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/BaoHanhDienThoaiUI.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/ChiTietBaoHanhDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/ChiTietBaoHanhDAO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DTO/BaoHanhDTO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/ChiTietBaoHanhUI.java</file>
         </group>
     </open-files>
 </project-private>
