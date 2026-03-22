@@ -13,6 +13,7 @@ import BUS.PhieuNhapHangBUS;
 import BUS.NhaCungCapBUS;
 import DTO.PhieuNhapHangDTO;
 import DTO.NhaCungCapDTO;
+import java.awt.Container;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,6 +56,7 @@ public class SuaPNUI extends javax.swing.JDialog {
         txtMaPN.setEditable(false);
 
         txtMaNV.setText(pn.getManv());
+        txtTongTien.setText(String.valueOf(pn.getTongtien()));
 
         try{
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(pn.getNgay());
@@ -74,12 +76,6 @@ public class SuaPNUI extends javax.swing.JDialog {
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt){
         
-        String maNV = txtMaNV.getText().trim();
-
-        // nếu không nhập thì giữ nguyên
-        if(!maNV.isEmpty()){
-            pn.setManv(maNV);
-        }
 
         // NCC
         NhaCungCapDTO ncc = (NhaCungCapDTO) cbNCC.getSelectedItem();
@@ -93,7 +89,17 @@ public class SuaPNUI extends javax.swing.JDialog {
             String ngay = sdf.format(dateNgay.getDate());
             pn.setNgay(ngay);
         }
+        try{
+            int tongTien = Integer.parseInt(txtTongTien.getText());
+            pn.setTongtien(tongTien);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Tổng tiền không hợp lệ!");
+            return;
+        }
 
+        // Trạng thái
+        String trangThai = cbTrangThai.getSelectedItem().toString();
+        pn.setTrangthai(trangThai);
         if(bus.sua(pn)){
             JOptionPane.showMessageDialog(this,"Cập nhật phiếu nhập thành công!");
 
@@ -113,9 +119,11 @@ public class SuaPNUI extends javax.swing.JDialog {
 
         txtMaPN = new javax.swing.JTextField();
         txtMaNV = new javax.swing.JTextField();
-
+        txtTongTien = new javax.swing.JTextField();
         cbNCC = new javax.swing.JComboBox<>();
-
+        cbTrangThai = new javax.swing.JComboBox<>();
+        cbTrangThai.addItem("Đang hoạt động");
+        cbTrangThai.addItem("Dừng hoạt động");
         dateNgay = new com.toedter.calendar.JDateChooser();
 
         btnLuu = new javax.swing.JButton();
@@ -123,29 +131,51 @@ public class SuaPNUI extends javax.swing.JDialog {
 
         setTitle("Sửa Phiếu Nhập");
 
-        java.awt.Container cp = getContentPane();
-        cp.setLayout(new java.awt.GridLayout(5,2,10,10));
+        Container cp = getContentPane();
+        cp.setLayout(new javax.swing.BoxLayout(cp, javax.swing.BoxLayout.Y_AXIS));
 
-        cp.add(new javax.swing.JLabel("Mã Phiếu Nhập"));
-        cp.add(txtMaPN);
+        // padding
+        ((javax.swing.JComponent) cp).setBorder(
+            javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)
+        );
 
-        cp.add(new javax.swing.JLabel("Nhân viên tạo"));
-        cp.add(txtMaNV);
 
-        cp.add(new javax.swing.JLabel("Nhà cung cấp"));
-        cp.add(cbNCC);
+        // ===== Hàm tạo 1 dòng =====
+        java.util.function.BiFunction<String, java.awt.Component, javax.swing.JPanel> createRow = (label, comp) -> {
+            javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
-        cp.add(new javax.swing.JLabel("Ngày tạo"));
-        cp.add(dateNgay);
+            javax.swing.JLabel lbl = new javax.swing.JLabel(label);
+            lbl.setPreferredSize(new java.awt.Dimension(130, 25)); // fix độ rộng label
+
+            comp.setPreferredSize(new java.awt.Dimension(200, 30));
+
+            panel.add(lbl);
+            panel.add(comp);
+
+            return panel;
+        };
+
+
+        // ===== Thêm từng dòng =====
+        cp.add(createRow.apply("Mã Phiếu Nhập", txtMaPN));
+        cp.add(createRow.apply("Nhà cung cấp", cbNCC));
+        cp.add(createRow.apply("Ngày tạo", dateNgay));
+        cp.add(createRow.apply("Tổng tiền", txtTongTien));
+        cp.add(createRow.apply("Trạng thái", cbTrangThai));
+
+
+        // ===== BUTTON =====
+        javax.swing.JPanel panelBtn = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 10));
 
         btnLuu.setText("Lưu");
         btnLuu.addActionListener(this::btnLuuActionPerformed);
-        cp.add(btnLuu);
-
         btnHuy.setText("Hủy");
         btnHuy.addActionListener(this::btnHuyActionPerformed);
-        cp.add(btnHuy);
+        panelBtn.add(btnLuu);
+        panelBtn.add(btnHuy);
 
+        cp.add(panelBtn);
+        
         pack();
     }
 
@@ -153,8 +183,10 @@ public class SuaPNUI extends javax.swing.JDialog {
     private javax.swing.JTextField txtMaNV;
     private javax.swing.JComboBox<NhaCungCapDTO> cbNCC;
     private com.toedter.calendar.JDateChooser dateNgay;
-
+    private javax.swing.JTextField txtTongTien;
+    private javax.swing.JComboBox<String> cbTrangThai;
     private javax.swing.JButton btnLuu;
+    
     private javax.swing.JButton btnHuy;
 
 }

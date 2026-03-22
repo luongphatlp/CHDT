@@ -36,8 +36,9 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
-        customTable();
+        
         loadTable();
+        customTable();
     }
     private void customTable() {
         
@@ -53,6 +54,47 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         for (int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        jTable1.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer(){
+            @Override
+            public java.awt.Component getTableCellRendererComponent(
+                    javax.swing.JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                // 👉 STT theo view (sau khi sort/filter)
+                setText(String.valueOf(row + 1));
+
+                setHorizontalAlignment(javax.swing.JLabel.LEFT);
+
+                return this;
+            }
+        });
+        jTable1.getColumnModel().getColumn(6).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer(){
+            @Override
+            public java.awt.Component getTableCellRendererComponent(
+                    javax.swing.JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+
+                java.awt.Component c = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+
+                String text = value.toString();
+
+                if(text.equals("Đang hoạt động")){
+                    setText("<html><span style='color:green;'>Đang hoạt động</span></html>");
+                } 
+                else if(text.equals("Dừng hoạt động")){
+                    setText("<html><span style='color:red;'>Dừng hoạt động</span></html>");
+                } 
+                else {
+                    setText(text);
+                }
+
+                return c;
+            }
+        });
     }
     NhaCungCapBUS busNCC = new NhaCungCapBUS();
     PhieuNhapHangBUS busPN = new PhieuNhapHangBUS();
@@ -79,13 +121,13 @@ public class PhieuNhapUI extends javax.swing.JPanel {
         
         for(PhieuNhapHangDTO pn : dspn){
             model.addRow(new Object[]{
-                stt++,
+                null,
                 pn.getMapn(),
                 getTenNCC(pn.getMancc()),
                 pn.getManv(),
                 pn.getNgay(),
                 pn.getTongtien(),
-                "Đang hoạt động"
+                pn.getTrangthai()
             });
         }
         capNhatSTT();
@@ -451,7 +493,16 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             new String [] {
                 "STT", "Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên tạo", "Thời gian tạo", "Tổng tiền", "Trạng thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
@@ -504,21 +555,26 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "Bạn có chắc muốn xóa không?",
+            "Bạn có chắc muốn ngừng hoạt động phiếu này?",
             "Xác nhận",
             JOptionPane.YES_NO_OPTION
         );
 
         if(confirm == JOptionPane.YES_OPTION){
 
-            int modelRow = jTable1.convertRowIndexToModel(row); 
+            int modelRow = jTable1.convertRowIndexToModel(row);
+            String mapn = jTable1.getValueAt(modelRow, 1).toString();
 
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            // 👉 GỌI BUS để update DB
+            boolean result = busPN.capNhatTrangThai(mapn, "Dừng hoạt động");
 
-            // ✔ đổi trạng thái
-            model.setValueAt("Dừng hoạt động", modelRow, 6);
-
-            JOptionPane.showMessageDialog(this, "Đã chuyển trạng thái thành Dừng hoạt động");
+            if(result){
+                // update lại table
+                jTable1.setValueAt("Dừng hoạt động", modelRow, 6);
+                JOptionPane.showMessageDialog(this, "Đã chuyển sang Dừng hoạt động");
+            }else{
+                JOptionPane.showMessageDialog(this, "Lỗi cập nhật!");
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -529,8 +585,9 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập cần sửa");
             return;
         }
-
+        String trangThai = jTable1.getValueAt(row, 6).toString();
         String mapn = jTable1.getValueAt(row,1).toString();
+        
 
         PhieuNhapHangDTO pn = null;
 
