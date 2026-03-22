@@ -11,6 +11,7 @@ package DTO;
 public class ChiTietHoaDonDTO {
     private String maHD;
     private String maSP;
+    private String tensp;
     private int soLuong;
     private int donGia;
     private int thanhTien;
@@ -20,9 +21,10 @@ public class ChiTietHoaDonDTO {
     }
 
     // Constructor đầy đủ
-    public ChiTietHoaDonDTO(String maHD, String maSP, int soLuong, int donGia, int thanhTien) {
+    public ChiTietHoaDonDTO(String maHD, String maSP,String tensp, int soLuong, int donGia, int thanhTien) {
         this.maHD = maHD;
         this.maSP = maSP;
+        this.tensp = tensp;
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.thanhTien = thanhTien;
@@ -44,7 +46,15 @@ public class ChiTietHoaDonDTO {
     public void setMaSP(String maSP) {
         this.maSP = maSP;
     }
+    
+    public String getTenSP(){
+        return tensp;
+    }
 
+    public void setTenSP(String tensp){
+        this.tensp=tensp;
+    }
+    
     public int getSoLuong() {
         return soLuong;
     }

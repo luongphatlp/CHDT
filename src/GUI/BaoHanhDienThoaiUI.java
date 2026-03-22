@@ -7,8 +7,16 @@ package GUI;
 import BUS.BaoHanhBUS;
 import DTO.BaoHanhDTO;
 import DTO.ChiTietBaoHanhDTO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +33,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
+        jTabbedPane1.remove(1); // xóa tab thứ 2
         veBangBaoHanh();
     }
 
@@ -41,9 +50,9 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        btnxuatexcel1 = new javax.swing.JButton();
+        btnxuatexcel2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -89,26 +98,6 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         jToolBar1.setPreferredSize(new java.awt.Dimension(505, 100));
         jToolBar1.add(jSeparator1);
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/document.png"))); // NOI18N
-        jButton5.setText("Xem chi tiết");
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton5);
-
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
-        jButton6.setText("Xuất Excel");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
-
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pdf.png"))); // NOI18N
         jButton4.setText("Xuất PDF");
@@ -120,7 +109,38 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                 jButton4MouseClicked(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton4);
+
+        btnxuatexcel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnxuatexcel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
+        btnxuatexcel1.setText("Xuất Excel");
+        btnxuatexcel1.setFocusable(false);
+        btnxuatexcel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnxuatexcel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnxuatexcel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxuatexcel1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnxuatexcel1);
+
+        btnxuatexcel2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btnxuatexcel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
+        btnxuatexcel2.setText("Xuất Excel tất cả");
+        btnxuatexcel2.setFocusable(false);
+        btnxuatexcel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnxuatexcel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnxuatexcel2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnxuatexcel2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnxuatexcel2);
 
         jPanel4.setBackground(new java.awt.Color(18, 77, 122));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +156,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel2)
-                .addContainerGap(1204, Short.MAX_VALUE))
+                .addContainerGap(1198, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,8 +189,8 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 970, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,20 +304,23 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(369, 369, 369)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(268, 268, 268))
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(369, 369, 369)
+                        .addComponent(jLabel7)
+                        .addGap(455, 455, 455)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 271, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,6 +502,8 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
              model.addRow(new Object[]{i++,ctbh.getIMEI(), ctbh.getNgay()});
          }
     }
+
+    
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
     String chucnang = cbtimkiem.getSelectedItem().toString();
         String key = txttimkiem.getText().trim();
@@ -521,10 +546,6 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnreset2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void bangbaohanhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bangbaohanhMouseClicked
         // TODO add your handling code here:
         int row;
@@ -535,6 +556,81 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bangbaohanhMouseClicked
 
+    private void btnxuatexcel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcel1ActionPerformed
+        // TODO add your handling code here:
+        int row=bangbaohanh.getSelectedRow();
+        if(row!=-1){
+            String mabh=bangbaohanh.getValueAt(row, 1).toString();
+            String manv=bangbaohanh.getValueAt(row,3).toString();
+            String makh=bangbaohanh.getValueAt(row,2).toString();
+            LocalDate ngay=LocalDate.parse(bangbaohanh.getValueAt(row,4).toString());
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".xlsx";
+                try {
+                    bus.xuatExcel(path,manv,makh,mabh,ngay, (DefaultTableModel) bangbaohanh.getModel());
+                } catch (IOException ex) {
+                    System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file Excel thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }else
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
+    }//GEN-LAST:event_btnxuatexcel1ActionPerformed
+
+    private void btnxuatexcel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcel2ActionPerformed
+        // TODO add your handling code here:
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".xlsx";
+                try {
+                    bus.xuatExcelTatCa(path, (DefaultTableModel) bangbaohanh.getModel());
+                } catch (IOException ex) {
+                    System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file Excel thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+    }//GEN-LAST:event_btnxuatexcel2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int row=bangbaohanh.getSelectedRow();
+        if(row!=-1){
+            String mabh=bangbaohanh.getValueAt(row, 1).toString();
+            String manv=bangbaohanh.getValueAt(row,3).toString();
+            String makh=bangbaohanh.getValueAt(row,2).toString();
+            String ngay=bangbaohanh.getValueAt(row,4).toString();
+            JFileChooser fileChooser = new JFileChooser();
+            int kq = fileChooser.showSaveDialog(null);
+            if(kq==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath() + ".pdf";
+                bus.xuatPDF(path,mabh,manv,makh,ngay);
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file PDF thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }else
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangbaohanh;
@@ -542,12 +638,12 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
     private javax.swing.JButton btnreset;
     private javax.swing.JButton btnreset1;
     private javax.swing.JButton btnreset2;
+    private javax.swing.JButton btnxuatexcel1;
+    private javax.swing.JButton btnxuatexcel2;
     private javax.swing.JComboBox<String> cbtimkiem;
     private com.toedter.calendar.JDateChooser datedenngay;
     private com.toedter.calendar.JDateChooser datetungay;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;

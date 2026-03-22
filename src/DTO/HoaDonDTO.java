@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 public class HoaDonDTO {
     private String MaHD;
-    private LocalDateTime  Ngay;
+    private LocalDateTime     Ngay;
     private String MaNV;
     private String MaKH;
     private int TongTien;
