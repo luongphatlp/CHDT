@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import database.Connect;
+import DATABASE.Connect;
 
 import DTO.TaiKhoanNVDTO;
 
@@ -25,8 +25,8 @@ public class TaiKhoanNVDAO {
        
         String qry = "INSERT INTO taikhoan (ma, taikhoan, matkhau) VALUES (?, ?, ?)";
         
-        try (Connection con = Connect.getConnection();
-             PreparedStatement st = con.prepareStatement(qry)) {
+        try (Connection conn = Connect.getConnection();
+             PreparedStatement st = conn.prepareStatement(qry)) {
             
             st.setString(1, tk.getMaNV());
             st.setString(2, tk.getTaiKhoan());
@@ -82,8 +82,8 @@ public ArrayList<TaiKhoanNVDTO> SelectAll() {
     ArrayList<TaiKhoanNVDTO> ds = new ArrayList<>();
     String qry = "SELECT * FROM taikhoan";
     
-    try (Connection con = Connect.getConnection();
-         PreparedStatement st = con.prepareStatement(qry);
+    try (Connection conn = Connect.getConnection();
+         PreparedStatement st = conn.prepareStatement(qry);
          ResultSet rs = st.executeQuery()) {
         
         while (rs.next()) {

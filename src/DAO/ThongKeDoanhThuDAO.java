@@ -5,7 +5,7 @@
 package DAO;
 
 import DTO.ThongKeDoanhThuDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;

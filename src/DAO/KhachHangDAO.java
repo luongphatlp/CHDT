@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DTO.KhachHangDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.util.ArrayList;
 
 public class KhachHangDAO {

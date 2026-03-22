@@ -4,7 +4,7 @@
  */
 package DAO;
 import DTO.ThongKeSanPhamDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

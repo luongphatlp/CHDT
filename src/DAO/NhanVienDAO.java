@@ -7,7 +7,7 @@ import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import database.Connect;
+import DATABASE.Connect;
 import DTO.NhanVienDTO;
 
 public class NhanVienDAO implements InterfaceDAO<NhanVienDTO> {

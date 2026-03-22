@@ -1,7 +1,7 @@
 package DAO;
 
 import DTO.BaoHanhDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.*;
 import java.util.ArrayList;
 

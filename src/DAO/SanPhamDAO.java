@@ -1,6 +1,6 @@
 package DAO;
 
-import database.Connect;
+import DATABASE.Connect;
 import DTO.SanPhamDTO;
 import DTO.ChiTietSanPhamDTO;
 import java.sql.Connection;

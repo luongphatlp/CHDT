@@ -1,6 +1,6 @@
 package DAO;
 
-import database.Connect;
+import DATABASE.Connect;
 import DTO.NhaCungCapDTO;
 import java.sql.*;
 import java.util.ArrayList;

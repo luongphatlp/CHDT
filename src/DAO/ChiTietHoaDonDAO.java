@@ -9,7 +9,7 @@ package DAO;
  * @author Latitude E7470
  */
 import DTO.ChiTietHoaDonDTO;
-import database.Connect;
+import DATABASE.Connect;
 
 import java.sql.*;
 import java.util.ArrayList;
