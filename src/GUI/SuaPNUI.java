@@ -54,7 +54,7 @@ public class SuaPNUI extends javax.swing.JDialog {
 
         txtMaPN.setText(pn.getMapn());
         txtMaPN.setEditable(false);
-
+        dateNgay.setEnabled(false);
         txtMaNV.setText(pn.getManv());
         txtTongTien.setText(String.valueOf(pn.getTongtien()));
 
