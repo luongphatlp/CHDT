@@ -744,7 +744,7 @@ public class NhapHangUI extends javax.swing.JPanel {
             ct.setTongtien(thanhTien);
 
             ctBUS.them(ct);
-            //spBus.tangSoLuong(maSP, soLuong);
+            spBus.tangSoLuong(maSP, soLuong);
         }
         int confirm = JOptionPane.showConfirmDialog(
             this,
