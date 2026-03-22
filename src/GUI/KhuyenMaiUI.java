@@ -288,8 +288,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             row.add(sp.getTenSP());
             row.add(sp.getSoLuong());
             row.add(sp.getDonGia());
-            row.add(sp.getDonViTinh());
-            row.add(sp.getMaHang());
+//            row.add(sp.getDonViTinh());
+//            row.add(sp.getMaHang());
             row.add(0);
             model.addRow(row);
         }
