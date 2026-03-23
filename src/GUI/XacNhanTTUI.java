@@ -226,7 +226,15 @@ public class XacNhanTTUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                "Thanh toán thành công",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+        if (result == JOptionPane.YES_OPTION) {
+            doClose(RET_OK);
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

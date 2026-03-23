@@ -43,6 +43,7 @@ public class HoaDonBUS {
     KhachHangBUS buskh=new KhachHangBUS();
     KhuyenMaiBUS buskm=new  KhuyenMaiBUS();
     ChiTietHoaDonBUS busct=new ChiTietHoaDonBUS();
+    SanPhamBUS bussp=new SanPhamBUS();
     ArrayList<HoaDonDTO> ds;
     public HoaDonBUS(){
         ds =new ArrayList<>();
@@ -113,7 +114,14 @@ public class HoaDonBUS {
         return null;
     }
     public String taoMaHD(){
-        return dao.taoMaHD();
+        String max = dao.layMaHDMax();
+
+        if(max == null){
+            return "HD001";
+        }
+
+        int index = Integer.parseInt(max.substring(2));
+        return String.format("HD%03d", index + 1);
     }
 public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         LocalDate tungay,LocalDate denngay,int tugia,int dengia){
@@ -182,14 +190,6 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         return tam;
     }
     
-    public String taoMaKH(){
-        KhachHangBUS bus=new KhachHangBUS();
-        int size=bus.getDSKH().size();
-        if(size <10)
-            return "KH0"+size;
-        else 
-            return "KH"+size;
-    }
     public void themKH(KhachHangDTO kh){
         KhachHangBUS bus=new KhachHangBUS();
         bus.insert(kh);
@@ -201,9 +201,8 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         
     }
     public void capNhatSoLuongSanPham(ArrayList<ChiTietHoaDonDTO> ds){
-         SanPhamBUS bus=new SanPhamBUS();
         for(ChiTietHoaDonDTO cthd:ds)
-         bus.capNhatSoLuongSanPham(cthd.getMaSP(),cthd.getSoLuong());
+         bussp.capNhatSoLuongSanPham(cthd.getMaSP(),cthd.getSoLuong());
     }
     public ArrayList<SanPhamDTO> selectAllDienThoai(){
         return dao.selectAllDienThoai();
@@ -407,5 +406,17 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
             workbook.write(fileOut);
             }
         }
+    }
+    public boolean kTSDT(String sdt){
+        if (sdt == null || sdt.isEmpty()) return false;
+        for (char c : sdt.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public String taoMaKH(){
+        return buskh.taoMaKH();
     }
 }

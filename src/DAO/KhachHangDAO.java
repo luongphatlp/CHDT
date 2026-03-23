@@ -110,5 +110,20 @@ public class KhachHangDAO {
 
         return false;
     }
+    public String layMaKHMax(){
+        String sql = "SELECT MAX(Ma) FROM khachhang";
 
+        try (
+            Connection conn = Connect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        ) {
+            if(rs.next()){
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

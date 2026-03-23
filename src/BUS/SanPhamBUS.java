@@ -11,9 +11,13 @@ import java.util.ArrayList;
 public class SanPhamBUS {
     private ArrayList<SanPhamDTO> ds;
     private SanPhamDAO dao = new SanPhamDAO();
-
-    public SanPhamBUS() {
-        docDS();
+    private ChiTietSanPhamBUS busct=new ChiTietSanPhamBUS();
+   public SanPhamBUS(){
+        try {
+            busct.docDS();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void docDS() {
@@ -147,12 +151,13 @@ public class SanPhamBUS {
         return false;
     }
     public void tangSoLuong(String masp, int soluong){
-
-        SanPhamDAO dao = new SanPhamDAO();
         dao.updateSoLuong(masp, soluong);
     }
+    public ChiTietSanPhamDTO getCTSPByMaSP(String ma){
+        return busct.getCTSPByMaSP(ma);
+    }
     public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
-        docDS();
+        if(ds==null) docDS();
         for(SanPhamDTO sp:ds){
             if(sp.getMaSP().equals(masp)){
                 return sp.getChiTiet();

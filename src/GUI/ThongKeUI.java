@@ -774,6 +774,26 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Từ:");
 
+        chtungay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chtungayAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        chdenngay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chdenngayAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel5.setText("Đến:");
 
@@ -880,8 +900,28 @@ public final class ThongKeUI extends javax.swing.JPanel {
         lbtungay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbtungay.setText("Từ ngày");
 
+        chtungaydoanhthu.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chtungaydoanhthuAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         lbdenngay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbdenngay.setText("Đến ngày");
+
+        chdenngaydoanhthu.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chdenngaydoanhthuAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout pngayLayout = new javax.swing.GroupLayout(pngay);
         pngay.setLayout(pngayLayout);
@@ -1113,7 +1153,27 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel11.setText("Từ ngày");
 
+        chdenngaynhanvien.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chdenngaynhanvienAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jLabel13.setText("Đến ngày");
+
+        chtungaynhanvien.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                chtungaynhanvienAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1135,15 +1195,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chdenngaynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(chtungaynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel13)
+                    .addComponent(chdenngaynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(chtungaynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel14.setText("Năm");
@@ -1738,6 +1794,72 @@ public final class ThongKeUI extends javax.swing.JPanel {
         );
     }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void chtungayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungayAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungay.getDate();
+        Date den = chdenngay.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chtungay.setDate(null);
+        }
+    }//GEN-LAST:event_chtungayAncestorAdded
+
+    private void chdenngayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngayAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungay.getDate();
+        Date den = chdenngay.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chdenngay.setDate(null);
+        }
+    }//GEN-LAST:event_chdenngayAncestorAdded
+
+    private void chtungaydoanhthuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungaydoanhthuAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungaydoanhthu.getDate();
+        Date den = chdenngaydoanhthu.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chtungaydoanhthu.setDate(null);
+        }
+    }//GEN-LAST:event_chtungaydoanhthuAncestorAdded
+
+    private void chdenngaydoanhthuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngaydoanhthuAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungaydoanhthu.getDate();
+        Date den = chdenngaydoanhthu.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chdenngaydoanhthu.setDate(null);
+        }
+    }//GEN-LAST:event_chdenngaydoanhthuAncestorAdded
+
+    private void chtungaynhanvienAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungaynhanvienAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungaynhanvien.getDate();
+        Date den = chdenngaynhanvien.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chtungaynhanvien.setDate(null);
+        }
+    }//GEN-LAST:event_chtungaynhanvienAncestorAdded
+
+    private void chdenngaynhanvienAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngaynhanvienAncestorAdded
+        // TODO add your handling code here:
+        Date tu = chtungaynhanvien.getDate();
+        Date den = chdenngaynhanvien.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chdenngaynhanvien.setDate(null);
+        }
+    }//GEN-LAST:event_chdenngaynhanvienAncestorAdded
 
     
 public static void main(String args[]) {

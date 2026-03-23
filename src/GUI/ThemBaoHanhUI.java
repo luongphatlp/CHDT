@@ -40,13 +40,16 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     private javax.swing.table.DefaultTableModel modelDuLieu;
     public static final int RET_CANCEL = 0;
     public static final int RET_OK = 1;
-    //private int returnStatus = RET_CANCEL;
-
+    private int returnStatus = RET_CANCEL;
+    
+    public int getReturnStatus() {
+        return returnStatus;
+    } 
+    
     public LocalDate tinhNgayHetHan(LocalDate ngay, int thoiHan) {
         return ngay.plusMonths(thoiHan);
     }
     public void veBangChiTietBaoHanh(ArrayList<SanPhamDTO> dssp,String ngay){
-        SanPhamBUS bus=new SanPhamBUS();
         Vector header=new Vector();
         header.add("STT");
         header.add("IMEI");
@@ -64,7 +67,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                 row.add("");
                 row.add(sp.getMaSP());
                 row.add(sp.getTenSP());
-                int thoihan=bus.layCTSPByMaSP(sp.getMaSP()).getBaoHanh();
+                int thoihan=bus.getCTSPByMaSP(sp.getMaSP()).getBaoHanh();
                 row.add(thoihan);
                 LocalDate ngayhethan=tinhNgayHetHan(hientai,thoihan);
                 row.add(ngayhethan);
@@ -510,6 +513,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         // Nếu bạn muốn lưu vào DB ngay tại đây, hãy gọi hàm DAO
         
         // Hoặc đơn giản là đóng dialog và báo về cho HoaDonUI biết là đã xong
+        JOptionPane.showMessageDialog(null,"Tạo phiếu bảo hành thành công");
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -608,7 +612,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtmakhachhangActionPerformed
 
     private void doClose(int retStatus) {
-        //returnStatus = retStatus;
+        returnStatus = retStatus;
         setVisible(false);
         dispose();
     }
@@ -652,5 +656,4 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     private javax.swing.JTextField txttenkh;
     // End of variables declaration//GEN-END:variables
 
-    //private int returnStatus = RET_CANCEL;
 }

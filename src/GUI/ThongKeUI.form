@@ -541,8 +541,14 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chtungay">
+                      <Events>
+                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungayAncestorAdded"/>
+                      </Events>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chdenngay">
+                      <Events>
+                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngayAncestorAdded"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
@@ -794,6 +800,9 @@
                               </Properties>
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="chtungaydoanhthu">
+                              <Events>
+                                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungaydoanhthuAncestorAdded"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lbdenngay">
                               <Properties>
@@ -804,6 +813,9 @@
                               </Properties>
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="chdenngaydoanhthu">
+                              <Events>
+                                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngaydoanhthuAncestorAdded"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1139,6 +1151,9 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chdenngaynhanvien">
+                      <Events>
+                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngaynhanvienAncestorAdded"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel13">
                       <Properties>
@@ -1146,6 +1161,9 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chtungaynhanvien">
+                      <Events>
+                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungaynhanvienAncestorAdded"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

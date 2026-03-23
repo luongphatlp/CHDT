@@ -59,28 +59,20 @@ public class BaoHanhDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return r;
     }
-    public String taoMaBH() {
+    public String layMaBHMax() {
         String sql = "SELECT MAX(Ma) FROM baohanh";
-        String maMax = null;
-
         try (
             Connection con = Connect.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
         ) {
             if (rs.next()) {
-                maMax = rs.getString(1);
+                return rs.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (maMax == null) {
-            return "BH01";
-        }
-
-        int so = Integer.parseInt(maMax.substring(2));
-        return String.format("BH%02d", so + 1);
+        return null;
 }
 
    /* public ArrayList<BaoHanhDTO> selectAll() {
