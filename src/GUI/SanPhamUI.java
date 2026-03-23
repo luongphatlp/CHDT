@@ -30,6 +30,7 @@ public class SanPhamUI extends javax.swing.JPanel {
         }
         initComponents();
         customTable();
+        spBUS.docDS();
         loadDataToTable(spBUS.getDS());
     }
     public void loadDataToTable(ArrayList<SanPhamDTO> ds) {

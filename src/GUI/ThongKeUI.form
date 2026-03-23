@@ -542,12 +542,12 @@
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chtungay">
                       <Events>
-                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungayAncestorAdded"/>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chtungayPropertyChange"/>
                       </Events>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chdenngay">
                       <Events>
-                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngayAncestorAdded"/>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chdenngayPropertyChange"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -801,7 +801,7 @@
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="chtungaydoanhthu">
                               <Events>
-                                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungaydoanhthuAncestorAdded"/>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chtungaydoanhthuPropertyChange"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="lbdenngay">
@@ -814,7 +814,7 @@
                             </Component>
                             <Component class="com.toedter.calendar.JDateChooser" name="chdenngaydoanhthu">
                               <Events>
-                                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngaydoanhthuAncestorAdded"/>
+                                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chdenngaydoanhthuPropertyChange"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -827,8 +827,8 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="lbnam" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtnam" min="-2" pref="105" max="-2" attributes="0"/>
-                                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                                      <Component id="spnam" pref="111" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -838,7 +838,7 @@
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lbnam" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                          <Component id="txtnam" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="spnam" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="14" max="32767" attributes="0"/>
                                   </Group>
@@ -854,10 +854,12 @@
                                 <Property name="text" type="java.lang.String" value="N&#x103;m"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtnam">
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtnamActionPerformed"/>
-                              </Events>
+                            <Component class="javax.swing.JSpinner" name="spnam">
+                              <Properties>
+                                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                  <SpinnerModel initial="-1" maximum="3000" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                </Property>
+                              </Properties>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -869,12 +871,12 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lbtunam" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txttunam" min="-2" pref="105" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="sptunam" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                                       <Component id="lbdennam" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="spdennam" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtdennam" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -884,18 +886,16 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lbtunam" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txttunam" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbdennam" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtdennam" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="sptunam" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="spdennam" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="9" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="txttunam">
-                            </Component>
                             <Component class="javax.swing.JLabel" name="lbtunam">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -912,7 +912,19 @@
                                 <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n n&#x103;m"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="txtdennam">
+                            <Component class="javax.swing.JSpinner" name="sptunam">
+                              <Properties>
+                                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                  <SpinnerModel initial="-1" maximum="3000" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JSpinner" name="spdennam">
+                              <Properties>
+                                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                  <SpinnerModel initial="-1" maximum="3000" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                                </Property>
+                              </Properties>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1060,7 +1072,7 @@
                           <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="270" max="32767" attributes="0"/>
+                          <EmptySpace pref="265" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1152,7 +1164,7 @@
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chdenngaynhanvien">
                       <Events>
-                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chdenngaynhanvienAncestorAdded"/>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chdenngaynhanvienPropertyChange"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel13">
@@ -1162,7 +1174,7 @@
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chtungaynhanvien">
                       <Events>
-                        <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="chtungaynhanvienAncestorAdded"/>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chtungaynhanvienPropertyChange"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1175,9 +1187,9 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtnamnv" pref="129" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="spnamnv" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="79" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1187,9 +1199,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtnamnv" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spnamnv" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1200,7 +1212,12 @@
                         <Property name="text" type="java.lang.String" value="N&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtnamnv">
+                    <Component class="javax.swing.JSpinner" name="spnamnv">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1212,12 +1229,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tunamnv" pref="112" max="32767" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="sptunamnv" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="56" max="32767" attributes="0"/>
                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="dennamnv" min="-2" pref="127" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="spdennamnv" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1227,11 +1244,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tunamnv" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dennamnv" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="sptunamnv" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spdennamnv" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1242,14 +1259,24 @@
                         <Property name="text" type="java.lang.String" value="T&#x1eeb; n&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="tunamnv">
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel16">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n n&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="dennamnv">
+                    <Component class="javax.swing.JSpinner" name="sptunamnv">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSpinner" name="spdennamnv">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1364,7 +1391,7 @@
                           <Component id="jScrollPane6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="331" max="32767" attributes="0"/>
+                          <EmptySpace pref="330" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1446,8 +1473,14 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chtungaykhachhang">
+                      <Events>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chtungaykhachhangPropertyChange"/>
+                      </Events>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="chdenngaykhachhang">
+                      <Events>
+                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="chdenngaykhachhangPropertyChange"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1459,9 +1492,9 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtnamkh" min="-2" pref="143" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="spnamkh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="75" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1471,9 +1504,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtnamkh" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spnamkh" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1484,7 +1517,12 @@
                         <Property name="text" type="java.lang.String" value="N&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtnamkh">
+                    <Component class="javax.swing.JSpinner" name="spnamkh">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1526,12 +1564,12 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tunamkh" pref="124" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="sptunamkh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="74" max="32767" attributes="0"/>
                               <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="dennamkh" min="-2" pref="116" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="spdennamkh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1541,11 +1579,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tunamkh" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dennamkh" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="sptunamkh" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spdennamkh" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1556,17 +1594,24 @@
                         <Property name="text" type="java.lang.String" value="T&#x1eeb; n&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="tunamkh">
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel21">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n n&#x103;m"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="dennamkh">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dennamkhActionPerformed"/>
-                      </Events>
+                    <Component class="javax.swing.JSpinner" name="sptunamkh">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSpinner" name="spdennamkh">
+                      <Properties>
+                        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                          <SpinnerModel initial="-1" minimum="-1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                        </Property>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>

@@ -156,7 +156,7 @@ public class HoaDonUI extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jDialog1 = new javax.swing.JDialog();
+        taokhachhang = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txttaomakh = new javax.swing.JTextField();
@@ -166,7 +166,8 @@ public class HoaDonUI extends javax.swing.JPanel {
         txttaosdt = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         txttaoemail = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        bttaokhachhang = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -211,70 +212,84 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         jLabel14.setText("Số điện thoại:");
 
+        txttaosdt.setEnabled(false);
+
         jLabel15.setText("Email:");
 
-        jButton5.setText("Xác nhận");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        bttaokhachhang.setText("Xác nhận");
+        bttaokhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                bttaokhachhangActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton5)
-                        .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jDialog1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jButton6.setText("Hủy");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout taokhachhangLayout = new javax.swing.GroupLayout(taokhachhang.getContentPane());
+        taokhachhang.getContentPane().setLayout(taokhachhangLayout);
+        taokhachhangLayout.setHorizontalGroup(
+            taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taokhachhangLayout.createSequentialGroup()
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(taokhachhangLayout.createSequentialGroup()
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txttaomakh)
                                     .addComponent(txttaohoten, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)))
-                            .addGroup(jDialog1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(taokhachhangLayout.createSequentialGroup()
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel14)
                                     .addComponent(jLabel15))
                                 .addGap(18, 18, 18)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txttaosdt, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                                     .addComponent(txttaoemail)))))
-                    .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
                         .addGap(106, 106, 106)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3))
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(bttaokhachhang)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
+        taokhachhangLayout.setVerticalGroup(
+            taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taokhachhangLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txttaomakh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(txttaohoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(txttaosdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15)
                     .addComponent(txttaoemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bttaokhachhang)
+                    .addComponent(jButton6))
                 .addContainerGap())
         );
 
@@ -295,7 +310,7 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel8)
-                .addContainerGap(820, Short.MAX_VALUE))
+                .addContainerGap(816, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -770,9 +785,15 @@ public class HoaDonUI extends javax.swing.JPanel {
             return;
         }
         if(kh==null){
-            if(JOptionPane.showConfirmDialog(null, "Không tìm thấy khách hàng/n"
+            if(JOptionPane.showConfirmDialog(null, "Không tìm thấy khách hàng-"
                     + "Bạn có muốn tạo khách hàng mới không.")==JOptionPane.YES_OPTION){
-                
+                taokhachhang.setSize(400,250);
+                taokhachhang.setVisible(true);
+                String makh=bus.taoMaKH();
+                txttaomakh.setText(makh);
+                String ssdt=txtsdt.getText();
+                txttaosdt.setText(ssdt);
+                return;
             }else{
                 txthoten.setText("");
                 txtemail.setText("");
@@ -798,10 +819,42 @@ public class HoaDonUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtemailActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void bttaokhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttaokhachhangActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
+        String makh,hoten,sdt,email;
+        if(txttaohoten.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập họ tên");
+            return;
+        }
+        if(txttaosdt.getText().equals("")){
+           JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại");
+            return; 
+        }else if(!bus.kTSDT(txttaosdt.getText())){
+            JOptionPane.showMessageDialog(null, "Số điện thoại chỉ bao gồm chữ số");
+            return; 
+        }else if(txttaosdt.getText().length()!=10){
+            JOptionPane.showMessageDialog(null, "Số điện thoại bao gồm 10 số");
+            return; 
+        }
+        if(txttaoemail.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập email");
+            return; 
+        }else if(!bus.kTEmail(txttaoemail.getText())){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ (abc@gmail.com)");
+            return; 
+        }
+        makh=txttaomakh.getText();
+        hoten=txttaohoten.getText();
+        sdt=txttaosdt.getText();
+        email=txttaoemail.getText();
+        bus.taoKH(makh,hoten,sdt,email);
+        taokhachhang.setVisible(false);
+    }//GEN-LAST:event_bttaokhachhangActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        taokhachhang.setVisible(false);
+    }//GEN-LAST:event_jButton6ActionPerformed
     private void customTable() {
         // 1. Chỉnh Font Arial, kích thước 16 cho nội dung bảng
         java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
@@ -872,14 +925,14 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JTable bangchitietsanpham;
     private javax.swing.JTable bangsanpham;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.JButton bttaokhachhang;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbpttt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -906,6 +959,7 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lbtongtien;
     private javax.swing.JSpinner spcapnhatsoluong;
+    private javax.swing.JDialog taokhachhang;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txthoten;
     private javax.swing.JTextField txtsdt;

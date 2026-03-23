@@ -419,4 +419,20 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     public String taoMaKH(){
         return buskh.taoMaKH();
     }
+    public void taoKH(String makh,String hoten,String sdt,String email){
+        KhachHangDTO kh=new KhachHangDTO();
+        kh.setMa(makh);
+        kh.setHoten(hoten);
+        kh.setEmail(email);
+        kh.setDt(sdt);
+        buskh.insert(kh);
+    }
+    public boolean kTEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
+
+        String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        return email.matches(regex);
+    }
 }

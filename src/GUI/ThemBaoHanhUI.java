@@ -42,6 +42,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     public static final int RET_OK = 1;
     private int returnStatus = RET_CANCEL;
     
+    public ThemBaoHanhUI(){initComponents();}
     public int getReturnStatus() {
         return returnStatus;
     } 
@@ -145,6 +146,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         okButton.setBackground(new java.awt.Color(0, 102, 102));
         okButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -198,6 +200,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmabaohanh.setBackground(new java.awt.Color(244, 244, 214));
         txtmabaohanh.setForeground(new java.awt.Color(0, 0, 0));
         txtmabaohanh.setText("\n");
+        txtmabaohanh.setEnabled(false);
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
@@ -206,6 +209,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtngaylap.setBackground(new java.awt.Color(244, 244, 214));
         txtngaylap.setForeground(new java.awt.Color(0, 0, 0));
         txtngaylap.setText("\n");
+        txtngaylap.setEnabled(false);
         txtngaylap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtngaylapActionPerformed(evt);
@@ -219,6 +223,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmahoadon.setBackground(new java.awt.Color(244, 244, 214));
         txtmahoadon.setForeground(new java.awt.Color(0, 0, 0));
         txtmahoadon.setText("\n");
+        txtmahoadon.setEnabled(false);
         txtmahoadon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmahoadonActionPerformed(evt);
@@ -232,6 +237,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmanhanvien.setBackground(new java.awt.Color(244, 244, 214));
         txtmanhanvien.setForeground(new java.awt.Color(0, 0, 0));
         txtmanhanvien.setText("\n");
+        txtmanhanvien.setEnabled(false);
         txtmanhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmanhanvienActionPerformed(evt);
@@ -249,6 +255,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txttenkh.setBackground(new java.awt.Color(244, 244, 214));
         txttenkh.setForeground(new java.awt.Color(0, 0, 0));
         txttenkh.setText("\n");
+        txttenkh.setEnabled(false);
         txttenkh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txttenkhActionPerformed(evt);
@@ -262,6 +269,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtsdt.setBackground(new java.awt.Color(244, 244, 214));
         txtsdt.setForeground(new java.awt.Color(0, 0, 0));
         txtsdt.setText("\n");
+        txtsdt.setEnabled(false);
         txtsdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtsdtActionPerformed(evt);
@@ -275,6 +283,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtemail.setBackground(new java.awt.Color(244, 244, 214));
         txtemail.setForeground(new java.awt.Color(0, 0, 0));
         txtemail.setText("\n");
+        txtemail.setEnabled(false);
         txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtemailActionPerformed(evt);
@@ -326,6 +335,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmakhachhang.setBackground(new java.awt.Color(244, 244, 214));
         txtmakhachhang.setForeground(new java.awt.Color(0, 0, 0));
         txtmakhachhang.setText("\n");
+        txtmakhachhang.setEnabled(false);
         txtmakhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmakhachhangActionPerformed(evt);
@@ -341,7 +351,6 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
                             .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(191, 191, 191)
@@ -381,7 +390,10 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(215, 215, 215)
+                                .addComponent(jLabel7)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -620,6 +632,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     public void setThongTinBaoHanh() {
 
     }
+    
 
     /**
      * @param args the command line arguments
@@ -655,5 +668,8 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     private javax.swing.JTextField txtsdt;
     private javax.swing.JTextField txttenkh;
     // End of variables declaration//GEN-END:variables
-
+public static void main(String[] args){
+        ThemBaoHanhUI u=new ThemBaoHanhUI();
+        u.setVisible(true);
+    }
 }

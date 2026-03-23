@@ -296,16 +296,16 @@ public final class ThongKeUI extends javax.swing.JPanel {
             }
             case "Tháng" -> {
                 int nam=0;
-                if(!txtnamnv.getText().equals(""))
-                    nam=Integer.parseInt(txtnamnv.getText());
+                if(Integer.parseInt(spnamnv.getValue().toString())==-1)
+                    nam=Integer.parseInt(spnamnv.getValue().toString());
                 return busnv.locNhanVienTheoThang(s, nam);
             }
             case "Năm" -> {
                 int tu=0,den=0;
-                if(!tunamnv.getText().equals(""))
-                    tu=Integer.parseInt(tunamnv.getText());
-                if(!dennamnv.getText().equals(""))
-                    den=Integer.parseInt(dennamnv.getText());
+                if(Integer.parseInt(sptunamnv.getValue().toString())==-1)
+                    tu=Integer.parseInt(sptunamnv.getValue().toString());
+                if(Integer.parseInt(spdennamnv.getValue().toString())==-1)
+                    den=Integer.parseInt(spdennamnv.getValue().toString());
                 return busnv.locNhanVienTheoNam(s, tu, den);
             }
             default -> {
@@ -343,16 +343,16 @@ public final class ThongKeUI extends javax.swing.JPanel {
             }
             case "Tháng" -> {
                 int nam=0;
-                if(!txtnamkh.getText().equals(""))
-                    nam=Integer.parseInt(txtnamkh.getText());
+                if(Integer.parseInt(spnamkh.getValue().toString())==-1)
+                    nam=Integer.parseInt(spnamkh.getValue().toString());
                 return buskh.locKhachHangTheoThang(s, nam);
             }
             case "Năm" -> {
                 int tu=0,den=0;
-                if(!tunamkh.getText().equals(""))
-                    tu=Integer.parseInt(tunamkh.getText());
-                if(!dennamkh.getText().equals(""))
-                    den=Integer.parseInt(dennamkh.getText());
+                if(Integer.parseInt(sptunamkh.getValue().toString())==-1)
+                    tu=Integer.parseInt(sptunamkh.getValue().toString());
+                if(Integer.parseInt(spdennamkh.getValue().toString())==-1)
+                    den=Integer.parseInt(spdennamkh.getValue().toString());
                 return buskh.locKhachHangTheoNam(s, tu, den);
             }
             default -> {
@@ -480,12 +480,12 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chdenngaydoanhthu = new com.toedter.calendar.JDateChooser();
         pthang = new javax.swing.JPanel();
         lbnam = new javax.swing.JLabel();
-        txtnam = new javax.swing.JTextField();
+        spnam = new javax.swing.JSpinner();
         pnam = new javax.swing.JPanel();
-        txttunam = new javax.swing.JTextField();
         lbtunam = new javax.swing.JLabel();
         lbdennam = new javax.swing.JLabel();
-        txtdennam = new javax.swing.JTextField();
+        sptunam = new javax.swing.JSpinner();
+        spdennam = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         bangdoanhthu = new javax.swing.JTable();
         btnbieudo = new javax.swing.JButton();
@@ -504,12 +504,12 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chtungaynhanvien = new com.toedter.calendar.JDateChooser();
         jPanel10 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        txtnamnv = new javax.swing.JTextField();
+        spnamnv = new javax.swing.JSpinner();
         jPanel12 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        tunamnv = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        dennamnv = new javax.swing.JTextField();
+        sptunamnv = new javax.swing.JSpinner();
+        spdennamnv = new javax.swing.JSpinner();
         btthongkenhanvien = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         listnv = new javax.swing.JList<>();
@@ -526,16 +526,16 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chdenngaykhachhang = new com.toedter.calendar.JDateChooser();
         jPanel15 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        txtnamkh = new javax.swing.JTextField();
+        spnamkh = new javax.swing.JSpinner();
         jScrollPane6 = new javax.swing.JScrollPane();
         bangthongkekhachhang = new javax.swing.JTable();
         txttimkiemkhachhang = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
-        tunamkh = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        dennamkh = new javax.swing.JTextField();
+        sptunamkh = new javax.swing.JSpinner();
+        spdennamkh = new javax.swing.JSpinner();
         jButton5 = new javax.swing.JButton();
 
         javax.swing.GroupLayout pnbieudoLayout = new javax.swing.GroupLayout(pnbieudo);
@@ -774,23 +774,15 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Từ:");
 
-        chtungay.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chtungayAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chtungay.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chtungayPropertyChange(evt);
             }
         });
 
-        chdenngay.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chdenngayAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chdenngay.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chdenngayPropertyChange(evt);
             }
         });
 
@@ -900,26 +892,18 @@ public final class ThongKeUI extends javax.swing.JPanel {
         lbtungay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbtungay.setText("Từ ngày");
 
-        chtungaydoanhthu.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chtungaydoanhthuAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chtungaydoanhthu.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chtungaydoanhthuPropertyChange(evt);
             }
         });
 
         lbdenngay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbdenngay.setText("Đến ngày");
 
-        chdenngaydoanhthu.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chdenngaydoanhthuAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chdenngaydoanhthu.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chdenngaydoanhthuPropertyChange(evt);
             }
         });
 
@@ -958,11 +942,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         lbnam.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbnam.setText("Năm");
 
-        txtnam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnamActionPerformed(evt);
-            }
-        });
+        spnam.setModel(new javax.swing.SpinnerNumberModel(-1, -1, 3000, 1));
 
         javax.swing.GroupLayout pthangLayout = new javax.swing.GroupLayout(pthang);
         pthang.setLayout(pthangLayout);
@@ -971,8 +951,8 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pthangLayout.createSequentialGroup()
                 .addComponent(lbnam)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtnam, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(spnam, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pthangLayout.setVerticalGroup(
             pthangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -980,7 +960,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pthangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbnam, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -990,6 +970,10 @@ public final class ThongKeUI extends javax.swing.JPanel {
         lbdennam.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbdennam.setText("Đến năm");
 
+        sptunam.setModel(new javax.swing.SpinnerNumberModel(-1, -1, 3000, 1));
+
+        spdennam.setModel(new javax.swing.SpinnerNumberModel(-1, -1, 3000, 1));
+
         javax.swing.GroupLayout pnamLayout = new javax.swing.GroupLayout(pnam);
         pnam.setLayout(pnamLayout);
         pnamLayout.setHorizontalGroup(
@@ -997,11 +981,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(pnamLayout.createSequentialGroup()
                 .addComponent(lbtunam)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txttunam, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sptunam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
                 .addComponent(lbdennam)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtdennam)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spdennam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnamLayout.setVerticalGroup(
@@ -1010,10 +994,10 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbtunam)
-                    .addComponent(txttunam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbdennam)
-                    .addComponent(txtdennam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sptunam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spdennam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         bangdoanhthu.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -1153,25 +1137,17 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel11.setText("Từ ngày");
 
-        chdenngaynhanvien.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chdenngaynhanvienAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chdenngaynhanvien.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chdenngaynhanvienPropertyChange(evt);
             }
         });
 
         jLabel13.setText("Đến ngày");
 
-        chtungaynhanvien.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                chtungaynhanvienAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        chtungaynhanvien.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chtungaynhanvienPropertyChange(evt);
             }
         });
 
@@ -1204,6 +1180,8 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel14.setText("Năm");
 
+        spnamnv.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1211,9 +1189,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addGap(18, 18, 18)
-                .addComponent(txtnamnv, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spnamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1221,13 +1199,17 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(txtnamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(spnamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jLabel15.setText("Từ năm");
 
         jLabel16.setText("Đến năm");
+
+        sptunamnv.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
+        spdennamnv.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1236,12 +1218,12 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tunamnv, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sptunamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dennamnv, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spdennamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1249,10 +1231,10 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(tunamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(dennamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sptunamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spdennamnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         btthongkenhanvien.setText("Thống kê");
@@ -1332,7 +1314,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Nhân viên", jPanel4);
@@ -1356,6 +1338,18 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jLabel9.setText("Từ ngày");
 
         jLabel18.setText("Đến ngày");
+
+        chtungaykhachhang.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chtungaykhachhangPropertyChange(evt);
+            }
+        });
+
+        chdenngaykhachhang.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                chdenngaykhachhangPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -1386,6 +1380,8 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel19.setText("Năm");
 
+        spnamkh.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -1393,9 +1389,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtnamkh, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spnamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1403,8 +1399,8 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(txtnamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(spnamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         bangthongkekhachhang.setModel(new javax.swing.table.DefaultTableModel(
@@ -1426,11 +1422,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel21.setText("Đến năm");
 
-        dennamkh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dennamkhActionPerformed(evt);
-            }
-        });
+        sptunamkh.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
+
+        spdennamkh.setModel(new javax.swing.SpinnerNumberModel(-1, -1, null, 1));
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -1440,12 +1434,12 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tunamkh, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(sptunamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dennamkh, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spdennamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1453,10 +1447,10 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(tunamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21)
-                    .addComponent(dennamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sptunamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spdennamkh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel (2).png"))); // NOI18N
@@ -1518,7 +1512,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Khách hàng", jPanel13);
@@ -1568,7 +1562,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        txtnam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        spnam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         String ngay=cbthoigian.getSelectedItem().toString();
         if(ngay.equals("Ngày")){
             Date datetu=chtungaydoanhthu.getDate();
@@ -1582,17 +1576,17 @@ public final class ThongKeUI extends javax.swing.JPanel {
             veBangThongKeDoanhThu("Ngày",ds);
             veBieuDo(1,ds);
         }else if(ngay.equals("Tháng")){
-            int nam=Integer.parseInt(txtnam.getText().trim());
-            if(txtnam.getText() == null){
-                txtnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            int nam=Integer.parseInt(spnam.getValue().toString());
+            if(Integer.parseInt(spnam.getValue().toString())==-1){
+                spnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             }
             ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoThang(nam);
             veBangThongKeDoanhThu("Tháng",busdt.thongKeDoanhThuTheoThang(nam));
             veBieuDo(2,ds);
         }else{
-            int tunam=Integer.parseInt(txttunam.getText());
-            int dennam=Integer.parseInt(txtdennam.getText());
-            if(txttunam.getText() ==null || txtdennam.getText() ==null){
+            int tunam=Integer.parseInt(sptunam.getValue().toString());
+            int dennam=Integer.parseInt(spdennam.getValue().toString());
+            if(Integer.parseInt(sptunam.getValue().toString()) ==-1 || Integer.parseInt(spdennam.getValue().toString()) ==-1){
                 chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
                 chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             }
@@ -1606,10 +1600,6 @@ public final class ThongKeUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         chucNang0();
     }//GEN-LAST:event_cbthoigianActionPerformed
-
-    private void txtnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnamActionPerformed
 
     private void btnbieudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbieudoActionPerformed
         // TODO add your handling code here:
@@ -1701,19 +1691,13 @@ public final class ThongKeUI extends javax.swing.JPanel {
             }
         }
         else if(k.equals("Tháng")){
-            if(txtnamnv.getText().equals("")){
+            if(Integer.parseInt(spnamnv.getValue().toString())==-1){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
-                return;
-            }else if(!isNumber(txtnamnv.getText())){
-                JOptionPane.showMessageDialog(null, "Vui lòng chỉ nhập ký tự số");
                 return;
             }
         }else if(k.equals("Năm")){
-            if(tunamnv.getText().equals("") || dennamnv.getText().equals("")){
+            if(Integer.parseInt(sptunamnv.getValue().toString())==-1 || Integer.parseInt(spdennamnv.getValue().toString())==-1){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
-                return;
-            }else if(!isNumber(tunamnv.getText()) ||!isNumber(dennamnv.getText())){
-                JOptionPane.showMessageDialog(null, "Vui lòng chỉ nhập ký tự số");
                 return;
             }
         }
@@ -1726,10 +1710,6 @@ public final class ThongKeUI extends javax.swing.JPanel {
         ArrayList<ThongKeKhachHangDTO> ds=locKhachHang();
         veBangThongKeKhachHang(ds);
     }//GEN-LAST:event_thongkekhachhang
-
-    private void dennamkhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dennamkhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dennamkhActionPerformed
 
     private void cbkynhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbkynhanvienActionPerformed
         // TODO add your handling code here:
@@ -1795,7 +1775,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void chtungayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungayAncestorAdded
+    private void chtungayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chtungayPropertyChange
         // TODO add your handling code here:
         Date tu = chtungay.getDate();
         Date den = chdenngay.getDate();
@@ -1804,9 +1784,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chtungay.setDate(null);
         }
-    }//GEN-LAST:event_chtungayAncestorAdded
+    }//GEN-LAST:event_chtungayPropertyChange
 
-    private void chdenngayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngayAncestorAdded
+    private void chdenngayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chdenngayPropertyChange
         // TODO add your handling code here:
         Date tu = chtungay.getDate();
         Date den = chdenngay.getDate();
@@ -1815,9 +1795,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chdenngay.setDate(null);
         }
-    }//GEN-LAST:event_chdenngayAncestorAdded
+    }//GEN-LAST:event_chdenngayPropertyChange
 
-    private void chtungaydoanhthuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungaydoanhthuAncestorAdded
+    private void chtungaydoanhthuPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chtungaydoanhthuPropertyChange
         // TODO add your handling code here:
         Date tu = chtungaydoanhthu.getDate();
         Date den = chdenngaydoanhthu.getDate();
@@ -1826,9 +1806,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chtungaydoanhthu.setDate(null);
         }
-    }//GEN-LAST:event_chtungaydoanhthuAncestorAdded
+    }//GEN-LAST:event_chtungaydoanhthuPropertyChange
 
-    private void chdenngaydoanhthuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngaydoanhthuAncestorAdded
+    private void chdenngaydoanhthuPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chdenngaydoanhthuPropertyChange
         // TODO add your handling code here:
         Date tu = chtungaydoanhthu.getDate();
         Date den = chdenngaydoanhthu.getDate();
@@ -1837,9 +1817,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chdenngaydoanhthu.setDate(null);
         }
-    }//GEN-LAST:event_chdenngaydoanhthuAncestorAdded
+    }//GEN-LAST:event_chdenngaydoanhthuPropertyChange
 
-    private void chtungaynhanvienAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chtungaynhanvienAncestorAdded
+    private void chtungaynhanvienPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chtungaynhanvienPropertyChange
         // TODO add your handling code here:
         Date tu = chtungaynhanvien.getDate();
         Date den = chdenngaynhanvien.getDate();
@@ -1848,9 +1828,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chtungaynhanvien.setDate(null);
         }
-    }//GEN-LAST:event_chtungaynhanvienAncestorAdded
+    }//GEN-LAST:event_chtungaynhanvienPropertyChange
 
-    private void chdenngaynhanvienAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_chdenngaynhanvienAncestorAdded
+    private void chdenngaynhanvienPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chdenngaynhanvienPropertyChange
         // TODO add your handling code here:
         Date tu = chtungaynhanvien.getDate();
         Date den = chdenngaynhanvien.getDate();
@@ -1859,7 +1839,29 @@ public final class ThongKeUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
             chdenngaynhanvien.setDate(null);
         }
-    }//GEN-LAST:event_chdenngaynhanvienAncestorAdded
+    }//GEN-LAST:event_chdenngaynhanvienPropertyChange
+
+    private void chtungaykhachhangPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chtungaykhachhangPropertyChange
+        // TODO add your handling code here:
+        Date tu = chtungaykhachhang.getDate();
+        Date den = chdenngaykhachhang.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chtungaykhachhang.setDate(null);
+        }
+    }//GEN-LAST:event_chtungaykhachhangPropertyChange
+
+    private void chdenngaykhachhangPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chdenngaykhachhangPropertyChange
+        // TODO add your handling code here:
+        Date tu = chtungaykhachhang.getDate();
+        Date den = chdenngaykhachhang.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            chdenngaykhachhang.setDate(null);
+        }
+    }//GEN-LAST:event_chdenngaykhachhangPropertyChange
 
     
 public static void main(String args[]) {
@@ -1888,8 +1890,6 @@ public static void main(String args[]) {
     private com.toedter.calendar.JDateChooser chtungaydoanhthu;
     private com.toedter.calendar.JDateChooser chtungaykhachhang;
     private com.toedter.calendar.JDateChooser chtungaynhanvien;
-    private javax.swing.JTextField dennamkh;
-    private javax.swing.JTextField dennamnv;
     private javax.swing.JFileChooser filechooseexcel;
     private javax.swing.JFileChooser filechoosepdf;
     private javax.swing.JButton jButton1;
@@ -1958,14 +1958,16 @@ public static void main(String args[]) {
     private javax.swing.JPanel pnbieudo;
     private javax.swing.JPanel pngay;
     private javax.swing.JPanel pthang;
-    private javax.swing.JTextField tunamkh;
-    private javax.swing.JTextField tunamnv;
-    private javax.swing.JTextField txtdennam;
-    private javax.swing.JTextField txtnam;
-    private javax.swing.JTextField txtnamkh;
-    private javax.swing.JTextField txtnamnv;
+    private javax.swing.JSpinner spdennam;
+    private javax.swing.JSpinner spdennamkh;
+    private javax.swing.JSpinner spdennamnv;
+    private javax.swing.JSpinner spnam;
+    private javax.swing.JSpinner spnamkh;
+    private javax.swing.JSpinner spnamnv;
+    private javax.swing.JSpinner sptunam;
+    private javax.swing.JSpinner sptunamkh;
+    private javax.swing.JSpinner sptunamnv;
     private javax.swing.JTextField txttimkiem;
     private javax.swing.JTextField txttimkiemkhachhang;
-    private javax.swing.JTextField txttunam;
     // End of variables declaration//GEN-END:variables
 }
