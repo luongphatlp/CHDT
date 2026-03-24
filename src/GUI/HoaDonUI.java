@@ -137,9 +137,9 @@ public class HoaDonUI extends javax.swing.JPanel {
             }
             bus.capNhatSoLuongSanPham(dscthd);
             bus.insertCTHD(dscthd);
-            
             ThemBaoHanhUI tbh = new ThemBaoHanhUI(makh, hd.getMaHD(), ds);
             tbh.setVisible(true);
+            
 
             // Reset UI
             model.setRowCount(0);
@@ -156,6 +156,18 @@ public class HoaDonUI extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        taokhachhang = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txttaomakh = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txttaohoten = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txttaosdt = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txttaoemail = new javax.swing.JTextField();
+        bttaokhachhang = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -189,9 +201,98 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         txtemail = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(1710, 1080));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("Tạo khách hàng");
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1710, 1080));
+        jLabel9.setText("Mã khách hàng");
+
+        txttaomakh.setEnabled(false);
+
+        jLabel11.setText("Họ tên:");
+
+        jLabel14.setText("Số điện thoại:");
+
+        txttaosdt.setEnabled(false);
+
+        jLabel15.setText("Email:");
+
+        bttaokhachhang.setText("Xác nhận");
+        bttaokhachhang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttaokhachhangActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Hủy");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout taokhachhangLayout = new javax.swing.GroupLayout(taokhachhang.getContentPane());
+        taokhachhang.getContentPane().setLayout(taokhachhangLayout);
+        taokhachhangLayout.setHorizontalGroup(
+            taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taokhachhangLayout.createSequentialGroup()
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(taokhachhangLayout.createSequentialGroup()
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txttaomakh)
+                                    .addComponent(txttaohoten, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)))
+                            .addGroup(taokhachhangLayout.createSequentialGroup()
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15))
+                                .addGap(18, 18, 18)
+                                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txttaosdt, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                                    .addComponent(txttaoemail)))))
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(jLabel3))
+                    .addGroup(taokhachhangLayout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(bttaokhachhang)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        taokhachhangLayout.setVerticalGroup(
+            taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(taokhachhangLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txttaomakh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(txttaohoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txttaosdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addComponent(txttaoemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(taokhachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bttaokhachhang)
+                    .addComponent(jButton6))
+                .addContainerGap())
+        );
+
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 103, 174));
@@ -209,7 +310,7 @@ public class HoaDonUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel8)
-                .addContainerGap(820, Short.MAX_VALUE))
+                .addContainerGap(816, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,52 +454,17 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
         jLabel7.setText("Email khách:");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(102, 102, 102))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtemail))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txthoten)
-                                    .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addContainerGap())))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        txthoten.setEnabled(false);
+
+        txtemail.setEnabled(false);
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtemailActionPerformed(evt);
+            }
+        });
+
+        cbpttt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -679,11 +745,33 @@ public class HoaDonUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         String sdt=txtsdt.getText();
         KhachHangDTO kh= bus.layKhachHangBySDT(sdt);
-        if(kh==null){
-            JOptionPane.showMessageDialog(null,"Không tìm thấy khách hàng");
+        if(!bus.kTSDT(sdt)){
+            JOptionPane.showMessageDialog(null,"Số điện thoại chỉ bao gồm số");
             txthoten.setText("");
             txtemail.setText("");
             return;
+        }
+        if(sdt.length()!=10){
+            JOptionPane.showMessageDialog(null,"Số điện thoại bao gồm 10 số");
+                txthoten.setText("");
+                txtemail.setText("");
+            return;
+        }
+        if(kh==null){
+            if(JOptionPane.showConfirmDialog(null, "Không tìm thấy khách hàng-"
+                    + "Bạn có muốn tạo khách hàng mới không.")==JOptionPane.YES_OPTION){
+                taokhachhang.setSize(400,250);
+                taokhachhang.setVisible(true);
+                String makh=bus.taoMaKH();
+                txttaomakh.setText(makh);
+                String ssdt=txtsdt.getText();
+                txttaosdt.setText(ssdt);
+                return;
+            }else{
+                txthoten.setText("");
+                txtemail.setText("");
+                return;
+            }
         }
         txthoten.setText(kh.getHoten());
         txtemail.setText(kh.getEmail());
@@ -696,8 +784,50 @@ public class HoaDonUI extends javax.swing.JPanel {
             DefaultTableModel model=(DefaultTableModel) bangchitietsanpham.getModel();
             model.removeRow(row);
             bangchitietsanpham.setModel(model);
+            tinhLaiTongHoaDon();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemailActionPerformed
+
+    private void bttaokhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttaokhachhangActionPerformed
+        // TODO add your handling code here:
+        String makh,hoten,sdt,email;
+        if(txttaohoten.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập họ tên");
+            return;
+        }
+        if(txttaosdt.getText().equals("")){
+           JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại");
+            return; 
+        }else if(!bus.kTSDT(txttaosdt.getText())){
+            JOptionPane.showMessageDialog(null, "Số điện thoại chỉ bao gồm chữ số");
+            return; 
+        }else if(txttaosdt.getText().length()!=10){
+            JOptionPane.showMessageDialog(null, "Số điện thoại bao gồm 10 số");
+            return; 
+        }
+        if(txttaoemail.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập email");
+            return; 
+        }else if(!bus.kTEmail(txttaoemail.getText())){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ (abc@gmail.com)");
+            return; 
+        }
+        makh=txttaomakh.getText();
+        hoten=txttaohoten.getText();
+        sdt=txttaosdt.getText();
+        email=txttaoemail.getText();
+        bus.taoKH(makh,hoten,sdt,email);
+        taokhachhang.setVisible(false);
+    }//GEN-LAST:event_bttaokhachhangActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        taokhachhang.setVisible(false);
+    }//GEN-LAST:event_jButton6ActionPerformed
     private void customTable() {
         // 1. Chỉnh Font Arial, kích thước 16 cho nội dung bảng
         java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
@@ -743,7 +873,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         }
     }
     
-        private void tinhLaiTongHoaDon() {
+    private void tinhLaiTongHoaDon() {
         DefaultTableModel model = (DefaultTableModel) bangchitietsanpham.getModel();
         long tongMoi = 0;
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -777,22 +907,29 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JTable bangchitietsanpham;
     private javax.swing.JTable bangsanpham;
     private javax.swing.JButton btnThanhToan;
+    private javax.swing.JButton bttaokhachhang;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbpttt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -804,8 +941,13 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lbtongtien;
     private javax.swing.JSpinner spcapnhatsoluong;
+    private javax.swing.JDialog taokhachhang;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txthoten;
     private javax.swing.JTextField txtsdt;
+    private javax.swing.JTextField txttaoemail;
+    private javax.swing.JTextField txttaohoten;
+    private javax.swing.JTextField txttaomakh;
+    private javax.swing.JTextField txttaosdt;
     // End of variables declaration//GEN-END:variables
 }

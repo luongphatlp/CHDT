@@ -33,6 +33,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
         initComponents();
+        String ma=buskm.taoMaKM();
+        txtmakhuyenmai.setText(ma);
         veBangKhuyenMai();
         customTable();
     }
@@ -597,6 +599,8 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
         jLabel6.setText("Ngày bắt đầu:");
 
+        txtmakhuyenmai.setEnabled(false);
+
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
         jLabel8.setText("Ghi chú:");
 
@@ -1148,11 +1152,20 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
 
     private void btnresetkhuyenmai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetkhuyenmai1ActionPerformed
         // TODO add your handling code here:
+        String ma=buskm.taoMaKM();
+        txtmakhuyenmai.setText(ma);
+        txttenkhuyenmai.setText("");
+        datebatdaukhuyenmai.setDate(null);
+        dateketthuckhuyenmai.setDate(null);
+        areatxtghichu.setText("");
         txttimkiemkhuyenmai.setText("");
         datebatdaukhuyenmaitimkiem.setDate(null);
         dateketthuckhuyenmaitimkiem.setDate(null);
         cbtimkiemtinhtrang.setSelectedIndex(0);
         veBangKhuyenMai();
+        DefaultTableModel model=(DefaultTableModel) bangchitietkhuyenmai.getModel();
+        model.setRowCount(0);
+        bangchitietkhuyenmai.setModel(model);
     }//GEN-LAST:event_btnresetkhuyenmai1ActionPerformed
 
     private void txttimkiemchitietkhuyenmaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttimkiemchitietkhuyenmaiActionPerformed

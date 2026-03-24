@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -147,8 +148,8 @@ public class THHoaDonUI extends javax.swing.JPanel {
         cbmanv.setSelectedIndex(0);
         datetungay.setDate(null);
         datedenngay.setDate(null);
-        txttugia.setText("");
-        txtdengia.setText("");
+        giatu.setValue(0);
+        giaden.setValue(0);
         veBangTHHoaDon();
     }
     public void timKiem(){
@@ -162,16 +163,13 @@ public class THHoaDonUI extends javax.swing.JPanel {
         LocalDate denngay=null;
         if(datedenngay.getDate()!=null) denngay=datedenngay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int tu=0,den=Integer.MAX_VALUE;
-        if(!txttugia.getText().equals("") ){
-            if(!txttugia.getText().matches("\\d+(\\.\\d+)?"))
-                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
-            else 
-                tu=Integer.parseInt(txttugia.getText());
-        }
-        if(!txtdengia.getText().equals("")){
-            if(!txtdengia.getText().matches("\\d+(\\.\\d+)?"))
-                JOptionPane.showMessageDialog(null,"Vui lòng nhập nhấp giá chỉ bao gồm chữ số");
-            den=Integer.parseInt(txtdengia.getText());
+        if(ckgia.isSelected()){
+            tu=Integer.parseInt(giatu.getValue().toString());
+            den=Integer.parseInt(giaden.getValue().toString());
+            if(tu>den){
+                JOptionPane.showMessageDialog(null, "Giá từ không được lớn hơn giá đến");
+                return;
+            }
         }
         ArrayList<HoaDonDTO> tam=bus.timKiem(key,pttt,manv,tungay,denngay,tu,den);
         veBangTHHoaDonTimKiem(tam);
@@ -227,8 +225,9 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtdengia = new javax.swing.JTextField();
-        txttugia = new javax.swing.JTextField();
+        giatu = new javax.swing.JSpinner();
+        giaden = new javax.swing.JSpinner();
+        ckgia = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         cbmanv = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
@@ -368,6 +367,26 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setText("Từ:");
 
+        datetungay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                datetungayAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        datedenngay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                datedenngayAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel2.setText("Đến:");
 
@@ -408,11 +427,7 @@ public class THHoaDonUI extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setText("Đến:");
 
-        txttugia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttugiaActionPerformed(evt);
-            }
-        });
+        ckgia.setText("Lọc giá");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -420,29 +435,33 @@ public class THHoaDonUI extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txttugia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtdengia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(26, 26, 26)
+                            .addComponent(giatu, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(giaden)))
+                    .addComponent(ckgia))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
+                .addContainerGap()
+                .addComponent(ckgia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txttugia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(giatu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtdengia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(giaden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc theo Mã nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 16))); // NOI18N
@@ -659,10 +678,6 @@ public class THHoaDonUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbptttActionPerformed
 
-    private void txttugiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttugiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txttugiaActionPerformed
-
     private void hienchitiet(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hienchitiet
         // TODO add your handling code here:
         hienChiTiet();
@@ -720,6 +735,28 @@ public class THHoaDonUI extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void datetungayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_datetungayAncestorAdded
+        // TODO add your handling code here:
+        Date tu = datetungay.getDate();
+        Date den = datedenngay.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            datetungay.setDate(null);
+        }
+    }//GEN-LAST:event_datetungayAncestorAdded
+
+    private void datedenngayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_datedenngayAncestorAdded
+        // TODO add your handling code here:
+        Date tu = datetungay.getDate();
+        Date den = datedenngay.getDate();
+
+        if (tu != null && den != null && tu.after(den)) {
+            JOptionPane.showMessageDialog(null, "Ngày đến phải >= ngày từ!");
+            datedenngay.setDate(null);
+        }
+    }//GEN-LAST:event_datedenngayAncestorAdded
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangchitiethoadon;
     private javax.swing.JTable banghoadon;
@@ -728,8 +765,11 @@ public class THHoaDonUI extends javax.swing.JPanel {
     private javax.swing.JButton btnxuatexcel1;
     private javax.swing.JComboBox<String> cbmanv;
     private javax.swing.JComboBox<String> cbpttt;
+    private javax.swing.JCheckBox ckgia;
     private com.toedter.calendar.JDateChooser datedenngay;
     private com.toedter.calendar.JDateChooser datetungay;
+    private javax.swing.JSpinner giaden;
+    private javax.swing.JSpinner giatu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
@@ -750,8 +790,6 @@ public class THHoaDonUI extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTextField txtdengia;
     private javax.swing.JTextField txttimkiemhoadon;
-    private javax.swing.JTextField txttugia;
     // End of variables declaration//GEN-END:variables
 }
