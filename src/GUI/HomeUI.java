@@ -26,7 +26,8 @@ public class HomeUI extends javax.swing.JFrame {
         NCC.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
-        
+        KH.setBackground(DefaultColor);
+
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
         KM.setBackground(DefaultColor);
@@ -66,9 +67,11 @@ public class HomeUI extends javax.swing.JFrame {
         baohanh = new javax.swing.JButton();
         pnTK = new javax.swing.JPanel();
         thongke = new javax.swing.JButton();
+        btnXemTTCN = new javax.swing.JButton();
+        KH = new javax.swing.JPanel();
+        khachhang = new javax.swing.JButton();
         NV = new javax.swing.JPanel();
         nhanvien = new javax.swing.JButton();
-        btnXemTTCN = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         PanelMenu = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -456,6 +459,59 @@ public class HomeUI extends javax.swing.JFrame {
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
+        btnXemTTCN.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        btnXemTTCN.setForeground(new java.awt.Color(236, 240, 241));
+        btnXemTTCN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user (4).png"))); // NOI18N
+        btnXemTTCN.setText(" Xem thông tin");
+        btnXemTTCN.setBorderPainted(false);
+        btnXemTTCN.setContentAreaFilled(false);
+        btnXemTTCN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXemTTCNMouseClicked(evt);
+            }
+        });
+        btnXemTTCN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTTCNActionPerformed(evt);
+            }
+        });
+
+        KH.setBackground(new java.awt.Color(61, 67, 78));
+
+        khachhang.setBackground(new java.awt.Color(61, 67, 78));
+        khachhang.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        khachhang.setForeground(new java.awt.Color(236, 240, 241));
+        khachhang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/customer.png"))); // NOI18N
+        khachhang.setText("Khách hàng");
+        khachhang.setBorderPainted(false);
+        khachhang.setContentAreaFilled(false);
+        khachhang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                khachhangMouseClicked(evt);
+            }
+        });
+        khachhang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                khachhangActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout KHLayout = new javax.swing.GroupLayout(KH);
+        KH.setLayout(KHLayout);
+        KHLayout.setHorizontalGroup(
+            KHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(KHLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(khachhang)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        KHLayout.setVerticalGroup(
+            KHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(KHLayout.createSequentialGroup()
+                .addComponent(khachhang)
+                .addGap(0, 10, Short.MAX_VALUE))
+        );
+
         NV.setBackground(new java.awt.Color(61, 67, 78));
 
         nhanvien.setBackground(new java.awt.Color(61, 67, 78));
@@ -487,28 +543,11 @@ public class HomeUI extends javax.swing.JFrame {
         );
         NVLayout.setVerticalGroup(
             NVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NVLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NVLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(nhanvien)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-
-        btnXemTTCN.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
-        btnXemTTCN.setForeground(new java.awt.Color(236, 240, 241));
-        btnXemTTCN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user (4).png"))); // NOI18N
-        btnXemTTCN.setText(" Xem thông tin");
-        btnXemTTCN.setBorderPainted(false);
-        btnXemTTCN.setContentAreaFilled(false);
-        btnXemTTCN.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnXemTTCNMouseClicked(evt);
-            }
-        });
-        btnXemTTCN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXemTTCNActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -518,7 +557,6 @@ public class HomeUI extends javax.swing.JFrame {
             .addComponent(NCC, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
             .addComponent(NH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(PN, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-            .addComponent(NV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,6 +569,9 @@ public class HomeUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton14)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(NV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -550,7 +591,8 @@ public class HomeUI extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(KM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                    .addComponent(KM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                    .addComponent(KH, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -579,8 +621,10 @@ public class HomeUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(KH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXemTTCN)
@@ -601,8 +645,8 @@ public class HomeUI extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/3.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("ROG Fonts", 1, 80)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("ROG Fonts", 1, 95)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(219, 226, 244));
         jLabel2.setText("tnftn ");
 
         javax.swing.GroupLayout PanelMenuLayout = new javax.swing.GroupLayout(PanelMenu);
@@ -610,23 +654,22 @@ public class HomeUI extends javax.swing.JFrame {
         PanelMenuLayout.setHorizontalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMenuLayout.createSequentialGroup()
-                .addGroup(PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelMenuLayout.createSequentialGroup()
-                        .addGap(471, 471, 471)
-                        .addComponent(jLabel1))
-                    .addGroup(PanelMenuLayout.createSequentialGroup()
-                        .addGap(748, 748, 748)
-                        .addComponent(jLabel2)))
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addGap(487, 487, 487)
+                .addComponent(jLabel1)
+                .addContainerGap(488, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(613, 613, 613))
         );
         PanelMenuLayout.setVerticalGroup(
             PanelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMenuLayout.createSequentialGroup()
-                .addGap(258, 258, 258)
+                .addGap(264, 264, 264)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(404, Short.MAX_VALUE))
         );
 
         jPanel4.add(PanelMenu, java.awt.BorderLayout.CENTER);
@@ -674,29 +717,28 @@ public class HomeUI extends javax.swing.JFrame {
     private void btnSuaThongTinCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThongTinCNActionPerformed
         // TODO add your handling code here:
         DTO.TaiKhoanSession.capnhat();
-        
+
         NhanVienUI nvGUI = new NhanVienUI();
         NhanVienDTO nvDN = DTO.TaiKhoanSession.nvDangNhap;
-        
+
         SuaNhanVienUI suaForm = new SuaNhanVienUI();
-        
+
         String ma = nvDN.getMaNV();
         String hoten = nvDN.getHoTenNV();
         String email = nvDN.getEmailNV();
-        String gioitinh = nvDN.getGioiTinhNV();  
+        String gioitinh = nvDN.getGioiTinhNV();
         java.util.Date ns = nvDN.getNgaySinhNV();
         String cv = nvDN.getChucVuNV();
         String luong = DoiSoLieu.doiTien((nvDN.getLuongNV()));
         String tt = "1";
-       
-        
-        suaForm.setThongTin(ma, hoten, email, gioitinh, ns, cv, luong ,  "1");
-        
+
+        suaForm.setThongTin(ma, hoten, email, gioitinh, ns, cv, luong, "1");
+
         suaForm.quyenAmdin(false);
-        
+
         suaForm.setVisible(true);
         suaForm.setLocationRelativeTo(null);
-        
+
     }//GEN-LAST:event_btnSuaThongTinCNActionPerformed
 
     private void thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thongkeActionPerformed
@@ -720,6 +762,7 @@ public class HomeUI extends javax.swing.JFrame {
         NCC.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -740,6 +783,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -773,6 +817,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(ClickColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -794,6 +839,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(ClickColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -817,6 +863,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(ClickColor);
         THHD.setBackground(DefaultColor);
@@ -838,6 +885,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(ClickColor);
@@ -845,13 +893,13 @@ public class HomeUI extends javax.swing.JFrame {
         BH.setBackground(DefaultColor);
         pnTK.setBackground(DefaultColor);
         NV.setBackground(DefaultColor);
-        
+
         THHoaDonUI s = new THHoaDonUI();
         jPanel4.removeAll();
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
         jPanel4.revalidate();
         jPanel4.repaint();
-        
+
     }//GEN-LAST:event_thhoadonMouseClicked
 
     private void khuyenmaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_khuyenmaiMouseClicked
@@ -860,7 +908,8 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
-        
+        KH.setBackground(DefaultColor);
+
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
         KM.setBackground(ClickColor);
@@ -873,7 +922,7 @@ public class HomeUI extends javax.swing.JFrame {
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
         jPanel4.revalidate();
         jPanel4.repaint();
-        
+
 
     }//GEN-LAST:event_khuyenmaiMouseClicked
 
@@ -883,6 +932,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -890,7 +940,7 @@ public class HomeUI extends javax.swing.JFrame {
         BH.setBackground(ClickColor);
         pnTK.setBackground(DefaultColor);
         NV.setBackground(DefaultColor);
-        
+
         BaoHanhDienThoaiUI s = new BaoHanhDienThoaiUI();
         jPanel4.removeAll();
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
@@ -905,6 +955,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -926,6 +977,7 @@ public class HomeUI extends javax.swing.JFrame {
         SP.setBackground(DefaultColor);
         NH.setBackground(DefaultColor);
         PN.setBackground(DefaultColor);
+        KH.setBackground(DefaultColor);
 
         HD.setBackground(DefaultColor);
         THHD.setBackground(DefaultColor);
@@ -934,7 +986,7 @@ public class HomeUI extends javax.swing.JFrame {
         pnTK.setBackground(DefaultColor);
         NV.setBackground(ClickColor);
 
-        NhanVienUI s = new NhanVienUI ();
+        NhanVienUI s = new NhanVienUI();
         jPanel4.removeAll();
         jPanel4.add(s, java.awt.BorderLayout.CENTER);
         jPanel4.revalidate();
@@ -943,13 +995,13 @@ public class HomeUI extends javax.swing.JFrame {
 
     private void hoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hoadonActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_hoadonActionPerformed
 
     private void btnSuaThongTinCNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaThongTinCNMouseClicked
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_btnSuaThongTinCNMouseClicked
 
     private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
@@ -965,12 +1017,38 @@ public class HomeUI extends javax.swing.JFrame {
 
     private void btnXemTTCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTTCNActionPerformed
         // TODO add your handling code here:
-        
-        XemTTCaNhanUI xemForm = new XemTTCaNhanUI() ;
+
+        XemTTCaNhanUI xemForm = new XemTTCaNhanUI();
         xemForm.setVisible(true);
         xemForm.setLocationRelativeTo(null);
-        
+
     }//GEN-LAST:event_btnXemTTCNActionPerformed
+
+    private void khachhangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_khachhangMouseClicked
+        // TODO add your handling code here:
+        NCC.setBackground(DefaultColor);
+        SP.setBackground(DefaultColor);
+        NH.setBackground(DefaultColor);
+        PN.setBackground(DefaultColor);
+
+        HD.setBackground(DefaultColor);
+        THHD.setBackground(DefaultColor);
+        KM.setBackground(DefaultColor);
+        BH.setBackground(DefaultColor);
+        pnTK.setBackground(DefaultColor);
+        NV.setBackground(DefaultColor);
+        KH.setBackground(ClickColor);
+        QLKhachHangUI s = new QLKhachHangUI();
+        jPanel4.removeAll();
+        jPanel4.add(s, java.awt.BorderLayout.CENTER);
+        jPanel4.revalidate();
+        jPanel4.repaint();
+
+    }//GEN-LAST:event_khachhangMouseClicked
+
+    private void khachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_khachhangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_khachhangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -989,7 +1067,7 @@ public class HomeUI extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
         //</editor-fold>
         try {
@@ -1004,6 +1082,7 @@ public class HomeUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BH;
     private javax.swing.JPanel HD;
+    private javax.swing.JPanel KH;
     private javax.swing.JPanel KM;
     private javax.swing.JPanel NCC;
     private javax.swing.JPanel NH;
@@ -1026,6 +1105,7 @@ public class HomeUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton khachhang;
     private javax.swing.JButton khuyenmai;
     private javax.swing.JButton nhacungcap;
     private javax.swing.JButton nhanvien;
