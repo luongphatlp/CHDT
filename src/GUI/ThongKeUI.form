@@ -120,11 +120,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="kGradientPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="kGradientPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="kGradientPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="1732" max="32767" attributes="0"/>
+                      <EmptySpace pref="1660" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -133,10 +133,10 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="kGradientPanel2" alignment="0" max="32767" attributes="0"/>
                           <Component id="kGradientPanel3" max="32767" attributes="0"/>
-                          <Component id="kGradientPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="kGradientPanel1" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -204,43 +204,40 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace pref="314" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lbdienthoai" min="-2" pref="404" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lbdienthoai" min="-2" pref="404" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="21" max="32767" attributes="0"/>
-                          <Component id="lbdienthoai" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lbdienthoai" min="-2" pref="64" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/icon/eye.png"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="lbdienthoai">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -262,6 +259,13 @@
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icon/eye.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -296,7 +300,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lbncc" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -726,10 +730,11 @@
                         <Component class="javax.swing.JComboBox" name="cbthoigian">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="3">
-                                <StringItem index="0" value="Ng&#xe0;y"/>
-                                <StringItem index="1" value="Th&#xe1;ng"/>
-                                <StringItem index="2" value="N&#x103;m"/>
+                              <StringArray count="4">
+                                <StringItem index="0" value="Ch&#x1ecd;n lo&#x1ea1;i th&#x1ed1;ng k&#xea;"/>
+                                <StringItem index="1" value="Ng&#xe0;y"/>
+                                <StringItem index="2" value="Th&#xe1;ng"/>
+                                <StringItem index="3" value="N&#x103;m"/>
                               </StringArray>
                             </Property>
                           </Properties>
@@ -745,7 +750,7 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="18" style="0"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n k&#x1ef3; th&#x1ed1;ng k&#xea;: "/>
+                            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n lo&#x1ea1;i th&#x1ed1;ng k&#xea;: "/>
                           </Properties>
                         </Component>
                         <Container class="javax.swing.JPanel" name="pngay">
@@ -1080,7 +1085,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel10">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n k&#x1ef3; th&#x1ed1;ng k&#xea;"/>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n lo&#x1ea1;i th&#x1ed1;ng k&#xea;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbkynhanvien">
@@ -1399,7 +1404,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n k&#x1ef3; th&#x1ed1;ng k&#xea;"/>
+                    <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n lo&#x1ea1;i th&#x1ed1;ng k&#xea;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbkykhachhang">

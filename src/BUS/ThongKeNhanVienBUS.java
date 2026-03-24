@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 
 public class ThongKeNhanVienBUS {
@@ -179,5 +180,22 @@ public class ThongKeNhanVienBUS {
             tam.add(tk);
         }
         return tam;
+    }
+    public ArrayList<String> layMaNV(List<String> l){
+        ArrayList<String> s=new ArrayList();
+        if(!l.isEmpty()){
+            for(String t:l){
+                String[] c=t.split("-");
+                if(t.equals("Tất cả")){
+                    s=null;
+                    break;
+                }
+                if(c.length>1)
+                    s.add(c[0]);
+            }
+        }else{
+            s=null;
+        }
+        return s;
     }
 }

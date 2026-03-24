@@ -126,14 +126,17 @@ public final class ThongKeUI extends javax.swing.JPanel {
     }
     public void veBieuDo(int i,ArrayList<ThongKeDoanhThuDTO> ds) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        ThongKeDoanhThuBUS bus=new ThongKeDoanhThuBUS();
         String ngay;
-        if(i==1){
-            ngay="Ngày";  
-        }else if(i==2){
-            ngay="Tháng";
-        }else{
-            ngay="Năm";
+        switch (i) {
+            case 1:
+                ngay="Ngày";
+                break;
+            case 2:
+                ngay="Tháng";
+                break;
+            default:
+                ngay="Năm";
+                break;
         }
         for(ThongKeDoanhThuDTO tk:ds){
             dataset.setValue(tk.getDoanhThu(),"Đồng",tk.getNgay());
@@ -169,6 +172,44 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         renderer.setSeriesPaint(0, new Color(79,129,189)); // màu cột
         renderer.setSeriesPaint(1, new Color(192,80,77));
+    }
+    public void thongKe(){
+        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        spnam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        String ngay=cbthoigian.getSelectedItem().toString();
+        if(ngay.equals("Ngày")){
+            Date datetu=chtungaydoanhthu.getDate();
+            Date dateden=chdenngaydoanhthu.getDate();
+            if(datetu == null || dateden==null ){
+                JOptionPane.showMessageDialog(null,"Vui lòng chọn đủ từ ngày đến ngày");
+                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            }
+            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNgay(datetu, dateden);
+            veBangThongKeDoanhThu("Ngày",ds);
+            veBieuDo(1,ds);
+        }else if(ngay.equals("Tháng")){
+            int nam=Integer.parseInt(spnam.getValue().toString());
+            if(Integer.parseInt(spnam.getValue().toString())==-1){
+                spnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            }
+            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoThang(nam);
+            veBangThongKeDoanhThu("Tháng",busdt.thongKeDoanhThuTheoThang(nam));
+            veBieuDo(2,ds);
+        }else{
+            int tunam=Integer.parseInt(sptunam.getValue().toString());
+            int dennam=Integer.parseInt(spdennam.getValue().toString());
+            if(Integer.parseInt(sptunam.getValue().toString()) ==-1 || Integer.parseInt(spdennam.getValue().toString()) ==-1){
+                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            }
+            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNam(tunam,dennam);
+            veBangThongKeDoanhThu("Năm",busdt.thongKeDoanhThuTheoNam(tunam,dennam));
+            veBieuDo(3,ds);
+        }
     }
     public void veBangThongKeDoanhThu(String ngay,ArrayList<ThongKeDoanhThuDTO> ds){
         Vector header =new Vector();
@@ -268,44 +309,20 @@ public final class ThongKeUI extends javax.swing.JPanel {
     }
     public ArrayList<ThongKeNhanVienDTO> locNhanVien(){
         String loai=cbkynhanvien.getSelectedItem().toString();
-        List<String> l=listnv.getSelectedValuesList();
-        ArrayList<String> s=new ArrayList();
-        if(!l.isEmpty()){
-            
-            for(String t:l){
-                String[] c=t.split("-");
-                if(t.equals("Tất cả")){
-                    s=null;
-                    break;
-                }
-                if(c.length>1)
-                    s.add(c[0]);
-            }
-        }else{
-            s=null;
-        }
+        ArrayList<String> s=busnv.layMaNV(listnv.getSelectedValuesList());
         switch (loai) {
             case "Ngày" -> {
-                LocalDate tu=LocalDate.MIN;
-                LocalDate den=LocalDate.MAX;
-                if(chtungaynhanvien.getDate()!=null)
-                    tu = chtungaynhanvien.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                if(chdenngaynhanvien.getDate()!=null)
-                    den= chdenngaynhanvien.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate tu=chtungaynhanvien.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate den=chdenngaynhanvien.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 return busnv.locNhanVienTheoNgay(s, tu, den);
             }
             case "Tháng" -> {
-                int nam=0;
-                if(Integer.parseInt(spnamnv.getValue().toString())==-1)
-                    nam=Integer.parseInt(spnamnv.getValue().toString());
+                int nam=Integer.parseInt(spnamnv.getValue().toString());;
                 return busnv.locNhanVienTheoThang(s, nam);
             }
             case "Năm" -> {
-                int tu=0,den=0;
-                if(Integer.parseInt(sptunamnv.getValue().toString())==-1)
-                    tu=Integer.parseInt(sptunamnv.getValue().toString());
-                if(Integer.parseInt(spdennamnv.getValue().toString())==-1)
-                    den=Integer.parseInt(spdennamnv.getValue().toString());
+                int tu=Integer.parseInt(sptunamnv.getValue().toString());
+                int den=Integer.parseInt(spdennamnv.getValue().toString());;
                 return busnv.locNhanVienTheoNam(s, tu, den);
             }
             default -> {
@@ -333,26 +350,17 @@ public final class ThongKeUI extends javax.swing.JPanel {
         String s=txttimkiemkhachhang.getText();
         switch (loai) {
             case "Ngày" -> {
-                LocalDate tu=LocalDate.MIN;
-                LocalDate den=LocalDate.MAX;
-                if(chtungaykhachhang.getDate()!=null)
-                    tu = chtungaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                if(chdenngaykhachhang.getDate()!=null)
-                    den= chdenngaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate tu = chtungaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate den =chdenngaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 return buskh.locKhachHangTheoNgay(s, tu, den);
             }
             case "Tháng" -> {
-                int nam=0;
-                if(Integer.parseInt(spnamkh.getValue().toString())==-1)
-                    nam=Integer.parseInt(spnamkh.getValue().toString());
+                int nam=Integer.parseInt(spnamkh.getValue().toString());
                 return buskh.locKhachHangTheoThang(s, nam);
             }
             case "Năm" -> {
-                int tu=0,den=0;
-                if(Integer.parseInt(sptunamkh.getValue().toString())==-1)
-                    tu=Integer.parseInt(sptunamkh.getValue().toString());
-                if(Integer.parseInt(spdennamkh.getValue().toString())==-1)
-                    den=Integer.parseInt(spdennamkh.getValue().toString());
+                int tu=Integer.parseInt(sptunamkh.getValue().toString());
+                int den=Integer.parseInt(spdennamkh.getValue().toString());
                 return buskh.locKhachHangTheoNam(s, tu, den);
             }
             default -> {
@@ -406,7 +414,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
             }
         }
     }
-        public void xuatExcelKhachHang(String path) throws FileNotFoundException, IOException {
+    public void xuatExcelKhachHang(String path) throws FileNotFoundException, IOException {
         try (Workbook workbook = new XSSFWorkbook()) { 
             Sheet sheet = workbook.createSheet("Thống kê khách hàng");
             org.apache.poi.ss.usermodel.Row row0 = sheet.createRow(0);
@@ -446,9 +454,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
-        jLabel1 = new javax.swing.JLabel();
         lbdienthoai = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         lbncc = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -616,8 +624,6 @@ public final class ThongKeUI extends javax.swing.JPanel {
         kGradientPanel1.setkEndColor(new java.awt.Color(221, 221, 239));
         kGradientPanel1.setkStartColor(new java.awt.Color(82, 162, 228));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eye.png"))); // NOI18N
-
         lbdienthoai.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         lbdienthoai.setForeground(new java.awt.Color(255, 255, 255));
         lbdienthoai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user-interface.png"))); // NOI18N
@@ -626,30 +632,35 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/eye.png"))); // NOI18N
+
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(314, Short.MAX_VALUE)
+                .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addGap(117, 117, 117))))
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(117, 117, 117))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap())))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(lbdienthoai)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbdienthoai, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(84, 84, 84)
                 .addComponent(jLabel12)
-                .addGap(152, 152, 152)
-                .addComponent(jLabel1))
+                .addGap(270, 270, 270))
         );
 
         kGradientPanel2.setkEndColor(new java.awt.Color(184, 233, 233));
@@ -679,7 +690,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbncc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -722,21 +733,21 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1732, Short.MAX_VALUE))
+                .addContainerGap(1660, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(kGradientPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(kGradientPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(kGradientPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -879,7 +890,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        cbthoigian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày", "Tháng", "Năm" }));
+        cbthoigian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn loại thống kê", "Ngày", "Tháng", "Năm" }));
         cbthoigian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbthoigianActionPerformed(evt);
@@ -887,7 +898,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel7.setText("Chọn kỳ thống kê: ");
+        jLabel7.setText("Chọn loại thống kê: ");
 
         lbtungay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbtungay.setText("Từ ngày");
@@ -1113,7 +1124,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Doanh thu", jPanel11);
 
-        jLabel10.setText("Chọn kỳ thống kê");
+        jLabel10.setText("Chọn loại thống kê");
 
         cbkynhanvien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ngày", "Tháng", "Năm" }));
         cbkynhanvien.addActionListener(new java.awt.event.ActionListener() {
@@ -1319,7 +1330,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Nhân viên", jPanel4);
 
-        jLabel8.setText("Chọn kỳ thống kê");
+        jLabel8.setText("Chọn loại thống kê");
 
         cbkykhachhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ngày", "Tháng", "Năm" }));
         cbkykhachhang.addActionListener(new java.awt.event.ActionListener() {
@@ -1558,42 +1569,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
     private void btnthongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthongkeActionPerformed
         // TODO add your handling code here:
-        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        spnam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        String ngay=cbthoigian.getSelectedItem().toString();
-        if(ngay.equals("Ngày")){
-            Date datetu=chtungaydoanhthu.getDate();
-            Date dateden=chdenngaydoanhthu.getDate();
-            if(datetu == null || dateden==null ){
-                JOptionPane.showMessageDialog(null,"Vui lòng chọn đủ từ ngày đến ngày");
-                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNgay(datetu, dateden);
-            veBangThongKeDoanhThu("Ngày",ds);
-            veBieuDo(1,ds);
-        }else if(ngay.equals("Tháng")){
-            int nam=Integer.parseInt(spnam.getValue().toString());
-            if(Integer.parseInt(spnam.getValue().toString())==-1){
-                spnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoThang(nam);
-            veBangThongKeDoanhThu("Tháng",busdt.thongKeDoanhThuTheoThang(nam));
-            veBieuDo(2,ds);
-        }else{
-            int tunam=Integer.parseInt(sptunam.getValue().toString());
-            int dennam=Integer.parseInt(spdennam.getValue().toString());
-            if(Integer.parseInt(sptunam.getValue().toString()) ==-1 || Integer.parseInt(spdennam.getValue().toString()) ==-1){
-                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNam(tunam,dennam);
-            veBangThongKeDoanhThu("Năm",busdt.thongKeDoanhThuTheoNam(tunam,dennam));
-            veBieuDo(3,ds);
-        }
+        thongKe();
     }//GEN-LAST:event_btnthongkeActionPerformed
 
     private void cbthoigianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbthoigianActionPerformed
@@ -1685,7 +1661,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         String k=cbkynhanvien.getSelectedItem().toString();
         if(k.equals("Ngày")){
-            if(chtungaynhanvien.getDate()==null || chdenngaynhanvien.getDate()==null){
+            if(chtungaynhanvien.getDate()==null && chdenngaynhanvien.getDate()==null){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
                 return;
             }
@@ -1696,7 +1672,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 return;
             }
         }else if(k.equals("Năm")){
-            if(Integer.parseInt(sptunamnv.getValue().toString())==-1 || Integer.parseInt(spdennamnv.getValue().toString())==-1){
+            if(Integer.parseInt(sptunamnv.getValue().toString())==-1 && Integer.parseInt(spdennamnv.getValue().toString())==-1){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
                 return;
             }
@@ -1707,7 +1683,26 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
     private void thongkekhachhang(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_thongkekhachhang
         // TODO add your handling code here:
+        String k=cbkykhachhang.getSelectedItem().toString();
+        if(k.equals("Ngày")){
+            if(chtungaykhachhang.getDate()==null && chdenngaykhachhang.getDate()==null){
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
+                return;
+            }
+        }
+        else if(k.equals("Tháng")){
+            if(Integer.parseInt(spnamkh.getValue().toString())==-1){
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
+                return;
+            }
+        }else if(k.equals("Năm")){
+            if(Integer.parseInt(sptunamkh.getValue().toString())==-1 && Integer.parseInt(spdennamkh.getValue().toString())==-1){
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
+                return;
+            }
+        }
         ArrayList<ThongKeKhachHangDTO> ds=locKhachHang();
+        if(ds==null) return;
         veBangThongKeKhachHang(ds);
     }//GEN-LAST:event_thongkekhachhang
 
@@ -1750,29 +1745,29 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-            if (bangthongkekhachhang.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(null, "Không có dữ liệu để xuất");
-        return;
-    }
-    filechooseexcel.setVisible(true);
-    int kq = filechooseexcel.showSaveDialog(null);
-    if(kq == JFileChooser.APPROVE_OPTION){
-
-        File file = filechooseexcel.getSelectedFile();
-
-        String path = file.getAbsolutePath() + ".xlsx";
-        try {
-            xuatExcelKhachHang(path);
-        } catch (IOException ex) {
-            System.getLogger(ThongKeUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        if (bangthongkekhachhang.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có dữ liệu để xuất");
+            return;
         }
-        JOptionPane.showMessageDialog(
-            null,
-            "Xuất file Excel thành công!",
-            "Thông báo",
-            JOptionPane.INFORMATION_MESSAGE
-        );
-    }
+        filechooseexcel.setVisible(true);
+        int kq = filechooseexcel.showSaveDialog(null);
+        if(kq == JFileChooser.APPROVE_OPTION){
+
+            File file = filechooseexcel.getSelectedFile();
+
+            String path = file.getAbsolutePath() + ".xlsx";
+            try {
+                xuatExcelKhachHang(path);
+            } catch (IOException ex) {
+                System.getLogger(ThongKeUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            JOptionPane.showMessageDialog(
+                null,
+                "Xuất file Excel thành công!",
+                "Thông báo",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void chtungayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_chtungayPropertyChange
