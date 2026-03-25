@@ -1,14 +1,10 @@
-
 package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 
@@ -19,44 +15,95 @@ public class ThemNCCUI extends javax.swing.JDialog {
 
     public static final int RET_CANCEL = 0;
     public static final int RET_OK = 1;
+
     public ThemNCCUI() {
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) { ex.printStackTrace(); }
+        
         initComponents();
-        setModal(true); 
-        setLocationRelativeTo(null); 
+        this.setModal(true);
+        this.setLayout(new BorderLayout());       
+        this.add(jPanel2, BorderLayout.NORTH); 
+        jPanel1.setPreferredSize(null); 
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS)); 
+        jPanel1.setBackground(Color.WHITE);
+        jPanel1.setBorder(BorderFactory.createEmptyBorder(25, 45, 25, 45));
+
+        JPanel groupInfo = createGroupPanel("THÔNG TIN NHÀ CUNG CẤP");
+        addPair(groupInfo, jLabel3, jTextField1); 
+        addPair(groupInfo, jLabel4, jTextField4);
+        addPair(groupInfo, jLabel2, jTextField2); 
+        addPair(groupInfo, jLabel6, jTextField3); 
+
+        jPanel1.removeAll();
+        jPanel1.add(groupInfo);
+        jPanel1.revalidate();
+                     
+        JScrollPane scroll = new JScrollPane(jPanel1);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        this.add(scroll, BorderLayout.CENTER);
+
+        JPanel pnFooter = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20)); 
+        pnFooter.setBackground(Color.WHITE);
         
-        javax.swing.JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel6};
-        for (javax.swing.JLabel lbl : labels) {
-            lbl.setForeground(new java.awt.Color(50, 50, 50)); 
-            lbl.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 15)); // Chữ đậm, không in nghiêng
-        }
-        javax.swing.JTextField[] textFields = {jTextField1, jTextField2, jTextField3, jTextField4};
-        for (javax.swing.JTextField txt : textFields) {
-            txt.setBackground(java.awt.Color.WHITE);
-            txt.setForeground(java.awt.Color.BLACK); 
-            txt.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 16));
-
-            txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(151, 180, 198), 2));
-
-            txt.setMargin(new java.awt.Insets(2, 10, 2, 10));
-        }
-
-        okButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        okButton.setPreferredSize(new Dimension(140, 45));
+        cancelButton.setPreferredSize(new Dimension(140, 45));
         
+        pnFooter.add(okButton);
+        pnFooter.add(cancelButton);
+        this.add(pnFooter, BorderLayout.SOUTH);
+
+        this.setSize(600, 650); 
+        this.setLocationRelativeTo(null); 
+        
+        formatComponents(); 
+        setupEscKey();
+    }
+
+    private void addPair(JPanel panel, JLabel label, JComponent input) {
+        panel.add(label);
+        panel.add(input);
+    }
+
+    private JPanel createGroupPanel(String title) {
+        JPanel panel = new JPanel(new GridLayout(0, 1, 0, 10));
+        panel.setBackground(Color.WHITE);
+        
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(151, 180, 198), 1),
+            title, 0, 0, new Font("Segoe UI", Font.BOLD, 14), new Color(151, 180, 198)
+        );
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(15, 25, 20, 25)));
+        return panel;
+    }
+
+    private void formatComponents() {
+        JLabel[] labels = {jLabel2, jLabel3, jLabel4, jLabel6};
+        for (JLabel label : labels) {
+            label.setForeground(new Color(50, 50, 50));
+            label.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        }
+        JTextField[] textFields = {jTextField1, jTextField2, jTextField3, jTextField4};
+        for (JTextField txt : textFields) {
+            txt.setBackground(Color.WHITE);
+            txt.setForeground(Color.BLACK); 
+            txt.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+            txt.setBorder(BorderFactory.createLineBorder(new Color(151, 180, 198), 1));
+            txt.setMargin(new Insets(2, 10, 2, 10));
+        }
+    }
+
+    private void setupEscKey() {
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), cancelName);
         ActionMap actionMap = getRootPane().getActionMap();
         actionMap.put(cancelName, new AbstractAction() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                doClose(RET_CANCEL);
-            }
+            public void actionPerformed(ActionEvent e) { doClose(RET_CANCEL); }
         });
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
     }
     public int getReturnStatus() {
         return returnStatus;
@@ -246,8 +293,8 @@ public class ThemNCCUI extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
             return;
         }
-        if (!sdt.matches("\\d{10,11}")) { 
-            JOptionPane.showMessageDialog(this, "Số điện thoại phải từ 10-11 ký số!");
+        if (!sdt.matches("^0\\d{9}$")) { 
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số và bắt đầu bằng số 0.");
             return;
         }
         NhaCungCapDTO ncc = new NhaCungCapDTO(ma, ten, diachi, sdt);

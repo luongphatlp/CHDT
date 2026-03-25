@@ -6,7 +6,7 @@ package DAO;
 import DTO.ChiTietSanPhamDTO;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

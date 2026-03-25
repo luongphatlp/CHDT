@@ -64,6 +64,12 @@ public class SuaSPUI extends JFrame {
         addInput(groupOther, "Màn hình:", txtManHinh = new JTextField(ct != null ? ct.getManHinh() : ""));
         addInput(groupOther, "Kích thước:", txtKichThuoc = new JTextField(ct != null ? ct.getKichThuoc() : ""));
         addInput(groupOther, "Dung lượng Pin:", txtPin = new JTextField(ct != null ? String.valueOf(ct.getPin()) : "0"));
+        addInput(groupOther, "Camera trước (MP):", txtCamTruoc = new JTextField(ct != null ? String.valueOf(ct.getCamTruoc()) : "0"));
+        addInput(groupOther, "Camera sau (MP):", txtCamSau = new JTextField(ct != null ? String.valueOf(ct.getCamSau()) : "0"));
+        
+        cbBaoHanh = new JComboBox<>(new String[]{"6 tháng", "12 tháng", "24 tháng"});
+        cbBaoHanh.setSelectedItem(ct != null ? ct.getBaoHanh() + " tháng" : "12 tháng");
+        addInput(groupOther, "Thời gian bảo hành:", cbBaoHanh);
         
         pnMainContent.add(groupBasic);
         pnMainContent.add(Box.createVerticalStrut(15));
@@ -103,6 +109,7 @@ public class SuaSPUI extends JFrame {
         cbBaoHanh = new JComboBox<>(new String[]{"6 tháng", "12 tháng", "24 tháng"});
         cbBaoHanh.setSelectedItem(ct != null ? ct.getBaoHanh() + " tháng" : "12 tháng");
         spinSoLuong = new JSpinner(new SpinnerNumberModel(sp.getSoLuong(), 0, 1000, 1));
+        spinSoLuong.setEnabled(false);
     }
 
     private JPanel createGroupPanel(String title) {
@@ -143,9 +150,7 @@ public class SuaSPUI extends JFrame {
             spNew.setTenSP(txtTen.getText().trim());
             spNew.setSoLuong((int) spinSoLuong.getValue());
             spNew.setDonGia(Integer.parseInt(txtDonGia.getText().trim().replace(".", "")));
-            spNew.setDonViTinh("Cái");
-            spNew.setMaHang("H1"); 
-
+            spNew.setBoNho(cbRam.getSelectedItem().toString() + " / " + cbBoNhoNgoai.getSelectedItem().toString());
             ChiTietSanPhamDTO ctNew = spNew.getChiTiet(); 
             ctNew.setMau(txtMau.getText().trim());
             ctNew.setManHinh(txtManHinh.getText().trim());
@@ -154,6 +159,10 @@ public class SuaSPUI extends JFrame {
             ctNew.setRam(cbRam.getSelectedItem().toString());
             ctNew.setBoNhoNgoai(Integer.parseInt(cbBoNhoNgoai.getSelectedItem().toString().replaceAll("[^0-9]", "")));
             ctNew.setHeDieuHanh(cbHeDieuHanh.getSelectedItem().toString());
+            ctNew.setPin(Integer.parseInt(txtPin.getText().trim().replaceAll("[^0-9]", "")));
+            ctNew.setCamTruoc(Integer.parseInt(txtCamTruoc.getText().trim().replaceAll("[^0-9]", "")));
+            ctNew.setCamSau(Integer.parseInt(txtCamSau.getText().trim().replaceAll("[^0-9]", "")));
+            ctNew.setBaoHanh(Integer.parseInt(cbBaoHanh.getSelectedItem().toString().replaceAll("[^0-9]", "")));
 
             if (spBUS.sua(spNew)) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!");

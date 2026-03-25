@@ -1,4 +1,3 @@
-
 package GUI;
 
 import java.io.File;
@@ -9,10 +8,11 @@ import DTO.NhaCungCapDTO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-public class NhaCungCapUI extends javax.swing.JPanel {
+public class QLKhachHangUI extends javax.swing.JPanel {
 
     private NhaCungCapBUS nccBUS = new NhaCungCapBUS();
-    public NhaCungCapUI() {
+    public QLKhachHangUI() {
+        //code cũ Nhà cung cấp t comment lại á
         try {
             com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
         } catch (Exception ex) {
@@ -21,7 +21,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
         initComponents();
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] { "STT", "Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại" } 
+            new String [] { "STT", "Mã Khách", "Tên Khách", "SĐT", "Email" } 
         ) {
            @Override
            public boolean isCellEditable(int row, int column) {
@@ -32,15 +32,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
         loadDataToTable(nccBUS.getDS());
     }
     public void loadDataToTable(ArrayList<NhaCungCapDTO> ds) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        int stt = 1;
-        for (NhaCungCapDTO ncc : ds) {
-             model.addRow(new Object[]{
-                stt++ ,ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai()
-             });
-         }
-         resizeColumnWidth(jTable1);
+        
     }
     private void customTable() {
         
@@ -201,7 +193,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnreset)
                 .addContainerGap())
@@ -222,7 +214,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 41)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("NHÀ CUNG CẤP");
+        jLabel1.setText("KHÁCH HÀNG");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -271,7 +263,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại"
+                "Mã Khách", "Tên Khách", "Số điện thoại", "Email"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -291,101 +283,31 @@ public class NhaCungCapUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        jTextField1.setText(""); 
-        loadDataToTable(nccBUS.getDS());
+        
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ThemNCCUI dialog = new ThemNCCUI();
-        dialog.setVisible(true);
-        if (dialog.getReturnStatus() == ThemNCCUI.RET_OK) {
-            nccBUS.docDS(); 
-            loadDataToTable(nccBUS.getDS());
-        }
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int row = jTable1.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp cần xóa!");
-        return;
-    }
     
-    String ma = jTable1.getValueAt(row, 1).toString();
-    int confirm = JOptionPane.showConfirmDialog(this,
-            "Bạn có chắc chắn muốn xóa nhà cung cấp: " + ma + "?",
-            "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
-            
-    if (confirm == JOptionPane.YES_OPTION) {
-        if (nccBUS.xoa(ma)) {
-            JOptionPane.showMessageDialog(this, "Xóa thành công!");
-
-            nccBUS.docDS();
-            loadDataToTable(nccBUS.getDS());
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại!");
-        }
-    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String text = jTextField1.getText().trim();
-        int index = jComboBox1.getSelectedIndex();
-        if (nccBUS.getDS().isEmpty()) {
-            nccBUS.docDS(); 
-        }
-        ArrayList<NhaCungCapDTO> ketQuaSearch = nccBUS.timKiem(text, index);
-        loadDataToTable(ketQuaSearch);
+      
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int row = jTable1.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp cần sửa!");
-            return;
-        }
-        String ma = jTable1.getValueAt(row, 1).toString();
-        String ten = jTable1.getValueAt(row, 2).toString();
-        String diaChi = jTable1.getValueAt(row, 3).toString();
-        String sdt = jTable1.getValueAt(row, 4).toString();
         
-        NhaCungCapDTO nccSelected = new NhaCungCapDTO(ma, ten, diaChi, sdt);              
-        SuaNCCUI suaForm = new SuaNCCUI(nccSelected, this, nccBUS);
-        suaForm.setVisible(true);
-        nccBUS.docDS(); 
-        loadDataToTable(nccBUS.getDS());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try {
-                int count = nccBUS.nhapExcel(file); 
-                JOptionPane.showMessageDialog(this, "Nhập thành công " + count + " NCC!");
-                loadDataToTable(nccBUS.getDS());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
-            }
-        }
+       
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
-        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if (!file.getName().endsWith(".xlsx")) {
-               file = new File(file.getAbsolutePath() + ".xlsx");
-            }
-            try {
-                nccBUS.xuatExcel(file);
-                JOptionPane.showMessageDialog(this, "Xuất Excel thành công!");
-            } catch (IOException ex) {
-               JOptionPane.showMessageDialog(this, "Lỗi xuất file: " + ex.getMessage());
-            }
-        }
+        
     }//GEN-LAST:event_jButton6ActionPerformed
    // --- THÊM ĐOẠN NÀY VÀO CUỐI CLASS ĐỂ CHẠY THỬ ---
     public static void main(String[] args) {
@@ -403,7 +325,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
                 frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
                 
                 // Khởi tạo Panel của bạn
-                NhaCungCapUI panel = new NhaCungCapUI();
+                QLKhachHangUI panel = new QLKhachHangUI();
                 
                 // Thêm Panel vào Frame
                 frame.add(panel);

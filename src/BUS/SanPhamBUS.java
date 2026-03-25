@@ -98,8 +98,8 @@ public class SanPhamBUS {
         row.createCell(1).setCellValue(sp.getTenSP());
         row.createCell(2).setCellValue(sp.getSoLuong());
         row.createCell(3).setCellValue(sp.getDonGia());
-        row.createCell(4).setCellValue(sp.getDonViTinh());
-        row.createCell(5).setCellValue(sp.getMaHang());
+//        row.createCell(4).setCellValue(sp.getDonViTinh());
+//        row.createCell(5).setCellValue(sp.getMaHang());
     }
 
     try (FileOutputStream fileOut = new FileOutputStream(file)) {
@@ -121,8 +121,8 @@ public class SanPhamBUS {
                 sp.setTenSP(row.getCell(1).getStringCellValue());
                 sp.setSoLuong((int) row.getCell(2).getNumericCellValue());
                 sp.setDonGia((int) row.getCell(3).getNumericCellValue());
-                sp.setDonViTinh(row.getCell(4).getStringCellValue());
-                sp.setMaHang(row.getCell(5).getStringCellValue());
+//                sp.setDonViTinh(row.getCell(4).getStringCellValue());
+//                sp.setMaHang(row.getCell(5).getStringCellValue());
                 DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
                 ct.setMau("Chưa xác định");
                 ct.setManHinh("Chưa xác định");
@@ -152,6 +152,7 @@ public class SanPhamBUS {
     }
     public void tangSoLuong(String masp, int soluong){
         dao.updateSoLuong(masp, soluong);
+        
     }
     public ChiTietSanPhamDTO getCTSPByMaSP(String ma){
         return busct.getCTSPByMaSP(ma);
@@ -165,7 +166,9 @@ public class SanPhamBUS {
         }
         return null;
     }
-    public int capNhatSoLuongSanPham(String masp,int soluongtru){
-        return dao.truSoLuongSanPham(masp,soluongtru);
+
+    public int capNhatSoLuongSanPham(String masp, int soluongtru) {
+        return dao.truSoLuongSanPham(masp, soluongtru);
     }
 }
+

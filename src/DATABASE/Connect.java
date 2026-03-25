@@ -1,4 +1,4 @@
-package database;
+package DATABASE;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +8,10 @@ public class Connect {
     public static Connection getConnection() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3309/dienthoai", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/endgame", "root", "");
+
         } catch (Exception ex) {
+             ex.printStackTrace();
 
         }
         return con;

@@ -91,7 +91,7 @@ public class ChiTietBaoHanhUI extends javax.swing.JDialog {
                 + "JOIN dienthoai dt ON dt.MaBH = bh.Ma "
                 + "WHERE dt.Ten = ?";
 
-        try (java.sql.Connection con = database.Connect.getConnection(); java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+        try (java.sql.Connection con = DATABASE.Connect.getConnection(); java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, tenMay.trim());
             try (java.sql.ResultSet rs = ps.executeQuery()) {

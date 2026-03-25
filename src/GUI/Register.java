@@ -8,6 +8,7 @@ import BUS.NhanVienBUS;
 import BUS.TaiKhoanNVBUS;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanNVDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,6 +43,7 @@ public class Register extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jRadioButton1 = new javax.swing.JRadioButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -67,6 +69,10 @@ public class Register extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         txtTaikhoan = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
+        jSeparator9 = new javax.swing.JSeparator();
+        cmbMale = new javax.swing.JRadioButton();
+        cmbFemale = new javax.swing.JRadioButton();
+        jLabel11 = new javax.swing.JLabel();
 
         jTextField4.setText("jTextField4");
 
@@ -179,6 +185,18 @@ public class Register extends javax.swing.JFrame {
         txtEmail.setBorder(null);
         txtEmail.setOpaque(true);
 
+        buttonGroup1.add(cmbMale);
+        cmbMale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cmbMale.setText("Nam");
+
+        buttonGroup1.add(cmbFemale);
+        cmbFemale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cmbFemale.setText("Nữ");
+
+        jLabel11.setFont(new java.awt.Font("Courier New", 1, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Giới tính");
+
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
@@ -200,25 +218,25 @@ public class Register extends javax.swing.JFrame {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jSeparator1)
+                            .addComponent(jSeparator3)
+                            .addComponent(dcNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                            .addComponent(jSeparator6)
+                            .addComponent(txtEmail))
+                        .addComponent(txtHoten, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbMale)
+                        .addGap(80, 80, 80)
+                        .addComponent(cmbFemale))
+                    .addComponent(jLabel11))
+                .addGap(261, 261, 261)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(jSeparator1)
-                                .addComponent(jSeparator3)
-                                .addComponent(dcNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                                .addComponent(jSeparator6)
-                                .addComponent(txtEmail))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel9)
-                                .addComponent(jSeparator7)
-                                .addComponent(txtTaikhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
-                            .addComponent(txtHoten, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(261, 261, 261)
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(pwfmatkhau)
@@ -231,64 +249,80 @@ public class Register extends javax.swing.JFrame {
                                     .addComponent(pwfmatkhau2)
                                     .addComponent(jLabel10)
                                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(137, 137, 137))))
+                        .addGap(137, 137, 137))
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9)
+                            .addComponent(jSeparator7)
+                            .addComponent(txtTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator9))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(30, 30, 30))
+                            .addComponent(txtTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pwfmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(13, 13, 13)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dcNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pwfmatkhau2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cmbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbMale)
+                                    .addComponent(cmbFemale)))
+                            .addComponent(jLabel8))
+                        .addGap(37, 37, 37)
+                        .addComponent(btnContinue))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(30, 30, 30))
-                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cmbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jLabel8)))
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btnContinue)
-                .addGap(58, 58, 58)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dcNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -318,8 +352,99 @@ public class Register extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+     public void laythongtin(){
+        
+        NhanVienDTO nvDTO = new NhanVienDTO();
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        TaiKhoanNVDTO tkDTO = new TaiKhoanNVDTO();
+        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
+    
+        
+        txtHoten.isEnabled();
+        String hoten = txtHoten.getText();
+        String email = txtEmail.getText();
+        java.util.Date ngaysinh = dcNgaySinh.getDate();
+        String chucvu = cmbChucVu.getSelectedItem().toString();
+        String gioiTinh = "";
+        
+        if(cmbMale.isSelected()){
+            gioiTinh = "Nam";
+        }else{
+            gioiTinh = "Nữ";
+        }
+        
+        String tk = txtTaikhoan.getText();
+        String mk = new String(pwfmatkhau.getPassword());
+        
+        
+
+        String maNV = nvBUS.maTuDong();
+        nvDTO.setMaNV(maNV);
+        tkDTO.setMaNV(maNV);
+        
+        nvDTO.setHoTenNV(hoten);
+        nvDTO.setEmailNV(email);
+        
+        java.sql.Date sqlNgaySinh = new java.sql.Date(ngaysinh.getTime());
+        nvDTO.setNgaySinhNV(sqlNgaySinh);
+        
+        nvDTO.setChucVuNV(chucvu);
+        nvDTO.setGioiTinhNV(gioiTinh);
+        tkDTO.setTaiKhoan(tk);
+        tkDTO.setMatKhau(mk);
+        nvDTO.setTinhTrangNV(false);
+        nvDTO.setLuongNV("5000000");
+        
+        nvBUS.them(nvDTO);
+        tkBUS.them(tkDTO);
+        
+    }
+       
     private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
         // TODO add your handling code here:
+        NhanVienDTO nvDTO = new NhanVienDTO();
+        nvDTO.setHoTenNV(txtHoten.getText());
+        nvDTO.setEmailNV(txtEmail.getText());
+        
+        java.util.Date ngaysinh = dcNgaySinh.getDate();
+        if (ngaysinh == null) {
+            // Nếu người dùng chưa chọn ngày sinh -> Báo lỗi và dừng hàm ngay lập tức
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày sinh!", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+        // Nếu đã chọn rồi thì mới an toàn để convert sang SQL Date
+        java.sql.Date sqlNgaySinh = new java.sql.Date(ngaysinh.getTime());
+        nvDTO.setNgaySinhNV(sqlNgaySinh);
+        
+        // 3. KIỂM TRA MẬT KHẨU CÓ KHỚP NHAU KHÔNG (Nên làm luôn ở đây)
+        String mk1 = new String(pwfmatkhau.getPassword());
+        String mk2 = new String(pwfmatkhau2.getPassword());
+        if (!mk1.equals(mk2)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu nhập lại không khớp!", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+       
+        nvDTO.setNgaySinhNV(sqlNgaySinh);
+        
+        TaiKhoanNVDTO tkDTO = new TaiKhoanNVDTO();
+        tkDTO.setTaiKhoan(txtTaikhoan.getText());
+      
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        String thongBao = nvBUS.kiemTraHopLe(nvDTO);
+        if(!thongBao.equals("OK")){
+            JOptionPane.showMessageDialog(this,thongBao,"Lỗi kiểm tra",JOptionPane.WARNING_MESSAGE);
+            return ;
+        }
+        
+        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
+        String thongBaotk = tkBUS.kiemtrahople(tkDTO);
+        if(!thongBaotk.equals("OK")){
+            JOptionPane.showMessageDialog(this,thongBaotk,"Lỗi kiểm tra",JOptionPane.WARNING_MESSAGE);
+            return ;
+        }
+                
+     
         laythongtin();
         Login l = new Login();
         l.setVisible(true);
@@ -331,42 +456,7 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbChucVuActionPerformed
     
-    public void laythongtin(){
-        
-        NhanVienDTO nvDTO = new NhanVienDTO();
-        NhanVienBUS nvBUS = new NhanVienBUS();
-        TaiKhoanNVDTO tkDTO = new TaiKhoanNVDTO();
-        TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
-    
-    
-        txtHoten.isEnabled();
-        String hoten = txtHoten.getText();
-        String email = txtEmail.getText();
-        java.util.Date ngaysinh = dcNgaySinh.getDate();
-        String chucvu = cmbChucVu.getSelectedItem().toString();
-        String tk = txtTaikhoan.getText();
-        String mk = new String(pwfmatkhau.getPassword());
-        
-        
-        String maNV = nvBUS.maTuDong();
-        nvDTO.setMaNV(maNV);
-        tkDTO.setMaNV(maNV);
-        
-        nvDTO.setHoTenNV(hoten);
-        nvDTO.setEmailNV(email);
-        
-        java.sql.Date sqlNgaySinh = new java.sql.Date(ngaysinh.getTime());
-        nvDTO.setNgaySinh(sqlNgaySinh);
-        
-        nvDTO.setChucVu(chucvu);
-        tkDTO.setTaiKhoan(tk);
-        tkDTO.setMatKhau(mk);
-        nvDTO.setTinhTrang(false);
-        
-        nvBUS.them(nvDTO);
-        tkBUS.them(tkDTO);
-        
-    }
+   
     /**
      * @param args the command line arguments
      */
@@ -380,11 +470,15 @@ public class Register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinue;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbChucVu;
+    private javax.swing.JRadioButton cmbFemale;
+    private javax.swing.JRadioButton cmbMale;
     private com.toedter.calendar.JDateChooser dcNgaySinh;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -400,6 +494,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField jTextField4;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JPasswordField pwfmatkhau;
