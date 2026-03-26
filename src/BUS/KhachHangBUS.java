@@ -63,5 +63,14 @@ public class KhachHangBUS {
 
         return check;
     }
+    public String taoMaKH(){
+        String max = khDAO.layMaKHMax();
 
+        if(max == null){
+            return "KH001";
+        }
+
+        int index = Integer.parseInt(max.substring(2));
+        return String.format("KH%03d", index + 1);
+    }
 }

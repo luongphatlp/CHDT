@@ -25,6 +25,16 @@ public class KhuyenMaiBUS {
             kmMap.put(km.getMa(), km);
         }
     }
+    public String taoMaKM(){
+        String max = dao.layMaKMMax();
+
+        if(max == null){
+            return "KM001";
+        }
+
+        int index = Integer.parseInt(max.substring(2));
+        return String.format("KM%03d", index + 1);
+    }
     public ArrayList<KhuyenMaiDTO> getDS() {
         return ds;
     }

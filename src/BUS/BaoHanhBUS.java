@@ -23,10 +23,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class BaoHanhBUS {
     private final BaoHanhDAO dao = new BaoHanhDAO();
-    ArrayList<BaoHanhDTO> ds;
+    SanPhamBUS bussp =new  SanPhamBUS();
     ChiTietBaoHanhBUS busct=new ChiTietBaoHanhBUS();
+    ArrayList<BaoHanhDTO> ds;
     public BaoHanhBUS(){
         ds=new ArrayList<>();
+        bussp.docDS();
         busct.selectAll();
     }
     public ArrayList<BaoHanhDTO> selectAll(){
@@ -55,7 +57,12 @@ public class BaoHanhBUS {
             }
     }
     public String taoMaBH() {
-       return dao.taoMaBH();
+        String max =dao.layMaBHMax();
+        if(max == null){
+            return "BH001";
+        }
+        int index = Integer.parseInt(max.substring(2));
+        return String.format("BH%03d", index + 1);
     }
     public KhachHangDTO getKHByMaKH(String makh){
         KhachHangBUS bus=new KhachHangBUS();
@@ -65,10 +72,12 @@ public class BaoHanhBUS {
         }
         return null;
     }
-//    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
-//        SanPhamBUS bus =new  SanPhamBUS();
-//        return bus.layCTSPByMaSP(masp);
-//    } 
+    public ChiTietSanPhamDTO getCTSPByMaSP(String ma){
+        return bussp.getCTSPByMaSP(ma);
+    }
+    public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
+        return bussp.layCTSPByMaSP(masp);
+    } 
     public void insertCTBH(ArrayList<ChiTietBaoHanhDTO> ds){
         ChiTietBaoHanhBUS bus=new ChiTietBaoHanhBUS();
         for(ChiTietBaoHanhDTO ctbh:ds)

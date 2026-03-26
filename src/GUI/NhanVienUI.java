@@ -337,7 +337,37 @@ public class NhanVienUI extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    private void customTable() {
+        
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        tblNhanVien.setFont(tableFont);
+        tblNhanVien.setRowHeight(30);
 
+        tblNhanVien.getTableHeader().setOpaque(false);
+        tblNhanVien.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < tblNhanVien.getColumnCount(); i++) {
+            tblNhanVien.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+
+    private void resizeColumnWidth(javax.swing.JTable table) {
+        final javax.swing.table.TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; 
+            for (int row = 0; row < table.getRowCount(); row++) {
+                javax.swing.table.TableCellRenderer renderer = table.getCellRenderer(row, column);
+                java.awt.Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 15, width);
+            }
+            if (width > 400) {
+                width = 400; 
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
     public void loadToData(){
         try{
             int i = 1;

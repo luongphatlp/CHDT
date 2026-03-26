@@ -9,6 +9,8 @@ import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
 import DTO.ThongKeNhanVienDTO;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  *
@@ -92,15 +94,14 @@ public class ThongKeNhanVienBUS {
     public ArrayList<ThongKeNhanVienDTO> locNhanVienTheoMa(ArrayList<String> key){
         ArrayList<ThongKeNhanVienDTO> tam=new ArrayList<>();
         for(NhanVienDTO nv:busnv.getDSNV()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.contains(nv.getMaNV());
-            if(!ktkey) continue;
-            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
+            if(key != null && !key.isEmpty() && !key.contains(nv.getMaNV())) continue;
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaNV(nv.getMaNV())){
                 dem++;
                 tong+=hd.getTongTien();
             }
+            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
             tk.setMaNV(nv.getMaNV());
             tk.setHoTen(nv.getHoTenNV());
             tk.setSoHoaDon(dem);
@@ -110,21 +111,22 @@ public class ThongKeNhanVienBUS {
         return tam;
         
     }
-    public ArrayList<ThongKeNhanVienDTO> locNhanVienTheoNgay(ArrayList<String> key,LocalDate tu,LocalDate den){
+    public ArrayList<ThongKeNhanVienDTO> locNhanVienTheoNgay(ArrayList<String> key,LocalDate tungay,LocalDate denngay){
         ArrayList<ThongKeNhanVienDTO> tam=new ArrayList<>();
+        LocalDateTime tu = tungay==null ? LocalDate.MIN.atStartOfDay() : tungay.atStartOfDay();
+        LocalDateTime den = denngay==null ? LocalDate.MAX.atTime(LocalTime.MAX) : denngay.atTime(LocalTime.MAX);
         for(NhanVienDTO nv:busnv.getDSNV()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.contains(nv.getMaNV());
-            if(!ktkey) continue;
-            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
+            if(key != null && !key.isEmpty() && !key.contains(nv.getMaNV())) continue;
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaNV(nv.getMaNV())){
-                boolean ktngay=kTNgay(hd.getNgay().toLocalDate(),tu,den);
-                if(ktngay){
+                LocalDateTime ngay=hd.getNgay();
+                if(!ngay.isAfter(den) && !ngay.isBefore(tu)){
                    dem++;
                    tong+=hd.getTongTien();
                 }
             }
+            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
             tk.setMaNV(nv.getMaNV());
             tk.setHoTen(nv.getHoTenNV());
             tk.setSoHoaDon(dem);
@@ -136,18 +138,16 @@ public class ThongKeNhanVienBUS {
     public ArrayList<ThongKeNhanVienDTO> locNhanVienTheoThang(ArrayList<String> key,int nam){
         ArrayList<ThongKeNhanVienDTO> tam=new ArrayList<>();
         for(NhanVienDTO nv:busnv.getDSNV()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.contains(nv.getMaNV());
-            if(!ktkey) continue;
-            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
+            if(key != null && !key.isEmpty() && !key.contains(nv.getMaNV())) continue;
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaNV(nv.getMaNV())){
-                boolean ktngay= hd.getNgay().getYear()==nam;
-                if(ktngay){
+                if(hd.getNgay().getYear()==nam){
                    dem++;
                    tong+=hd.getTongTien();
                 }
             }
+            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
             tk.setMaNV(nv.getMaNV());
             tk.setHoTen(nv.getHoTenNV());
             tk.setSoHoaDon(dem);
@@ -158,25 +158,20 @@ public class ThongKeNhanVienBUS {
     }
     public ArrayList<ThongKeNhanVienDTO> locNhanVienTheoNam(ArrayList<String> key,int tunam,int dennam){
         ArrayList<ThongKeNhanVienDTO> tam=new ArrayList<>();
+        int tu=tunam == -1 ? Integer.MIN_VALUE : tunam;
+        int den =dennam==-1? Integer.MAX_VALUE : dennam;
         for(NhanVienDTO nv:busnv.getDSNV()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.contains(nv.getMaNV());
-            if(!ktkey) continue;
-            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
+            if(key != null && !key.isEmpty() && !key.contains(nv.getMaNV())) continue;
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaNV(nv.getMaNV())){
-                boolean ktngay;
-                if(tunam!=0 && dennam!=0)
-                    ktngay=hd.getNgay().getYear()>=tunam && hd.getNgay().getYear()<=dennam;
-                else if(tunam!=0)
-                    ktngay=hd.getNgay().getYear()>=tunam;
-                else 
-                    ktngay=hd.getNgay().getYear()<=dennam;
-                if(ktngay){
+                int nam=hd.getNgay().getYear();
+                if(nam<=den && nam>=tu){
                    dem++;
                    tong+=hd.getTongTien();
                 }                      
             }
+            ThongKeNhanVienDTO tk=new ThongKeNhanVienDTO();
             tk.setMaNV(nv.getMaNV());
             tk.setHoTen(nv.getHoTenNV());
             tk.setSoHoaDon(dem);
