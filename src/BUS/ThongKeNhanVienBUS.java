@@ -185,4 +185,35 @@ public class ThongKeNhanVienBUS {
         }
         return tam;
     }
+    
+    public ArrayList<ThongKeNhanVienDTO> thongkenhanvientheoquy (ArrayList<String> key , int quy , int nam){
+        ArrayList<ThongKeNhanVienDTO> dstk = new ArrayList<>();
+        
+        HoaDonBUS hdbus = new HoaDonBUS();
+        for (NhanVienDTO nv : hdbus.getDSNV()){
+            int shd = 0;
+            int st = 0;
+            if (key == null || !key.isEmpty() && !key.contains(nv.getMaNV())){
+                continue;
+            }
+            for (HoaDonDTO hd : hdbus.getDS()){
+                   
+                   int ktquy = ((hd.getNgay().getMonthValue()-1)/3) +1;
+                   int ktnam = hd.getNgay().getYear();
+                   if (nv.getMaNV().equals(hd.getMaNV()))
+                       if (nam == ktnam && quy == ktquy){
+                           shd++;
+                           st += hd.getTongTien();
+                       }
+            }
+            ThongKeNhanVienDTO tk = new ThongKeNhanVienDTO();
+            tk.setMaNV(nv.getMaNV());
+            tk.setHoTen(nv.getHoTenNV());
+            tk.setDoanhThu(st);
+            tk.setSoHoaDon(shd);
+            
+            dstk.add(tk);
+        }
+        return dstk;
+    }
 }

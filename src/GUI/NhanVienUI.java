@@ -24,7 +24,21 @@ public class NhanVienUI extends javax.swing.JPanel {
     public NhanVienUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
         initComponents();
-        
+      // 1. Ép Font chữ to (size 18) và in đậm cho dữ liệu
+        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+        tblNhanVien.setFont(tableFont);
+        tblNhanVien.setRowHeight(30);
+
+        // 2. Chỉnh Font chữ (Arial, size 16) cho thanh Tiêu đề
+        tblNhanVien.getTableHeader().setOpaque(false);
+        tblNhanVien.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+        // 3. (Bổ sung thêm) Căn giữa nội dung cho giống ảnh mẫu
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        for (int i = 0; i < tblNhanVien.getColumnCount(); i++) {
+            tblNhanVien.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         
         loadToData();
         loadCVtoCMB();

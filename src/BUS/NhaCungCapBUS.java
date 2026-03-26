@@ -1,4 +1,4 @@
-package BUS;
+    package BUS;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -141,4 +141,43 @@ public ArrayList<NhaCungCapDTO> timKiem(String text, int index) {
         } 
          return count;
     } 
+    public boolean them1 (NhaCungCapDTO ncc){
+        NhaCungCapDAO dao = new NhaCungCapDAO();
+        dao.insert(ncc);
+        ds.add(ncc);
+        return true;
+    }
+    public boolean sua1 (NhaCungCapDTO ncc){
+        NhaCungCapDAO dao = new NhaCungCapDAO();
+        dao.update(ncc);
+        for (int i = 0 ; i <ds.size(); i++){
+            if (ncc.getMaNCC().equals(ds.get(i).getMaNCC())){
+                ds.set(i, ncc);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean xoa1 (NhaCungCapDTO ncc){
+        NhaCungCapDAO dao = new NhaCungCapDAO();
+        dao.delete(ncc.getMaNCC());
+        for (int i = 0 ; i < ds.size(); i++){
+            if (ncc.getMaNCC().equals(ds.get(i).getMaNCC())){
+                ds.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    public ArrayList<NhaCungCapDTO> timkiem (String muctieu){
+        ArrayList<NhaCungCapDTO> dstk = new ArrayList<>();
+        for (NhaCungCapDTO ncc : ds){
+            if (muctieu.contains(ncc.getMaNCC())){
+                dstk.add(ncc);
+            }else{
+                return null;
+            }
+        }
+        return dstk;
+    }
 }
