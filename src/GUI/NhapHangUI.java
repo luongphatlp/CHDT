@@ -12,7 +12,7 @@ import BUS.SanPhamBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
-import DTO.TaiKhoanSession;
+import UTIL.TaiKhoanSession;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -700,10 +700,6 @@ public class NhapHangUI extends javax.swing.JPanel {
         String maPN = jTextField3.getText();
         System.out.println("MaPN: " + maPN);
         String maNV = jTextField2.getText();
-        if(maNV == null || maNV.trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống!");
-            return;
-        }
         NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
         String maNCC = ncc.getMaNCC();
         Date today = new Date();
