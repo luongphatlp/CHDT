@@ -1,7 +1,7 @@
 package DAO;
 
 import DTO.BaoHanhDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class BaoHanhDAO {
     
     public int insert(BaoHanhDTO bh) {
         int r=-1;
-        String sql = "INSERT INTO baohanh (Ma,MaNV,MaKH,ThoiGian) VALUES (?, ?,?,?)";
+        String sql = "INSERT INTO baohanh (MaBH,MaNV,MaKH,NgayLap) VALUES (?, ?,?,?)";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, bh.getMaBH());
             ps.setString(2, bh.getMaNV());
@@ -40,7 +40,7 @@ public class BaoHanhDAO {
     }
     public int update(BaoHanhDTO bh){
         int r=-1;
-        String sql = "UPDATE  baohanh SET MaNV=?,MaKH=?,ThoiGian=? WHERE Ma=? ";
+        String sql = "UPDATE  baohanh SET MaNV=?,MaKH=?,ThoiGian=? WHERE MaBH=? ";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, bh.getMaNV());
             ps.setString(2, bh.getMaKH());        
@@ -52,35 +52,27 @@ public class BaoHanhDAO {
     }
     public int delete(String mabh){
         int r=-1;
-         String sql = "DELETE  baohanh WHERE Ma=? ";
+         String sql = "DELETE  baohanh WHERE MaBH=? ";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, mabh);
             r= ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
         return r;
     }
-    public String taoMaBH() {
-        String sql = "SELECT MAX(Ma) FROM baohanh";
-        String maMax = null;
-
+    public String layMaBHMax() {
+        String sql = "SELECT MAX(MaBH) FROM baohanh";
         try (
             Connection con = Connect.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
         ) {
             if (rs.next()) {
-                maMax = rs.getString(1);
+                return rs.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (maMax == null) {
-            return "BH01";
-        }
-
-        int so = Integer.parseInt(maMax.substring(2));
-        return String.format("BH%02d", so + 1);
+        return null;
 }
 
    /* public ArrayList<BaoHanhDTO> selectAll() {

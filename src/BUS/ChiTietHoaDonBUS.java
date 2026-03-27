@@ -7,6 +7,7 @@ package BUS;
 import DAO.ChiTietHoaDonDAO;
 import DTO.ChiTietHoaDonDTO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,6 +42,7 @@ class ChiTietHoaDonBUS {
     public ArrayList<ChiTietHoaDonDTO> getCTHDByMaHD(String mahd){
         ArrayList<ChiTietHoaDonDTO> tam=new ArrayList<>();
         for(ChiTietHoaDonDTO ct:ds){
+                            JOptionPane.showMessageDialog(null, "Mã HT:"+ct.getMaHD()+" Mã key:"+mahd);
             if(ct.getMaHD().equals(mahd))
                 tam.add(ct);
         }

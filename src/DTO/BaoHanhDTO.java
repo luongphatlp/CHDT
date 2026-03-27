@@ -13,12 +13,7 @@ public class BaoHanhDTO {
     }
 
     // Constructor có tham số
-    public BaoHanhDTO(String mabh, String manv, String makh, LocalDate ngaylap) {
-        this.mabh = mabh;
-        this.manv = manv;
-        this.makh = makh;
-        this.ngaylap = ngaylap;
-    }
+  
 
     // Getter và Setter
 

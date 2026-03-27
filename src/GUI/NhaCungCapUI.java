@@ -21,7 +21,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
         initComponents();
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] { "Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại" } 
+            new String [] { "STT", "Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại" } 
         ) {
            @Override
            public boolean isCellEditable(int row, int column) {
@@ -34,9 +34,10 @@ public class NhaCungCapUI extends javax.swing.JPanel {
     public void loadDataToTable(ArrayList<NhaCungCapDTO> ds) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+        int stt = 1;
         for (NhaCungCapDTO ncc : ds) {
              model.addRow(new Object[]{
-                  ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai()
+                stt++ ,ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai()
              });
          }
          resizeColumnWidth(jTable1);
@@ -61,6 +62,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
         final javax.swing.table.TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
             int width = 70; 
+            if (column == 0) width = 50;
             for (int row = 0; row < table.getRowCount(); row++) {
                 javax.swing.table.TableCellRenderer renderer = table.getCellRenderer(row, column);
                 java.awt.Component comp = table.prepareRenderer(renderer, row, column);
@@ -309,7 +311,7 @@ public class NhaCungCapUI extends javax.swing.JPanel {
         return;
     }
     
-    String ma = jTable1.getValueAt(row, 0).toString();
+    String ma = jTable1.getValueAt(row, 1).toString();
     int confirm = JOptionPane.showConfirmDialog(this,
             "Bạn có chắc chắn muốn xóa nhà cung cấp: " + ma + "?",
             "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
@@ -343,10 +345,10 @@ public class NhaCungCapUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp cần sửa!");
             return;
         }
-        String ma = jTable1.getValueAt(row, 0).toString();
-        String ten = jTable1.getValueAt(row, 1).toString();
-        String diaChi = jTable1.getValueAt(row, 2).toString();
-        String sdt = jTable1.getValueAt(row, 3).toString();
+        String ma = jTable1.getValueAt(row, 1).toString();
+        String ten = jTable1.getValueAt(row, 2).toString();
+        String diaChi = jTable1.getValueAt(row, 3).toString();
+        String sdt = jTable1.getValueAt(row, 4).toString();
         
         NhaCungCapDTO nccSelected = new NhaCungCapDTO(ma, ten, diaChi, sdt);              
         SuaNCCUI suaForm = new SuaNCCUI(nccSelected, this, nccBUS);
@@ -385,7 +387,34 @@ public class NhaCungCapUI extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+   // --- THÊM ĐOẠN NÀY VÀO CUỐI CLASS ĐỂ CHẠY THỬ ---
+    public static void main(String[] args) {
+        /* Set Look and Feel (Giao diện FlatLaf) */
+        try {
+            com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+        /* Tạo một cửa sổ Frame ảo để chứa Panel */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                javax.swing.JFrame frame = new javax.swing.JFrame("Test Giao Diện Nhà Cung Cấp");
+                frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+                
+                // Khởi tạo Panel của bạn
+                NhaCungCapUI panel = new NhaCungCapUI();
+                
+                // Thêm Panel vào Frame
+                frame.add(panel);
+                
+                // Chỉnh kích thước và hiển thị
+                frame.setSize(1200, 800); // Kích thước mô phỏng
+                frame.setLocationRelativeTo(null); // Căn giữa màn hình
+                frame.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnreset;

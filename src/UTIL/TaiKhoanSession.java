@@ -8,7 +8,9 @@ package UTIL;
  *
  * @author admin
  */
+import DTO.*;
 import BUS.NhanVienBUS;
+import DTO.NhanVienDTO;
 import DTO.NhanVienDTO;
 
 public class TaiKhoanSession {

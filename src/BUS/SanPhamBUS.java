@@ -11,9 +11,13 @@ import java.util.ArrayList;
 public class SanPhamBUS {
     private ArrayList<SanPhamDTO> ds;
     private SanPhamDAO dao = new SanPhamDAO();
-
-    public SanPhamBUS() {
-        docDS();
+    private ChiTietSanPhamBUS busct=new ChiTietSanPhamBUS();
+   public SanPhamBUS(){
+        try {
+            busct.docDS();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void docDS() {
@@ -94,8 +98,8 @@ public class SanPhamBUS {
         row.createCell(1).setCellValue(sp.getTenSP());
         row.createCell(2).setCellValue(sp.getSoLuong());
         row.createCell(3).setCellValue(sp.getDonGia());
-        row.createCell(4).setCellValue(sp.getDonViTinh());
-        row.createCell(5).setCellValue(sp.getMaHang());
+//        row.createCell(4).setCellValue(sp.getDonViTinh());
+//        row.createCell(5).setCellValue(sp.getMaHang());
     }
 
     try (FileOutputStream fileOut = new FileOutputStream(file)) {
@@ -117,8 +121,8 @@ public class SanPhamBUS {
                 sp.setTenSP(row.getCell(1).getStringCellValue());
                 sp.setSoLuong((int) row.getCell(2).getNumericCellValue());
                 sp.setDonGia((int) row.getCell(3).getNumericCellValue());
-                sp.setDonViTinh(row.getCell(4).getStringCellValue());
-                sp.setMaHang(row.getCell(5).getStringCellValue());
+//                sp.setDonViTinh(row.getCell(4).getStringCellValue());
+//                sp.setMaHang(row.getCell(5).getStringCellValue());
                 DTO.ChiTietSanPhamDTO ct = sp.getChiTiet();
                 ct.setMau("Chưa xác định");
                 ct.setManHinh("Chưa xác định");
@@ -147,12 +151,14 @@ public class SanPhamBUS {
         return false;
     }
     public void tangSoLuong(String masp, int soluong){
-
-        SanPhamDAO dao = new SanPhamDAO();
         dao.updateSoLuong(masp, soluong);
+        
+    }
+    public ChiTietSanPhamDTO getCTSPByMaSP(String ma){
+        return busct.getCTSPByMaSP(ma);
     }
     public ChiTietSanPhamDTO layCTSPByMaSP(String masp){
-        docDS();
+        if(ds==null) docDS();
         for(SanPhamDTO sp:ds){
             if(sp.getMaSP().equals(masp)){
                 return sp.getChiTiet();
@@ -160,7 +166,9 @@ public class SanPhamBUS {
         }
         return null;
     }
-    public int capNhatSoLuongSanPham(String masp,int soluongtru){
-        return dao.truSoLuongSanPham(masp,soluongtru);
+
+    public int capNhatSoLuongSanPham(String masp, int soluongtru) {
+        return dao.truSoLuongSanPham(masp, soluongtru);
     }
 }
+

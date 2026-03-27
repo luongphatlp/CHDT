@@ -6,7 +6,7 @@ package DAO;
 
 import DTO.HoaDonDTO;
 import DTO.SanPhamDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,27 +126,20 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
         }
         return ds;
     }
-        public String taoMaHD() {
+    public String layMaHDMax(){
         String sql = "SELECT MAX(MaHD) FROM hoadon";
-        String maMax = null;
 
         try (
-            Connection con = Connect.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
+            Connection conn = Connect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
         ) {
-            if (rs.next()) {
-                maMax = rs.getString(1);
+            if(rs.next()){
+                return rs.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (maMax == null) {
-            return "HD01";
-        }
-
-        int so = Integer.parseInt(maMax.substring(2));
-        return String.format("HD%02d", so + 1);
-}
+        return null;
+    }
 }

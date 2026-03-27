@@ -12,8 +12,10 @@ import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
+import static GUI.XacNhanTTUI.RET_CANCEL;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +27,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,13 +42,17 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     private javax.swing.table.DefaultTableModel modelDuLieu;
     public static final int RET_CANCEL = 0;
     public static final int RET_OK = 1;
-    //private int returnStatus = RET_CANCEL;
-
+    private int returnStatus = RET_CANCEL;
+    
+    public ThemBaoHanhUI(){initComponents();}
+    public int getReturnStatus() {
+        return returnStatus;
+    } 
+    
     public LocalDate tinhNgayHetHan(LocalDate ngay, int thoiHan) {
         return ngay.plusMonths(thoiHan);
     }
     public void veBangChiTietBaoHanh(ArrayList<SanPhamDTO> dssp,String ngay){
-        SanPhamBUS bus=new SanPhamBUS();
         Vector header=new Vector();
         header.add("STT");
         header.add("IMEI");
@@ -62,7 +70,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                 row.add("");
                 row.add(sp.getMaSP());
                 row.add(sp.getTenSP());
-                int thoihan=bus.layCTSPByMaSP(sp.getMaSP()).getBaoHanh();
+                int thoihan=bus.getCTSPByMaSP(sp.getMaSP()).getBaoHanh();
                 row.add(thoihan);
                 LocalDate ngayhethan=tinhNgayHetHan(hientai,thoihan);
                 row.add(ngayhethan);
@@ -84,8 +92,8 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmahoadon.setText(mahd);
 
         // Nhân viên
-        if (UTIL.TaiKhoanSession.nvDangNhap != null) {
-            txtmanhanvien.setText(UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
+        if (DTO.TaiKhoanSession.nvDangNhap != null) {
+            txtmanhanvien.setText(DTO.TaiKhoanSession.nvDangNhap.getMaNV());
         }
 
         // Khách hàng
@@ -140,6 +148,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         okButton.setBackground(new java.awt.Color(0, 102, 102));
         okButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -193,6 +202,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmabaohanh.setBackground(new java.awt.Color(244, 244, 214));
         txtmabaohanh.setForeground(new java.awt.Color(0, 0, 0));
         txtmabaohanh.setText("\n");
+        txtmabaohanh.setEnabled(false);
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
@@ -201,6 +211,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtngaylap.setBackground(new java.awt.Color(244, 244, 214));
         txtngaylap.setForeground(new java.awt.Color(0, 0, 0));
         txtngaylap.setText("\n");
+        txtngaylap.setEnabled(false);
         txtngaylap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtngaylapActionPerformed(evt);
@@ -214,6 +225,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmahoadon.setBackground(new java.awt.Color(244, 244, 214));
         txtmahoadon.setForeground(new java.awt.Color(0, 0, 0));
         txtmahoadon.setText("\n");
+        txtmahoadon.setEnabled(false);
         txtmahoadon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmahoadonActionPerformed(evt);
@@ -227,6 +239,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmanhanvien.setBackground(new java.awt.Color(244, 244, 214));
         txtmanhanvien.setForeground(new java.awt.Color(0, 0, 0));
         txtmanhanvien.setText("\n");
+        txtmanhanvien.setEnabled(false);
         txtmanhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmanhanvienActionPerformed(evt);
@@ -244,6 +257,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txttenkh.setBackground(new java.awt.Color(244, 244, 214));
         txttenkh.setForeground(new java.awt.Color(0, 0, 0));
         txttenkh.setText("\n");
+        txttenkh.setEnabled(false);
         txttenkh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txttenkhActionPerformed(evt);
@@ -257,6 +271,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtsdt.setBackground(new java.awt.Color(244, 244, 214));
         txtsdt.setForeground(new java.awt.Color(0, 0, 0));
         txtsdt.setText("\n");
+        txtsdt.setEnabled(false);
         txtsdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtsdtActionPerformed(evt);
@@ -270,6 +285,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtemail.setBackground(new java.awt.Color(244, 244, 214));
         txtemail.setForeground(new java.awt.Color(0, 0, 0));
         txtemail.setText("\n");
+        txtemail.setEnabled(false);
         txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtemailActionPerformed(evt);
@@ -321,6 +337,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmakhachhang.setBackground(new java.awt.Color(244, 244, 214));
         txtmakhachhang.setForeground(new java.awt.Color(0, 0, 0));
         txtmakhachhang.setText("\n");
+        txtmakhachhang.setEnabled(false);
         txtmakhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmakhachhangActionPerformed(evt);
@@ -336,7 +353,6 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
                             .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(191, 191, 191)
@@ -376,7 +392,10 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(215, 215, 215)
+                                .addComponent(jLabel7)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -461,7 +480,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         BaoHanhDTO bh=new BaoHanhDTO();
         bh.setMaBH(txtmabaohanh.getText());
         bh.setMaKH(txtmakhachhang.getText());
-        NhanVienDTO nv=UTIL.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nv=DTO.TaiKhoanSession.nvDangNhap;
         bh.setMaNV(nv.getMaNV());
         String ngaylap=txtngaylap.getText();
         try {
@@ -504,15 +523,38 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         }
         
         bus.insertCTBH(ds);
-       
-        // Nếu bạn muốn lưu vào DB ngay tại đây, hãy gọi hàm DAO
+        JOptionPane.showMessageDialog(null,"Tạo phiếu bảo hành thành công");
+        doClose(RET_OK);
+        int ok=JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất phiếu pdf không");
+            if(ok==JOptionPane.YES_OPTION){
+                JFileChooser fileChooser = new JFileChooser();
+                int kq = fileChooser.showSaveDialog(null);
+                if(kq==JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    String path = file.getAbsolutePath() + ".pdf";
+                    bus.xuatPDF(path,mabh);
+                    JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file PDF thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }
         
         // Hoặc đơn giản là đóng dialog và báo về cho HoaDonUI biết là đã xong
-        doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                "Bạn có chắc muốn xóa không?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+        if (result == JOptionPane.YES_OPTION) {
+            doClose(RET_CANCEL);
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -561,12 +603,35 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     }//GEN-LAST:event_bangchitietbaohanhAncestorAdded
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String imei=txtimei.getText();
-        int row;
-        row=bangchitietbaohanh.getSelectedRow();
-        if(row!=-1)
-            bangchitietbaohanh.setValueAt(imei,row,1);
+        String imei = txtimei.getText().trim();
+
+        if (imei.isEmpty()) { 
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập IMEI");
+            return;
+        }
+
+        int row = bangchitietbaohanh.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng");
+            return;
+        }
+        boolean kt=true;
+        // kiểm tra trùng
+        for (int i = 0; i < bangchitietbaohanh.getRowCount(); i++) {
+            if (i == row) continue; // bỏ qua dòng đang chọn
+
+            Object value = bangchitietbaohanh.getValueAt(i, 1);
+            if (value != null && imei.equals(value.toString())) {
+                JOptionPane.showMessageDialog(null, "Trùng IMEI");
+                return;
+            }
+        }
+        if(kt && !bus.KtIMEI(imei)){
+            JOptionPane.showMessageDialog(null, "IMEI này đã được bảo hành");
+            return;
+        }
+        // nếu không trùng thì set
+        bangchitietbaohanh.setValueAt(imei, row, 1);
         txtimei.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -575,7 +640,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtmakhachhangActionPerformed
 
     private void doClose(int retStatus) {
-        //returnStatus = retStatus;
+        returnStatus = retStatus;
         setVisible(false);
         dispose();
     }
@@ -583,6 +648,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     public void setThongTinBaoHanh() {
 
     }
+    
 
     /**
      * @param args the command line arguments
@@ -618,6 +684,8 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
     private javax.swing.JTextField txtsdt;
     private javax.swing.JTextField txttenkh;
     // End of variables declaration//GEN-END:variables
-
-    //private int returnStatus = RET_CANCEL;
+public static void main(String[] args){
+        ThemBaoHanhUI u=new ThemBaoHanhUI();
+        u.setVisible(true);
+    }
 }

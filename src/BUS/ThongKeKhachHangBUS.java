@@ -8,7 +8,10 @@ import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.ThongKeKhachHangDTO;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,15 +35,14 @@ public class ThongKeKhachHangBUS {
     public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoMa(String key){
         ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
         for(KhachHangDTO kh:buskh.getDSKH()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.equalsIgnoreCase(kh.getMa()) ||key.contains(kh.getHoten().toLowerCase());
-            if(!ktkey) continue;
-            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
+            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;          
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
                 dem++;
                 tong+=hd.getTongTien();
             }
+            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
             tk.setMa(kh.getMa());
             tk.setHoten(kh.getHoten());
             tk.setHoadon(dem);
@@ -49,21 +51,22 @@ public class ThongKeKhachHangBUS {
         }
         return tam;
     }
-    public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoNgay(String key,LocalDate tu,LocalDate den){
+    public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoNgay(String key,LocalDate tungay,LocalDate denngay){
         ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
+        LocalDateTime tu= tungay==null ? LocalDate.MIN.atStartOfDay() : tungay.atStartOfDay();
+        LocalDateTime den =denngay==null ? LocalDate.MAX.atTime(LocalTime.MAX) : denngay.atTime(LocalTime.MAX);
         for(KhachHangDTO kh:buskh.getDSKH()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.equalsIgnoreCase(kh.getMa()) ||key.contains(kh.getHoten().toLowerCase());
-            if(!ktkey) continue;
-            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
+            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;          
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
-                boolean ktngay=kTNgay(hd.getNgay().toLocalDate(),tu,den);
-                if(ktngay){
+                LocalDateTime ngay=hd.getNgay();
+                if(!ngay.isAfter(den) && !ngay.isBefore(tu)){
                    dem++;
                    tong+=hd.getTongTien();
                 }
             }
+            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
             tk.setMa(kh.getMa());
             tk.setHoten(kh.getHoten());
             tk.setHoadon(dem);
@@ -74,19 +77,18 @@ public class ThongKeKhachHangBUS {
     }
     public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoThang(String key,int nam){
         ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
+        
         for(KhachHangDTO kh:buskh.getDSKH()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.equalsIgnoreCase(kh.getMa()) ||key.contains(kh.getHoten().toLowerCase());
-            if(!ktkey) continue;
-            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
+            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;                      
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
-                boolean ktngay= hd.getNgay().getYear()==nam;
-                if(ktngay){
+                if(hd.getNgay().getYear()==nam){
                    dem++;
                    tong+=hd.getTongTien();
                 }
             }
+            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
             tk.setMa(kh.getMa());
             tk.setHoten(kh.getHoten());
             tk.setHoadon(dem);
@@ -97,25 +99,20 @@ public class ThongKeKhachHangBUS {
     }
     public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoNam(String key,int tunam,int dennam){
         ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
+        int tu=tunam==-1 ? Integer.MIN_VALUE : tunam;
+        int den =dennam==-1 ? Integer.MAX_VALUE : dennam;
         for(KhachHangDTO kh:buskh.getDSKH()){
-            boolean ktkey = (key == null || key.isEmpty()) || key.equalsIgnoreCase(kh.getMa()) ||key.contains(kh.getHoten().toLowerCase());
-            if(!ktkey) continue;
-            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
+            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;                      
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
-                boolean ktngay;
-                if(tunam!=0 && dennam!=0)
-                    ktngay=hd.getNgay().getYear()>=tunam && hd.getNgay().getYear()<=dennam;
-                else if(tunam!=0)
-                    ktngay=hd.getNgay().getYear()>=tunam;
-                else 
-                    ktngay=hd.getNgay().getYear()<=dennam;
-                if(ktngay){
+                int nam=hd.getNgay().getYear();
+                if(nam<=den && nam>=tu){
                    dem++;
                    tong+=hd.getTongTien();
                 }                      
             }
+            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
             tk.setMa(kh.getMa());
             tk.setHoten(kh.getHoten());
             tk.setHoadon(dem);
@@ -124,4 +121,5 @@ public class ThongKeKhachHangBUS {
         }
         return tam;
     }
+
 }

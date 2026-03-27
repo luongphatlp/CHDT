@@ -35,6 +35,7 @@ public class Login extends javax.swing.JFrame {
         }
         initComponents();
         this.setLocationRelativeTo(null);
+        this.getRootPane().setDefaultButton(btnDangNhap);
         
         setTitle("Login");
     }
@@ -65,6 +66,7 @@ public class Login extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         btnQMK = new javax.swing.JButton();
+        btnShow = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -164,6 +166,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnShow.setText("Hiện mật khẩu");
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -177,14 +186,12 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(pwfMatKhau)
                         .addComponent(jSeparator1)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnShow, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(61, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -194,11 +201,13 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnQMK)
-                        .addGap(130, 130, 130))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(btnDangNhap)
-                        .addGap(160, 160, 160))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnQMK)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,13 +226,15 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(pwfMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDangNhap)
                 .addGap(12, 12, 12)
-                .addComponent(btnQMK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(btnShow)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnQMK, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDangNhap))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,14 +250,13 @@ public class Login extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(38, Short.MAX_VALUE)
-                        .addComponent(jLabel4))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -257,9 +267,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -305,13 +313,7 @@ public class Login extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ Tài khoản và Mật khẩu.");
             return;
         }
-        if(tkInput.equals("1") && mkInput.equals("1")){
-           HomeUI homeAdmin = new HomeUI();
-            homeAdmin.setLocationRelativeTo(null);
-            homeAdmin.setVisible(true);
-            this.dispose();
-            return;
-        }
+
         TaiKhoanNVBUS tkBUS = new TaiKhoanNVBUS();
         NhanVienBUS nvBUS = new NhanVienBUS();
 
@@ -354,22 +356,22 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        if (!nhanVienLogin.isTinhTrang()) {
+        if (!nhanVienLogin.isTinhTrangNV()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa hoặc ngừng hoạt động.");
             return;
         }
-        
+
         
         UTIL.TaiKhoanSession.nvDangNhap = nhanVienLogin;
 
-        if (nhanVienLogin.getChucVu().equalsIgnoreCase("Quản Lý")) {
+        if (nhanVienLogin.getChucVuNV().equalsIgnoreCase("Quản Lý")) {
             HomeUI homeAdmin = new HomeUI();
             homeAdmin.setLocationRelativeTo(null);
             homeAdmin.setVisible(true);
         } else {
-            HomeUI homeAdmin = new HomeUI();
-            homeAdmin.setLocationRelativeTo(null);
-            homeAdmin.setVisible(true);
+            HomeUserUI homeuser = new HomeUserUI();
+            homeuser.setLocationRelativeTo(null);
+            homeuser.setVisible(true);
         }
 
         this.dispose();
@@ -385,6 +387,22 @@ public class Login extends javax.swing.JFrame {
         ThayDoiMatKhau1 form = new ThayDoiMatKhau1();
         form.setVisible(true);
     }//GEN-LAST:event_btnQMKActionPerformed
+
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        // TODO add your handling code here:
+        // Kiểm tra xem ô mật khẩu có đang bị che không (ký tự che khác 0)
+    if (pwfMatKhau.getEchoChar() != (char) 0) {
+        // Xóa ký tự che -> Hiển thị mật khẩu thật
+        pwfMatKhau.setEchoChar((char) 0); 
+        // Đổi tên nút thành "Ẩn" (tùy chọn)
+        btnShow.setText("Ẩn"); 
+    } else {
+        // Gán lại ký tự che là dấu chấm tròn (hoặc có thể dùng '*')
+        pwfMatKhau.setEchoChar('•'); 
+        // Đổi tên nút lại thành "Hiện" (tùy chọn)
+        btnShow.setText("Hiện"); 
+    }
+    }//GEN-LAST:event_btnShowActionPerformed
 
     /**
      * @param args the command line arguments
@@ -405,6 +423,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnQMK;
+    private javax.swing.JButton btnShow;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

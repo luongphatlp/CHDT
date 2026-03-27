@@ -1,7 +1,7 @@
 package DAO;
 
 import DTO.KhuyenMaiDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -92,7 +92,7 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
         ArrayList<KhuyenMaiDTO> ds = new ArrayList<>();
         // Thử truy vấn tất cả trước để kiểm tra kết nối, sau đó mới thêm WHERE
         String qry = "SELECT * FROM khuyenmai WHERE TinhTrang = 1 OR TinhTrang = true";
-        try (Connection conn = database.Connect.getConnection()) {
+        try (Connection conn = DATABASE.Connect.getConnection()) {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(qry);
             while (rs.next()) {
@@ -105,5 +105,21 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
             ex.printStackTrace();
         }
         return ds;
+    }
+    public String layMaKMMax(){
+        String sql = "SELECT MAX(Ma) FROM khuyenmai";
+
+        try (
+            Connection conn = Connect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        ) {
+            if(rs.next()){
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

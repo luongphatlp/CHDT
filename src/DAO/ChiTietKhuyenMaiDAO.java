@@ -2,7 +2,7 @@ package DAO;
 import DTO.ChiTietKhuyenMaiDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.SanPhamDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

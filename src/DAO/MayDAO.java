@@ -1,7 +1,7 @@
 package DAO;
 
 import DTO.MayDTO;
-import database.Connect;
+import DATABASE.Connect;
 import java.sql.*;
 import java.util.ArrayList;
 

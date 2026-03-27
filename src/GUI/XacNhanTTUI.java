@@ -5,6 +5,7 @@
 package GUI;
 
 import DTO.HoaDonDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -142,7 +143,7 @@ public class XacNhanTTUI extends javax.swing.JDialog {
         jLabel5.setText("TỔNG TIỀN HÓA ĐƠN");
 
         jLabel4.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
-        jLabel4.setText("Loại thanh toán:");
+        jLabel4.setText("Phương thức thanh toán:");
 
         jLabel6.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
         jLabel6.setText("Thời gian tạo:");
@@ -225,11 +226,20 @@ public class XacNhanTTUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        JOptionPane.showMessageDialog(null,"Thanh toán thành công");
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                "Bạn có chắc muốn xóa không?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION
+            );
+        if (result == JOptionPane.YES_OPTION) {
+            doClose(RET_CANCEL);
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**

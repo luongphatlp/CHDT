@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import database.Connect;
+import DATABASE.Connect;
 
 import DTO.TaiKhoanNVDTO;
 
@@ -22,11 +22,11 @@ import java.util.ArrayList;
 public class TaiKhoanNVDAO {
    public int Insert(TaiKhoanNVDTO tk) {
         int result = 0;
-        // Câu lệnh SQL khớp với các cột: matk, taikhoan, matkhau
-        String qry = "INSERT INTO taikhoan (Ma, TaiKhoan, MatKhau) VALUES (?, ?, ?)";
+       
+        String qry = "INSERT INTO taikhoan (ma, taikhoan, matkhau) VALUES (?, ?, ?)";
         
-        try (Connection con = Connect.getConnection();
-             PreparedStatement st = con.prepareStatement(qry)) {
+        try (Connection conn = Connect.getConnection();
+             PreparedStatement st = conn.prepareStatement(qry)) {
             
             st.setString(1, tk.getMaNV());
             st.setString(2, tk.getTaiKhoan());
@@ -40,10 +40,10 @@ public class TaiKhoanNVDAO {
         return result;
     }
 
-    // 2. Hàm Cập nhật (Update) - Thường cập nhật mật khẩu theo mã tài khoản
+    
     public int Update(TaiKhoanNVDTO tk) {
         int result = 0;
-        String qry = "UPDATE taikhoan SET TaiKhoan = ? , MatKhau = ? WHERE Ma = ?";
+        String qry = "UPDATE taikhoan SET taikhoan = ? , matkhau = ? WHERE ma = ?";
         
         try (Connection con = Connect.getConnection();
              PreparedStatement st = con.prepareStatement(qry)) {
@@ -63,7 +63,7 @@ public class TaiKhoanNVDAO {
     // 3. Hàm Xóa (Delete)
     public int Delete(String maTK) {
         int result = 0;
-        String qry = "DELETE FROM taikhoan WHERE Ma = ?";
+        String qry = "DELETE FROM taikhoan WHERE ma = ?";
         
         try (Connection con = Connect.getConnection();
              PreparedStatement st = con.prepareStatement(qry)) {
@@ -82,16 +82,16 @@ public ArrayList<TaiKhoanNVDTO> SelectAll() {
     ArrayList<TaiKhoanNVDTO> ds = new ArrayList<>();
     String qry = "SELECT * FROM taikhoan";
     
-    try (Connection con = Connect.getConnection();
-         PreparedStatement st = con.prepareStatement(qry);
+    try (Connection conn = Connect.getConnection();
+         PreparedStatement st = conn.prepareStatement(qry);
          ResultSet rs = st.executeQuery()) {
         
         while (rs.next()) {
             TaiKhoanNVDTO tk = new TaiKhoanNVDTO();
            
-            tk.setMaNV(rs.getString("Ma"));
-            tk.setTaiKhoan(rs.getString("TaiKhoan"));
-            tk.setMatKhau(rs.getString("MatKhau"));
+            tk.setMaNV(rs.getString("ma"));
+            tk.setTaiKhoan(rs.getString("taikhoan"));
+            tk.setMatKhau(rs.getString("matkhau"));
             
             ds.add(tk);
         }
@@ -101,7 +101,7 @@ public ArrayList<TaiKhoanNVDTO> SelectAll() {
     return ds;
 }   
   public boolean updatePassword(String matkhau , String ma) {
-        String sql = "UPDATE taikhoan SET matkhau = ? WHERE Ma = ?";
+        String sql = "UPDATE taikhoan SET matkhau = ? WHERE ma = ?";
         try (Connection conn = Connect.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, matkhau);
             ps.setString(2, ma);
@@ -111,6 +111,25 @@ public ArrayList<TaiKhoanNVDTO> SelectAll() {
             return false;
         }
     }
-    
+    public int themTuExcel(DTO.TaiKhoanNVDTO tk) {
+        int result = 0;
+
+        // Sử dụng INSERT IGNORE để bỏ qua lỗi trùng lặp Khóa chính
+        String qry = "INSERT IGNORE INTO taikhoan(ma, taikhoan, matkhau) VALUES (?, ?, ?)";
+
+        // Sử dụng try-with-resources để tự động đóng kết nối
+        try (java.sql.Connection conn = Connect.getConnection(); java.sql.PreparedStatement pst = conn.prepareStatement(qry)) {
+
+            // Thiết lập giá trị cho 3 dấu hỏi chấm
+            pst.setString(1, tk.getMaNV());
+            pst.setString(2, tk.getTaiKhoan());
+            pst.setString(3, tk.getMatKhau());
+
+            result = pst.executeUpdate();
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace(); // In lỗi ra màn hình console nếu có vấn đề về kết nối
+        }
+        return result;
+    }
 
 }

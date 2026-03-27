@@ -12,7 +12,7 @@ import BUS.SanPhamBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
-import UTIL.TaiKhoanSession;
+import DTO.TaiKhoanSession;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;

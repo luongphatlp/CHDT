@@ -223,7 +223,10 @@ public class ThayDoiMatKhau2 extends javax.swing.JDialog {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + e.getMessage());
         }
-        doClose(RET_OK);
+        this.dispose();
+        Login form = new Login();
+        form.setVisible(true);
+       // doClose(RET_OK);
     }//GEN-LAST:event_btnGuiActionPerformed
 
     private void btnReturnFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnFormActionPerformed
