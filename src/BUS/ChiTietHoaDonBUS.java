@@ -28,6 +28,7 @@ class ChiTietHoaDonBUS {
         ds=dao.selectAll();
         return ds;
     }
+    
     public int kiemTraMaSP(String masp){
         for(int i=0;i<ds.size();i++)
             if(ds.get(i).getMaSP().equals(masp))

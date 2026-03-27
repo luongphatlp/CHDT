@@ -26,6 +26,12 @@ public class KhachHangBUS {
         }
         return listKH;
     }
+    public ArrayList<KhachHangDTO> docDSKH(){
+        KhachHangDAO data = new KhachHangDAO();
+       
+        listKH = data.selectAll();      
+        return listKH;
+    }
 
     // Thêm khách hàng
     public boolean insert(KhachHangDTO kh) {

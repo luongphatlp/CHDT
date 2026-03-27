@@ -227,16 +227,21 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
 
         bangchitietbaohanh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "IMEI", "Ngày hết bảo hành"
+                "STT", "IMEI", "Ngày hết bảo hành", "Tình trạng ", "Xử lý"
             }
         ));
         jScrollPane3.setViewportView(bangchitietbaohanh);
+        if (bangchitietbaohanh.getColumnModel().getColumnCount() > 0) {
+            bangchitietbaohanh.getColumnModel().getColumn(0).setMaxWidth(60);
+            bangchitietbaohanh.getColumnModel().getColumn(1).setPreferredWidth(40);
+            bangchitietbaohanh.getColumnModel().getColumn(2).setPreferredWidth(40);
+        }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setText("Bảng bảo hành");
@@ -282,7 +287,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                         .addComponent(cbtimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,12 +316,15 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(302, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 422, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,7 +546,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
          model.setRowCount(0);
          int i=1;
          for(ChiTietBaoHanhDTO ctbh :bus.selectCTBHByMaBH(mabh)){
-             model.addRow(new Object[]{i++,ctbh.getIMEI(), ctbh.getNgay()});
+             model.addRow(new Object[]{i++,ctbh.getIMEI(), ctbh.getNgay() , ctbh.getTinhTrang() , ctbh.getXuLy()});
          }
     }
 

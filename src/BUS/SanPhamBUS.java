@@ -27,10 +27,24 @@ public class SanPhamBUS {
         ds = dao.selectAll();
         if (ds == null) ds = new ArrayList<>();
     }
+   
 
     public ArrayList<SanPhamDTO> getDS() {
         return ds;
     }
+    
+    public ArrayList<SanPhamDTO> getDSSP(){
+        if(ds == null){
+          ds = docDSSP();
+        }
+        return ds;
+    }
+    public ArrayList<SanPhamDTO> docDSSP(){
+        SanPhamDAO data = new SanPhamDAO();
+        ds = data.selectAll();      
+        return ds;
+    }
+
 
     public boolean checkMaSP(String ma) {
         for (SanPhamDTO sp : ds) {

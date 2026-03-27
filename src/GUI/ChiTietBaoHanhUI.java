@@ -183,7 +183,7 @@ public class ChiTietBaoHanhUI extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Mã IMEI", "Tên sản phẩm", "Thời hạn bảo hành"
+                "Mã IMEI", "Tên sản phẩm", "Thời hạn bảo hành", "Tình trạng", "Xử lý"
             }
         ));
         jScrollPane2.setViewportView(jTable2);

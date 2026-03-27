@@ -166,6 +166,14 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         NhanVienBUS bus=new NhanVienBUS();
         return bus.docDSNV();
     }
+    public ArrayList<KhachHangDTO> getDSKH(){
+        KhachHangBUS bus = new KhachHangBUS();
+        return bus.docDSKH();
+    }
+    public ArrayList<SanPhamDTO> getDSSP(){
+        SanPhamBUS bus = new SanPhamBUS();
+        return bus.docDSSP();
+    }
     public KhachHangDTO layKhachHangBySDT(String sdt){
         KhachHangBUS buskh= new KhachHangBUS();
         for(KhachHangDTO kh:buskh.getDSKH()){
