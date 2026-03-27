@@ -7,7 +7,6 @@
 package BUS;
 
 import DAO.HoaDonDAO;
-import DTO.ChiTietBaoHanhDTO;
 import DTO.ChiTietHoaDonDTO;
 import DTO.ChiTietKhuyenMaiDTO;
 import DTO.HoaDonDTO;
@@ -16,8 +15,11 @@ import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,9 +46,11 @@ public class HoaDonBUS {
     KhuyenMaiBUS buskm=new  KhuyenMaiBUS();
     ChiTietHoaDonBUS busct=new ChiTietHoaDonBUS();
     SanPhamBUS bussp=new SanPhamBUS();
+    BaoHanhBUS busbh=new BaoHanhBUS();
     ArrayList<HoaDonDTO> ds;
     public HoaDonBUS(){
         ds =new ArrayList<>();
+        busct.selectAll();
         buskm.docDS();
         buskh.getDSKH();
         busnv.docDSNV();
@@ -54,6 +58,13 @@ public class HoaDonBUS {
     public void dockm(){buskm.docDS();}
     
     public ArrayList<HoaDonDTO> getDS(){return ds;}
+   public ArrayList<HoaDonDTO> getDSHD(){
+        // Bắt buộc phải kiểm tra cả null LẪN isEmpty (rỗng)
+        if(ds == null || ds.isEmpty()){
+            ds = dao.selectAll(); 
+        }
+        return ds;
+    }
     public boolean checkSoLuong(int soLuongMua, int soLuongTon) {
         if (soLuongMua <= 0) {
             JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0!");
@@ -236,31 +247,54 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     public ArrayList<ChiTietHoaDonDTO> getCTBHByMaBH(String mahd){
         return busct.getCTHDByMaHD(mahd);
     }
+    public HoaDonDTO getHDByMaHD(String mahd){
+        for(HoaDonDTO hd:ds){
+            if(hd.getMaHD().equals(mahd))
+                return hd;
+        }
+        return null;
+    }
+    public void xuatPDF(String path,String mahd){
+        HoaDonDTO hd= getHDByMaHD(mahd);
+        if(hd==null){ System.out.print("Lỗi không tìm thấy hóa đơn");return;}
+        String manv=hd.getMaNV();
+        String makh=hd.getMaKH();
+        String ngay=hd.getNgay().toString();
+        String tongtien=String.valueOf(hd.getTongTien());
+        String pttt=hd.getPTTT();
+        xuatPDF(path,mahd,manv,makh,ngay,tongtien,pttt);
+    }
     public void xuatPDF(String path,String mahd,String manv,String makh,String ngay,String tongtien,String pttt) {
         try {
+            BaseFont bf = BaseFont.createFont(
+                "src/FONT/times.ttf",  // đường dẫn font
+                BaseFont.IDENTITY_H,            // bắt buộc để hiện tiếng Việt
+                BaseFont.EMBEDDED               // nhúng font vào PDF
+            );
+            Font font = new Font(bf,13);
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(path));
 
             document.open();
 
-            document.add(new Paragraph("Cua hang dien thoai"));
-            document.add(new Paragraph("Phieu bao hanh"));
+            document.add(new Paragraph("Cửa hàng điện thoại",font));
+            document.add(new Paragraph("Phiếu bảo hành",font));
 
-            document.add(new Paragraph("Ma hoa don: "+mahd));
-            document.add(new Paragraph("Ma nhan vien: "+manv));
-            document.add(new Paragraph("Ma khach hang: "+makh));
-            document.add(new Paragraph("Tong tien "+ngay));
-            document.add(new Paragraph("Ngay lap phieu: "+ngay));
-            document.add(new Paragraph("Phuong thuc thanh toan: "+pttt));
+            document.add(new Paragraph("Mã hóa đơn: "+mahd,font));
+            document.add(new Paragraph("Mã nhân viên: "+manv,font));
+            document.add(new Paragraph("Mã khách hàng: "+makh,font));
+            document.add(new Paragraph("Tổng tiền "+ngay,font));
+            document.add(new Paragraph("Ngày lập phiếu: "+ngay,font));
+            document.add(new Paragraph("Phương thức thanh toán: "+pttt,font));
 
             PdfPTable table = new PdfPTable(3);
 
-            table.addCell("STT");
-            table.addCell("Ma san pham");
-            table.addCell("Ten san pham");
-            table.addCell("Đon gia");
-            table.addCell("So luong");
-            table.addCell("Thanh tien");
+            table.addCell(new Phrase("STT",font));
+            table.addCell(new Phrase("Mã sản phẩm",font));
+            table.addCell(new Phrase("Tên sản phẩm",font));
+            table.addCell(new Phrase("Đơn giá",font));
+            table.addCell(new Phrase("Số lượng",font));
+            table.addCell(new Phrase("Thành tiền",font));
             ArrayList<ChiTietHoaDonDTO> tam=getCTHDByMaHD(mahd);
             int i=1;
             for(ChiTietHoaDonDTO ct:tam){
@@ -416,13 +450,8 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
         }
     }
     public boolean kTSDT(String sdt){
-        if (sdt == null || sdt.isEmpty()) return false;
-        for (char c : sdt.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
+        if (sdt == null) return false;
+        return sdt.trim().matches("0\\d{9}");
     }
     public String taoMaKH(){
         return buskh.taoMaKH();
@@ -442,5 +471,18 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
 
         String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
         return email.matches(regex);
+    }
+    public void xuatPDFBaoHanh(String path,String mabh){
+        busbh.xuatPDF(path, mabh);
+    }
+    public boolean kTMaHD(String mahd){
+        if(ds == null || mahd == null) return false;
+
+        for(HoaDonDTO hd : ds){
+            if(mahd.equals(hd.getMaHD())){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -18,7 +18,7 @@ public class ChiTietHoaDonDAO {
 
     public int insert(ChiTietHoaDonDTO ct) {
         int result = 0;
-        String sql = "INSERT INTO chitiethoadon (MaHD, MaSP, SoLuong, DonGia) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO chitiethoadon (MaHD, MaSP,TenSP, SoLuong, DonGia ) VALUES (?, ?, ?, ?, ?)";
 
         try (
             Connection con = Connect.getConnection();
@@ -26,8 +26,10 @@ public class ChiTietHoaDonDAO {
         ) {
             ps.setString(1, ct.getMaHD());
             ps.setString(2, ct.getMaSP());
-            ps.setInt(3, ct.getSoLuong());
-            ps.setInt(4, ct.getDonGia());
+            ps.setString(3, ct.getTenSP());
+            ps.setInt(4, ct.getSoLuong());
+            ps.setInt(5, ct.getDonGia());
+           
             result = ps.executeUpdate();
 
         } catch (Exception e) {
@@ -40,16 +42,18 @@ public class ChiTietHoaDonDAO {
     // ================== UPDATE ==================
     public int update(ChiTietHoaDonDTO ct) {
         int result = 0;
-        String sql = "UPDATE chitiethoadon SET SoLuong = ?, DonGia = ? WHERE MaHD = ? AND MaSP = ?";
+        String sql = "UPDATE chitiethoadon SET TenSP = ? SoLuong = ?, DonGia = ?  WHERE MaHD = ? AND MaSP = ?";
 
         try (
             Connection con = Connect.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
         ) {
-            ps.setInt(1, ct.getSoLuong());
-            ps.setInt(2, ct.getDonGia());
-            ps.setString(3, ct.getMaHD());
-            ps.setString(4, ct.getMaSP());
+            ps.setString(1, ct.getTenSP());
+            ps.setInt(2, ct.getSoLuong());
+            ps.setInt(3, ct.getDonGia());
+            ps.setString(4, ct.getMaHD());
+            ps.setString(5, ct.getMaSP());
+           
 
             result = ps.executeUpdate();
 

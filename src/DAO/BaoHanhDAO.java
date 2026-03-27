@@ -9,7 +9,7 @@ public class BaoHanhDAO {
     
     public int insert(BaoHanhDTO bh) {
         int r=-1;
-        String sql = "INSERT INTO baohanh (Ma,MaNV,MaKH,ThoiGian) VALUES (?, ?,?,?)";
+        String sql = "INSERT INTO baohanh (MaBH,MaNV,MaKH,NgayLap) VALUES (?, ?,?,?)";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, bh.getMaBH());
             ps.setString(2, bh.getMaNV());
@@ -40,7 +40,7 @@ public class BaoHanhDAO {
     }
     public int update(BaoHanhDTO bh){
         int r=-1;
-        String sql = "UPDATE  baohanh SET MaNV=?,MaKH=?,ThoiGian=? WHERE Ma=? ";
+        String sql = "UPDATE  baohanh SET MaNV=?,MaKH=?,ThoiGian=? WHERE MaBH=? ";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, bh.getMaNV());
             ps.setString(2, bh.getMaKH());        
@@ -52,7 +52,7 @@ public class BaoHanhDAO {
     }
     public int delete(String mabh){
         int r=-1;
-         String sql = "DELETE  baohanh WHERE Ma=? ";
+         String sql = "DELETE  baohanh WHERE MaBH=? ";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, mabh);
             r= ps.executeUpdate();
@@ -60,7 +60,7 @@ public class BaoHanhDAO {
         return r;
     }
     public String layMaBHMax() {
-        String sql = "SELECT MAX(Ma) FROM baohanh";
+        String sql = "SELECT MAX(MaBH) FROM baohanh";
         try (
             Connection con = Connect.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);

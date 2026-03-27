@@ -20,6 +20,7 @@ public class ChiTietSanPhamBUS {
         ds=dao.selectAll();
     }
     public ArrayList<ChiTietSanPhamDTO> getDS(){return ds;}
+    
     public ChiTietSanPhamDTO getCTSPByMaSP(String ma){
         for(ChiTietSanPhamDTO ct:ds)
             if(ct.getMaSP().equals(ma))

@@ -7,6 +7,7 @@ package BUS;
 import DAO.ChiTietHoaDonDAO;
 import DTO.ChiTietHoaDonDTO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +29,18 @@ class ChiTietHoaDonBUS {
         ds=dao.selectAll();
         return ds;
     }
+    public ArrayList<ChiTietHoaDonDTO> getDSSP(){
+        if(ds == null){
+          ds = docDSSP();
+        }
+        return ds;
+    }
+    public ArrayList<ChiTietHoaDonDTO> docDSSP(){
+        ChiTietHoaDonDAO data = new ChiTietHoaDonDAO();
+        ds = data.selectAll();      
+        return ds;
+    }
+   
     
     public int kiemTraMaSP(String masp){
         for(int i=0;i<ds.size();i++)
@@ -42,6 +55,7 @@ class ChiTietHoaDonBUS {
     public ArrayList<ChiTietHoaDonDTO> getCTHDByMaHD(String mahd){
         ArrayList<ChiTietHoaDonDTO> tam=new ArrayList<>();
         for(ChiTietHoaDonDTO ct:ds){
+                           // JOptionPane.showMessageDialog(null, "Mã HT:"+ct.getMaHD()+" Mã key:"+mahd);
             if(ct.getMaHD().equals(mahd))
                 tam.add(ct);
         }

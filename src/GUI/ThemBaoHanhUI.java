@@ -15,6 +15,7 @@ import DTO.SanPhamDTO;
 import static GUI.XacNhanTTUI.RET_CANCEL;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +27,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
@@ -521,12 +523,26 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         }
         
         bus.insertCTBH(ds);
-       
-        // Nếu bạn muốn lưu vào DB ngay tại đây, hãy gọi hàm DAO
-        
-        // Hoặc đơn giản là đóng dialog và báo về cho HoaDonUI biết là đã xong
         JOptionPane.showMessageDialog(null,"Tạo phiếu bảo hành thành công");
         doClose(RET_OK);
+        int ok=JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất phiếu pdf không");
+            if(ok==JOptionPane.YES_OPTION){
+                JFileChooser fileChooser = new JFileChooser();
+                int kq = fileChooser.showSaveDialog(null);
+                if(kq==JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    String path = file.getAbsolutePath() + ".pdf";
+                    bus.xuatPDF(path,mabh);
+                    JOptionPane.showMessageDialog(
+                    null,
+                    "Xuất file PDF thành công!",
+                    "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }
+        
+        // Hoặc đơn giản là đóng dialog và báo về cho HoaDonUI biết là đã xong
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -611,7 +627,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
             }
         }
         if(kt && !bus.KtIMEI(imei)){
-            JOptionPane.showMessageDialog(null, "Đã tồn tại IMEI trong hệ thống");
+            JOptionPane.showMessageDialog(null, "IMEI này đã được bảo hành");
             return;
         }
         // nếu không trùng thì set

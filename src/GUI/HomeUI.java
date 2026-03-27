@@ -1,9 +1,7 @@
 package GUI;
 
 import DTO.NhanVienDTO;
-import DTO.TaiKhoanSession;
 import SERVICES.DoiSoLieu;
-import static com.mysql.cj.conf.PropertyKey.logger;
 import java.awt.Color;
 
 /**
