@@ -2,10 +2,15 @@ package BUS;
 import DAO.BaoHanhDAO;
 import DTO.BaoHanhDTO;
 import DTO.ChiTietBaoHanhDTO;
+import DTO.ChiTietHoaDonDTO;
 import DTO.ChiTietSanPhamDTO;
+import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
+import DTO.LanBaoHanhDTO;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
@@ -133,9 +138,31 @@ public class BaoHanhBUS {
     public ArrayList<ChiTietBaoHanhDTO> getCTBHByMaBH(String mabh){
         return busct.selectCTBHByMaBH(mabh);
     }
-    
+    public BaoHanhDTO getBHByMaBH(String mabh){
+        for(BaoHanhDTO bh:ds)
+            if(bh.getMaBH().equals(mabh))
+                return bh;
+        return null;
+    }
+    public void xuatPDF(String path,String mabh){
+        BaoHanhDTO bh=getBHByMaBH(mabh);
+        if(bh==null){
+            System.out.println("Lỗi không tìm thấy bảo hành");
+            return;
+        }
+        String manv= bh.getMaNV();
+        String makh=bh.getMaKH();
+        String ngay=bh.getNgayLap().toString();
+        xuatPDF(path,mabh,manv,makh,ngay);
+    }
     public void xuatPDF(String path,String mabh,String manv,String makh,String ngay) {
         try {
+            BaseFont bf = BaseFont.createFont(
+                "src/FONT/times.ttf",  // đường dẫn font
+                BaseFont.IDENTITY_H,            // bắt buộc để hiện tiếng Việt
+                BaseFont.EMBEDDED               // nhúng font vào PDF
+            );
+            Font font = new Font(bf,13);
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(path));
 
@@ -283,5 +310,38 @@ public class BaoHanhBUS {
     }
     public boolean KtIMEI(String imei){
        return  busct.kTIMEI(imei);
+    }
+    public HoaDonDTO getHDByMaHD(String mahd){
+        HoaDonBUS bushd =new HoaDonBUS();
+        bushd.selectAll();
+        for(HoaDonDTO hd:bushd.getDS())
+            if(hd.getMaHD().equals(mahd))
+                return hd;
+        return null;
+    }
+    public ArrayList<ChiTietHoaDonDTO> geCTHDByMaHD(String mahd){
+        HoaDonBUS bushd =new HoaDonBUS();
+        return  bushd.getCTHDByMaHD(mahd);
+    }
+    public boolean kTMaHD(String mahd){
+        HoaDonBUS bushd =new HoaDonBUS();
+        bushd.selectAll();
+        return bushd.kTMaHD(mahd);
+    }
+    public ArrayList<LanBaoHanhDTO> getDSLBHByIMEI(String imei){
+        LanBaoHanhBUS buslbh=new LanBaoHanhBUS();
+        return buslbh.getByIMEI(imei);
+    }
+    public int taoMaLBH(String imei){
+        LanBaoHanhBUS buslbh=new LanBaoHanhBUS();
+        return buslbh.soLanBaoHanh(imei);
+    }
+    public void themLBH(String imei,String tinhtrang){
+        LanBaoHanhBUS buslbh=new LanBaoHanhBUS();
+        buslbh.themLanBaoHanh(imei, tinhtrang);
+    }
+    public void hoanhThanh(int malbh,String xuly){
+        LanBaoHanhBUS buslbh=new LanBaoHanhBUS();
+        buslbh.hoanThanhBaoHanh(malbh, xuly);
     }
 }

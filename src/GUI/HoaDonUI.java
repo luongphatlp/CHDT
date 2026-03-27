@@ -1,23 +1,16 @@
 package GUI;
 
-import BUS.ChiTietKhuyenMaiBUS;
 import BUS.HoaDonBUS;
-import BUS.KhuyenMaiBUS;
-import DAO.HoaDonDAO;
 import DTO.ChiTietHoaDonDTO;
-import DTO.ChiTietKhuyenMaiDTO;
-import DTO.DienThoaiDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
-import DTO.KhuyenMaiDTO;
+import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
-import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HoaDonUI extends javax.swing.JPanel {
     HoaDonBUS bus=new HoaDonBUS();
+
     public HoaDonUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
 
@@ -127,7 +121,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                 dscthd.add(cthd);
             }
             HoaDonDTO hd = thanhToan(mahd);
-
+            
             int ok = bus.insert(hd);
             
             
@@ -137,8 +131,28 @@ public class HoaDonUI extends javax.swing.JPanel {
             }
             bus.capNhatSoLuongSanPham(dscthd);
             bus.insertCTHD(dscthd);
-            ThemBaoHanhUI tbh = new ThemBaoHanhUI(makh, hd.getMaHD(), ds);
-            tbh.setVisible(true);
+            ok = JOptionPane.showConfirmDialog(null, "Bạn có muốn xuất phiếu pdf không");
+            if(ok==JOptionPane.YES_OPTION){
+                JFileChooser fileChooser = new JFileChooser();
+                int kq = fileChooser.showSaveDialog(null);
+                if(kq==JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    String path = file.getAbsolutePath() + ".pdf";
+                    bus.xuatPDF(path,mahd);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Xuất file PDF thành công!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+            ok = JOptionPane.showConfirmDialog(null, "Bạn có muốn tạo phiếu bảo hành không");
+            
+            if(ok==JOptionPane.YES_OPTION){
+                ThemBaoHanhUI tbh = new ThemBaoHanhUI(makh, hd.getMaHD(), ds);
+                tbh.setVisible(true);
+            }
             
 
             // Reset UI
@@ -189,16 +203,20 @@ public class HoaDonUI extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         spcapnhatsoluong = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         cbpttt = new javax.swing.JComboBox<>();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         txtsdt = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
         txthoten = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         txtemail = new javax.swing.JTextField();
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -293,6 +311,9 @@ public class HoaDonUI extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        setPreferredSize(new java.awt.Dimension(1710, 1080));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1710, 1080));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 103, 174));
@@ -434,12 +455,8 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
 
-        cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin khách mua hàng"));
-
-        jLabel12.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
-        jLabel12.setText("SĐT khách:");
+        jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel7.setText("Email khách:");
 
         jButton3.setText("Tìm");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -451,20 +468,73 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
         jLabel10.setText("Tên khách:");
 
-        jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
-        jLabel7.setText("Email khách:");
+        jLabel12.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel12.setText("SĐT khách:");
 
-        txthoten.setEnabled(false);
+        cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
 
-        txtemail.setEnabled(false);
-        txtemail.addActionListener(new java.awt.event.ActionListener() {
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin khách mua hàng"));
+
+        jLabel16.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel16.setText("SĐT khách:");
+
+        jButton5.setText("Tìm");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtemailActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        cbpttt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
+        jLabel17.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel17.setText("Tên khách:");
+
+        jLabel18.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel18.setText("Email khách:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel16)
+                .addGap(5, 5, 5)
+                .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jButton5)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel17)
+                .addGap(5, 5, 5)
+                .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel18)
+                .addGap(5, 5, 5)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel16))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jButton5))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel17))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel18))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -593,7 +663,7 @@ public class HoaDonUI extends javax.swing.JPanel {
         hd.setMaHD(mahd);
 
         hd.setNgay( LocalDateTime.now());
-        hd.setMaNV(DTO.TaiKhoanSession.nvDangNhap.getMaNV());
+        hd.setMaNV(UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
 
         
         hd.setMaKH(bus.layKhachHangBySDT(txtsdt.getText()).getMa());
@@ -788,10 +858,6 @@ public class HoaDonUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailActionPerformed
-
     private void bttaokhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttaokhachhangActionPerformed
         // TODO add your handling code here:
         String makh,hoten,sdt,email;
@@ -914,6 +980,7 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -922,6 +989,9 @@ public class HoaDonUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

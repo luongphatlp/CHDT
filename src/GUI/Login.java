@@ -362,7 +362,7 @@ public class Login extends javax.swing.JFrame {
         }
 
         
-        DTO.TaiKhoanSession.nvDangNhap = nhanVienLogin;
+        UTIL.TaiKhoanSession.nvDangNhap = nhanVienLogin;
 
         if (nhanVienLogin.getChucVuNV().equalsIgnoreCase("Quản Lý")) {
             HomeUI homeAdmin = new HomeUI();

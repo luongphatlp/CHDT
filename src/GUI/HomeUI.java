@@ -714,10 +714,10 @@ public class HomeUI extends javax.swing.JFrame {
 
     private void btnSuaThongTinCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThongTinCNActionPerformed
         // TODO add your handling code here:
-        DTO.TaiKhoanSession.capnhat();
+        UTIL.TaiKhoanSession.capnhat();
 
         NhanVienUI nvGUI = new NhanVienUI();
-        NhanVienDTO nvDN = DTO.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nvDN = UTIL.TaiKhoanSession.nvDangNhap;
 
         SuaNhanVienUI suaForm = new SuaNhanVienUI();
 
