@@ -92,8 +92,8 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         txtmahoadon.setText(mahd);
 
         // Nhân viên
-        if (UTIL.TaiKhoanSession.nvDangNhap != null) {
-            txtmanhanvien.setText(UTIL.TaiKhoanSession.nvDangNhap.getMaNV());
+        if (DTO.TaiKhoanSession.nvDangNhap != null) {
+            txtmanhanvien.setText(DTO.TaiKhoanSession.nvDangNhap.getMaNV());
         }
 
         // Khách hàng
@@ -480,7 +480,7 @@ public class ThemBaoHanhUI extends javax.swing.JDialog {
         BaoHanhDTO bh=new BaoHanhDTO();
         bh.setMaBH(txtmabaohanh.getText());
         bh.setMaKH(txtmakhachhang.getText());
-        NhanVienDTO nv=UTIL.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nv=DTO.TaiKhoanSession.nvDangNhap;
         bh.setMaNV(nv.getMaNV());
         String ngaylap=txtngaylap.getText();
         try {

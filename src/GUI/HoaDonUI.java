@@ -455,8 +455,12 @@ public class HoaDonUI extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
-        jLabel7.setText("Email khách:");
+        cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin khách mua hàng"));
+
+        jLabel12.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel12.setText("SĐT khách:");
 
         jButton3.setText("Tìm");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -468,8 +472,8 @@ public class HoaDonUI extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
         jLabel10.setText("Tên khách:");
 
-        jLabel12.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
-        jLabel12.setText("SĐT khách:");
+        jLabel7.setFont(new java.awt.Font("Roboto Lt", 0, 24)); // NOI18N
+        jLabel7.setText("Email khách:");
 
         cbpttt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Thẻ ngân hàng" }));
 

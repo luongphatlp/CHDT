@@ -2,7 +2,6 @@ package GUI;
 
 import DTO.NhanVienDTO;
 import SERVICES.DoiSoLieu;
-import static com.mysql.cj.conf.PropertyKey.logger;
 import java.awt.Color;
 
 /**
@@ -548,10 +547,10 @@ public class HomeUserUI extends javax.swing.JFrame {
 
     private void btnSuaThongTinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThongTinActionPerformed
             // TODO add your handling code here:
-        UTIL.TaiKhoanSession.capnhat();
+        DTO.TaiKhoanSession.capnhat();
         
         NhanVienUI nvGUI = new NhanVienUI();
-        NhanVienDTO nvDN = UTIL.TaiKhoanSession.nvDangNhap;
+        NhanVienDTO nvDN = DTO.TaiKhoanSession.nvDangNhap;
         
         SuaNhanVienUI suaForm = new SuaNhanVienUI();
         

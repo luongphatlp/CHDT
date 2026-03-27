@@ -10,6 +10,7 @@ public class Connect {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3309/dienthoai", "root", "");
 
+
         } catch (Exception ex) {
              ex.printStackTrace();
 
