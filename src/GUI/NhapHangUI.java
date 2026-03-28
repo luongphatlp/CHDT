@@ -374,6 +374,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
         jLabel4.setText("Ngày:");
 
+        jTextField2.setEnabled(false);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -699,10 +700,6 @@ public class NhapHangUI extends javax.swing.JPanel {
         String maPN = jTextField3.getText();
         System.out.println("MaPN: " + maPN);
         String maNV = jTextField2.getText();
-        if(maNV == null || maNV.trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Mã nhân viên không được để trống!");
-            return;
-        }
         NhaCungCapDTO ncc = (NhaCungCapDTO) jComboBox2.getSelectedItem();
         String maNCC = ncc.getMaNCC();
         Date today = new Date();
@@ -782,7 +779,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int row = jTable3.getSelectedRow();
-    
+        
         if(row == -1){
             JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
             return;
@@ -797,16 +794,37 @@ public class NhapHangUI extends javax.swing.JPanel {
         }
         int gia = dongia * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
+        boolean daTonTai = false;
 
-        model.addRow(new Object[]{
-            model.getRowCount()+1,
-            masp,
-            tensp,
-            soluong,
-            gia
-        });
+        for(int i = 0; i < model.getRowCount(); i++){
+            String maSPTrongBang = model.getValueAt(i, 1).toString();
 
-      
+            if(maSPTrongBang.equals(masp)){
+                // đã tồn tại → cộng số lượng
+                int soLuongCu = Integer.parseInt(model.getValueAt(i, 3).toString());
+                int soLuongMoi = soLuongCu + soluong;
+
+                model.setValueAt(soLuongMoi, i, 3);
+
+                // cập nhật lại thành tiền
+                int thanhTienMoi = soLuongMoi * dongia;
+                model.setValueAt(thanhTienMoi, i, 4);
+
+                daTonTai = true;
+                break;
+            }
+        }
+        if(!daTonTai){
+            model.addRow(new Object[]{
+                model.getRowCount() + 1,
+                masp,
+                tensp,
+                soluong,
+                gia
+            });
+        }
+
         tinhTongTien();
     }//GEN-LAST:event_jButton5ActionPerformed
 
