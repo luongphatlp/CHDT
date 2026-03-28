@@ -1,5 +1,6 @@
 
 package GUI;
+import BUS.NhapHangBUS;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,6 +15,7 @@ import DTO.ThongKeDoanhThuDTO;
 import DTO.ThongKeNhanVienDTO;
 import DTO.ThongKeSanPhamDTO;
 import DTO.ThongKeKhachHangDTO;
+import DTO.ThongKeNhapHangDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -63,6 +65,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chucNang();
         veListNhanVien();
         filechooseexcel.setVisible(false);
+        loadNam();
     }
     
     private void customTable() {
@@ -463,6 +466,39 @@ public final class ThongKeUI extends javax.swing.JPanel {
             try (FileOutputStream fileOut = new FileOutputStream(path)) {
                 workbook.write(fileOut);
             }
+        }
+    }
+     //Quốc Nam 
+    public void loadThongKe() {
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0); 
+
+        int nam = Integer.parseInt(jComboBox3.getSelectedItem().toString());
+
+        NhapHangBUS bus = new NhapHangBUS();
+        ArrayList<ThongKeNhapHangDTO> list = bus.thongKe(nam);
+
+        for (ThongKeNhapHangDTO tk : list) {
+            model.addRow(new Object[]{
+                tk.getTenSP(),
+                formatTien(tk.getQuy1()),
+                formatTien(tk.getQuy2()),
+                formatTien(tk.getQuy3()),
+                formatTien(tk.getQuy4())
+            });
+        }
+    }
+    public String formatTien(double tien) {
+        return String.format("%,.0f VND", tien);
+    }
+    public void loadNam() {
+        jComboBox3.removeAllItems();
+
+        NhapHangBUS bus = new NhapHangBUS();
+        ArrayList<Integer> listNam = bus.getListNam();
+
+        for (int nam : listNam) {
+            jComboBox3.addItem(nam + "");
         }
     }
     @SuppressWarnings("unchecked")
@@ -891,7 +927,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chdenngay, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(btnreset1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -967,7 +1003,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sản phẩm", jPanel6);
@@ -1043,7 +1079,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pthangLayout.createSequentialGroup()
                 .addComponent(lbnam)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spnam, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)
+                .addComponent(spnam, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pthangLayout.setVerticalGroup(
@@ -1435,7 +1471,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     .addComponent(jButton7))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Nhân viên", jPanel4);
@@ -1670,7 +1706,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Khách hàng", jPanel13);
@@ -1693,6 +1729,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton9.setText("Thống kê");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -1722,7 +1763,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     .addComponent(jButton9))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Nhập hàng", jPanel17);
@@ -2072,6 +2113,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
             chdenngaykhachhang.setDate(null);
         }
     }//GEN-LAST:event_chdenngaykhachhangPropertyChange
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        jButton9.addActionListener(e -> loadThongKe());
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     
 public static void main(String args[]) {

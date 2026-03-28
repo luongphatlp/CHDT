@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import DTO.NhapHangDTO;
 import DTO.DienThoaiDTO;
+import DTO.ThongKeNhapHangDTO;
 import java.util.Vector;
 /**
  *
@@ -111,5 +112,59 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
         }
 
         return list;
-    }    
+    }   
+    public ArrayList<ThongKeNhapHangDTO> thongKeTheoNam(int nam) {
+        ArrayList<ThongKeNhapHangDTO> list = new ArrayList<>();
+
+        String sql = "SELECT sp.Ten, " +
+                "SUM(CASE WHEN MONTH(pn.Ngay) BETWEEN 1 AND 3 THEN ct.TongTien ELSE 0 END) AS Quy1, " +
+                "SUM(CASE WHEN MONTH(pn.Ngay) BETWEEN 4 AND 6 THEN ct.TongTien ELSE 0 END) AS Quy2, " +
+                "SUM(CASE WHEN MONTH(pn.Ngay) BETWEEN 7 AND 9 THEN ct.TongTien ELSE 0 END) AS Quy3, " +
+                "SUM(CASE WHEN MONTH(pn.Ngay) BETWEEN 10 AND 12 THEN ct.TongTien ELSE 0 END) AS Quy4 " +
+                "FROM chitietphieunhap ct " +
+                "JOIN phieunhap pn ON ct.MaPN = pn.MaPN " +
+                "JOIN dienthoai sp ON ct.MaSP = sp.Ma " +
+                "WHERE YEAR(pn.Ngay) = " + nam + " " +
+                "GROUP BY sp.Ten";
+
+        try {Connection conn=Connect.getConnection();
+            Statement ps = conn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+
+            while (rs.next()) {
+                ThongKeNhapHangDTO tk = new ThongKeNhapHangDTO(
+                    rs.getString("Ten"),
+                    rs.getDouble("Quy1"),
+                    rs.getDouble("Quy2"),
+                    rs.getDouble("Quy3"),
+                    rs.getDouble("Quy4")
+                );
+                list.add(tk);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public ArrayList<Integer> getListNam() {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT YEAR(Ngay) AS Nam FROM phieunhap ORDER BY Nam DESC";
+
+        try {
+            Connection conn = Connect.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                list.add(rs.getInt("Nam"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

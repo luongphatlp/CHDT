@@ -11,6 +11,7 @@ package BUS;
 import java.util.ArrayList;
 import DTO.NhapHangDTO;
 import DAO.NhapHangDAO;
+import DTO.ThongKeNhapHangDTO;
 
 public class NhapHangBUS {
     public static ArrayList<NhapHangDTO> dsnh;
@@ -63,5 +64,13 @@ public class NhapHangBUS {
             }
         }
         return ketQua;
+    }
+    public ArrayList<ThongKeNhapHangDTO> thongKe(int nam){
+        NhapHangDAO dao = new NhapHangDAO();
+        return dao.thongKeTheoNam(nam);
+    }
+    public ArrayList<Integer> getListNam() {
+        NhapHangDAO dao = new NhapHangDAO();
+        return dao.getListNam();
     }
 }
