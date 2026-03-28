@@ -32,31 +32,33 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author THANH NHAN
  */
 public class THHoaDonUI extends javax.swing.JPanel {
-    HoaDonBUS bus=new HoaDonBUS();
+
+    HoaDonBUS bus = new HoaDonBUS();
+
     /**
      * Creates new form PhieuNhapUI
      */
     public THHoaDonUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
-        
+
         initComponents();
         customTable();
         veBangTHHoaDon();
         veCbMaNV();
     }
 
-    public void veBangTHHoaDon(){
-        ArrayList<HoaDonDTO> ds=bus.selectAll();
-        Vector header =new Vector();
+    public void veBangTHHoaDon() {
+        ArrayList<HoaDonDTO> ds = bus.selectAll();
+        Vector header = new Vector();
         header.add("Mã hóa đơn");
         header.add("Nhân viên");
         header.add("Ngày lập");
         header.add("Khách hàng");
         header.add("Tổng tiền");
         header.add("Phương thức thanh toán");
-        DefaultTableModel model=new DefaultTableModel(header,0);
-        for(HoaDonDTO hd:ds){
-            Vector row=new Vector();
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        for (HoaDonDTO hd : ds) {
+            Vector row = new Vector();
             row.add(hd.getMaHD());
             row.add(hd.getMaNV());
             //NhanVienDTO nv= bus.getNVByMaNV(hd.getMaNV());
@@ -71,17 +73,18 @@ public class THHoaDonUI extends javax.swing.JPanel {
         }
         banghoadon.setModel(model);
     }
-        public void veBangTHHoaDonTimKiem(ArrayList<HoaDonDTO> ds){
-        Vector header =new Vector();
+
+    public void veBangTHHoaDonTimKiem(ArrayList<HoaDonDTO> ds) {
+        Vector header = new Vector();
         header.add("Mã hóa đơn");
         header.add("Nhân viên");
         header.add("Ngày lập");
         header.add("Khách hàng");
         header.add("Tổng tiền");
         header.add("Phương thức thanh toán");
-        DefaultTableModel model=new DefaultTableModel(header,0);
-        for(HoaDonDTO hd:ds){
-            Vector row=new Vector();
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        for (HoaDonDTO hd : ds) {
+            Vector row = new Vector();
             row.add(hd.getMaHD());
             row.add(hd.getMaNV());
             //NhanVienDTO nv= bus.getNVByMaNV(hd.getMaNV());
@@ -104,15 +107,14 @@ public class THHoaDonUI extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     private void customTable() {
-        
-        java.awt.Font tableFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18);
+
+        java.awt.Font tableFont = new java.awt.Font("SF-Pro", java.awt.Font.BOLD, 18);
         banghoadon.setFont(tableFont);
         banghoadon.setRowHeight(30);
 
         banghoadon.getTableHeader().setOpaque(false);
         banghoadon.getTableHeader().setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
 
-        
         bangchitiethoadon.setFont(tableFont);
         bangchitiethoadon.setRowHeight(30);
 
@@ -131,20 +133,21 @@ public class THHoaDonUI extends javax.swing.JPanel {
     private void resizeColumnWidth(javax.swing.JTable table) {
         final javax.swing.table.TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
-            int width = 70; 
+            int width = 70;
             for (int row = 0; row < table.getRowCount(); row++) {
                 javax.swing.table.TableCellRenderer renderer = table.getCellRenderer(row, column);
                 java.awt.Component comp = table.prepareRenderer(renderer, row, column);
                 width = Math.max(comp.getPreferredSize().width + 15, width);
             }
             if (width > 400) {
-                width = 400; 
+                width = 400;
             }
             columnModel.getColumn(column).setPreferredWidth(width);
         }
     }
-    public void reset(){
-                txttimkiemhoadon.setText("");
+
+    public void reset() {
+        txttimkiemhoadon.setText("");
         cbpttt.setSelectedIndex(0);
         cbmanv.setSelectedIndex(0);
         datetungay.setDate(null);
@@ -153,39 +156,48 @@ public class THHoaDonUI extends javax.swing.JPanel {
         giaden.setValue(0);
         veBangTHHoaDon();
     }
-    public void timKiem(){
-        String key=txttimkiemhoadon.getText();
-        String pttt=null;
-        if(cbpttt.getSelectedIndex()!=0) pttt=cbpttt.getSelectedItem().toString();
-        String manv=null;
-        if(cbmanv.getSelectedIndex()!=0) manv=cbmanv.getSelectedItem().toString();
-        LocalDate tungay=null;
-        if(datetungay.getDate()!=null) tungay=datetungay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate denngay=null;
-        if(datedenngay.getDate()!=null) denngay=datedenngay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int tu=0,den=Integer.MAX_VALUE;
-        if(ckgia.isSelected()){
-            tu=Integer.parseInt(giatu.getValue().toString());
-            den=Integer.parseInt(giaden.getValue().toString());
-            if(tu>den){
+
+    public void timKiem() {
+        String key = txttimkiemhoadon.getText();
+        String pttt = null;
+        if (cbpttt.getSelectedIndex() != 0) {
+            pttt = cbpttt.getSelectedItem().toString();
+        }
+        String manv = null;
+        if (cbmanv.getSelectedIndex() != 0) {
+            manv = cbmanv.getSelectedItem().toString();
+        }
+        LocalDate tungay = null;
+        if (datetungay.getDate() != null) {
+            tungay = datetungay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        LocalDate denngay = null;
+        if (datedenngay.getDate() != null) {
+            denngay = datedenngay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        int tu = 0, den = Integer.MAX_VALUE;
+        if (ckgia.isSelected()) {
+            tu = Integer.parseInt(giatu.getValue().toString());
+            den = Integer.parseInt(giaden.getValue().toString());
+            if (tu > den) {
                 JOptionPane.showMessageDialog(null, "Giá từ không được lớn hơn giá đến");
                 return;
             }
         }
-        ArrayList<HoaDonDTO> tam=bus.timKiem(key,pttt,manv,tungay,denngay,tu,den);
+        ArrayList<HoaDonDTO> tam = bus.timKiem(key, pttt, manv, tungay, denngay, tu, den);
         veBangTHHoaDonTimKiem(tam);
     }
-    
-    public void veBangChiTietHoaDon(ArrayList<ChiTietHoaDonDTO> ds){
-        Vector header =new Vector();
+
+    public void veBangChiTietHoaDon(ArrayList<ChiTietHoaDonDTO> ds) {
+        Vector header = new Vector();
         header.add("Mã sản phẩm");
         header.add("Tên sản phẩm");
         header.add("Số lượng");
         header.add("Đơn giá");
         header.add("Thành tiền");
-        DefaultTableModel model=new DefaultTableModel(header,0);
-        for(ChiTietHoaDonDTO tk:ds){
-            Vector row=new Vector();
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        for (ChiTietHoaDonDTO tk : ds) {
+            Vector row = new Vector();
             row.add(tk.getMaSP());
             row.add(tk.getTenSP());
             row.add(tk.getSoLuong());
@@ -195,10 +207,11 @@ public class THHoaDonUI extends javax.swing.JPanel {
         }
         bangchitiethoadon.setModel(model);
     }
-    public void hienChiTiet(){
-        int row=banghoadon.getSelectedRow();
-        if(row!=-1){
-            ArrayList<ChiTietHoaDonDTO> ds= bus.getCTHDByMaHD(banghoadon.getValueAt(row,0).toString());
+
+    public void hienChiTiet() {
+        int row = banghoadon.getSelectedRow();
+        if (row != -1) {
+            ArrayList<ChiTietHoaDonDTO> ds = bus.getCTHDByMaHD(banghoadon.getValueAt(row, 0).toString());
             veBangChiTietHoaDon(ds);
         }
     }
@@ -624,16 +637,17 @@ public class THHoaDonUI extends javax.swing.JPanel {
         timKiem();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void veCbMaNV(){
-        ArrayList<NhanVienDTO> ds=bus.getDSNV();
-        Vector row=new Vector();
+    public void veCbMaNV() {
+        ArrayList<NhanVienDTO> ds = bus.getDSNV();
+        Vector row = new Vector();
         row.add("Chọn nhân viên");
-        for(NhanVienDTO nv:ds)
-            row.add(nv.getMaNV()+"-"+nv.getHoTenNV());
-        DefaultComboBoxModel model= new DefaultComboBoxModel(row);
+        for (NhanVienDTO nv : ds) {
+            row.add(nv.getMaNV() + "-" + nv.getHoTenNV());
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel(row);
         cbmanv.setModel(model);
     }
-    
+
     private void txttimkiemhoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttimkiemhoadonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttimkiemhoadonActionPerformed
@@ -645,34 +659,35 @@ public class THHoaDonUI extends javax.swing.JPanel {
 
     private void btnxuatexcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcelActionPerformed
         // TODO add your handling code here:
-        int row=banghoadon.getSelectedRow();
-        if(row!=-1){
-            String mahd=banghoadon.getValueAt(row, 0).toString();
-            String manv=banghoadon.getValueAt(row,1).toString();
-            String makh=banghoadon.getValueAt(row,3).toString();
-            String ngay=banghoadon.getValueAt(row,2).toString();
-            String tongtien=banghoadon.getValueAt(row,4).toString();
-            String pttt=banghoadon.getValueAt(row,5).toString();
+        int row = banghoadon.getSelectedRow();
+        if (row != -1) {
+            String mahd = banghoadon.getValueAt(row, 0).toString();
+            String manv = banghoadon.getValueAt(row, 1).toString();
+            String makh = banghoadon.getValueAt(row, 3).toString();
+            String ngay = banghoadon.getValueAt(row, 2).toString();
+            String tongtien = banghoadon.getValueAt(row, 4).toString();
+            String pttt = banghoadon.getValueAt(row, 5).toString();
             JFileChooser fileChooser = new JFileChooser();
             int kq = fileChooser.showSaveDialog(null);
-            if(kq==JFileChooser.APPROVE_OPTION){
+            if (kq == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 String path = file.getAbsolutePath() + ".xlsx";
                 try {
-                    bus.xuatExcel(path,manv,makh,mahd,ngay,pttt,tongtien,(DefaultTableModel) bangchitiethoadon.getModel());
+                    bus.xuatExcel(path, manv, makh, mahd, ngay, pttt, tongtien, (DefaultTableModel) bangchitiethoadon.getModel());
                 } catch (IOException ex) {
                     System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Xuất file Excel thành công!",
-                    "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE
+                        null,
+                        "Xuất file Excel thành công!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
-        }else
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
-        
+        }
+
     }//GEN-LAST:event_btnxuatexcelActionPerformed
 
     private void cbptttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbptttActionPerformed
@@ -685,24 +700,29 @@ public class THHoaDonUI extends javax.swing.JPanel {
     }//GEN-LAST:event_hienchitiet
 
     private void btnxuatexcel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxuatexcel1ActionPerformed
-        // TODO add your handling code here:
+        int row = banghoadon.getSelectedRow();
+        if (row != -1) {
+            String mahd = banghoadon.getValueAt(row, 0).toString();
+            String manv = banghoadon.getValueAt(row, 1).toString();
+            String makh = banghoadon.getValueAt(row, 3).toString();
+            String ngay = banghoadon.getValueAt(row, 2).toString();
+            String tongtien = banghoadon.getValueAt(row, 4).toString();
+            String pttt = banghoadon.getValueAt(row, 5).toString();
             JFileChooser fileChooser = new JFileChooser();
             int kq = fileChooser.showSaveDialog(null);
-            if(kq==JFileChooser.APPROVE_OPTION){
+            if (kq == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
-                String path = file.getAbsolutePath() + ".xlsx";
-                try {
-                    bus.xuatExcelTatCa(path,(DefaultTableModel) banghoadon.getModel());
-                } catch (IOException ex) {
-                    System.getLogger(BaoHanhDienThoaiUI.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+                String path = file.getAbsolutePath() + ".pdf";
+                bus.xuatPDF(path, mahd, manv, makh, ngay, tongtien, pttt);
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Xuất file Excel thành công!",
-                    "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE
+                        null,
+                        "Xuất file PDF thành công!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
+        } else
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
     }//GEN-LAST:event_btnxuatexcel1ActionPerformed
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
@@ -711,29 +731,29 @@ public class THHoaDonUI extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int row=banghoadon.getSelectedRow();
-        if(row!=-1){
-            String mahd=banghoadon.getValueAt(row, 0).toString();
-            String manv=banghoadon.getValueAt(row,1).toString();
-            String makh=banghoadon.getValueAt(row,3).toString();
-            String ngay=banghoadon.getValueAt(row,2).toString();
-            String tongtien=banghoadon.getValueAt(row,4).toString();
-            String pttt=banghoadon.getValueAt(row,5).toString();
+        int row = banghoadon.getSelectedRow();
+        if (row != -1) {
+            String mahd = banghoadon.getValueAt(row, 0).toString();
+            String manv = banghoadon.getValueAt(row, 1).toString();
+            String makh = banghoadon.getValueAt(row, 3).toString();
+            String ngay = banghoadon.getValueAt(row, 2).toString();
+            String tongtien = banghoadon.getValueAt(row, 4).toString();
+            String pttt = banghoadon.getValueAt(row, 5).toString();
             JFileChooser fileChooser = new JFileChooser();
             int kq = fileChooser.showSaveDialog(null);
-            if(kq==JFileChooser.APPROVE_OPTION){
+            if (kq == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 String path = file.getAbsolutePath() + ".pdf";
-                bus.xuatPDF(path,mahd,manv,makh,ngay,tongtien,pttt);
+                bus.xuatPDF(path, mahd, manv, makh, ngay, tongtien, pttt);
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Xuất file PDF thành công!",
-                    "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE
+                        null,
+                        "Xuất file PDF thành công!",
+                        "Thông báo",
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
-        }else
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
+        } else
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bảo hành để xuất excel");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void datetungayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_datetungayAncestorAdded
