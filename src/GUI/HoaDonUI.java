@@ -115,6 +115,7 @@ public class HoaDonUI extends javax.swing.JPanel {
                 ChiTietHoaDonDTO cthd = new ChiTietHoaDonDTO();
                 cthd.setMaHD(mahd);
                 cthd.setMaSP(model.getValueAt(i, 0).toString());
+                cthd.setTenSP(model.getValueAt(i, 1).toString());
                 cthd.setSoLuong(Integer.parseInt(model.getValueAt(i, 4).toString()));
                 cthd.setDonGia(Integer.parseInt(model.getValueAt(i, 2).toString()) - Integer.parseInt(model.getValueAt(i, 3).toString()));
                 cthd.setThanhTien(Integer.parseInt(model.getValueAt(i, 4).toString()));

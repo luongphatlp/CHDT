@@ -8,6 +8,7 @@ import DAO.ThongKeNhanVienDAO;
 import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
 import DTO.ThongKeNhanVienDTO;
+import SERVICES.DoiSoLieu;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -181,21 +182,81 @@ public class ThongKeNhanVienBUS {
         }
         return tam;
     }
-    public ArrayList<String> layMaNV(List<String> l){
-        ArrayList<String> s=new ArrayList();
-        if(!l.isEmpty()){
-            for(String t:l){
-                String[] c=t.split("-");
-                if(t.equals("Tất cả")){
-                    s=null;
-                    break;
-                }
-                if(c.length>1)
-                    s.add(c[0]);
+    
+    public ArrayList<ThongKeNhanVienDTO> thongkenhanvientheoquy (ArrayList<String> key , int quy , int nam){
+        ArrayList<ThongKeNhanVienDTO> dstk = new ArrayList<>();
+        
+        HoaDonBUS hdbus = new HoaDonBUS();
+        for (NhanVienDTO nv : hdbus.getDSNV()){
+            int shd = 0;
+            int st = 0;
+            if (key == null || !key.isEmpty() && !key.contains(nv.getMaNV())){
+                continue;
             }
-        }else{
-            s=null;
+            for (HoaDonDTO hd : hdbus.getDS()){
+                   
+                   int ktquy = ((hd.getNgay().getMonthValue()-1)/3) +1;
+                   int ktnam = hd.getNgay().getYear();
+                   if (nv.getMaNV().equals(hd.getMaNV()))
+                       if (nam == ktnam && quy == ktquy){
+                           shd++;
+                           st += hd.getTongTien();
+                       }
+            }
+            ThongKeNhanVienDTO tk = new ThongKeNhanVienDTO();
+            tk.setMaNV(nv.getMaNV());
+            tk.setHoTen(nv.getHoTenNV());
+            tk.setDoanhThu(st);
+            tk.setSoHoaDon(shd);
+            
+            dstk.add(tk);
         }
-        return s;
+        return dstk;
     }
+    public ArrayList<Object[]> thongKeNVtheoQuy(int nam) {
+        ArrayList<Object[]> ketqua = new ArrayList<>();
+        long[] tongCotQuy = new long[4];
+        long tongTatCa = 0;
+
+        // Tự động duyệt qua toàn bộ nhân viên
+        for (NhanVienDTO nv : bushd.getDSNV()) {
+            Object[] row = new Object[7];
+            row[1] = nv.getHoTenNV();
+            long[] quy = new long[4];
+            long tongNam = 0;
+
+            for (HoaDonDTO hd : bushd.getDS()) {
+                if (hd.getNgay().getYear() == nam && hd.getMaNV().equals(nv.getMaNV())) {
+                    int q = (hd.getNgay().getMonthValue() - 1) / 3;
+                    quy[q] += hd.getTongTien();
+                    tongNam += hd.getTongTien();
+                }
+            }
+            row[2] = quy[0];
+            row[3] = quy[1];
+            row[4] = quy[2];
+            row[5] = quy[3];
+            row[6] = tongNam;
+
+            for (int i = 0; i < 4; i++) tongCotQuy[i] += quy[i];
+            tongTatCa += tongNam;
+
+            ketqua.add(row);
+        }
+
+        // Tạo dòng Tổng cộng dưới cùng
+        if (!ketqua.isEmpty()) {
+            Object[] finalRow = new Object[7];
+            finalRow[1] = "Tổng cộng";
+            finalRow[2] = tongCotQuy[0];
+            finalRow[3] = tongCotQuy[1];
+            finalRow[4] = tongCotQuy[2];
+            finalRow[5] = tongCotQuy[3];
+            finalRow[6] = tongTatCa;
+            ketqua.add(finalRow);
+        }
+
+        return ketqua;
+    }
+    
 }

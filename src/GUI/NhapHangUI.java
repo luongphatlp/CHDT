@@ -12,7 +12,7 @@ import BUS.SanPhamBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
-import DTO.TaiKhoanSession;
+import UTIL.TaiKhoanSession;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -108,7 +108,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
         for(int i=0;i<model.getRowCount();i++){
 
-            long gia = Long.parseLong(model.getValueAt(i,4).toString());
+            long gia = Long.parseLong(model.getValueAt(i,5).toString());
             tong += gia;
 
         }
@@ -216,6 +216,8 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jButton5 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jSpinner2 = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -322,7 +324,7 @@ public class NhapHangUI extends javax.swing.JPanel {
         jLabel6.setText("Số lượng:");
 
         jSpinner1.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel());
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -330,6 +332,12 @@ public class NhapHangUI extends javax.swing.JPanel {
                 jButton5ActionPerformed(evt);
             }
         });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setText("Giá nhập:");
+
+        jSpinner2.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -341,21 +349,24 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(476, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton5)))
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
 
@@ -502,7 +513,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá"
+                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá", "Thành tiền"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -735,13 +746,14 @@ public class NhapHangUI extends javax.swing.JPanel {
 
             String maSP = model.getValueAt(i, 1).toString();
             int soLuong = Integer.parseInt(model.getValueAt(i, 3).toString());
-            long thanhTien = Long.parseLong(model.getValueAt(i, 4).toString());
-
+            int gianhap = Integer.parseInt(model.getValueAt(i, 4).toString());
+            int thanhtien =soLuong*gianhap;
             ChiTietPhieuNhapDTO ct = new ChiTietPhieuNhapDTO();
             ct.setMapn(maPN);
             ct.setMasp(maSP);
             ct.setSl(soLuong);
-            ct.setTongtien(thanhTien);
+            ct.setDonGia(gianhap);
+            ct.setTongtien(thanhtien);
 
             ctBUS.them(ct);
             spBus.tangSoLuong(maSP, soLuong);
@@ -787,15 +799,15 @@ public class NhapHangUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Hãy chọn sản phẩm");
             return;
         }
-        int dongia = Integer.parseInt(jTable3.getValueAt(row, 2).toString());
         String masp = jTable3.getValueAt(row,0).toString();
         String tensp = jTable3.getValueAt(row,1).toString();
         int soluong = (int) jSpinner1.getValue();
-        if(soluong <= 0){
+        int gianhap= Integer.parseInt(jSpinner2.getValue().toString());
+        if(soluong == 0){
             JOptionPane.showMessageDialog(this, "Không thêm do số lượng bằng 0!");
             return;
         }
-        int gia = dongia * soluong;
+        int thanhtien = gianhap * soluong;
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
 
         model.addRow(new Object[]{
@@ -803,7 +815,8 @@ public class NhapHangUI extends javax.swing.JPanel {
             masp,
             tensp,
             soluong,
-            gia
+            gianhap,
+            thanhtien
         });
 
       
@@ -854,6 +867,7 @@ public class NhapHangUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -868,6 +882,7 @@ public class NhapHangUI extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;

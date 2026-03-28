@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 
 import DATABASE.Connect;
@@ -24,11 +21,11 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhapDTO>{
     public int insert(ChiTietPhieuNhapDTO pnh){
         int result = 0;
         try(Connection conn = Connect.getConnection()){
-            String qry = "INSERT INTO chitietphieunhap(MaPN, MaSP, SoLuong, TongTien) VALUES ("
+            String qry = "INSERT INTO chitietphieunhap(MaPN, MaSP, SoLuong, DonGia) VALUES ("
             + "'" + pnh.getMapn() + "',"
             + "'" + pnh.getMasp() + "',"
             + "'" + pnh.getSl() + "',"
-            + "'" + pnh.getTongtien() + "')";
+            + "'" + pnh.getDonGia() + "')";
             Statement st = conn.createStatement();
             result = st.executeUpdate(qry);
         }catch (SQLException ex) {
@@ -40,10 +37,9 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhapDTO>{
     @Override
     public int update(ChiTietPhieuNhapDTO pnh) {
         int result=0;
-        String qry="Update chitietphieunhap Set";
-        qry+=" "+"MaSP="+"'"+pnh.getMasp()+"'";
-        qry+=","+"SoLuong="+"'"+pnh.getSl()+"'";
-        qry+=","+"TongTien="+"'"+pnh.getTongtien()+"'";
+        String qry="Update chitietphieunhap Set ";
+        qry+="SoLuong="+"'"+pnh.getSl()+"'";
+        qry+=","+"DonGia="+"'"+pnh.getDonGia()+"'";
         qry+=" WHERE MaPN='"+pnh.getMapn()+"' AND MaSP= '"+pnh.getMasp()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
@@ -57,7 +53,7 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhapDTO>{
     @Override
     public int delete(ChiTietPhieuNhapDTO pnh) {
         int result=0;
-        String qry="Delete from chitietphieunhap where MaPN='"+pnh.getMapn()+"'";
+        String qry="Delete from chitietphieunhap where MaPN='"+pnh.getMapn()+"' AND MaSP='"+pnh.getMasp()+"'";
         try(Connection conn=Connect.getConnection()) {
             Statement st=conn.createStatement();
             result=st.executeUpdate(qry);
@@ -78,7 +74,8 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhapDTO>{
                 pnh.setMapn(rs.getString(1));
                 pnh.setMasp(rs.getString(2));
                 pnh.setSl(rs.getInt(3));
-                pnh.setTongtien(rs.getInt(4));
+                pnh.setDonGia(rs.getInt(4));
+                pnh.setTongtien(rs.getInt(3)*rs.getInt(4));
                 ds.add(pnh);
             }
         }catch(SQLException ex) {
@@ -100,7 +97,8 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhapDTO>{
                 ct.setMapn(rs.getString("MaPN"));
                 ct.setMasp(rs.getString("MaSP"));
                 ct.setSl(rs.getInt("SoLuong"));
-                ct.setTongtien(rs.getLong("TongTien"));
+                ct.setDonGia(rs.getInt("DonGia"));
+                ct.setTongtien(rs.getInt("SoLuong") * rs.getInt("DonGia"));
                 list.add(ct);
             }
         } catch(Exception e){

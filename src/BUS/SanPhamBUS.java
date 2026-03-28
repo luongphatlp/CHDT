@@ -1,11 +1,14 @@
 package BUS;
 
+import DAO.NhanVienDAO;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
 import DTO.ChiTietSanPhamDTO;
+import DTO.NhanVienDTO;
+import com.mysql.cj.jdbc.ConnectionImpl;
 import java.util.ArrayList;
 
 public class SanPhamBUS {
@@ -24,10 +27,24 @@ public class SanPhamBUS {
         ds = dao.selectAll();
         if (ds == null) ds = new ArrayList<>();
     }
+   
 
     public ArrayList<SanPhamDTO> getDS() {
         return ds;
     }
+    
+    public ArrayList<SanPhamDTO> getDSSP(){
+        if(ds == null){
+          ds = docDSSP();
+        }
+        return ds;
+    }
+    public ArrayList<SanPhamDTO> docDSSP(){
+        SanPhamDAO data = new SanPhamDAO();
+        ds = data.selectAll();      
+        return ds;
+    }
+
 
     public boolean checkMaSP(String ma) {
         for (SanPhamDTO sp : ds) {
@@ -170,5 +187,100 @@ public class SanPhamBUS {
     public int capNhatSoLuongSanPham(String masp, int soluongtru) {
         return dao.truSoLuongSanPham(masp, soluongtru);
     }
+    
+    public boolean them1(SanPhamDTO spDTO){
+        
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.insert(spDTO);
+        ds.add(spDTO);
+        return true;
+    }
+    public boolean sua1 (SanPhamDTO spDTO){
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.update(spDTO);
+        for (int i = 0 ; i < ds.size(); i++){
+            if (spDTO.getMaSP().equals(ds.get(i).getMaSP())){
+                ds.set(i, spDTO);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean xoa1 (SanPhamDTO spDTO){
+         SanPhamDAO dao = new SanPhamDAO();
+         dao.delete(spDTO);
+         for (int i = 0 ; i < ds.size(); i++){
+             if (spDTO.getMaSP().equals(ds.get(i).getMaSP())){
+                 ds.remove(i);
+                 return true;
+             }
+         }
+         return false;
+    }
+    public ArrayList<SanPhamDTO> timkiem (String muctieu){
+        String target = muctieu.toLowerCase().trim();
+        ArrayList<SanPhamDTO> dstk = new ArrayList<>();
+        for (SanPhamDTO sp : ds){
+            if (target.contains(sp.getMaSP().toLowerCase().trim())){
+                dstk.add(sp);
+            }else{
+                return null;
+            }
+        }
+        return dstk;
+    }
+    
+    public void thu(){
+       SanPhamDTO sp = new SanPhamDTO();
+       sp.getMaSP();
+       sp.getTenSP();
+       sp.getSoLuong();
+       sp.getDonGia();
+       sp.getBoNho();
+               
+     
+    }
+    
+    public boolean them2 (SanPhamDTO sp){
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.insert(sp);
+        ds.add(sp);
+        return true;
+    }
+    public boolean sua2 (SanPhamDTO sp){
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.update(sp);
+        for (int i = 0 ; i < ds.size(); i++){
+            if (sp.getMaSP().equals(ds.get(i).getMaSP())){
+                ds.set(i, sp);
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean xoa2 (SanPhamDTO sp){
+        SanPhamDAO dao = new SanPhamDAO();
+        dao.delete(sp);
+        for(int i = 0 ; i < ds.size() ; i++){
+            if (sp.getMaSP().equals(ds.get(i).getMaSP())){
+                ds.remove(i);
+                return true;
+            }
+        }
+        return true;
+    }
+    public ArrayList<SanPhamDTO> timkiem2 (String muctieu){
+        SanPhamBUS bus = new SanPhamBUS();
+        ArrayList<SanPhamDTO> dstk = new ArrayList<>();
+        for (SanPhamDTO sp :  bus.getDS()){
+            if(muctieu.contains(sp.getMaSP())){
+                dstk.add(sp);
+            }else{
+                return null;
+            }
+        }
+        return dstk;
+    }
+    
 }
 

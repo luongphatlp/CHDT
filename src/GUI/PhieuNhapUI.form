@@ -233,7 +233,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" pref="269" max="32767" attributes="0"/>
+                          <Component id="jComboBox1" pref="265" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTextField1" min="-2" pref="460" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -466,7 +466,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1226" max="32767" attributes="0"/>
+                          <EmptySpace pref="1201" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

@@ -6,7 +6,6 @@
             <file>file:/D:/projectnetbean/CHDT/src/TEST/MainApplication.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietKhuyenMaiDAO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/HomeUI.java</file>
-            <file>file:/D:/projectnetbean/CHDT/src/GUI/PhieuNhapUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DATABASE/Connect.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DAO/NhanVienDAO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DTO/NhanVienDTO.java</file>
@@ -82,7 +81,16 @@
             <file>file:/D:/projectnetbean/CHDT/src/DTO/LanBaoHanhDTO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DAO/LanBaoHanhDAO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/BUS/LanBaoHanhBUS.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/QLKhachHangUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaKHUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/UTIL/TaiKhoanSession.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/Login.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/PhieuNhapHangDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietPhieuNhapDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/PhieuNhapUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhanVienUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhapHangUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DTO/ThongKeDoanhThuDTO.java</file>
         </group>
     </open-files>
 </project-private>

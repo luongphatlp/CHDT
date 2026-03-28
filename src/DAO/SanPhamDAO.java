@@ -274,4 +274,52 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
             e.printStackTrace();
         }
     }
+    public int insert1 (SanPhamDTO sp){
+        int result =0 ;
+        String qry = "Insert sanpham (ma,ten,sl,bonho) value (?,?,?,?)";
+        try(Connection conn = Connect.getConnection();
+                java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
+            pst.setString(1,sp.getMaSP());
+            pst.setString(2,sp.getTenSP());
+            pst.setDouble(3,sp.getSoLuong());
+            pst.setString(4,sp.getBoNho());
+            
+            result = pst.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+            
+        return result;
+    }
+    public int update1 (SanPhamDTO sp){
+        int result = 0 ; 
+        String qry = "update set ho = ? , sl = ? , bonho = ? where ma = ?";
+        try (Connection conn = Connect.getConnection();
+                java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
+            
+            pst.setString(1,sp.getTenSP());
+            pst.setInt(2,sp.getSoLuong());
+            pst.setString(3, sp.getBoNho());
+            pst.setString(4, sp.getMaSP());
+            
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public int delete1(SanPhamDTO spdto){
+        int result =0;
+        String qry = "Delete form sanpham where ma=?";
+        try (Connection conn = Connect.getConnection();
+                java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
+            
+            pst.setString(1, spdto.getMaSP());
+            
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ package GUI;
 import BUS.HoaDonBUS;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
+import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,7 +60,7 @@ public class THHoaDonUI extends javax.swing.JPanel {
             row.add(hd.getMaHD());
             row.add(hd.getMaNV());
             //NhanVienDTO nv= bus.getNVByMaNV(hd.getMaNV());
-            //row.add(nv.getHotenNV());
+            //row.add(nv.getHoTenNV());
             row.add(hd.getNgay());
             //KhachHangDTO kh=bus.getKHByMaKH(hd.getMaKH());
             //row.add(kh.getHoten());

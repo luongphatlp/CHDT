@@ -605,6 +605,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int row = jTable1.getSelectedRow();
+        if(row==-1) return;
         String maPN = jTable1.getValueAt(row, 1).toString();
 
         ChiTietPNUI ui = new ChiTietPNUI();

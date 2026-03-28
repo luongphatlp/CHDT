@@ -3,14 +3,14 @@ package GUI;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
-import BUS.NhaCungCapBUS;
-import DTO.NhaCungCapDTO;
+import BUS.KhachHangBUS;
+import DTO.KhachHangDTO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 public class QLKhachHangUI extends javax.swing.JPanel {
 
-    private NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+    private KhachHangBUS khBUS = new KhachHangBUS();
     public QLKhachHangUI() {
         //code cũ Nhà cung cấp t comment lại á
         try {
@@ -29,10 +29,18 @@ public class QLKhachHangUI extends javax.swing.JPanel {
             }
         });
         customTable();
-        loadDataToTable(nccBUS.getDS());
+        loadDataToTable(khBUS.getDSKH());
     }
-    public void loadDataToTable(ArrayList<NhaCungCapDTO> ds) {
-        
+    public void loadDataToTable(ArrayList<KhachHangDTO> ds) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        int stt = 1;
+        for (KhachHangDTO kh : ds) {
+             model.addRow(new Object[]{
+                stt++, kh.getMa(), kh.getHoten(), kh.getDt(), kh.getEmail() 
+             });
+         }
+        resizeColumnWidth(jTable1); 
     }
     private void customTable() {
         
@@ -168,7 +176,7 @@ public class QLKhachHangUI extends javax.swing.JPanel {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(820, 90));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã NCC", "Tên NCC", "Địa chỉ", "Số điện thoại" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã khách", "Tên khách", "Số điện thoại" }));
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -193,7 +201,7 @@ public class QLKhachHangUI extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnreset)
                 .addContainerGap())
@@ -278,36 +286,132 @@ public class QLKhachHangUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        
+        jTextField1.setText(""); 
+        jComboBox1.setSelectedIndex(0); 
+        loadDataToTable(khBUS.getDSKH());
     }//GEN-LAST:event_btnresetActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
+
+       KhachHangUI themKH = new KhachHangUI();
+       themKH.setVisible(true);
+       if (themKH.getReturnStatus() == KhachHangUI.RET_OK) {
+          khBUS = new KhachHangBUS(); 
+          loadDataToTable(khBUS.getDSKH());
+       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         int row = jTable1.getSelectedRow();
+        if (row == -1) {
+           JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần xóa!");
+           return;
+        }
+        String ma = jTable1.getValueAt(row, 1).toString();
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa khách hàng " + ma + "?", "Xác nhận", JOptionPane.YES_NO_OPTION);
     
+        if (confirm == JOptionPane.YES_OPTION) {
+           if (khBUS.delete(ma)) {
+              JOptionPane.showMessageDialog(this, "Xóa thành công!");
+              loadDataToTable(khBUS.getDSKH()); 
+           } else {
+              JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+           }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-      
+      String text = jTextField1.getText().toLowerCase().trim();
+      int index = jComboBox1.getSelectedIndex();
+      ArrayList<KhachHangDTO> dsFull = khBUS.getDSKH();
+      ArrayList<KhachHangDTO> kq = new ArrayList<>();
+
+      for (KhachHangDTO kh : dsFull) {
+          boolean match = false;
+
+          switch (index) {
+              case 0:
+                  if (kh.getMa().toLowerCase().contains(text) || 
+                      kh.getHoten().toLowerCase().contains(text) || 
+                      kh.getDt().toLowerCase().contains(text)) { 
+                      match = true;
+                  }
+                  break;
+              case 1: 
+                  if (kh.getMa().toLowerCase().contains(text)) match = true;
+                  break;
+              case 2: 
+                  if (kh.getHoten().toLowerCase().contains(text)) match = true;
+                  break;
+              case 3:
+                  if (kh.getDt().toLowerCase().contains(text)) match = true; // Tìm chính xác theo cột SĐT
+                  break;
+          }
+        
+          if (match) {
+              kq.add(kh);
+          }
+      }
+      loadDataToTable(kq);
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+        int row = jTable1.getSelectedRow();
+        if (row == -1) {
+           JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần sửa!");
+           return;
+        }
+        String ma = jTable1.getValueAt(row, 1).toString();
+        String ten = jTable1.getValueAt(row, 2).toString();
+        String sdt = jTable1.getValueAt(row, 3).toString();
+        String email = jTable1.getValueAt(row, 4).toString();
+    
+        KhachHangDTO khSelect = new KhachHangDTO(ma, ten, sdt, email);
+
+        SuaKHUI suaForm = new SuaKHUI(khSelect, this, khBUS);
+        suaForm.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       
+       JFileChooser fileChooser = new JFileChooser();
+       fileChooser.setDialogTitle("Chọn file Excel để nhập dữ liệu");
+       int userSelection = fileChooser.showOpenDialog(this);
+    
+       if (userSelection == JFileChooser.APPROVE_OPTION) {
+           File fileOpen = fileChooser.getSelectedFile();
+           try {
+                int count = khBUS.nhapExcel(fileOpen);
+                JOptionPane.showMessageDialog(this, "Đã nhập thành công " + count + " khách hàng!");
+                loadDataToTable(khBUS.getDSKH()); // Cập nhật lại bảng hiển thị
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi nhập file: " + ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String path = fileToSave.getAbsolutePath();
+            if (!path.endsWith(".xlsx")) {
+               fileToSave = new File(path + ".xlsx");
+            }
+            try {
+                khBUS.xuatExcel(fileToSave);
+                JOptionPane.showMessageDialog(this, "Xuất file Excel thành công!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi xuất file: " + ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
    // --- THÊM ĐOẠN NÀY VÀO CUỐI CLASS ĐỂ CHẠY THỬ ---
     public static void main(String[] args) {

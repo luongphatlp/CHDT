@@ -28,7 +28,6 @@ public class HoaDonDAO implements InterfaceDAO<HoaDonDTO> {
             PreparedStatement ps = con.prepareStatement(sql);
         ) {
             ps.setString(1, hd.getMaHD());
-            if(hd.getNgay() != null )
             ps.setTimestamp(2, Timestamp.valueOf(hd.getNgay()));
             ps.setString(3, hd.getMaNV());
             ps.setString(4, hd.getMaKH());

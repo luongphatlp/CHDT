@@ -21,11 +21,13 @@ public class ChiTietBaoHanhDAO {
     
     public boolean insert(ChiTietBaoHanhDTO ctbh) {
         // Cột trong DB của bạn là 'Ngay', không phải 'NgayBaoHanh'
-        String sql = "INSERT INTO chitietbaohanh (MaBH, IMEI, NgayHetBaoHanh) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO chitietbaohanh (MaBH, IMEI, NgayHetBaoHanh , TinhTrang , XuLy) VALUES (?, ?, ? ,? ,?)";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1,ctbh.getMaBH());
             ps.setString(2,ctbh.getIMEI());
             ps.setDate(3,java.sql.Date.valueOf(ctbh.getNgay()));
+            ps.setString(4, ctbh.getTinhTrang());
+            ps.setString(5, ctbh.getXuLy());
             
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -43,6 +45,8 @@ public class ChiTietBaoHanhDAO {
                 ctbh.setMaBH(rs.getString(1));
                 ctbh.setIMEI(rs.getString(2));
                 ctbh.setNgay(rs.getDate(3).toLocalDate());
+                ctbh.setTinhTrang(rs.getString(4));
+                ctbh.setXuLy(rs.getString(5));
                 ds.add(ctbh);
             }
             
@@ -52,11 +56,14 @@ public class ChiTietBaoHanhDAO {
         return ds;
     }
     public void update(ChiTietBaoHanhDTO ctbh){
-        String sql = "UPDATE chitietbaohanh SET IMEI=?,NgayHetBaoHanh=? WHERE MaBH=?";
+        String sql = "UPDATE chitietbaohanh SET IMEI=?,NgayHetBaoHanh=? , TinhTrang = ? , XuLy = ? WHERE MaBH=?";
         try (Connection con = Connect.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1,ctbh.getIMEI());
             ps.setDate(2,java.sql.Date.valueOf(ctbh.getNgay()));
-            ps.setString(3,ctbh.getMaBH());
+            ps.setString(3,ctbh.getTinhTrang());
+            ps.setString(4, ctbh.getXuLy());
+            
+            ps.setString(5,ctbh.getMaBH());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Loi tai DAO: " + e.getMessage());

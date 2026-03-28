@@ -121,5 +121,55 @@ public class ThongKeKhachHangBUS {
         }
         return tam;
     }
+    public ArrayList<Object[]> thongKeKHtheoQuy(int nam){
+        ArrayList<Object[]> ketqua = new ArrayList<>();
+        long[] tongCotQuy = new long[4];
+        long tongTatCa = 0;
+        
 
+       
+        for (KhachHangDTO kh : bushd.getDSKH()) {
+            Object[] row = new Object[7];
+            row[1] = kh.getMa();
+            
+            long[] quy = new long[4];
+            long tongNam = 0;
+            int soHD = 0 ;
+            for(HoaDonDTO hd : bushd.getDS()){
+            if (hd.getNgay().getYear() == nam && kh.getMa().equals(hd.getMaKH())) {
+                int q = (hd.getNgay().getMonthValue() - 1) / 3;
+                quy[q] += hd.getTongTien();
+                tongNam += hd.getTongTien();
+               
+            }
+            }
+            row[2] = quy[0];
+            row[3] = quy[1];
+            row[4] = quy[2];
+            row[5] = quy[3];
+            
+            row[6] = tongNam;
+
+            for (int i = 0; i < 4; i++) tongCotQuy[i] += quy[i];
+            tongTatCa += tongNam;
+
+            ketqua.add(row);
+        }
+
+        
+        if (!ketqua.isEmpty()) {
+            Object[] finalRow = new Object[7];
+            finalRow[1] = "Tổng cộng";
+            finalRow[2] = tongCotQuy[0];
+            finalRow[3] = tongCotQuy[1];
+            finalRow[4] = tongCotQuy[2];
+            finalRow[5] = tongCotQuy[3];
+            
+            finalRow[6] = tongTatCa;
+            ketqua.add(finalRow);
+        }
+
+        return ketqua;
+    }
+    
 }

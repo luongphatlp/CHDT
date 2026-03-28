@@ -105,18 +105,14 @@ public class ChiTietPNUI extends javax.swing.JDialog {
         model.setRowCount(0);
 
         for (ChiTietPhieuNhapDTO ct : ds) {
-            long donGia = 0;
             long soLuong = ct.getSl();
             long thanhTien = ct.getTongtien();
-
-            if (soLuong != 0) {
-                donGia = thanhTien / soLuong; 
-            }
+            long dongia=ct.getDonGia();
 
             model.addRow(new Object[]{
                 ct.getMasp(),
                 ct.getSl(),
-                df.format(donGia),
+                df.format(dongia),
                 df.format(ct.getTongtien())
             });
         }

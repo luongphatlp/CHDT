@@ -58,6 +58,13 @@ public class HoaDonBUS {
     public void dockm(){buskm.docDS();}
     
     public ArrayList<HoaDonDTO> getDS(){return ds;}
+   public ArrayList<HoaDonDTO> getDSHD(){
+        // Bắt buộc phải kiểm tra cả null LẪN isEmpty (rỗng)
+        if(ds == null || ds.isEmpty()){
+            ds = dao.selectAll(); 
+        }
+        return ds;
+    }
     public boolean checkSoLuong(int soLuongMua, int soLuongTon) {
         if (soLuongMua <= 0) {
             JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0!");
@@ -169,6 +176,14 @@ public ArrayList<HoaDonDTO> timKiem(String key,String pttt,String nv,
     public ArrayList<NhanVienDTO> getDSNV(){
         NhanVienBUS bus=new NhanVienBUS();
         return bus.docDSNV();
+    }
+    public ArrayList<KhachHangDTO> getDSKH(){
+        KhachHangBUS bus = new KhachHangBUS();
+        return bus.docDSKH();
+    }
+    public ArrayList<SanPhamDTO> getDSSP(){
+        SanPhamBUS bus = new SanPhamBUS();
+        return bus.docDSSP();
     }
     public KhachHangDTO layKhachHangBySDT(String sdt){
         KhachHangBUS buskh= new KhachHangBUS();
