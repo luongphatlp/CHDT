@@ -48,7 +48,7 @@ public class KhachHangDAO {
     // Thêm khách hàng
         public boolean insert(KhachHangDTO kh) {
 
-            String sql = "INSERT INTO khachhang VALUES (?,?,?,?)";
+            String sql = "INSERT INTO khachhang(Ma, HoTen, SDT, Email)  VALUES (?,?,?,?)";
 
             try {
                 conn = Connect.getConnection();
