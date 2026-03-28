@@ -8,13 +8,11 @@
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/ChiTietHoaDonBUS.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/BUS/HoaDonBUS.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/ChiTietHoaDonDAO.java</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/XemTTNhanVienUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/HoaDonDAO.java</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/NhanVienUI.java</file>
             <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/XemTTCaNhanUI.java</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/SuaNhanVienUI.java</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/SuaThongTinUI.form</file>
-            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/SuaThongTinUI.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/KhachHangUI.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/DAO/KhachHangDAO.java</file>
+            <file>file:/C:/Users/admin/Downloads/CHDT-main/CHDT-main/src/GUI/HoaDonUI.java</file>
         </group>
     </open-files>
 </project-private>
