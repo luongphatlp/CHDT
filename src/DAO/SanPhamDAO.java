@@ -17,16 +17,14 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
     @Override
     public int insert(SanPhamDTO sp) {   
         int result = 0;
-        String qry = "INSERT INTO dienthoai(Ma, Ten, SoLuong, DonGia, BoNho) VALUES (?, ?, ?, ?, ?)";
+        String qry = "INSERT INTO dienthoai(Ma, Ten, SoLuong, DonGia) VALUES (?, ?, ?, ?)";
         try (Connection conn = Connect.getConnection();
              PreparedStatement st = conn.prepareStatement(qry)) {
             
-            int index = 1;
-            st.setString(index++, sp.getMaSP());
-            st.setString(index++, sp.getTenSP()); 
-            st.setInt(index++, sp.getSoLuong());
-            st.setInt(index++, sp.getDonGia());
-            st.setString(index++, sp.getBoNho());
+            st.setString(1, sp.getMaSP());
+            st.setString(2, sp.getTenSP()); 
+            st.setInt(3, sp.getSoLuong());
+            st.setInt(4, sp.getDonGia());
             
             result = st.executeUpdate();
         } catch (SQLException ex) {
@@ -80,16 +78,14 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
     @Override
     public int update(SanPhamDTO sp) {
         int result = 0; 
-        String qry = "UPDATE dienthoai SET Ten=?, SoLuong=?, DonGia=?, BoNho=? WHERE Ma=?";
+        String qry = "UPDATE dienthoai SET Ten=?, SoLuong=?, DonGia=? WHERE Ma=?";
         try (Connection conn = Connect.getConnection();
              PreparedStatement st = conn.prepareStatement(qry)) {
             
-            int index = 1;
-            st.setString(index++, sp.getTenSP()); 
-            st.setInt(index++, sp.getSoLuong());
-            st.setInt(index++, sp.getDonGia());  
-            st.setString(index++, sp.getBoNho());
-            st.setString(index++, sp.getMaSP());
+            st.setString(1, sp.getTenSP()); 
+            st.setInt(2, sp.getSoLuong());
+            st.setInt(3, sp.getDonGia());  
+            st.setString(4, sp.getMaSP());
             
             result = st.executeUpdate();
         } catch (SQLException ex) {
@@ -112,7 +108,6 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
                 sp.setTenSP(rs.getString("Ten"));
                 sp.setSoLuong(rs.getInt("SoLuong"));
                 sp.setDonGia(rs.getInt("DonGia")); 
-                sp.setBoNho(rs.getString("BoNho"));
                 ds.add(sp);
             }
         } catch(SQLException ex) {
@@ -135,7 +130,6 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
                     sp.setTenSP(rs.getString("Ten"));
                     sp.setSoLuong(rs.getInt("SoLuong"));
                     sp.setDonGia(rs.getInt("DonGia"));
-                    sp.setBoNho(rs.getString("BoNho"));
                     ds.add(sp);
                 }
             }
@@ -160,8 +154,7 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
                         rs.getString("Ma"), 
                         rs.getString("Ten"), 
                         rs.getInt("SoLuong"), 
-                        rs.getInt("DonGia"), 
-                        rs.getString("BoNho")
+                        rs.getInt("DonGia")
                     );
                     
                     ChiTietSanPhamDTO ct = sp.getChiTiet();
@@ -276,13 +269,12 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
     }
     public int insert1 (SanPhamDTO sp){
         int result =0 ;
-        String qry = "Insert sanpham (ma,ten,sl,bonho) value (?,?,?,?)";
+        String qry = "Insert sanpham (ma,ten,sl) value (?,?,?)";
         try(Connection conn = Connect.getConnection();
                 java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
             pst.setString(1,sp.getMaSP());
             pst.setString(2,sp.getTenSP());
             pst.setDouble(3,sp.getSoLuong());
-            pst.setString(4,sp.getBoNho());
             
             result = pst.executeUpdate();
         }catch(SQLException ex){
@@ -293,14 +285,13 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
     }
     public int update1 (SanPhamDTO sp){
         int result = 0 ; 
-        String qry = "update set ho = ? , sl = ? , bonho = ? where ma = ?";
+        String qry = "update set ho = ? , sl = ?  where ma = ?";
         try (Connection conn = Connect.getConnection();
                 java.sql.PreparedStatement pst = conn.prepareStatement(qry)){
             
             pst.setString(1,sp.getTenSP());
             pst.setInt(2,sp.getSoLuong());
-            pst.setString(3, sp.getBoNho());
-            pst.setString(4, sp.getMaSP());
+            pst.setString(3, sp.getMaSP());
             
             result = pst.executeUpdate();
         } catch (SQLException e) {

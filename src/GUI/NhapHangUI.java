@@ -311,7 +311,7 @@ public class NhapHangUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã máy", "Tên máy", "Đơn giá"
+                "Mã máy", "Tên máy", "Giá bán"
             }
         ));
         jScrollPane3.setViewportView(jTable3);
@@ -351,10 +351,10 @@ public class NhapHangUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addGap(81, 81, 81))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

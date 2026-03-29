@@ -42,12 +42,8 @@ public class SanPhamUI extends javax.swing.JPanel {
         int stt = 1;
         for (SanPhamDTO sp : ds) {
             String giaTien = String.format("%,d VNĐ", sp.getDonGia());
-            String ramRom = sp.getBoNho();
-            if (ramRom == null || ramRom.isEmpty()) {
-                ramRom = "Chưa có";
-            }
             model.addRow(new Object[]{
-                stt++, sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), giaTien, ramRom
+                stt++, sp.getMaSP(), sp.getTenSP(), sp.getSoLuong(), giaTien
             });
         }
         //resizeColumnWidth(jTable1);

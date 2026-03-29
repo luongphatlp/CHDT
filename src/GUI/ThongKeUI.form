@@ -125,9 +125,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Component id="kGradientPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="kGradientPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="kGradientPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -837,10 +837,11 @@
                         <Component class="javax.swing.JComboBox" name="cbthoigian">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="3">
-                                <StringItem index="0" value="Ng&#xe0;y"/>
-                                <StringItem index="1" value="Th&#xe1;ng"/>
+                              <StringArray count="4">
+                                <StringItem index="0" value="Ch&#x1ecd;n lo&#x1ea1;i th&#x1ed1;ng k&#xea;"/>
+                                <StringItem index="1" value="Kho&#x1ea3;ng ng&#xe0;y"/>
                                 <StringItem index="2" value="N&#x103;m"/>
+                                <StringItem index="3" value="Kho&#x1ea3;ng n&#x103;m"/>
                               </StringArray>
                             </Property>
                           </Properties>
@@ -1191,9 +1192,9 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="4">
                         <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
-                        <StringItem index="1" value="Ng&#xe0;y"/>
-                        <StringItem index="2" value="Th&#xe1;ng"/>
-                        <StringItem index="3" value="N&#x103;m"/>
+                        <StringItem index="1" value="Kho&#x1ea3;ng ng&#xe0;y"/>
+                        <StringItem index="2" value="N&#x103;m"/>
+                        <StringItem index="3" value="Kho&#x1ea3;nh n&#x103;m"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -1624,9 +1625,9 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="4">
                         <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
-                        <StringItem index="1" value="Ng&#xe0;y"/>
-                        <StringItem index="2" value="Th&#xe1;ng"/>
-                        <StringItem index="3" value="N&#x103;m"/>
+                        <StringItem index="1" value="Kho&#x1ea3;ng ng&#xe0;y"/>
+                        <StringItem index="2" value="N&#x103;m"/>
+                        <StringItem index="3" value="Kho&#x1ea3;ng n&#x103;m"/>
                       </StringArray>
                     </Property>
                   </Properties>

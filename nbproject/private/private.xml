@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/projectnetbean/CHDT/src/TEST/MainApplication.java</file>
@@ -82,15 +82,19 @@
             <file>file:/D:/projectnetbean/CHDT/src/DAO/LanBaoHanhDAO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/BUS/LanBaoHanhBUS.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/QLKhachHangUI.java</file>
-            <file>file:/D:/projectnetbean/CHDT/src/GUI/SuaKHUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/UTIL/TaiKhoanSession.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/Login.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DTO/PhieuNhapHangDTO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DAO/ChiTietPhieuNhapDAO.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/PhieuNhapUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/GUI/NhanVienUI.java</file>
-            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhapHangUI.java</file>
             <file>file:/D:/projectnetbean/CHDT/src/DTO/ThongKeDoanhThuDTO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/ThongKeSanPhamDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/XemTTNhanVienUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/Register.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/DAO/NhaCungCapDAO.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/SanPhamUI.java</file>
+            <file>file:/D:/projectnetbean/CHDT/src/GUI/NhapHangUI.java</file>
         </group>
     </open-files>
 </project-private>

@@ -55,6 +55,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
     public ThongKeUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
         initComponents();
+        busnv.loadAll();
+        bussp.loadAll();
+        buskh.loadAll();
         customTable();
         bangDienThoai();
         bangNhanVien();
@@ -63,6 +66,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         chucNang();
         veListNhanVien();
         filechooseexcel.setVisible(false);
+        
     }
     
     private void customTable() {
@@ -125,11 +129,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
         pthang.setVisible(false);
         pnam.setVisible(false);
         String key=cbthoigian.getSelectedItem().toString();
-        if(key.equals("Ngày")){
+        if(key.equals("Khoảng ngày")){
             pngay.setVisible(true);
-        }else if(key.equals("Tháng")){
+        }else if(key.equals("Năm")){
             pthang.setVisible(true);
-        }else{
+        }else if(key.equals("Khoảng năm")){
             pnam.setVisible(true);
         }
     }
@@ -138,11 +142,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jPanel15.setVisible(false);
         jPanel16.setVisible(false);
         String key=cbkykhachhang.getSelectedItem().toString();
-        if(key.equals("Ngày"))
+        if(key.equals("Khoảng ngày"))
             jPanel14.setVisible(true);
         else if(key.equals("Tháng"))
             jPanel15.setVisible(true);
-        else if(key.equals("Năm"))
+        else if(key.equals("Khoảng năm"))
             jPanel16.setVisible(true);
     }
     public void chucNang1(){
@@ -150,11 +154,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jPanel10.setVisible(false);
         jPanel12.setVisible(false);
         String key=cbkynhanvien.getSelectedItem().toString();
-        if(key.equals("Ngày"))
+        if(key.equals("Khoảng ngày"))
             jPanel5.setVisible(true);
-        else if(key.equals("Tháng"))
-            jPanel10.setVisible(true);
         else if(key.equals("Năm"))
+            jPanel10.setVisible(true);
+        else if(key.equals("Khoảng năm"))
             jPanel12.setVisible(true);
     }
     public void veBieuDo(int i,ArrayList<ThongKeDoanhThuDTO> ds) {
@@ -369,7 +373,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         String loai=cbkykhachhang.getSelectedItem().toString();
         String s=txttimkiemkhachhang.getText();
         switch (loai) {
-            case "Ngày" -> {
+            case "Khoảng ngày" -> {
                 LocalDate tu=LocalDate.MIN;
                 LocalDate den=LocalDate.MAX;
                 if(chtungaykhachhang.getDate()!=null)
@@ -378,13 +382,13 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     den= chdenngaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 return buskh.locKhachHangTheoNgay(s, tu, den);
             }
-            case "Tháng" -> {
+            case "Năm" -> {
                 int nam=0;
                 if(Integer.parseInt(spnamkh.getValue().toString())==-1)
                     nam=Integer.parseInt(spnamkh.getValue().toString());
                 return buskh.locKhachHangTheoThang(s, nam);
             }
-            case "Năm" -> {
+            case "Khoảng năm" -> {
                 int tu=0,den=0;
                 if(Integer.parseInt(sptunamkh.getValue().toString())==-1)
                     tu=Integer.parseInt(sptunamkh.getValue().toString());
@@ -761,9 +765,9 @@ public final class ThongKeUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -958,7 +962,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        cbthoigian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày", "Tháng", "Năm" }));
+        cbthoigian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn loại thống kê", "Khoảng ngày", "Năm", "Khoảng năm" }));
         cbthoigian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbthoigianActionPerformed(evt);
@@ -1187,7 +1191,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel8.setText("Chọn kỳ thống kê");
 
-        cbkykhachhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ngày", "Tháng", "Năm" }));
+        cbkykhachhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Khoảng ngày", "Năm", "Khoảnh năm" }));
         cbkykhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbkykhachhangActionPerformed(evt);
@@ -1433,7 +1437,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel10.setText("Chọn kỳ thống kê");
 
-        cbkynhanvien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ngày", "Tháng", "Năm" }));
+        cbkynhanvien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Khoảng ngày", "Năm", "Khoảng năm" }));
         cbkynhanvien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbkynhanvienActionPerformed(evt);
@@ -1725,42 +1729,33 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
     private void btnthongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthongkeActionPerformed
         // TODO add your handling code here:
-        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        spnam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         String ngay=cbthoigian.getSelectedItem().toString();
-        if(ngay.equals("Ngày")){
+        int bieudo=0;
+        String tencot;
+        ArrayList<ThongKeDoanhThuDTO> dstk;
+        if(ngay.equals("Khoảng ngày")){
             Date datetu=chtungaydoanhthu.getDate();
             Date dateden=chdenngaydoanhthu.getDate();
             if(datetu == null || dateden==null ){
                 JOptionPane.showMessageDialog(null,"Vui lòng chọn đủ từ ngày đến ngày");
-                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNgay(datetu, dateden);
-            veBangThongKeDoanhThu("Ngày",ds);
-            veBieuDo(1,ds);
-        }else if(ngay.equals("Tháng")){
+            dstk=busdt.thongKeDoanhThuTheoNgay(datetu, dateden);
+            bieudo=1;
+            tencot="Ngày";
+        }else if(ngay.equals("Năm")){
             int nam=Integer.parseInt(spnam.getValue().toString());
-            if(Integer.parseInt(spnam.getValue().toString())==-1){
-                spnam.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoThang(nam);
-            veBangThongKeDoanhThu("Tháng",busdt.thongKeDoanhThuTheoThang(nam));
-            veBieuDo(2,ds);
-        }else{
+            dstk=busdt.thongKeDoanhThuTheoThang(nam);
+            tencot="Tháng";
+            bieudo=2;
+        }else if(ngay.equals("Khoảng năm")){
             int tunam=Integer.parseInt(sptunam.getValue().toString());
             int dennam=Integer.parseInt(spdennam.getValue().toString());
-            if(Integer.parseInt(sptunam.getValue().toString()) ==-1 || Integer.parseInt(spdennam.getValue().toString()) ==-1){
-                chtungaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-                chdenngaydoanhthu.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            }
-            ArrayList<ThongKeDoanhThuDTO> ds=busdt.thongKeDoanhThuTheoNam(tunam,dennam);
-            veBangThongKeDoanhThu("Năm",busdt.thongKeDoanhThuTheoNam(tunam,dennam));
-            veBieuDo(3,ds);
-        }
+            dstk=busdt.thongKeDoanhThuTheoNam(tunam,dennam);
+            tencot="Năm";
+            bieudo=3;
+        }else return;
+        veBieuDo(bieudo,dstk);
+        veBangThongKeDoanhThu(tencot,dstk); 
     }//GEN-LAST:event_btnthongkeActionPerformed
 
     private void cbthoigianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbthoigianActionPerformed
@@ -1851,18 +1846,18 @@ public final class ThongKeUI extends javax.swing.JPanel {
     private void btthongkenhanvienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthongkenhanvienActionPerformed
         // TODO add your handling code here:
         String k=cbkynhanvien.getSelectedItem().toString();
-        if(k.equals("Ngày")){
+        if(k.equals("Khoảng ngày")){
             if(chtungaynhanvien.getDate()==null || chdenngaynhanvien.getDate()==null){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
                 return;
             }
         }
-        else if(k.equals("Tháng")){
+        else if(k.equals("Năm")){
             if(Integer.parseInt(spnamnv.getValue().toString())==-1){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
                 return;
             }
-        }else if(k.equals("Năm")){
+        }else if(k.equals("Khoảng năm")){
             if(Integer.parseInt(sptunamnv.getValue().toString())==-1 || Integer.parseInt(spdennamnv.getValue().toString())==-1){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian");
                 return;

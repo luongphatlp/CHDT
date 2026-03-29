@@ -12,12 +12,12 @@ import DAO.NhapHangDAO;
 import java.util.ArrayList;
 import java.util.Vector;
 public class DienThoaiBUS {
-    
+    NhapHangDAO dao = new NhapHangDAO();
     public ArrayList<Vector> dsdt;
 
     public void docDS() {
 
-        NhapHangDAO dao = new NhapHangDAO();
+        
         dsdt = dao.getAll();
 
     }

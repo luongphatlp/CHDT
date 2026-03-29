@@ -1,42 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BUS;
 
 import DAO.ThongKeSanPhamDAO;
-import DATABASE.Connect;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.NhaCungCapDTO;
 import DTO.SanPhamDTO;
 import DTO.ThongKeSanPhamDTO;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.sql.ResultSet;
 
-/**
- *
- * @author Latitude E7470
- */
 public class ThongKeSanPhamBUS {
     private ArrayList<ThongKeSanPhamDTO> ds;
-    NhaCungCapBUS busncc=new NhaCungCapBUS();
     SanPhamBUS busSP = new SanPhamBUS();
     HoaDonBUS busHD = new HoaDonBUS();
     ChiTietHoaDonBUS busCTHD = new ChiTietHoaDonBUS();
     public ThongKeSanPhamBUS(){
         ds=new ArrayList<>();
-        busncc.docDS();
     }
-    
+    public void loadAll(){
+        busSP.docDS();
+        busHD.selectAll();
+    }
     public ArrayList<ThongKeSanPhamDTO> getList(){
         return ds;
     }
-    //thuc hien thong ke san pham
+
     public ArrayList<ThongKeSanPhamDTO> thongKeSanPham(){
         ThongKeSanPhamDAO dao=new ThongKeSanPhamDAO();
         ds=dao.thongKeSanPham();
@@ -59,6 +47,8 @@ public class ThongKeSanPhamBUS {
         return bus.getDS();
     }
     public ArrayList<NhaCungCapDTO> getDSNCC(){
+        NhaCungCapBUS busncc=new NhaCungCapBUS();
+        busncc.docDS();
         return busncc.getDS();
     }
     public ArrayList<Object[]> thongKeSanPhamTheoQuy(int nam) {

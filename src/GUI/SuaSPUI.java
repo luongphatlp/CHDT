@@ -150,7 +150,6 @@ public class SuaSPUI extends JFrame {
             spNew.setTenSP(txtTen.getText().trim());
             spNew.setSoLuong((int) spinSoLuong.getValue());
             spNew.setDonGia(Integer.parseInt(txtDonGia.getText().trim().replace(".", "")));
-            spNew.setBoNho(cbRam.getSelectedItem().toString() + " / " + cbBoNhoNgoai.getSelectedItem().toString());
             ChiTietSanPhamDTO ctNew = spNew.getChiTiet(); 
             ctNew.setMau(txtMau.getText().trim());
             ctNew.setManHinh(txtManHinh.getText().trim());

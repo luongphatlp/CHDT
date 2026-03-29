@@ -23,6 +23,8 @@ public class ThongKeKhachHangBUS {
     HoaDonBUS bushd=new HoaDonBUS();
     public ThongKeKhachHangBUS(){
         ds=new ArrayList<>();
+    }
+    public void loadAll(){
         buskh.getDSKH();
         bushd.selectAll();
     }

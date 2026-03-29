@@ -1,7 +1,7 @@
 package DTO;
 
 public class SanPhamDTO {
-    private String masp, tenSP, boNho;
+    private String masp, tenSP;
     private int soluong, dongia;
     private ChiTietSanPhamDTO chiTiet;
 
@@ -9,12 +9,11 @@ public class SanPhamDTO {
         this.chiTiet = new ChiTietSanPhamDTO();
     }
     
-    public SanPhamDTO(String masp, String tenSP, int soluong, int dongia, String boNho) {
+    public SanPhamDTO(String masp, String tenSP, int soluong, int dongia) {
         this.masp = masp;
         this.tenSP = tenSP;
         this.soluong = soluong;
         this.dongia = dongia;
-        this.boNho = boNho;
         this.chiTiet = new ChiTietSanPhamDTO();
     }
 
@@ -30,8 +29,6 @@ public class SanPhamDTO {
     public int getDonGia() { return dongia; }
     public void setDonGia(int dongia) { this.dongia = dongia; }
     
-    public String getBoNho() { return boNho; }
-    public void setBoNho(String boNho) { this.boNho = boNho; }
 
     public ChiTietSanPhamDTO getChiTiet() { return chiTiet; }
     public void setChiTiet(ChiTietSanPhamDTO chiTiet) { this.chiTiet = chiTiet; }

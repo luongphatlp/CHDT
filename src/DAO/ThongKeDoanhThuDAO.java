@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import DTO.ThongKeDoanhThuDTO;
@@ -13,12 +9,9 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 
-/**
- *
- * @author Latitude E7470
- */
 public class ThongKeDoanhThuDAO {
-    public ArrayList<ThongKeDoanhThuDTO> thongKeDoanhThuTheoNgay(LocalDate tuUtil,LocalDate denUtil){
+    
+ /*   public ArrayList<ThongKeDoanhThuDTO> thongKeDoanhThuTheoNgay(LocalDate tuUtil,LocalDate denUtil){
         ArrayList<ThongKeDoanhThuDTO> ds= new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
             StringBuilder qry = new StringBuilder();
@@ -71,6 +64,7 @@ public class ThongKeDoanhThuDAO {
         }
         return ds;
     }
+*/
     public ArrayList<ThongKeDoanhThuDTO> thongKeDoanhThuTheoThang(int nam){
         ArrayList<ThongKeDoanhThuDTO> ds = new ArrayList<>();
 
@@ -160,5 +154,43 @@ public class ThongKeDoanhThuDAO {
         }
 
         return ds;
+    }
+    public ArrayList<ThongKeDoanhThuDTO> thongKeDoanhThuTheoNgay(LocalDate tu,LocalDate den){
+        ArrayList<ThongKeDoanhThuDTO> ds=new ArrayList<>();
+        String qry="SELECT cp.Ngay AS Ngay, COALESCE(cp.chiphi,0) as tongchiphi, COALESCE(dt.doanhthu,0) as tongdoanhthu, COALESCE(dt.doanhthu,0) - COALESCE(cp.chiphi,0) as tongloinhuan "
+                + "FROM "
+                + "(SELECT DATE(pn.Ngay) as Ngay,COALESCE(SUM(pn.TongTien),0) AS chiphi "
+                + "FROM phieunhap AS pn "
+                + "WHERE DATE(pn.Ngay) BETWEEN ? AND ? "
+                + "GROUP BY DATE(pn.Ngay)) AS cp "
+                + "LEFT JOIN (SELECT DATE(hd.Ngay) as Ngay, COALESCE(SUM(hd.TongTien),0) AS doanhthu " 
+                + "FROM hoadon AS hd "
+                + "WHERE hd.Ngay BETWEEN ? AND ? "
+                + "GROUP BY DATE(hd.Ngay)) AS dt "
+                + "ON DATE(cp.Ngay)=DATE(dt.Ngay) ";
+        try(
+                Connection conn=Connect.getConnection();
+                PreparedStatement st=conn.prepareStatement(qry);
+                
+            )
+        {   
+            st.setDate(1,java.sql.Date.valueOf(tu));
+            st.setDate(2,java.sql.Date.valueOf(den));
+            st.setDate(3,java.sql.Date.valueOf(tu));
+            st.setDate(4,java.sql.Date.valueOf(den));
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                ThongKeDoanhThuDTO tk=new ThongKeDoanhThuDTO();
+                tk.setNgay(rs.getString("Ngay"));
+                tk.setChiPhi(rs.getInt("tongchiphi"));
+                tk.setDoanhThu(rs.getInt("tongdoanhthu"));
+                tk.setLoiNhuan(rs.getInt("tongloinhuan"));
+                ds.add(tk);
+            }
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+            return ds; 
     }
 }

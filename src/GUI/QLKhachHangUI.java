@@ -12,7 +12,6 @@ public class QLKhachHangUI extends javax.swing.JPanel {
 
     private KhachHangBUS khBUS = new KhachHangBUS();
     public QLKhachHangUI() {
-        //code cũ Nhà cung cấp t comment lại á
         try {
             com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
         } catch (Exception ex) {

@@ -156,7 +156,7 @@
                   <Table columnCount="3" rowCount="0">
                     <Column editable="true" title="M&#xe3; m&#xe1;y" type="java.lang.Object"/>
                     <Column editable="true" title="T&#xea;n m&#xe1;y" type="java.lang.Object"/>
-                    <Column editable="true" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
+                    <Column editable="true" title="Gi&#xe1; b&#xe1;n" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
@@ -186,10 +186,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSpinner2" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="jSpinner2" pref="273" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="253" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

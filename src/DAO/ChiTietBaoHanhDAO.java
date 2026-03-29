@@ -45,8 +45,6 @@ public class ChiTietBaoHanhDAO {
                 ctbh.setMaBH(rs.getString(1));
                 ctbh.setIMEI(rs.getString(2));
                 ctbh.setNgay(rs.getDate(3).toLocalDate());
-                ctbh.setTinhTrang(rs.getString(4));
-                ctbh.setXuLy(rs.getString(5));
                 ds.add(ctbh);
             }
             

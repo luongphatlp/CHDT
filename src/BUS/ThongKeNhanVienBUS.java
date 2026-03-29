@@ -8,20 +8,13 @@ import DAO.ThongKeNhanVienDAO;
 import DTO.HoaDonDTO;
 import DTO.NhanVienDTO;
 import DTO.ThongKeNhanVienDTO;
-import SERVICES.DoiSoLieu;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
-/**
- *
- * @author Latitude E7470
- */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+
 
 public class ThongKeNhanVienBUS {
     private ArrayList<ThongKeNhanVienDTO> ds;
@@ -31,6 +24,8 @@ public class ThongKeNhanVienBUS {
     public ThongKeNhanVienBUS() {
         dao = new ThongKeNhanVienDAO();
         ds = new ArrayList<>();
+    }
+    public void loadAll(){
         bushd.selectAll();
         busnv.docDSNV();
     }

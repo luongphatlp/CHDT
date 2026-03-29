@@ -29,10 +29,10 @@ public class BaoHanhDAO {
         {
              while(rs.next()){
                  BaoHanhDTO bh=new BaoHanhDTO();
-                 bh.setMaBH(rs.getString(1));
-                 bh.setMaNV(rs.getString(2));
-                 bh.setMaKH(rs.getString(3));
-                 bh.setNgayLap(rs.getDate(4).toLocalDate());
+                 bh.setMaBH(rs.getString("MaBH"));
+                 bh.setMaNV(rs.getString("MaNV"));
+                 bh.setMaKH(rs.getString("MaKH"));
+                 bh.setNgayLap(rs.getDate("NgayLap").toLocalDate());
                  ds.add(bh);
              }
         } catch (SQLException e) { e.printStackTrace(); }
@@ -73,17 +73,5 @@ public class BaoHanhDAO {
             e.printStackTrace();
         }
         return null;
-}
-
-   /* public ArrayList<BaoHanhDTO> selectAll() {
-        ArrayList<BaoHanhDTO> list = new ArrayList<>();
-        // JOIN bảng 'chitietbaohanh' (ct) và 'dienthoai' (dt) qua IMEI và Ma
-        String sql = "SELECT ct.IMEI, dt.Ten, ct.Ngay FROM chitietbaohanh ct JOIN dienthoai dt ON ct.IMEI = dt.Ma";
-        try (Connection con = Connect.getConnection(); Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                
-            }
-        } catch (SQLException e) { System.out.println("Loi SQL selectAll: " + e.getMessage()); }
-        return list;
-    }*/
+    }
 }

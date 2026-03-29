@@ -235,10 +235,7 @@ public class SanPhamBUS {
        sp.getMaSP();
        sp.getTenSP();
        sp.getSoLuong();
-       sp.getDonGia();
-       sp.getBoNho();
-               
-     
+       sp.getDonGia();  
     }
     
     public boolean them2 (SanPhamDTO sp){
