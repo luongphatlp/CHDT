@@ -27,18 +27,24 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class BaoHanhBUS {
-    private final BaoHanhDAO dao = new BaoHanhDAO();
+    private BaoHanhDAO dao = new BaoHanhDAO();
     SanPhamBUS bussp =new  SanPhamBUS();
     ChiTietBaoHanhBUS busct=new ChiTietBaoHanhBUS();
     ArrayList<BaoHanhDTO> ds;
     public BaoHanhBUS(){
         ds=new ArrayList<>();
+    }
+    public void loadAll(){
+        selectAll();
         bussp.docDS();
         busct.selectAll();
     }
-    public ArrayList<BaoHanhDTO> selectAll(){
-        ds=dao.selectAll();
+    public ArrayList<BaoHanhDTO> getDS(){
+        if(ds==null || ds.isEmpty()) selectAll();
         return ds;
+    }
+    public void selectAll(){
+        ds=dao.selectAll();
     }
     public void delete(String ma){
         if(dao.delete(ma)!=-1)
@@ -119,7 +125,6 @@ public class BaoHanhBUS {
             selectAll();
             bd = ds;
         }
-
         ArrayList<BaoHanhDTO> tam = new ArrayList<>();
 
         for(BaoHanhDTO bh : bd){

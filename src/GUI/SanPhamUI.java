@@ -232,7 +232,7 @@ public class SanPhamUI extends javax.swing.JPanel {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "STT", "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "RAM/ROM"
+                    "STT", "Mã máy", "Tên máy", "Số lượng", "Đơn giá"
                 }) {
             @Override
             public boolean isCellEditable(int row, int column) {

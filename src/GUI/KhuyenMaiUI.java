@@ -331,8 +331,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         header.add("Tên sản phẩm");
         header.add("Số lượng");
         header.add("Đơn giá");
-        header.add("Đơn vị tính");
-        header.add("Mã hãng");
         header.add("Giảm %");
         DefaultTableModel model = new DefaultTableModel(header, 0){
             @Override
@@ -360,9 +358,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             row.add(sp.getTenSP());
             row.add(sp.getSoLuong());
             row.add(sp.getDonGia());
-//            row.add(sp.getDonViTinh());
-//            row.add(sp.getMaHang());
-            row.add(0);
+            row.add(bussp.getCTSPByMaSP(sp.getMaSP()).getBaoHanh());
             model.addRow(row);
         }
         bangchonsanphamkhuyenmai.setModel(model);
@@ -1075,7 +1071,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                 sp.setMaSP(masp);
                 int phantram = 0;
 
-                Object value = model.getValueAt(i, 7);
+                Object value = model.getValueAt(i, 5);
 
                 if(value != null && !value.toString().trim().isEmpty()){
                     phantram = Integer.parseInt(value.toString().trim());
