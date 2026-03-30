@@ -297,6 +297,7 @@ public class HoaDonBUS {
     }
 
     public HoaDonDTO getHDByMaHD(String mahd) {
+        selectAll();
         for (HoaDonDTO hd : ds) {
             if (hd.getMaHD().equals(mahd)) {
                 return hd;

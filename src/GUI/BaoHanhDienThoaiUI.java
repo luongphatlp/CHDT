@@ -139,6 +139,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel6.setRequestFocusEnabled(false);
 
         cancelButton.setBackground(new java.awt.Color(255, 51, 51));
         cancelButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -583,7 +584,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
                     .addGroup(baohanhLayout.createSequentialGroup()
                         .addGap(211, 211, 211)
                         .addComponent(jLabel26)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         baohanhLayout.setVerticalGroup(
             baohanhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1236,7 +1237,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         thembaohanh.setVisible(true);
-        thembaohanh.setSize(500,800);
+        thembaohanh.setSize(732, 785);
         String mabh=bus.taoMaBH();
         LocalDate ngay=LocalDate.now();
         String nv= UTIL.TaiKhoanSession.nvDangNhap.getMaNV();
@@ -1428,7 +1429,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         baohanh.setVisible(true);
-        baohanh.setSize(500,800);
+        baohanh.setSize(492, 671);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btntimmabaohanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimmabaohanhActionPerformed

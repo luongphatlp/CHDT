@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -81,12 +82,19 @@ public class ThongKeKhachHangBUS {
         ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
         
         for(KhachHangDTO kh:buskh.getDSKH()){
-            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;                      
+            if (key != null && !key.isEmpty()) {
+                if (!kh.getMa().equalsIgnoreCase(key)
+                    && (kh.getHoten() == null 
+                    || !kh.getHoten().toLowerCase().contains(key.toLowerCase()))) {
+                    continue;
+                }
+            }
             int dem=0;
             int tong=0;
             for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
                 if(hd.getNgay().getYear()==nam){
-                   dem++;
+                    
+                    dem++;
                    tong+=hd.getTongTien();
                 }
             }
@@ -99,28 +107,42 @@ public class ThongKeKhachHangBUS {
         }
         return tam;
     }
-    public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoNam(String key,int tunam,int dennam){
-        ArrayList<ThongKeKhachHangDTO> tam=new ArrayList<>();
-        int tu=tunam==-1 ? Integer.MIN_VALUE : tunam;
-        int den =dennam==-1 ? Integer.MAX_VALUE : dennam;
-        for(KhachHangDTO kh:buskh.getDSKH()){
-            if(key != null && !key.isEmpty() && !key.equalsIgnoreCase(kh.getMa()) && kh.getHoten().toLowerCase().contains(key.toLowerCase())) continue;                      
-            int dem=0;
-            int tong=0;
-            for(HoaDonDTO hd:bushd.getHDByMaKH(kh.getMa())){
-                int nam=hd.getNgay().getYear();
-                if(nam<=den && nam>=tu){
-                   dem++;
-                   tong+=hd.getTongTien();
-                }                      
+    public ArrayList<ThongKeKhachHangDTO> locKhachHangTheoNam(String key, int tunam, int dennam) {
+        ArrayList<ThongKeKhachHangDTO> tam = new ArrayList<>();
+
+        int tu = tunam == -1 ? Integer.MIN_VALUE : tunam;
+        int den = dennam == -1 ? Integer.MAX_VALUE : dennam;
+
+        for (KhachHangDTO kh : buskh.getDSKH()) {
+
+            if (key != null && !key.isEmpty()) {
+                if (!kh.getMa().equalsIgnoreCase(key)
+                        && (kh.getHoten() == null 
+                        || !kh.getHoten().toLowerCase().contains(key.toLowerCase()))) {
+                    continue;
+                }
             }
-            ThongKeKhachHangDTO tk=new ThongKeKhachHangDTO();
+
+            int dem = 0;
+            int tong = 0;
+
+            for (HoaDonDTO hd : bushd.getHDByMaKH(kh.getMa())) {
+                int nam = hd.getNgay().getYear();
+                if (nam >= tu && nam <= den) {
+                    dem++;
+                    tong += hd.getTongTien();
+                }
+            }
+
+            ThongKeKhachHangDTO tk = new ThongKeKhachHangDTO();
             tk.setMa(kh.getMa());
             tk.setHoten(kh.getHoten());
             tk.setHoadon(dem);
             tk.setTong(tong);
+
             tam.add(tk);
         }
+
         return tam;
     }
     public ArrayList<Object[]> thongKeKHtheoQuy(int nam){
@@ -138,12 +160,12 @@ public class ThongKeKhachHangBUS {
             long tongNam = 0;
             int soHD = 0 ;
             for(HoaDonDTO hd : bushd.getDS()){
-            if (hd.getNgay().getYear() == nam && kh.getMa().equals(hd.getMaKH())) {
-                int q = (hd.getNgay().getMonthValue() - 1) / 3;
-                quy[q] += hd.getTongTien();
-                tongNam += hd.getTongTien();
-               
-            }
+                if (hd.getNgay().getYear() == nam && kh.getMa().equals(hd.getMaKH())) {
+                    int q = (hd.getNgay().getMonthValue() - 1) / 3;
+                    quy[q] += hd.getTongTien();
+                    tongNam += hd.getTongTien();
+
+                }
             }
             row[2] = quy[0];
             row[3] = quy[1];

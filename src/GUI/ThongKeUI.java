@@ -18,6 +18,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -144,7 +145,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
         String key=cbkykhachhang.getSelectedItem().toString();
         if(key.equals("Khoảng ngày"))
             jPanel14.setVisible(true);
-        else if(key.equals("Tháng"))
+        else if(key.equals("Năm"))
             jPanel15.setVisible(true);
         else if(key.equals("Khoảng năm"))
             jPanel16.setVisible(true);
@@ -370,32 +371,48 @@ public final class ThongKeUI extends javax.swing.JPanel {
         bangnhanvien.setModel(model);
     }
     public ArrayList<ThongKeKhachHangDTO> locKhachHang(){
-        String loai=cbkykhachhang.getSelectedItem().toString();
-        String s=txttimkiemkhachhang.getText();
+        String loai = cbkykhachhang.getSelectedItem().toString();
+        String s = txttimkiemkhachhang.getText();
+
         switch (loai) {
             case "Khoảng ngày" -> {
-                LocalDate tu=LocalDate.MIN;
-                LocalDate den=LocalDate.MAX;
-                if(chtungaykhachhang.getDate()!=null)
-                    tu = chtungaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                if(chdenngaykhachhang.getDate()!=null)
-                    den= chdenngaykhachhang.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                Date dTu = chtungaykhachhang.getDate();
+                Date dDen = chdenngaykhachhang.getDate();
+
+                LocalDate tu = (dTu == null) 
+                        ? LocalDate.MIN 
+                        : dTu.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                LocalDate den = (dDen == null) 
+                        ? LocalDate.MAX 
+                        : dDen.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
                 return buskh.locKhachHangTheoNgay(s, tu, den);
             }
+
             case "Năm" -> {
-                int nam=0;
-                if(Integer.parseInt(spnamkh.getValue().toString())==-1)
-                    nam=Integer.parseInt(spnamkh.getValue().toString());
+                int nam = Integer.parseInt(spnamkh.getValue().toString());
+                if(nam <= -1){
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập năm hợp lệ");
+                    return null;
+                }
                 return buskh.locKhachHangTheoThang(s, nam);
             }
+
             case "Khoảng năm" -> {
-                int tu=0,den=0;
-                if(Integer.parseInt(sptunamkh.getValue().toString())==-1)
-                    tu=Integer.parseInt(sptunamkh.getValue().toString());
-                if(Integer.parseInt(spdennamkh.getValue().toString())==-1)
-                    den=Integer.parseInt(spdennamkh.getValue().toString());
+                int tu = Integer.parseInt(sptunamkh.getValue().toString());
+                int den = Integer.parseInt(spdennamkh.getValue().toString());
+
+                if(tu <= -1 && den <= -1){
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập khoảng năm");
+                    return null;
+                }
+                if(tu <= -1) tu = Integer.MIN_VALUE;
+                if(den <= -1) den = Integer.MAX_VALUE;
+
                 return buskh.locKhachHangTheoNam(s, tu, den);
             }
+
             default -> {
                 return buskh.locKhachHangTheoMa(s);
             }
@@ -861,7 +878,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chdenngay, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(btnreset1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -954,7 +971,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     .addComponent(btnThongKeTheoQuy))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sản phẩm", jPanel6);
@@ -1191,7 +1208,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         jLabel8.setText("Chọn kỳ thống kê");
 
-        cbkykhachhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Khoảng ngày", "Năm", "Khoảnh năm" }));
+        cbkykhachhang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Khoảng ngày", "Năm", "Khoảng năm" }));
         cbkykhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbkykhachhangActionPerformed(evt);
@@ -1202,6 +1219,11 @@ public final class ThongKeUI extends javax.swing.JPanel {
         btthongkekhachhang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 thongkekhachhang(evt);
+            }
+        });
+        btthongkekhachhang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btthongkekhachhangActionPerformed(evt);
             }
         });
 
@@ -1430,7 +1452,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
                 .addComponent(jButton5)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Khách hàng", jPanel13);
@@ -1681,7 +1703,7 @@ public final class ThongKeUI extends javax.swing.JPanel {
                     .addComponent(btthongkenhanvien1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(129, 129, 129))
         );
@@ -1837,7 +1859,21 @@ public final class ThongKeUI extends javax.swing.JPanel {
 
         xuatPDFBieuDo(chart,path);
 
-        JOptionPane.showMessageDialog(null,"Xuất PDF thành công");
+        int open = JOptionPane.showConfirmDialog(
+                    this,
+                    "Xuất PDF thành công. Bạn có muốn mở file không?",
+                    "Mở PDF",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if(open == JOptionPane.YES_OPTION){
+                try{
+                    Desktop.getDesktop().open(new File(path));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        
     }
         
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -2127,6 +2163,10 @@ public final class ThongKeUI extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng số cho Năm (VD: 2026)");
         }
     }//GEN-LAST:event_btnThongKeTheoQuyActionPerformed
+
+    private void btthongkekhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btthongkekhachhangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btthongkekhachhangActionPerformed
 
     
 public static void main(String args[]) {

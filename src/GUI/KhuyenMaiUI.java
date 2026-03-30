@@ -424,7 +424,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         spinnergiamchung = new javax.swing.JSpinner();
         jButton6 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
         bangchonsanphamkhuyenmai.setModel(new javax.swing.table.DefaultTableModel(
@@ -773,17 +772,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
             }
         });
 
-        jButton7.setBackground(new java.awt.Color(56, 134, 155));
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bin.png"))); // NOI18N
-        jButton7.setText("Xóa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
         jButton8.setBackground(new java.awt.Color(56, 134, 155));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
@@ -855,10 +843,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                                 .addGap(34, 34, 34)
                                 .addComponent(btnresetchitietkhuyenmai, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(205, 205, 205))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton7))
+                            .addComponent(jButton5)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2154, 2154, 2154))
@@ -955,9 +940,7 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
                             .addComponent(jButton4)
                             .addComponent(btnresetchitietkhuyenmai))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7))
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1223,28 +1206,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbtimkiemtinhtrangActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        int ok=JOptionPane.showConfirmDialog(null,"Bạn muốn xóa sản phẩm này");
-        if(ok==JOptionPane.YES_OPTION){
-            int row1=bangkhuyenmai.getSelectedRow();
-            if(row1==-1){
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn mã khuyến mãi");
-                return;
-            }
-            int row2=bangchitietkhuyenmai.getSelectedRow();
-            if(row2==-1){
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm khuyến mãi");
-                return;
-            }
-            String makm=bangkhuyenmai.getValueAt(row1, 0).toString();
-            String masp=bangchitietkhuyenmai.getValueAt(row2, 0).toString(); 
-            buskm.deleteCTKM(makm,masp);
-            veBangChiTietKhuyenMai(makm);
-        }
-       
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         int ok=JOptionPane.showConfirmDialog(null,"Bạn muốn xóa khuyến mãi này");
@@ -1285,7 +1246,6 @@ public class KhuyenMaiUI extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

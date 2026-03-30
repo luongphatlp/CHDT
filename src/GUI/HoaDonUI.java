@@ -5,6 +5,7 @@ import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.SanPhamDTO;
+import java.awt.Desktop;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HoaDonUI extends javax.swing.JPanel {
     HoaDonBUS bus=new HoaDonBUS();
-
+    
     public HoaDonUI() {
         com.formdev.flatlaf.intellijthemes.FlatNordIJTheme.setup();
-
+        bus.selectAll();
         initComponents();
         customTable();
         veBangHoaDon();
@@ -138,12 +139,20 @@ public class HoaDonUI extends javax.swing.JPanel {
                     File file = fileChooser.getSelectedFile();
                     String path = file.getAbsolutePath() + ".pdf";
                     bus.xuatPDF(path,mahd);
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Xuất file PDF thành công!",
-                        "Thông báo",
-                        JOptionPane.INFORMATION_MESSAGE
+                    int open = JOptionPane.showConfirmDialog(
+                        this,
+                        "Xuất PDF thành công. Bạn có muốn mở file không?",
+                        "Mở PDF",
+                        JOptionPane.YES_NO_OPTION
                     );
+
+                    if(open == JOptionPane.YES_OPTION){
+                        try{
+                            Desktop.getDesktop().open(new File(path));
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
             ok = JOptionPane.showConfirmDialog(null, "Bạn có muốn tạo phiếu bảo hành không");

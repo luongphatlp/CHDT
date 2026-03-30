@@ -13,14 +13,22 @@ import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapHangDTO;
 import UTIL.TaiKhoanSession;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -161,38 +169,121 @@ public class NhapHangUI extends javax.swing.JPanel {
         }
     }
     public void xuatPDF(String path){
-
-        try{
-
-            Document document = new Document();
+        Document document = new Document(PageSize.A4);
+        try {
             PdfWriter.getInstance(document, new FileOutputStream(path));
-
             document.open();
 
-            document.add(new Paragraph("PHIEU NHAP HANG"));
-            document.add(new Paragraph(" "));
+            // 1. Cài đặt Font (Đường dẫn đến font hệ thống để hiển thị tiếng Việt)
+            // Nếu bạn chạy trên Windows, có thể dùng: "C:\\Windows\\Fonts\\Arial.ttf"
+            BaseFont bf = BaseFont.createFont("c:\\windows\\fonts\\Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font fontTitle = new Font(bf, 18, Font.BOLD);
+            Font fontHeader = new Font(bf, 12, Font.BOLD);
+            Font fontNormal = new Font(bf, 12, Font.NORMAL);
+            Font fontItalic = new Font(bf, 12, Font.ITALIC);
 
+            // 2. Header: Thông tin cửa hàng (Căn trái)
+            Paragraph storeName = new Paragraph("CỬA HÀNG ĐIỆN THOẠI TNFTN", fontHeader);
+            Paragraph address = new Paragraph("Địa chỉ: 273 An Dương Vương, Phường Chợ Quán, TP. HCM", fontNormal);
+            Paragraph hotline = new Paragraph("Hotline: 0913.686.868", fontNormal);
+            document.add(storeName);
+            document.add(address);
+            document.add(hotline);
+            document.add(new Paragraph("\n"));
+
+            // 3. Tiêu đề chính (Căn giữa)
+            Paragraph title = new Paragraph("PHIẾU NHẬP HÀNG", fontTitle);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+            document.add(new Paragraph("\n"));
+
+            // 4. Thông tin chung (Mã phiếu, Nhân viên, NCC...)
+            PdfPTable infoTable = new PdfPTable(2);
+            infoTable.setWidthPercentage(100);
+            
+
+            // Cột trái
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Mã phiếu nhập: " + jTextField3.getText(), fontNormal));
+            cell1.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Nhân viên: " + jTextField2.getText(), fontNormal));
+            cell2.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Nhà cung cấp: " + jComboBox2.getSelectedItem().toString(), fontNormal));
+            cell3.setBorder(Rectangle.NO_BORDER);
+
+            // Cột phải
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Ngày lập: " + sdf.format(new Date()), fontNormal));
+            cell4.setBorder(Rectangle.NO_BORDER);
+            cell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            infoTable.addCell(cell1); infoTable.addCell(cell4);
+            infoTable.addCell(cell2); infoTable.addCell(new PdfPCell(new Paragraph("")) {{ setBorder(Rectangle.NO_BORDER); }});
+            infoTable.addCell(cell3); infoTable.addCell(new PdfPCell(new Paragraph("")) {{ setBorder(Rectangle.NO_BORDER); }});
+
+            document.add(infoTable);
+            document.add(new Paragraph("\n"));
+
+            // 5. Bảng chi tiết sản phẩm
+            // STT, Mã SP, Tên SP, Đơn giá, SL, Thành tiền (6 cột)
+            PdfPTable table = new PdfPTable(6);
+            table.setWidthPercentage(100);
+            table.setWidths(new float[]{1, 2, 4, 2, 1, 2}); // Tỉ lệ độ rộng các cột
+
+            // Header bảng
+            String[] headers = {"STT", "Mã SP", "Tên sản phẩm", "Đơn giá", "SL", "Thành tiền"};
+            for (String h : headers) {
+                PdfPCell cell = new PdfPCell(new Paragraph(h, fontHeader));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                table.addCell(cell);
+            }
+
+            // Dữ liệu bảng từ jTable2
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+            DecimalFormat df = new DecimalFormat("#,###");
 
-            PdfPTable table = new PdfPTable(model.getColumnCount());
+            for (int i = 0; i < model.getRowCount(); i++) {
+                table.addCell(new PdfPCell(new Paragraph(String.valueOf(i + 1), fontNormal))); // STT
+                table.addCell(new PdfPCell(new Paragraph(model.getValueAt(i, 1).toString(), fontNormal))); // Mã SP
+                table.addCell(new PdfPCell(new Paragraph(model.getValueAt(i, 2).toString(), fontNormal))); // Tên SP
 
-            for(int i=0;i<model.getColumnCount();i++){
-                table.addCell(model.getColumnName(i));
+                // Đơn giá (giả định cột 4 là thành tiền, cột 3 là số lượng)
+                long sl = Long.parseLong(model.getValueAt(i, 3).toString());
+                long tt = Long.parseLong(model.getValueAt(i, 4).toString());
+                table.addCell(new PdfPCell(new Paragraph(df.format(tt/sl), fontNormal)));
+
+                table.addCell(new PdfPCell(new Paragraph(String.valueOf(sl), fontNormal)));
+                table.addCell(new PdfPCell(new Paragraph(df.format(tt), fontNormal)));
             }
-
-            for(int i=0;i<model.getRowCount();i++){
-                for(int j=0;j<model.getColumnCount();j++){
-                    table.addCell(model.getValueAt(i,j).toString());
-                }
-            }
-
             document.add(table);
 
-            document.close();
+            // 6. Tổng tiền
+            Paragraph total = new Paragraph("\nTỔNG TIỀN THANH TOÁN: " + df.format(getTongTien()) + " VNĐ", fontHeader);
+            total.setAlignment(Element.ALIGN_RIGHT);
+            document.add(total);
 
-        }catch(Exception e){
+            // 7. Chữ ký
+            document.add(new Paragraph("\n"));
+            PdfPTable signTable = new PdfPTable(2);
+            signTable.setWidthPercentage(100);
+
+            PdfPCell cellLeft = new PdfPCell(new Paragraph("Người mua hàng\n(Ký và ghi rõ họ tên)", fontItalic));
+            cellLeft.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellLeft.setBorder(Rectangle.NO_BORDER);
+
+            PdfPCell cellRight = new PdfPCell(new Paragraph("Ngày....tháng....năm....\nNgười bán hàng\n(Ký và ghi rõ họ tên)", fontItalic));
+            cellRight.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellRight.setBorder(Rectangle.NO_BORDER);
+
+            signTable.addCell(cellLeft);
+            signTable.addCell(cellRight);
+            document.add(signTable);
+
+            document.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
     /**
