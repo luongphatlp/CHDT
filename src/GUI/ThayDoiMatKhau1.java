@@ -220,10 +220,6 @@ public class ThayDoiMatKhau1 extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,"Email không được để trống");
             return;
         }
-        if(!email.equals("singapothinh0711@gmail.com")){
-            JOptionPane.showMessageDialog(this,"Email không phù hợp");
-            return;
-        }
         
         // 3. NẾU VƯỢT QUA KIỂM TRA ("OK") -> BẮT ĐẦU GỬI OTP
         try {

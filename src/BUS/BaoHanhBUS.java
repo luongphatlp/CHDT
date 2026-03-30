@@ -180,12 +180,12 @@ public class BaoHanhBUS {
             document.add(new Paragraph("Ma nhan vien: "+manv));
             document.add(new Paragraph("Ma khach hang: "+makh));
             document.add(new Paragraph("Ngay lap phieu: "+ngay));
-
+            document.add(new Paragraph(""));
             PdfPTable table = new PdfPTable(3);
 
             table.addCell("STT");
             table.addCell("IMEI");
-            table.addCell("Ngay het bao hanh");
+            table.addCell("Ngày hết bảo hành");
             ArrayList<ChiTietBaoHanhDTO> tam=getCTBHByMaBH(mabh);
             int i=1;
             for(ChiTietBaoHanhDTO ct:tam){

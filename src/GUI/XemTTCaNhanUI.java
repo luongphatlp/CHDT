@@ -148,7 +148,7 @@ public class XemTTCaNhanUI extends javax.swing.JDialog {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        jLabel3.setText("Xin Chào : ");
+        jLabel3.setText("Họ tên:");
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
