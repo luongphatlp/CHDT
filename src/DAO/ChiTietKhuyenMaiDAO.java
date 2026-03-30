@@ -30,14 +30,14 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectAll(){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qty="SELECT km.MaKM, km.MaSP, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSP=sp.Ma";
+            String qty="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma";
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery(qty);
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString("MaKM"));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString("MaSP"));
+                sp.setMaSP(rs.getString("MaSanPham"));
                 sp.setTenSP(rs.getString("Ten"));
                 sp.setDonGia(rs.getInt("DonGia"));
                 km.setSanPham(sp);
@@ -52,15 +52,15 @@ public class ChiTietKhuyenMaiDAO {
     public ArrayList<ChiTietKhuyenMaiDTO> selectByMaKM(String ma){
         ArrayList<ChiTietKhuyenMaiDTO> ds=new ArrayList<>();
         try(Connection conn=Connect.getConnection()){
-            String qry="SELECT km.MaKM, km.MaSP, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSP=sp.Ma WHERE km.MaKM=?";
+            String qry="SELECT km.MaKhuyenMai, km.MaSanPham, sp.Ten, sp.DonGia, km.PhanTram  FROM chitietkhuyenmai km JOIN dienthoai sp ON km.MaSanPham=sp.Ma WHERE km.MaKhuyenMai=?";
             PreparedStatement st=conn.prepareStatement(qry);
             st.setString(1,ma);
             ResultSet rs=st.executeQuery();
             while(rs.next()){
                 ChiTietKhuyenMaiDTO km=new ChiTietKhuyenMaiDTO();
-                km.setMaKM(rs.getString("MaKM"));
+                km.setMaKM(rs.getString("MaKhuyenMai"));
                 SanPhamDTO sp = new SanPhamDTO();
-                sp.setMaSP(rs.getString("MaSP"));
+                sp.setMaSP(rs.getString("MaSanPham"));
                 sp.setTenSP(rs.getString("Ten"));
                 sp.setDonGia(rs.getInt("DonGia"));
                 km.setSanPham(sp);

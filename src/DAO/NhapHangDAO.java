@@ -98,10 +98,10 @@ public class NhapHangDAO implements InterfaceDAO<NhapHangDTO>{
 
                 dt.setMa(rs.getString("Ma"));
                 dt.setTen(rs.getString("Ten"));
-                dt.setDonGia(rs.getInt("DonGia"));
+                //dt.setDonGia(rs.getInt("DonGia"));
                 vector.add(dt.getMa());
                 vector.add(dt.getTen());
-                vector.add((int)(dt.getDonGia() * 0.75));
+                //vector.add((int)(dt.getDonGia() * 0.75));
                 
                 list.add(vector);
             }

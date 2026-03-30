@@ -118,7 +118,7 @@ public class SanPhamDAO implements InterfaceDAO<SanPhamDTO> {
      
     public ArrayList<SanPhamDTO> selectSanPhamKhongTrongKhuyenMai(String maKM) {
         ArrayList<SanPhamDTO> ds = new ArrayList<>();
-        String qry = "Select * FROM dienthoai WHERE Ma NOT IN (SELECT MaSP FROM chitietkhuyenmai WHERE MaKM=?)";
+        String qry = "Select * FROM dienthoai WHERE Ma NOT IN (SELECT MaSanPham FROM chitietkhuyenmai WHERE MaKhuyenMai=?)";
         try (Connection conn = Connect.getConnection();
              PreparedStatement st = conn.prepareStatement(qry)) {
             
