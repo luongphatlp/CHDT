@@ -20,6 +20,8 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.JFileChooser;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -302,7 +304,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jComboBox1, 0, 269, Short.MAX_VALUE)
+                .addComponent(jComboBox1, 0, 266, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -325,6 +327,18 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setText("Từ:");
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
+            }
+        });
+
+        jDateChooser2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser2PropertyChange(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel2.setText("Đến:");
@@ -424,7 +438,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel6)
-                .addContainerGap(1226, Short.MAX_VALUE))
+                .addContainerGap(1201, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -700,7 +714,10 @@ public class PhieuNhapUI extends javax.swing.JPanel {
                if(!giaTu.isEmpty() && !giaDen.isEmpty()){
                    int min = Integer.parseInt(giaTu);
                    int max = Integer.parseInt(giaDen);
-
+                   if(max<min){
+                       JOptionPane.showMessageDialog(null, "Vui lòng nhập giá từ phải nhỏ hơn giá đến");
+                       return;
+                   }
                    filters.add(new RowFilter<Object,Object>(){
                        public boolean include(Entry<?,?> entry){
                            int gia = Integer.parseInt(entry.getStringValue(5)); // cột tổng tiền
@@ -840,6 +857,30 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        // TODO add your handling code here:
+        if(jDateChooser2.getDate()!=null && jDateChooser1.getDate()!=null){
+            LocalDate den=jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate tu=jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if(tu.isAfter(den)){
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập từ phải nhỏ hơn ngày đén");
+                jDateChooser1.setDate(null);
+            }
+        }
+    }//GEN-LAST:event_jDateChooser1PropertyChange
+
+    private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+        // TODO add your handling code here:
+        if(jDateChooser2.getDate()!=null && jDateChooser1.getDate()!=null){
+            LocalDate den=jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate tu=jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if(tu.isAfter(den)){
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đến phải nhỏ hơn ngày từ");
+                jDateChooser2.setDate(null);
+            }
+        }
+    }//GEN-LAST:event_jDateChooser2PropertyChange
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Test Phiếu Nhập Hàng");
