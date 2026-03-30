@@ -25,6 +25,15 @@ public class KhuyenMaiBUS {
             kmMap.put(km.getMa(), km);
         }
     }
+    public void deleteCTKM(String makm,String masp){
+        busct.delete(makm, masp);
+    }
+    public void deleteKM(String makm){
+        for(int i=0;i<ds.size();i++)
+            if(ds.get(i).getMa().equals(makm))
+                ds.remove(i);
+        dao.delete(makm);
+    }
     public String taoMaKM(){
         String max = dao.layMaKMMax();
 
@@ -48,6 +57,7 @@ public class KhuyenMaiBUS {
         return kmMap.get(maKM);
     }
     public void add(KhuyenMaiDTO km) {
+        ds.add(km);
         dao.insert(km);
     }
 
@@ -61,7 +71,9 @@ public class KhuyenMaiBUS {
     }
 
     public void update(KhuyenMaiDTO km) {
-        
+        for(int i=0;i<ds.size();i++)
+            if(ds.get(i).getMa().equals(km))
+                ds.set(i, km);
         dao.update(km);
     }
     

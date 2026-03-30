@@ -46,7 +46,18 @@ public class KhuyenMaiDAO implements InterfaceDAO<KhuyenMaiDTO> {
         }
         return result;
     }
-
+    public int delete(String makm) {
+        int result = 0;
+        try (Connection conn = Connect.getConnection()) {
+            String qry = "Delete from khuyenmai where Ma=?";
+            PreparedStatement st = conn.prepareStatement(qry);
+            st.setString(1, makm);
+            result = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.getLogger(KhuyenMaiDTO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return result;
+    }
     @Override
     public int update(KhuyenMaiDTO km) {
         int result = 0;
