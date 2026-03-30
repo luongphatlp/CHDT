@@ -565,8 +565,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
 
         if(confirm == JOptionPane.YES_OPTION){
 
-            int modelRow = jTable1.convertRowIndexToModel(row);
-            String mapn = jTable1.getValueAt(modelRow, 1).toString();
+            String mapn = jTable1.getValueAt(row, 1).toString();
 
             // 👉 GỌI BUS để update DB
             boolean result = busPN.capNhatTrangThai(mapn, "Dừng hoạt động");
@@ -574,7 +573,7 @@ public class PhieuNhapUI extends javax.swing.JPanel {
             if(result){
                 // update lại table
                 int modelCol = jTable1.convertColumnIndexToModel(6);
-                jTable1.setValueAt("Dừng hoạt động", modelRow, modelCol);
+                jTable1.setValueAt("Dừng hoạt động", row, modelCol);
                 }
                 JOptionPane.showMessageDialog(this, "Đã chuyển sang Dừng hoạt động");
             }else{
