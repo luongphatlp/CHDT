@@ -782,13 +782,13 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
 
         bangchitietbaohanh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "STT", "IMEI", "Ngày hết bảo hành", "Tình trạng ", "Xử lý"
+                "STT", "IMEI", "Ngày hết bảo hành"
             }
         ));
         jScrollPane3.setViewportView(bangchitietbaohanh);
@@ -1084,7 +1084,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) bangbaohanh.getModel();
         model.setRowCount(0);
         int i=1;
-        for (DTO.BaoHanhDTO bh : bus.selectAll()) {
+        for (DTO.BaoHanhDTO bh : bus.getDS()) {
             model.addRow(new Object[]{i++,bh.getMaBH(), bh.getMaKH(), bh.getMaNV(),bh.getNgayLap()});
         }
     }
@@ -1110,7 +1110,7 @@ public class BaoHanhDienThoaiUI extends javax.swing.JPanel {
     String chucnang = cbtimkiem.getSelectedItem().toString();
         String key = txttimkiem.getText().trim();
 
-        ArrayList<BaoHanhDTO> ds = bus.selectAll();
+        ArrayList<BaoHanhDTO> ds = bus.getDS();
 
         if(!key.equals("")){
             switch (chucnang) {

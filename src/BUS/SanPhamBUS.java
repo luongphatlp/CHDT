@@ -1,14 +1,11 @@
 package BUS;
 
-import DAO.NhanVienDAO;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
 import DTO.ChiTietSanPhamDTO;
-import DTO.NhanVienDTO;
-import com.mysql.cj.jdbc.ConnectionImpl;
 import java.util.ArrayList;
 
 public class SanPhamBUS {
@@ -278,6 +275,5 @@ public class SanPhamBUS {
         }
         return dstk;
     }
-    
 }
 
